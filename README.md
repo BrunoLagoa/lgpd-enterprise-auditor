@@ -1,26 +1,44 @@
 # LGPD Enterprise Auditor
 
 <p align="left">
-  <img src="./assets/logo-lgpd-enterprise-auditor.webp" alt="Logo LGPD Enterprise Auditor" width="355" />
+  <img src="./assets/logo-lgpd-enterprise-auditor.webp" alt="LGPD Enterprise Auditor Logo" width="355" />
 </p>
 
-Framework de auditoria LGPD orientado a evidências, com foco em segurança, governança e uso de IA em engenharia de software.
+<!-- README-I18N:START -->
 
-Este projeto foi desenhado para funcionar como um sistema auditável e modular, pronto para ser reutilizado em diferentes produtos e times.
+**English** | [Português (Brasil)](./README.pt-BR.md)
 
-## O que é este projeto
+<!-- README-I18N:END -->
 
-O `lgpd-enterprise-auditor` é um framework que combina:
 
-- auditoria jurídica (LGPD + ANPD);
-- auditoria técnica (appsec, cloud, mobile, devsecops, IA/LLM);
-- modelo de severidade e score;
-- formato de relatório padronizado;
-- comandos práticos para execução por cenário.
+An evidence-driven LGPD auditing framework focused on security, governance, and AI usage in software engineering.
 
-Na prática, ele permite rodar auditorias completas ou direcionadas com consistência de critérios, evidências e plano de adequação.
+This project was designed to operate as an auditable and modular system, ready to be reused across products and teams.
 
-## Como o projeto está organizado
+## What this project is
+
+`lgpd-enterprise-auditor` is a framework that combines:
+
+- legal auditing (LGPD + ANPD);
+- technical auditing (appsec, cloud, mobile, devsecops, AI/LLM);
+- severity and scoring model;
+- standardized reporting format;
+- practical commands for scenario-based execution.
+
+In practice, it enables complete or targeted audits with consistent criteria, evidence, and remediation planning.
+
+## Legal basis and updates
+
+This framework uses the **General Data Protection Law (LGPD)** as its primary legal reference:
+
+- **Official text (Planalto):** [Law No. 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
+- **Regulatory authority:** [ANPD](https://www.gov.br/anpd/)
+
+| Item | Value |
+|------|--------|
+| Last synchronization | `2026-05` |
+
+## How the project is organized
 
 ```text
 .
@@ -48,104 +66,104 @@ Na prática, ele permite rodar auditorias completas ou direcionadas com consist�
         └── legacy/
 ```
 
-### Fonte canônica
+### Canonical source
 
-O caminho base canônico do framework modular é:
+The canonical base path for the modular framework is:
 
 `.agents/lgpd-enterprise-auditor/`
 
-Esse é o padrão esperado para projetos que adotarem a mesma estrutura.
+This is the expected standard for projects that adopt the same structure.
 
-## Como funciona
+## How it works
 
-O fluxo da auditoria segue 5 passos:
+The audit workflow follows 5 steps:
 
-1. **Contexto do projeto**: stack, dados tratados, integrações e operação.
-2. **Roteamento inteligente**: o orquestrador ativa módulos por cenário.
-3. **Checklist com evidência**: nada é marcado como conforme sem comprovação.
-4. **Consolidação**: severidade, score e classificação final.
-5. **Saída padronizada**: relatório executivo/técnico/compliance + plano de adequação.
+1. **Project context**: stack, processed data, integrations, and operational setup.
+2. **Smart routing**: the orchestrator activates modules by scenario.
+3. **Evidence-based checklist**: nothing is marked compliant without proof.
+4. **Consolidation**: severity, score, and final classification.
+5. **Standardized output**: executive/technical/compliance report + remediation plan.
 
-## Modos de uso
+## Usage modes
 
-### 1) Auditoria completa
+### 1) Full audit
 
-Use quando quiser cobertura total:
+Use when you need full coverage:
 
-- comando: `commands/lgpd-full-audit.md`
-- cenário: `full_audit`
+- command: `commands/lgpd-full-audit.md`
+- scenario: `full_audit`
 
-Módulos acionados: `core`, `legal`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
+Activated modules: `core`, `legal`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
-### 2) Auditoria por cenário
+### 2) Scenario-based audit
 
-Use para escopo focado:
+Use for focused scope:
 
-- `lgpd-saas` -> SaaS web
-- `lgpd-mobile` -> app mobile
-- `lgpd-ai-llm` -> sistemas com IA/LLM
-- `lgpd-devsecops` -> pipelines e supply chain
+- `lgpd-saas` -> web SaaS
+- `lgpd-mobile` -> mobile app
+- `lgpd-ai-llm` -> AI/LLM systems
+- `lgpd-devsecops` -> pipelines and supply chain
 
-## Comandos disponíveis
+## Available commands
 
-Os comandos em `commands/` são atalhos de execução para o agente.
+Commands in `commands/` are execution shortcuts for the agent.
 
-Todos incluem:
+All commands include:
 
-- metadados (`name`, `description`, `license`, `author`, `version`);
-- coleta de contexto mínimo quando não mapeado;
-- regras obrigatórias de evidência e consistência com o framework modular.
+- metadata (`name`, `description`, `license`, `author`, `version`);
+- minimum context collection when not mapped yet;
+- mandatory evidence and consistency rules aligned with the modular framework.
 
-## Contratos de auditoria (resumo)
+## Audit contracts (summary)
 
-Os contratos centrais estão em `.agents/lgpd-enterprise-auditor/core/`:
+Core contracts are located at `.agents/lgpd-enterprise-auditor/core/`:
 
-- `auditor-core.md`: estruturas canônicas (`finding`, `check_item`, `module_output`);
-- `evidence-engine.md`: regras de evidência;
-- `severity-model.md`: classificação de severidade;
-- `scoring-engine.md`: cálculo de score;
-- `reporting-engine.md`: formato obrigatório da saída.
+- `auditor-core.md`: canonical structures (`finding`, `check_item`, `module_output`);
+- `evidence-engine.md`: evidence rules;
+- `severity-model.md`: severity classification;
+- `scoring-engine.md`: score calculation;
+- `reporting-engine.md`: mandatory output format.
 
-## Para quem este projeto é útil
+## Who this project is for
 
-- times de engenharia e plataforma;
-- segurança da informação e AppSec;
-- compliance e privacidade;
-- consultorias de adequação LGPD;
-- squads com uso de IA generativa em produção.
+- engineering and platform teams;
+- information security and AppSec teams;
+- compliance and privacy teams;
+- LGPD readiness consultancies;
+- squads using generative AI in production.
 
-## Boas práticas de adoção
+## Adoption best practices
 
-- manter `.agents/lgpd-enterprise-auditor/` versionado junto ao produto;
-- adaptar comandos por domínio, sem quebrar contratos do core;
-- registrar evidências técnicas e documentais por item;
-- revisar score e não conformidades por release;
-- tratar auditoria como processo contínuo, não evento isolado.
+- keep `.agents/lgpd-enterprise-auditor/` versioned together with the product;
+- adapt commands by domain without breaking core contracts;
+- record technical and documentary evidence per item;
+- review score and non-conformities per release;
+- treat auditing as a continuous process, not a one-time event.
 
-## Roadmap sugerido
+## Suggested roadmap
 
-- templates mais ricos por setor (healthtech, fintech, gov);
-- automação de coleta de evidências;
-- geração de matriz de risco por ambiente;
-- relatórios comparativos entre releases;
-- integração com pipelines CI/CD.
+- richer templates by industry (healthtech, fintech, gov);
+- evidence collection automation;
+- environment-based risk matrix generation;
+- comparative reports between releases;
+- CI/CD pipeline integration.
 
-## Pessoas por trás do Memflow
+## People Behind Memflow
 
-Este projeto evolui com contribuições de pessoas que acreditam em engenharia de software com IA de forma disciplinada, prática e auditável.
+This project evolves with contributions from people who believe in disciplined, practical, and auditable AI software engineering.
 
 <p align="left">
   <a href="https://github.com/BrunoLagoa/memflow-command-system/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=BrunoLagoa/memflow-command-system&max=100" alt="Contribuidores do projeto" width="45" />
+    <img src="https://contrib.rocks/image?repo=BrunoLagoa/memflow-command-system&max=100" alt="Project contributors" width="45" />
   </a>
 </p>
 
-Quer aparecer aqui também? Abra uma issue, sugira melhorias ou envie um PR.
+Want to appear here too? Open an issue, suggest improvements, or submit a PR.
 
-## Suporte
+## Support
 
-Para obter suporte, abra uma issue no GitHub. Relatos de bugs, solicitações de recursos e dúvidas de uso são bem-vindos.
+For support, open an issue on GitHub. Bug reports, feature requests, and usage questions are welcome.
 
-## Licença
+## License
 
-Este projeto está licenciado sob os termos da licença MIT. Consulte o arquivo [`LICENSE`](LICENSE) para os termos completos.
+This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for full terms.

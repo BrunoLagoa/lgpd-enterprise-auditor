@@ -4,6 +4,12 @@
   <img src="./assets/logo-lgpd-enterprise-auditor.webp" alt="Logo LGPD Enterprise Auditor" width="355" />
 </p>
 
+<!-- README-I18N:START -->
+
+[English](./README.md) | **Português (Brasil)**
+
+<!-- README-I18N:END -->
+
 Framework de auditoria LGPD orientado a evidências, com foco em segurança, governança e uso de IA em engenharia de software.
 
 Este projeto foi desenhado para funcionar como um sistema auditável e modular, pronto para ser reutilizado em diferentes produtos e times.
