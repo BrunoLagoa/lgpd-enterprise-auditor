@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/stargazers"><img src="https://img.shields.io/github/stars/BrunoLagoa/lgpd-enterprise-auditor?style=social" alt="GitHub stars" /></a>
-  <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/blob/main/LICENSE"><img src="https://img.shields.io/github/license/BrunoLagoa/lgpd-enterprise-auditor" alt="License" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License MIT" /></a>
   <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor"><img src="https://hits.sh/github.com/BrunoLagoa/lgpd-enterprise-auditor.svg?label=Project%20views&color=f1c40f" alt="Project views" /></a>
 </p>
 
