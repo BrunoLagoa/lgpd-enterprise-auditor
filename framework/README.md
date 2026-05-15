@@ -1,0 +1,41 @@
+# LGPD Enterprise Auditor Framework V2
+
+## Visão geral
+Esta V2 modular organiza a auditoria em camadas para melhorar manutenção, escalabilidade e especialização sem perder compatibilidade com a V1.
+
+## Estrutura
+- `core/`: contratos canônicos (evidência, severidade, score, relatório).
+- `legal/`: base normativa LGPD/ANPD e bases legais.
+- `governance/`: governança, DPO, RIPD e terceiros.
+- `cloud/`: postura cloud e exposição de infraestrutura.
+- `appsec/`: segurança de aplicações e APIs.
+- `mobile/`: segurança/privacidade mobile.
+- `devsecops/`: CI/CD, supply chain, containers e Kubernetes.
+- `ai-llm/`: riscos de IA generativa, RAG e retenção.
+- `orchestrator/`: roteamento de módulos por cenário.
+- `templates/`: modelos de políticas e artefatos de conformidade.
+- `reports/`: formatos de relatório por público.
+- `legacy/`: ponte de compatibilidade V1.
+- `validation/`: validação de paridade V1->V2.
+
+## Fluxo de execução
+1. Capturar contexto do projeto (stack, dados, integrações).
+2. Orquestrador ativa módulos aplicáveis.
+3. Módulos executam checklist com evidência obrigatória.
+4. Core consolida severidade, score e classificação.
+5. Reporting engine gera relatório final.
+
+## Modo de uso
+- Modo direcionado: ativação por cenário (`saas_web`, `mobile_app`, `ai_llm_system`, `devsecops_pipeline`).
+- Modo legado (`full_audit`): cobertura equivalente à V1 para auditoria completa.
+
+## Convenções de nomenclatura
+- Módulos: kebab-case (ex.: `ai-llm`).
+- Áreas de score: snake_case (ex.: `ai_llm`).
+- Essa separação evita ambiguidade entre roteamento e cálculo de score.
+
+## Cenários rápidos
+- SaaS (React/Node/Postgres/AWS): `core`, `legal`, `governance`, `cloud`, `appsec`, `devsecops`.
+- IA/LLM (RAG): `core`, `legal`, `governance`, `ai-llm`, `appsec`.
+- Mobile (Flutter/Firebase): `core`, `legal`, `governance`, `mobile`, `cloud`, `appsec`.
+- Pipeline (GitHub Actions/Docker/K8s): `core`, `legal`, `devsecops`, `cloud`, `appsec`.
