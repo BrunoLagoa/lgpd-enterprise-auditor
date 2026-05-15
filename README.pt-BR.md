@@ -4,6 +4,12 @@
   <img src="./assets/logo-lgpd-enterprise-auditor.webp" alt="Logo LGPD Enterprise Auditor" width="355" />
 </p>
 
+<p align="center">
+  <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/stargazers"><img src="https://img.shields.io/github/stars/BrunoLagoa/lgpd-enterprise-auditor?style=social" alt="GitHub stars" /></a>
+  <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/blob/main/LICENSE"><img src="https://img.shields.io/github/license/BrunoLagoa/lgpd-enterprise-auditor" alt="License" /></a>
+  <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor"><img src="https://hits.sh/github.com/BrunoLagoa/lgpd-enterprise-auditor.svg?label=Project%20views&color=f1c40f" alt="Project views" /></a>
+</p>
+
 <!-- README-I18N:START -->
 
 [English](./README.md) | **Português (Brasil)**
@@ -152,8 +158,8 @@ Os contratos centrais estão em `.agents/lgpd-enterprise-auditor/core/`:
 Este projeto evolui com contribuições de pessoas que acreditam em engenharia de software com IA de forma disciplinada, prática e auditável.
 
 <p align="left">
-  <a href="https://github.com/BrunoLagoa/memflow-command-system/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=BrunoLagoa/memflow-command-system&max=100" alt="Contribuidores do projeto" width="45" />
+  <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=BrunoLagoa/lgpd-enterprise-auditor&max=100" alt="Contribuidores do projeto" width="45" />
   </a>
 </p>
 

@@ -4,6 +4,12 @@
   <img src="./assets/logo-lgpd-enterprise-auditor.webp" alt="LGPD Enterprise Auditor Logo" width="355" />
 </p>
 
+<p align="center">
+  <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/stargazers"><img src="https://img.shields.io/github/stars/BrunoLagoa/lgpd-enterprise-auditor?style=social" alt="GitHub stars" /></a>
+  <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/blob/main/LICENSE"><img src="https://img.shields.io/github/license/BrunoLagoa/lgpd-enterprise-auditor" alt="License" /></a>
+  <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor"><img src="https://hits.sh/github.com/BrunoLagoa/lgpd-enterprise-auditor.svg?label=Project%20views&color=f1c40f" alt="Project views" /></a>
+</p>
+
 <!-- README-I18N:START -->
 
 **English** | [Português (Brasil)](./README.pt-BR.md)
@@ -153,8 +159,8 @@ Core contracts are located at `.agents/lgpd-enterprise-auditor/core/`:
 This project evolves with contributions from people who believe in disciplined, practical, and auditable AI software engineering.
 
 <p align="left">
-  <a href="https://github.com/BrunoLagoa/memflow-command-system/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=BrunoLagoa/memflow-command-system&max=100" alt="Project contributors" width="45" />
+  <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=BrunoLagoa/lgpd-enterprise-auditor&max=100" alt="Project contributors" width="45" />
   </a>
 </p>
 
