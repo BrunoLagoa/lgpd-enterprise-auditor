@@ -5,6 +5,7 @@
 | Cenário | core | legal | governance | cloud | appsec | mobile | devsecops | ai-llm |
 |---|---|---|---|---|---|---|---|---|
 | SaaS Web (React/Node/Postgres/AWS) | X | X | X | X | X |  | X |  |
+| Web Site / Landing Page | X | X | X | X | X |  |  |  |
 | Sistema IA/LLM (RAG + OpenAI/Pinecone) | X | X | X |  | X |  |  | X |
 | App Mobile (Flutter/Firebase) | X | X | X | X | X | X |  |  |
 | Pipeline (GitHub Actions + Docker + K8s) | X | X |  | X | X |  | X |  |

@@ -17,6 +17,7 @@ Ativar apenas módulos relevantes ao contexto do projeto, preservando cobertura 
 
 ### Cenários base
 - `saas_web`: `core`, `legal`, `governance`, `appsec`, `cloud`, `devsecops`.
+- `web_site`: `core`, `legal`, `governance`, `appsec`, `cloud`.
 - `mobile_app`: `core`, `legal`, `governance`, `mobile`, `appsec`, `cloud`.
 - `ai_llm_system`: `core`, `legal`, `governance`, `ai-llm`, `appsec`.
 - `devsecops_pipeline`: `core`, `legal`, `devsecops`, `cloud`, `appsec`.
