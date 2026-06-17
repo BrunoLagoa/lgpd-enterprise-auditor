@@ -153,20 +153,41 @@ Qualquer operação envolvendo dados:
 
 # BASES LEGAIS
 
-Toda operação deve possuir base legal válida.
+Toda operação deve possuir base legal válida. Antes de validar, classificar se o dado é pessoal comum (art. 7º) ou sensível (art. 11).
 
+## Dados pessoais (art. 7º)
 Validar:
 - Consentimento;
 - Execução de contrato;
 - Obrigação legal;
-- Legítimo interesse;
+- Execução de políticas públicas;
+- Estudos por órgão de pesquisa;
 - Exercício regular de direitos;
-- Tutela da saúde;
 - Proteção da vida;
+- Tutela da saúde;
+- Legítimo interesse;
 - Proteção ao crédito.
+
+## Dados sensíveis (art. 11)
+Rol próprio e mais restrito. Atenção:
+- **Legítimo interesse NÃO é base legal válida para dado sensível** → uso indevido = CRÍTICO.
+- Consentimento para dado sensível deve ser específico e em destaque.
 
 Se não existir base legal:
 → classificar como NÃO CONFORME.
+
+---
+
+# DADOS DE CRIANÇAS E ADOLESCENTES (art. 14)
+
+Validar:
+- tratamento sempre no melhor interesse;
+- consentimento específico e em destaque de pelo menos um dos pais/responsável para crianças;
+- mecanismo de verificação de idade;
+- minimização (não exigir dados além do necessário);
+- informações sobre o tratamento públicas e acessíveis.
+
+Dado de criança sem consentimento parental → CRÍTICO.
 
 ---
 
@@ -517,7 +538,8 @@ Validar:
 - política de segurança;
 - política de privacidade;
 - política de retenção;
-- resposta a incidentes;
+- resposta a incidentes (comunicação à ANPD e titulares em até 3 dias úteis — Res. CD/ANPD nº 15/2024);
+- publicidade da identidade e contato do encarregado/DPO (art. 41, §1º);
 - gestão de terceiros;
 - treinamento interno.
 
@@ -529,7 +551,7 @@ Verificar:
 - operadores;
 - subprocessadores;
 - DPA;
-- transferência internacional;
+- transferência internacional (arts. 33-36: exige mecanismo legal — adequação ANPD, cláusulas-padrão contratuais, consentimento específico, etc.);
 - analytics;
 - marketing;
 - adtechs;

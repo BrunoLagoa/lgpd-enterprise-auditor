@@ -38,10 +38,11 @@ Este framework usa como referência principal a **Lei Geral de Proteção de Dad
 
 - **Texto oficial (Planalto):** [Lei nº 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
 - **Órgão regulador:** [ANPD](https://www.gov.br/anpd/)
+- **Regulamento ANPD relevante:** Resolução CD/ANPD nº 15/2024 — comunicação de incidente de segurança (3 dias úteis).
 
 | Item | Valor |
 |------|--------|
-| Última sincronização | `2026-05` |
+| Última sincronização | `2026-06` |
 
 ## Como o projeto está organizado
 
@@ -51,6 +52,7 @@ Este framework usa como referência principal a **Lei Geral de Proteção de Dad
 ├── commands/
 │   ├── lgpd-full-audit.md
 │   ├── lgpd-saas.md
+│   ├── lgpd-web.md
 │   ├── lgpd-mobile.md
 │   ├── lgpd-ai-llm.md
 │   └── lgpd-devsecops.md
@@ -105,6 +107,7 @@ Módulos acionados: `core`, `legal`, `governance`, `cloud`, `appsec`, `mobile`, 
 Use para escopo focado:
 
 - `lgpd-saas` -> SaaS web
+- `lgpd-web` -> sites e landing pages
 - `lgpd-mobile` -> app mobile
 - `lgpd-ai-llm` -> sistemas com IA/LLM
 - `lgpd-devsecops` -> pipelines e supply chain
@@ -153,7 +156,7 @@ Os contratos centrais estão em `.agents/lgpd-enterprise-auditor/core/`:
 - relatórios comparativos entre releases;
 - integração com pipelines CI/CD.
 
-## Pessoas por trás do Memflow
+## Pessoas por trás do LGPD Enterprise Auditor
 
 Este projeto evolui com contribuições de pessoas que acreditam em engenharia de software com IA de forma disciplinada, prática e auditável.
 

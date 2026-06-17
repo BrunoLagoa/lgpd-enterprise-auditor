@@ -10,6 +10,7 @@ Avaliar postura de segurança e privacidade em ambientes cloud (AWS/Azure/GCP).
 - Logs de auditoria cloud estão ativos e protegidos?
 - Segmentação de rede e regras de exposição externa estão adequadas?
 - Há processo de hardening e gestão de vulnerabilidades em infra?
+- A região/armazenamento implica transferência internacional de dados? Se sim, há mecanismo legal do art. 33 (ver `legal/international-transfer.md`)?
 
 ## Critérios de evidência
 - políticas IAM e evidências de revisão;

@@ -39,10 +39,11 @@ This framework uses the **General Data Protection Law (LGPD)** as its primary le
 
 - **Official text (Planalto):** [Law No. 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
 - **Regulatory authority:** [ANPD](https://www.gov.br/anpd/)
+- **Key ANPD regulation:** Resolution CD/ANPD No. 15/2024 — security incident communication (3 business days).
 
 | Item | Value |
 |------|--------|
-| Last synchronization | `2026-05` |
+| Last synchronization | `2026-06` |
 
 ## How the project is organized
 
@@ -52,6 +53,7 @@ This framework uses the **General Data Protection Law (LGPD)** as its primary le
 ├── commands/
 │   ├── lgpd-full-audit.md
 │   ├── lgpd-saas.md
+│   ├── lgpd-web.md
 │   ├── lgpd-mobile.md
 │   ├── lgpd-ai-llm.md
 │   └── lgpd-devsecops.md
@@ -106,6 +108,7 @@ Activated modules: `core`, `legal`, `governance`, `cloud`, `appsec`, `mobile`, `
 Use for focused scope:
 
 - `lgpd-saas` -> web SaaS
+- `lgpd-web` -> websites and landing pages
 - `lgpd-mobile` -> mobile app
 - `lgpd-ai-llm` -> AI/LLM systems
 - `lgpd-devsecops` -> pipelines and supply chain
@@ -154,7 +157,7 @@ Core contracts are located at `.agents/lgpd-enterprise-auditor/core/`:
 - comparative reports between releases;
 - CI/CD pipeline integration.
 
-## People Behind Memflow
+## People Behind LGPD Enterprise Auditor
 
 This project evolves with contributions from people who believe in disciplined, practical, and auditable AI software engineering.
 
