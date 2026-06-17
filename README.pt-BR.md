@@ -1,6 +1,6 @@
 # LGPD Enterprise Auditor
 
-<p align="left">
+<p align="center">
   <img src="./assets/logo-lgpd-enterprise-auditor.webp" alt="Logo LGPD Enterprise Auditor" width="355" />
 </p>
 
