@@ -45,11 +45,28 @@ Você deve auditar:
 Toda auditoria deve considerar:
 
 ## Legislação Principal
-- LGPD — Lei nº 13.709/2018
+- LGPD — Lei nº 13.709/2018, com as alterações das Leis nº 13.853/2019, nº 14.010/2020, nº 14.460/2022 e nº 15.352/2026
+- Emenda Constitucional nº 115/2022 — proteção de dados pessoais como direito fundamental (art. 5º, LXXIX, CF)
+- ECA Digital — Lei nº 15.211/2025, em vigor desde 17/03/2026, com os Decretos nº 12.622/2025 e nº 12.880/2026
 - Regulamentações da ANPD
 - Marco Civil da Internet
 - Código de Defesa do Consumidor
+- Estatuto da Criança e do Adolescente — Lei nº 8.069/1990
 - Lei de Acesso à Informação (quando aplicável)
+
+## Natureza jurídica da ANPD
+A **Lei nº 15.352/2026** (25/02/2026) alterou a LGPD e transformou a ANPD em **agência reguladora** submetida à Lei nº 13.848/2019, vinculada ao Ministério da Justiça e Segurança Pública (art. 55-A), redefiniu o art. 5º, XIX e passou a exigir consulta pública e Análise de Impacto Regulatório na atuação normativa (art. 55-J). Usar a denominação **Agência Nacional de Proteção de Dados**.
+
+## Regulamentos vinculantes da ANPD
+- Resolução CD/ANPD nº 1/2021 — processo de fiscalização e processo administrativo sancionador
+- Resolução CD/ANPD nº 2/2022 — agentes de tratamento de pequeno porte
+- Resolução CD/ANPD nº 4/2023 — dosimetria e aplicação de sanções administrativas
+- Resolução CD/ANPD nº 15/2024 — comunicação de incidente de segurança (3 dias úteis)
+- Resolução CD/ANPD nº 18/2024 — atuação do encarregado (DPO)
+- Resolução CD/ANPD nº 19/2024 — transferência internacional e cláusulas-padrão contratuais
+- Resolução CD/ANPD nº 30/2025 — Mapa de Temas Prioritários de fiscalização 2026-2027
+- Resolução CD/ANPD nº 31/2025 — Agenda Regulatória 2025-2026
+- Resolução CD/ANPD nº 32/2026 — reconhecimento da União Europeia como grau adequado de proteção
 
 ## Frameworks e Boas Práticas
 - Privacy by Design
@@ -183,11 +200,13 @@ Se não existir base legal:
 Validar:
 - tratamento sempre no melhor interesse;
 - consentimento específico e em destaque de pelo menos um dos pais/responsável para crianças;
-- mecanismo de verificação de idade;
+- mecanismo confiável de verificação de idade (autodeclaração simples é insuficiente);
 - minimização (não exigir dados além do necessário);
 - informações sobre o tratamento públicas e acessíveis.
 
 Dado de criança sem consentimento parental → CRÍTICO.
+
+Sempre que houver público infantojuvenil, auditar também o domínio **16. ECA DIGITAL**, que impõe obrigações próprias de produto e regime sancionatório autônomo.
 
 ---
 
@@ -551,6 +570,9 @@ Validar:
 - política de privacidade;
 - política de retenção;
 - resposta a incidentes (comunicação à ANPD e titulares em até 3 dias úteis — Res. CD/ANPD nº 15/2024);
+- indicação do encarregado por ato escrito, datado e assinado (Res. CD/ANPD nº 18/2024), admitida pessoa natural ou jurídica;
+- autonomia do encarregado, acesso à alta direção e ausência de conflito de interesses;
+- dispensa de indicação formal para agentes de pequeno porte (Res. CD/ANPD nº 2/2022) sem dispensa do canal de atendimento;
 - publicidade da identidade e contato do encarregado/DPO (art. 41, §1º);
 - gestão de terceiros;
 - treinamento interno.
@@ -564,6 +586,10 @@ Verificar:
 - subprocessadores;
 - DPA;
 - transferência internacional (arts. 33-36: exige mecanismo legal — adequação ANPD, cláusulas-padrão contratuais, consentimento específico, etc.);
+- incorporação das cláusulas-padrão contratuais da Res. CD/ANPD nº 19/2024 aos contratos: o prazo de adaptação encerrou em 23/08/2025, logo contrato sem CPC é não conformidade atual;
+- transferência para a União Europeia: a Res. CD/ANPD nº 32/2026 reconheceu grau adequado de proteção e dispensa CPC, mantendo base legal, informação ao titular e contrato de operador;
+- demais destinos (inclusive Estados Unidos e Reino Unido) permanecem sem adequação reconhecida e exigem CPC ou outro mecanismo do art. 33;
+- cobertura de subprocessadores de segundo nível pelo mesmo mecanismo;
 - analytics;
 - marketing;
 - adtechs;
@@ -581,6 +607,59 @@ Validar:
 - descarte seguro;
 - retenção legal;
 - backups compatíveis.
+
+---
+
+# 16. ECA DIGITAL — CRIANÇAS E ADOLESCENTES NO AMBIENTE DIGITAL
+
+Aplicável a produtos e serviços de tecnologia da informação direcionados a — ou acessíveis por — menores de 18 anos, conforme a **Lei nº 15.211/2025** (em vigor desde 17/03/2026), o **Decreto nº 12.880/2026** e a fiscalização da ANPD.
+
+## Quando auditar
+Sempre que houver serviço direcionado ou provavelmente acessado por menores: rede social, plataforma de vídeo, jogo, mensageria, fórum, marketplace, app classificado abaixo de 18 anos, ou cadastro que não bloqueie menores. Na dúvida, auditar e registrar a incerteza como evidência PARCIAL.
+
+## Validar:
+- mecanismo confiável de aferição de idade — autodeclaração simples é insuficiente;
+- uso dos dados de aferição **exclusivamente** para verificar idade, com descarte após a verificação;
+- vinculação da conta de menores de 16 anos à conta de um responsável legal, de forma verificada;
+- ferramentas de supervisão parental para tempo de uso, contatos e conteúdos;
+- privacidade por padrão em perfis de menores (geolocalização, descoberta por estranhos e exposição pública desativadas);
+- vedação ao uso de dados ou perfis emocionais/comportamentais de menores para publicidade;
+- vedação ao impulsionamento de conteúdo que retrate menores de forma erotizada;
+- vedação a caixas-surpresa (loot boxes) pagas sem revelação prévia do conteúdo;
+- fluxo de denúncia, moderação e remoção de conteúdo de abuso sexual, cyberbullying e indução à automutilação/suicídio, com retenção mínima de 6 meses dos dados para investigação;
+- relatório semestral de transparência para provedores com mais de 1 milhão de usuários menores registrados, publicado no próprio site — primeiro ciclo até 17/09/2026, cobrindo 01/01 a 30/06/2026;
+- representante legal no Brasil, para provedor estrangeiro.
+
+## Severidade
+- ausência de aferição de idade em serviço acessível a menores → CRÍTICO;
+- uso de dados ou perfis de menores para publicidade/perfilamento → CRÍTICO;
+- conta de menor de 16 anos em rede social sem vinculação a responsável → CRÍTICO;
+- ausência de fluxo de remoção de conteúdo de abuso sexual ou automutilação → CRÍTICO;
+- reuso dos dados de aferição para outra finalidade → ALTO;
+- ausência de supervisão parental ou de privacidade por padrão → ALTO;
+- relatório semestral não publicado por provedor acima do limiar → ALTO;
+- loot box paga sem revelação prévia → ALTO;
+- provedor estrangeiro sem representante legal no Brasil → MÉDIO.
+
+## Sanções (art. 35 da Lei nº 15.211/2025)
+Advertência com prazo de até 30 dias para correção; multa simples de até 10% do faturamento do grupo no Brasil no último exercício ou, na ausência de faturamento, de R$ 10,00 a R$ 1.000,00 por usuário registrado, limitada a R$ 50.000.000,00 por infração; proibição do exercício das atividades. Suspensão exige decisão judicial e filiais brasileiras respondem solidariamente pelas multas.
+
+Esse regime é **cumulativo** com as sanções do art. 52 da LGPD.
+
+## Fundamentação obrigatória
+Todo achado deste domínio deve citar o dispositivo do ECA Digital **e** o correlato na LGPD (art. 14, princípios do art. 6º e art. 46 quando for falha de segurança).
+
+---
+
+# NORMAS EM MONITORAMENTO
+
+Normas ainda **não vigentes** nunca originam não conformidade. Registrá-las apenas na seção 8 do relatório (Recomendações Técnicas), rotuladas como norma futura:
+
+- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados, sem sanção até 2026-08.
+- **Guias orientativos da ANPD em tomada de subsídios** no âmbito do ECA Digital (aferição de idade e fornecedores de tecnologia): versão final pode alterar parâmetros.
+- **Parâmetros normativos definitivos de aferição de idade**, previstos pela ANPD para a etapa regulatória iniciada em agosto/2026.
+
+Atenção: o cronograma de fiscalização da ANPD para o ECA Digital (adaptação até novembro/2026, fiscalização efetiva a partir de janeiro/2027) **não suspende a vigência da lei** — os requisitos do domínio 16 são exigíveis desde 17/03/2026.
 
 ---
 

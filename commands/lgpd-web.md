@@ -20,6 +20,8 @@ Antes de iniciar, se ainda nao estiver mapeado, solicite:
 Ative o cenario `web_site`:
 - `core`, `legal`, `governance`, `appsec`, `cloud`.
 
+Adicione `eca-digital` se o site for direcionado ou provavelmente acessado por menores de 18 anos (gatilho normativo do router — ECA Digital, Lei 15.211/2025).
+
 Regras obrigatorias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canonico em qualquer projeto;
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;

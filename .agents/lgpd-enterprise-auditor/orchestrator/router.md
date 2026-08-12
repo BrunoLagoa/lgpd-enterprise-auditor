@@ -21,6 +21,7 @@ Ativar apenas módulos relevantes ao contexto do projeto, preservando cobertura 
 - `mobile_app`: `core`, `legal`, `governance`, `mobile`, `appsec`, `cloud`.
 - `ai_llm_system`: `core`, `legal`, `governance`, `ai-llm`, `appsec`.
 - `devsecops_pipeline`: `core`, `legal`, `devsecops`, `cloud`, `appsec`.
+- `eca_digital_platform`: `core`, `legal`, `eca-digital`, `governance`, `appsec`, `mobile`.
 
 ### Gatilhos técnicos adicionais
 - Se usar `Firebase` ou storage cloud, adicionar `cloud`.
@@ -28,9 +29,19 @@ Ativar apenas módulos relevantes ao contexto do projeto, preservando cobertura 
 - Se houver uso de embeddings/RAG/fine-tuning, adicionar `ai-llm`.
 - Se houver Kubernetes ou CI/CD ativo, adicionar `devsecops`.
 
+### Gatilho normativo — público infantojuvenil
+Adicionar `eca-digital` a **qualquer** cenário quando houver indício de usuários menores de 18 anos:
+- serviço direcionado a crianças ou adolescentes;
+- serviço provavelmente acessado por menores (rede social, vídeo, jogo, mensageria, fórum, marketplace);
+- cadastro que aceite ou não bloqueie usuários menores de 18 anos;
+- jogos eletrônicos, itens virtuais pagos ou monetização por engajamento;
+- app classificado para faixa etária inferior a 18 anos nas lojas.
+
+Esse gatilho é **normativo, não técnico**: na dúvida sobre a presença de menores, ativar o módulo e registrar a incerteza como evidência `PARCIAL`.
+
 ## Modo de compatibilidade V1
 `full_audit` ativa todos os módulos:
-`core`, `legal`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
+`core`, `legal`, `eca-digital`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
 ## Saída do roteador
 - lista de módulos ativos;

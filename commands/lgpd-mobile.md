@@ -18,6 +18,8 @@ Antes de iniciar, se ainda nao estiver mapeado, solicite:
 Ative o cenario `mobile_app`:
 - `core`, `legal`, `governance`, `mobile`, `appsec`, `cloud`.
 
+Adicione `eca-digital` se o app for classificado para faixa etaria inferior a 18 anos nas lojas ou tiver usuarios menores (gatilho normativo do router — ECA Digital, Lei 15.211/2025).
+
 Regras obrigatorias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canonico em qualquer projeto;
 - validar permissoes, storage local e tracking;

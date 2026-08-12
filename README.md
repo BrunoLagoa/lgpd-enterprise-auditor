@@ -38,8 +38,22 @@ In practice, it enables complete or targeted audits with consistent criteria, ev
 This framework uses the **General Data Protection Law (LGPD)** as its primary legal reference:
 
 - **Official text (Planalto):** [Law No. 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
-- **Regulatory authority:** [ANPD](https://www.gov.br/anpd/)
-- **Key ANPD regulation:** Resolution CD/ANPD No. 15/2024 — security incident communication (3 business days).
+- **Regulatory authority:** [ANPD](https://www.gov.br/anpd/) — since **Law No. 15.352/2026**, a **regulatory agency** (LGPD art. 55-A).
+- **Related statute:** [Digital Statute of the Child and Adolescent — Law No. 15.211/2025](https://www.gov.br/anpd/pt-br/assuntos/eca-digital), in force since 2026-03-17, regulated by Decree No. 12.880/2026 and enforced by ANPD.
+
+ANPD regulations covered by the framework:
+
+| Resolution | Subject |
+|---|---|
+| CD/ANPD No. 1/2021 | Inspection and administrative sanctioning procedure |
+| CD/ANPD No. 2/2022 | Small-scale processing agents |
+| CD/ANPD No. 4/2023 | Dosimetry and application of sanctions |
+| CD/ANPD No. 15/2024 | Security incident communication (3 business days) |
+| CD/ANPD No. 18/2024 | Data protection officer (DPO) duties |
+| CD/ANPD No. 19/2024 | International data transfer and standard contractual clauses |
+| CD/ANPD No. 30/2025 | Priority enforcement themes map 2026-2027 |
+| CD/ANPD No. 31/2025 | Regulatory agenda 2025-2026 |
+| CD/ANPD No. 32/2026 | European Union recognized as providing an adequate level of protection |
 
 | Item | Value |
 |------|--------|
@@ -56,7 +70,8 @@ This framework uses the **General Data Protection Law (LGPD)** as its primary le
 │   ├── lgpd-web.md
 │   ├── lgpd-mobile.md
 │   ├── lgpd-ai-llm.md
-│   └── lgpd-devsecops.md
+│   ├── lgpd-devsecops.md
+│   └── lgpd-eca-digital.md
 └── .agents/
     └── lgpd-enterprise-auditor/
         ├── core/
@@ -101,7 +116,7 @@ Use when you need full coverage:
 - command: `commands/lgpd-full-audit.md`
 - scenario: `full_audit`
 
-Activated modules: `core`, `legal`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
+Activated modules: `core`, `legal`, `eca-digital`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
 ### 2) Scenario-based audit
 
@@ -112,6 +127,7 @@ Use for focused scope:
 - `lgpd-mobile` -> mobile app
 - `lgpd-ai-llm` -> AI/LLM systems
 - `lgpd-devsecops` -> pipelines and supply chain
+- `lgpd-eca-digital` -> platforms accessed by children and adolescents (LGPD art. 14 + Digital Statute)
 
 ## Available commands
 

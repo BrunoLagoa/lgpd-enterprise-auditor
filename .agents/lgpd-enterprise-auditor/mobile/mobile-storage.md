@@ -10,6 +10,9 @@ Avaliar riscos de privacidade e segurança em apps iOS/Android/Flutter/React Nat
 - SDKs de tracking/analytics possuem controle de consentimento?
 - Regras de backend mobile (ex.: Firebase rules) estão restritivas?
 - Identificadores de dispositivo são usados com base legal adequada?
+- O app é classificado ou acessível a menores de 18 anos nas lojas (App Store, Google Play)? Se sim, ativar [[eca-digital]].
+- A sinalização de faixa etária da loja ou do sistema operacional é consumida pelo app para restringir recursos, ou o app depende apenas de autodeclaração?
+- SDKs de publicidade recebem identificadores de usuários menores?
 
 ## Critérios de evidência
 - configuração de storage seguro;

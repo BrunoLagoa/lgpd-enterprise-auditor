@@ -37,8 +37,22 @@ Na prática, ele permite rodar auditorias completas ou direcionadas com consist�
 Este framework usa como referência principal a **Lei Geral de Proteção de Dados (LGPD)**:
 
 - **Texto oficial (Planalto):** [Lei nº 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
-- **Órgão regulador:** [ANPD](https://www.gov.br/anpd/)
-- **Regulamento ANPD relevante:** Resolução CD/ANPD nº 15/2024 — comunicação de incidente de segurança (3 dias úteis).
+- **Órgão regulador:** [ANPD](https://www.gov.br/anpd/) — desde a **Lei nº 15.352/2026**, uma **agência reguladora** (art. 55-A da LGPD).
+- **Norma correlata:** [ECA Digital — Lei nº 15.211/2025](https://www.gov.br/anpd/pt-br/assuntos/eca-digital), em vigor desde 17/03/2026, regulamentada pelo Decreto nº 12.880/2026 e fiscalizada pela ANPD.
+
+Regulamentos da ANPD considerados pelo framework:
+
+| Resolução | Assunto |
+|---|---|
+| CD/ANPD nº 1/2021 | Processo de fiscalização e processo administrativo sancionador |
+| CD/ANPD nº 2/2022 | Agentes de tratamento de pequeno porte |
+| CD/ANPD nº 4/2023 | Dosimetria e aplicação de sanções |
+| CD/ANPD nº 15/2024 | Comunicação de incidente de segurança (3 dias úteis) |
+| CD/ANPD nº 18/2024 | Atuação do encarregado (DPO) |
+| CD/ANPD nº 19/2024 | Transferência internacional e cláusulas-padrão contratuais |
+| CD/ANPD nº 30/2025 | Mapa de Temas Prioritários de fiscalização 2026-2027 |
+| CD/ANPD nº 31/2025 | Agenda Regulatória 2025-2026 |
+| CD/ANPD nº 32/2026 | União Europeia reconhecida como grau adequado de proteção |
 
 | Item | Valor |
 |------|--------|
@@ -55,7 +69,8 @@ Este framework usa como referência principal a **Lei Geral de Proteção de Dad
 │   ├── lgpd-web.md
 │   ├── lgpd-mobile.md
 │   ├── lgpd-ai-llm.md
-│   └── lgpd-devsecops.md
+│   ├── lgpd-devsecops.md
+│   └── lgpd-eca-digital.md
 └── .agents/
     └── lgpd-enterprise-auditor/
         ├── core/
@@ -100,7 +115,7 @@ Use quando quiser cobertura total:
 - comando: `commands/lgpd-full-audit.md`
 - cenário: `full_audit`
 
-Módulos acionados: `core`, `legal`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
+Módulos acionados: `core`, `legal`, `eca-digital`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
 ### 2) Auditoria por cenário
 
@@ -111,6 +126,7 @@ Use para escopo focado:
 - `lgpd-mobile` -> app mobile
 - `lgpd-ai-llm` -> sistemas com IA/LLM
 - `lgpd-devsecops` -> pipelines e supply chain
+- `lgpd-eca-digital` -> plataformas acessadas por crianças e adolescentes (LGPD art. 14 + ECA Digital)
 
 ## Comandos disponíveis
 

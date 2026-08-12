@@ -18,6 +18,8 @@ Antes de iniciar, se ainda nao estiver mapeado, solicite:
 Ative o cenario `ai_llm_system`:
 - `core`, `legal`, `governance`, `ai-llm`, `appsec`.
 
+Adicione `eca-digital` se menores forem expostos a recomendacao algoritmica, perfilamento ou conteudo gerado por IA (gatilho normativo do router — ECA Digital, Lei 15.211/2025).
+
 Regras obrigatorias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canonico em qualquer projeto;
 - validar risco de prompt injection e vazamento contextual;

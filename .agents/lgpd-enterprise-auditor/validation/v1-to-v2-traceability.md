@@ -17,6 +17,7 @@
 | Governança | `governance` | `check_item`, `finding`, `scoring` |
 | Compartilhamento de dados | `legal`, `governance` | `check_item`, `finding` |
 | Retenção e exclusão | `legal`, `governance`, `ai-llm` | `check_item`, `finding` |
+| Proteção de crianças e adolescentes no ambiente digital (ECA Digital) | `eca-digital`, `legal`, `governance`, `mobile`, `templates` | `check_item`, `finding`, `severity`, `evidence`, `scoring` |
 
 ## Observação
 Esta matriz deve ser atualizada sempre que um domínio mudar de módulo primário.
