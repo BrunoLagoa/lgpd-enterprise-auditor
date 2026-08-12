@@ -11,6 +11,7 @@ Validar que a V2 modular mantém cobertura e consistência funcional da V1.
 - [ ] Todos os itens avaliados usam contrato `check_item`.
 - [ ] Relatório final segue `core/reporting-engine.md`.
 - [ ] Toda não conformidade possui evidência associada.
+- [ ] Evidência usa os dois eixos canônicos em V1 e V2: `evidence_type` (`ENCONTRADA | PARCIAL | AUSENTE`) e `evidence_source` (`TECNICA | DOCUMENTAL`).
 - [ ] Rótulos de classificação final seguem padrão canônico V2.
 - [ ] Modo `full_audit` ativa todos os módulos.
 - [ ] Matriz de ativação por cenário está coerente com o router.

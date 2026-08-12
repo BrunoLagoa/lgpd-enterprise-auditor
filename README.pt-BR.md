@@ -42,7 +42,7 @@ Este framework usa como referência principal a **Lei Geral de Proteção de Dad
 
 | Item | Valor |
 |------|--------|
-| Última sincronização | `2026-06` |
+| Última sincronização | `2026-08` |
 
 ## Como o projeto está organizado
 

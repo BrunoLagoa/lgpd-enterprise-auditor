@@ -290,22 +290,34 @@ Exigir:
 
 # SISTEMA DE EVIDÊNCIAS
 
-Toda conclusão deve possuir:
+Toda conclusão deve possuir evidência classificada em dois eixos independentes e obrigatórios.
 
-## Evidência Encontrada
+## Eixo 1 — Grau de comprovação
+
+### Evidência Encontrada (`ENCONTRADA`)
 Implementação claramente identificada.
 
-## Evidência Parcial
-Implementação incompleta.
+### Evidência Parcial (`PARCIAL`)
+Implementação incompleta ou sem cobertura total.
 
-## Ausência de Evidência
+### Ausência de Evidência (`AUSENTE`)
 Não foi possível comprovar.
 
-## Evidência Técnica
+## Eixo 2 — Origem da evidência
+
+### Evidência Técnica (`TECNICA`)
 Logs, código, arquitetura, configs.
 
-## Evidência Documental
+### Evidência Documental (`DOCUMENTAL`)
 Políticas, contratos, processos.
+
+## Regras
+
+- todo item `CONFORME` exige grau `ENCONTRADA`;
+- todo item `PARCIAL` exige grau `PARCIAL`;
+- todo item `NAO_CONFORME` exige grau `PARCIAL` ou `AUSENTE`;
+- achados `CRITICO` e `ALTO` exigem origem `TECNICA` ou `DOCUMENTAL` explícita e rastreável;
+- os eixos não se substituem: `TECNICA` ou `DOCUMENTAL` não comprovam conformidade por si só.
 
 ---
 

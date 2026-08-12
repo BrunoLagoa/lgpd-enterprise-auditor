@@ -11,6 +11,8 @@
 |---|---|---|---|---|
 |  |  |  |  |  |
 
+Preencher `Evidência` como `GRAU (ORIGEM): descrição`, conforme `core/evidence-engine.md`.
+
 ## 3. Não conformidades detalhadas
 Para cada achado:
 - problema;
@@ -18,7 +20,7 @@ Para cada achado:
 - fundamento LGPD;
 - impacto técnico;
 - impacto jurídico;
-- evidência;
+- evidência (com `evidence_type` e `evidence_source`);
 - correção recomendada.
 
 ## 4. Riscos técnicos e operacionais

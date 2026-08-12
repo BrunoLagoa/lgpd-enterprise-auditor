@@ -43,7 +43,7 @@ This framework uses the **General Data Protection Law (LGPD)** as its primary le
 
 | Item | Value |
 |------|--------|
-| Last synchronization | `2026-06` |
+| Last synchronization | `2026-08` |
 
 ## How the project is organized
 

@@ -19,7 +19,8 @@ Estrutura mínima para cada não conformidade:
 - `problem`: descrição objetiva do problema.
 - `severity`: `CRITICO | ALTO | MEDIO | BAIXO`.
 - `lgpd_article`: artigo(s) aplicáveis da LGPD.
-- `evidence_type`: `TECNICA | DOCUMENTAL | PARCIAL | AUSENTE`.
+- `evidence_type`: grau de comprovação - `ENCONTRADA | PARCIAL | AUSENTE`.
+- `evidence_source`: origem da evidência - `TECNICA | DOCUMENTAL`.
 - `evidence`: evidência observada.
 - `technical_impact`: impacto técnico.
 - `legal_impact`: impacto jurídico/regulatório.
@@ -34,6 +35,8 @@ Estrutura mínima de checklist:
 - `item`: requisito validado.
 - `status`: `CONFORME | PARCIAL | NAO_CONFORME`.
 - `evidence`: evidência associada.
+- `evidence_type`: `ENCONTRADA | PARCIAL | AUSENTE`.
+- `evidence_source`: `TECNICA | DOCUMENTAL`.
 - `impact`: impacto caso falha.
 - `recommendation`: correção sugerida.
 

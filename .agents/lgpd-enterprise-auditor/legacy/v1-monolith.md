@@ -4,7 +4,7 @@
 Preservar referência operacional da V1 enquanto a V2 modular entra em produção.
 
 ## Fonte de verdade da V1
-- Arquivo monolítico original: `/Users/bruno/Dev/www/lgpd-enterprise-auditor/SKILL.md`
+- Arquivo monolítico original: `SKILL.md`, na raiz do repositório do framework (caminho relativo ao projeto que adota `.agents/lgpd-enterprise-auditor/`).
 
 ## Regra de compatibilidade
 - O modo `full_audit` da V2 deve cobrir os mesmos 15 domínios da V1:

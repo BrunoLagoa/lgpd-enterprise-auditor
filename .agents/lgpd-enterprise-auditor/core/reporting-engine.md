@@ -32,6 +32,8 @@ Status permitidos:
 - `PARCIAL`
 - `NAO_CONFORME`
 
+A célula `Evidência` deve registrar os dois eixos de `core/evidence-engine.md` no formato `GRAU (ORIGEM): descrição`, ex.: `ENCONTRADA (TECNICA): política de retenção aplicada em job de expurgo`.
+
 ### `nao_conformidades`
 Para cada achado:
 - problema;
@@ -39,7 +41,7 @@ Para cada achado:
 - fundamento LGPD;
 - impacto técnico;
 - impacto jurídico;
-- evidência;
+- evidência (com `evidence_type` e `evidence_source`);
 - correção recomendada.
 
 ### `riscos_identificados`
