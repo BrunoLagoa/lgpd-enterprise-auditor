@@ -13,9 +13,11 @@ Consolidar fundamentos legais que devem orientar toda auditoria.
 - Estatuto da Criança e do Adolescente (Lei nº 8.069/1990)
 - Lei de Acesso a Informação (quando aplicável)
 
-## Estado da norma (verificado em 2026-08)
-- A alteração mais recente da LGPD é a **Lei nº 15.352/2026** (25/02/2026), que transformou a ANPD em **agência reguladora** (art. 55-A), redefiniu o art. 5º, XIX e submeteu a atuação normativa da agência ao rito da Lei nº 13.848/2019, com consulta pública e AIR (art. 55-J).
-- Consequência para a auditoria: usar a denominação **Agência Nacional de Proteção de Dados**; a competência sancionatória e a capacidade fiscalizatória foram ampliadas, elevando a materialidade do risco regulatório em relatórios executivos.
+## Estado da norma (verificado no texto compilado do Planalto em 2026-08)
+- A LGPD foi alterada pelas Leis nº 13.853/2019, nº 14.010/2020, nº 14.460/2022 e nº 15.352/2026.
+- A alteração mais recente é a **Lei nº 15.352/2026** (25/02/2026), que renomeou a autoridade para **Agência Nacional de Proteção de Dados (ANPD)** e a submeteu ao regime da Lei nº 13.848/2019 (art. 55-A), mantendo sua condição de **autarquia de natureza especial**. Alterou também o art. 5º, VIII e XIX, a denominação do Capítulo IX e a estrutura do art. 55-C.
+- O termo **"autoridade nacional" permanece no texto legal** — usar o nome próprio *Agência Nacional de Proteção de Dados* nos relatórios sem corrigir citações da lei.
+- Consequência para a auditoria: a submissão ao regime das agências reguladoras e a criação de carreira própria de fiscalização elevam a materialidade do risco regulatório em relatórios executivos.
 
 ## Princípios obrigatórios LGPD
 1. Finalidade

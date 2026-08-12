@@ -4,11 +4,22 @@
 Guiar a aderência regulatória contínua com foco em evidência auditável.
 
 ## Natureza jurídica da ANPD (atualizado pela Lei nº 15.352/2026)
-- A **Lei nº 15.352/2026** (25/02/2026, conversão da MP nº 1.317/2025) alterou a LGPD e transformou a ANPD em **agência reguladora**, submetida à Lei nº 13.848/2019, vinculada ao Ministério da Justiça e Segurança Pública, com autonomia funcional, técnica, decisória, administrativa e financeira (art. 55-A).
-- O art. 5º, XIX passou a definir a ANPD como **entidade da administração pública** responsável por zelar, implementar e fiscalizar o cumprimento da LGPD.
-- O art. 55-J vinculou a atuação normativa da ANPD ao rito da Lei nº 13.848/2019, exigindo **consulta pública e Análise de Impacto Regulatório (AIR)**.
-- Nomenclatura correta em relatórios: **Agência Nacional de Proteção de Dados (ANPD)**. Evitar "Autoridade Nacional" em textos novos.
-- Efeito prático para auditoria: ampliação da capacidade fiscalizatória (carreira própria de regulação e fiscalização, com 200 vagas) e nova competência sobre o **ECA Digital** — ver [[eca-digital]].
+Verificado no texto compilado oficial da LGPD (Planalto, consulta em 2026-08). A **Lei nº 15.352/2026** (25/02/2026, conversão da MP nº 1.317/2025) alterou **cinco pontos** da LGPD:
+
+| Dispositivo | O que mudou |
+|---|---|
+| art. 5º, VIII | o encarregado passa a ser canal de comunicação com a **Agência Nacional de Proteção de Dados (ANPD)** |
+| art. 5º, XIX | nova redação da definição de *autoridade nacional*: entidade da administração pública responsável por zelar, implementar e fiscalizar o cumprimento da Lei |
+| Capítulo IX | passa a se chamar "Da **Agência** Nacional de Proteção de Dados e do Conselho Nacional de Proteção de Dados Pessoais e da Privacidade" |
+| art. 55-A | nova redação: cria a **Agência** Nacional de Proteção de Dados (ANPD), **autarquia de natureza especial** vinculada ao MJSP, com autonomia funcional, técnica, decisória, administrativa e financeira, patrimônio próprio e sede no DF, **nos termos da Lei nº 13.848/2019** |
+| art. 55-C, V-A, V-B e VI | estrutura passa a incluir Procuradoria, Auditoria e unidades administrativas/especializadas |
+
+Precisões que evitam erro de citação:
+- A ANPD **continua sendo autarquia de natureza especial**. O que mudou foi a denominação (*Autoridade* → *Agência*) e a submissão ao regime da **Lei nº 13.848/2019** (Lei Geral das Agências Reguladoras), que traz consulta pública e Análise de Impacto Regulatório à atuação normativa. Não houve nova redação do art. 55-J.
+- O termo **"autoridade nacional" permanece no texto da LGPD** (art. 5º, XIX e ao longo da lei). Não corrigir citações legais que o usem: o nome próprio do órgão é *Agência Nacional de Proteção de Dados*, e *autoridade nacional* é o termo técnico da lei.
+- Efeito prático para auditoria: ampliação da capacidade fiscalizatória (carreira própria de regulação e fiscalização, com 200 vagas, criada fora da LGPD) e nova competência sobre o **ECA Digital** — ver [[eca-digital]].
+
+Histórico de alterações da LGPD: Leis nº 13.853/2019, nº 14.010/2020 (art. 65, I-A), nº 14.460/2022 e nº 15.352/2026.
 
 ## Regulamentos vinculantes da ANPD a considerar
 - **Resolução CD/ANPD nº 1/2021** — Regulamento do Processo de Fiscalização e do Processo Administrativo Sancionador (base do risco sancionatório).

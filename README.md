@@ -38,7 +38,7 @@ In practice, it enables complete or targeted audits with consistent criteria, ev
 This framework uses the **General Data Protection Law (LGPD)** as its primary legal reference:
 
 - **Official text (Planalto):** [Law No. 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
-- **Regulatory authority:** [ANPD](https://www.gov.br/anpd/) — since **Law No. 15.352/2026**, a **regulatory agency** (LGPD art. 55-A).
+- **Regulatory authority:** [ANPD](https://www.gov.br/anpd/) — since **Law No. 15.352/2026**, renamed National Data Protection **Agency** and placed under the regulatory-agency regime of Law No. 13.848/2019 (LGPD art. 55-A).
 - **Related statute:** [Digital Statute of the Child and Adolescent — Law No. 15.211/2025](https://www.gov.br/anpd/pt-br/assuntos/eca-digital), in force since 2026-03-17, regulated by Decree No. 12.880/2026 and enforced by ANPD.
 
 ANPD regulations covered by the framework:

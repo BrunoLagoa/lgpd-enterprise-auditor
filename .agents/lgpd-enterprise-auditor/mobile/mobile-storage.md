@@ -11,7 +11,7 @@ Avaliar riscos de privacidade e segurança em apps iOS/Android/Flutter/React Nat
 - Regras de backend mobile (ex.: Firebase rules) estão restritivas?
 - Identificadores de dispositivo são usados com base legal adequada?
 - O app é classificado ou acessível a menores de 18 anos nas lojas (App Store, Google Play)? Se sim, ativar [[eca-digital]].
-- A sinalização de faixa etária da loja ou do sistema operacional é consumida pelo app para restringir recursos, ou o app depende apenas de autodeclaração?
+- O app consome o **sinal de idade** exposto pela loja/SO via API (art. 12, III da Lei nº 15.211/2025) e mantém mecanismo próprio de bloqueio (art. 14), ou depende apenas de autodeclaração?
 - SDKs de publicidade recebem identificadores de usuários menores?
 
 ## Critérios de evidência

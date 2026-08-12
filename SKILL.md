@@ -55,7 +55,9 @@ Toda auditoria deve considerar:
 - Lei de Acesso à Informação (quando aplicável)
 
 ## Natureza jurídica da ANPD
-A **Lei nº 15.352/2026** (25/02/2026) alterou a LGPD e transformou a ANPD em **agência reguladora** submetida à Lei nº 13.848/2019, vinculada ao Ministério da Justiça e Segurança Pública (art. 55-A), redefiniu o art. 5º, XIX e passou a exigir consulta pública e Análise de Impacto Regulatório na atuação normativa (art. 55-J). Usar a denominação **Agência Nacional de Proteção de Dados**.
+A **Lei nº 15.352/2026** (25/02/2026) alterou a LGPD nos arts. 5º, VIII e XIX, na denominação do Capítulo IX, no art. 55-A e no art. 55-C. A autoridade passou a se chamar **Agência Nacional de Proteção de Dados (ANPD)** e ficou submetida ao regime da Lei nº 13.848/2019 — que traz consulta pública e Análise de Impacto Regulatório —, **permanecendo autarquia de natureza especial** vinculada ao Ministério da Justiça e Segurança Pública.
+
+O termo "autoridade nacional" continua no texto da LGPD (art. 5º, XIX e demais artigos): usar o nome próprio *Agência Nacional de Proteção de Dados* nos relatórios, sem corrigir citações literais da lei.
 
 ## Regulamentos vinculantes da ANPD
 - Resolução CD/ANPD nº 1/2021 — processo de fiscalização e processo administrativo sancionador
@@ -612,42 +614,63 @@ Validar:
 
 # 16. ECA DIGITAL — CRIANÇAS E ADOLESCENTES NO AMBIENTE DIGITAL
 
-Aplicável a produtos e serviços de tecnologia da informação direcionados a — ou acessíveis por — menores de 18 anos, conforme a **Lei nº 15.211/2025** (em vigor desde 17/03/2026), o **Decreto nº 12.880/2026** e a fiscalização da ANPD.
+Aplicável a todo produto ou serviço de tecnologia da informação direcionado a — ou **de acesso provável por** — crianças e adolescentes no País, conforme a **Lei nº 15.211/2025** (em vigor desde 17/03/2026, art. 41-A), o **Decreto nº 12.880/2026** e a fiscalização da ANPD. Alcança aplicações de internet, softwares, **sistemas operacionais**, **lojas de aplicativos** e jogos eletrônicos conectados (art. 2º, I).
 
 ## Quando auditar
-Sempre que houver serviço direcionado ou provavelmente acessado por menores: rede social, plataforma de vídeo, jogo, mensageria, fórum, marketplace, app classificado abaixo de 18 anos, ou cadastro que não bloqueie menores. Na dúvida, auditar e registrar a incerteza como evidência PARCIAL.
+Sempre que houver serviço direcionado ou de acesso provável por menores. "Acesso provável" (art. 1º, parágrafo único) = probabilidade de uso e atratividade + facilidade de acesso + grau de risco à privacidade, segurança ou desenvolvimento biopsicossocial. Na dúvida, auditar e registrar a incerteza como evidência PARCIAL.
+
+**Antes de emitir achado, checar a modulação do art. 39**: as obrigações dos arts. 6º, 17, 18, 19, 20, 27, 28, 29, 31, 32 e 40 são proporcionais ao grau de interferência sobre o conteúdo, ao número de usuários e ao porte; serviços com controle editorial e conteúdo licenciado são dispensados se cumprirem classificação indicativa, transparência etária, mediação parental e canal de denúncias (art. 39, §1º).
 
 ## Validar:
-- mecanismo confiável de aferição de idade — autodeclaração simples é insuficiente;
-- uso dos dados de aferição **exclusivamente** para verificar idade, com descarte após a verificação;
-- vinculação da conta de menores de 16 anos à conta de um responsável legal, de forma verificada;
-- ferramentas de supervisão parental para tempo de uso, contatos e conteúdos;
-- privacidade por padrão em perfis de menores (geolocalização, descoberta por estranhos e exposição pública desativadas);
-- vedação ao uso de dados ou perfis emocionais/comportamentais de menores para publicidade;
-- vedação ao impulsionamento de conteúdo que retrate menores de forma erotizada;
-- vedação a caixas-surpresa (loot boxes) pagas sem revelação prévia do conteúdo;
-- fluxo de denúncia, moderação e remoção de conteúdo de abuso sexual, cyberbullying e indução à automutilação/suicídio, com retenção mínima de 6 meses dos dados para investigação;
-- relatório semestral de transparência para provedores com mais de 1 milhão de usuários menores registrados, publicado no próprio site — primeiro ciclo até 17/09/2026, cobrindo 01/01 a 30/06/2026;
-- representante legal no Brasil, para provedor estrangeiro.
+- prevenção e mitigação de risco, desde a concepção, contra as seis categorias do art. 6º: exploração/abuso sexual; violência e bullying virtual; indução a automutilação, suicídio ou uso de substâncias; jogos de azar, apostas, tabaco, álcool e narcóticos; publicidade predatória; pornografia;
+- configuração **no modelo mais protetivo por padrão** e vedação a tratamento que viole a privacidade do menor (art. 7º);
+- gestão de riscos, classificação indicativa, bloqueio de conteúdo inadequado, defaults contra uso compulsivo e informação da faixa etária no acesso (art. 8º);
+- em conteúdo impróprio/adulto: **verificação confiável de idade a cada acesso, vedada a autodeclaração** (art. 9º, §1º), e bloqueio de criação de conta em serviço pornográfico (art. 9º, §3º);
+- em lojas de aplicativos e sistemas operacionais: aferição proporcional e **auditável**, supervisão parental e **API segura de sinal de idade** com minimização (art. 12), além de consentimento do responsável para download, sem presunção por silêncio (art. 12, §2º);
+- uso dos dados de verificação de idade **exclusivamente** para essa finalidade (art. 13), inclusive os coletados em confirmação de conta suspeita (art. 24, §3º);
+- recebimento do sinal de idade e **mecanismo próprio de bloqueio**, independente de loja e SO (art. 14);
+- responsabilidade **solidária** de toda a cadeia digital (art. 15);
+- informação sobre riscos acessível independentemente da aquisição e, em tratamento além do estritamente necessário, mapeamento de riscos e **relatório de impacto** (art. 16);
+- ferramentas de supervisão parental com os nove defaults do art. 17, §4º e as seis capacidades do art. 18, incluindo restrição de compras, identificação de adultos que interagem, controle de recomendação personalizada e conteúdo em português;
+- ausência de **dark patterns** que enfraqueçam salvaguardas (art. 18, §2º);
+- em produtos de monitoramento infantil: inviolabilidade das informações e aviso ao menor em linguagem apropriada (art. 19);
+- **vedação a caixas de recompensa (loot boxes)** em jogos de acesso provável por menores (art. 20) e limitação padrão das funcionalidades de interação (art. 21);
+- **vedação ao perfilamento para publicidade** a menores, inclusive por análise emocional, realidade aumentada, estendida ou virtual (art. 22), à monetização/impulsionamento de conteúdo erotizado (art. 23) e à criação de perfis comportamentais, mesmo com dados da verificação de idade (art. 26);
+- vinculação da conta de usuários **de até 16 anos** à conta de um responsável legal, com suspensão e direito de apelação diante de indícios (art. 24);
+- remoção e comunicação de conteúdo de exploração, abuso sexual, sequestro e aliciamento às autoridades, com retenção dos dados pelo prazo do **art. 15 do Marco Civil da Internet — 6 meses** (art. 27);
+- canal público de notificação, retirada sem ordem judicial mediante notificação identificada (vedado anonimato) e **direito de contestação** com indicação de análise humana ou automatizada (arts. 28 a 30);
+- **relatório semestral de transparência** para provedores com mais de 1.000.000 de usuários dessa faixa etária registrados com conexão no País, em português, no site do provedor, com os sete incisos do art. 31 — primeiro ciclo até 17/09/2026, cobrindo 01/01 a 30/06/2026 — e acesso gratuito a dados para pesquisa;
+- mecanismos contra uso abusivo dos instrumentos de denúncia, com sanções internas graduadas e registros (arts. 32 e 33);
+- **representante legal no País** com poderes para receber citações e notificações (art. 40);
+- adesivo de alerta em embalagens de eletrônicos com acesso à internet (art. 38).
 
 ## Severidade
-- ausência de aferição de idade em serviço acessível a menores → CRÍTICO;
-- uso de dados ou perfis de menores para publicidade/perfilamento → CRÍTICO;
-- conta de menor de 16 anos em rede social sem vinculação a responsável → CRÍTICO;
-- ausência de fluxo de remoção de conteúdo de abuso sexual ou automutilação → CRÍTICO;
-- reuso dos dados de aferição para outra finalidade → ALTO;
-- ausência de supervisão parental ou de privacidade por padrão → ALTO;
-- relatório semestral não publicado por provedor acima do limiar → ALTO;
-- loot box paga sem revelação prévia → ALTO;
-- provedor estrangeiro sem representante legal no Brasil → MÉDIO.
+- conteúdo adulto sem verificação a cada acesso ou baseado em autodeclaração (art. 9º, §1º) → CRÍTICO;
+- ausência de medidas contra os conteúdos do art. 6º, I a III → CRÍTICO;
+- perfilamento ou análise emocional para publicidade a menores (arts. 22 e 26) → CRÍTICO;
+- conta de usuário de até 16 anos sem vinculação a responsável (art. 24) → CRÍTICO;
+- ausência de fluxo de remoção e comunicação de abuso sexual e aliciamento (art. 27) → CRÍTICO;
+- reuso dos dados de aferição para outra finalidade (art. 13) → ALTO;
+- ausência de privacidade por padrão (art. 7º) ou dos defaults de supervisão parental (art. 17, §4º) → ALTO;
+- relatório semestral não publicado por provedor acima do limiar (art. 31) → ALTO;
+- loot box em jogo de acesso provável (art. 20) → ALTO;
+- dark pattern que enfraquece salvaguardas (art. 18, §2º) → ALTO;
+- ausência de relatório de impacto no caso do art. 16, parágrafo único → MÉDIO;
+- ausência de mecanismo contra uso abusivo de denúncias (art. 32) → MÉDIO;
+- provedor estrangeiro sem representante legal no País (art. 40) → MÉDIO;
+- ausência do adesivo do art. 38 → BAIXO.
 
 ## Sanções (art. 35 da Lei nº 15.211/2025)
-Advertência com prazo de até 30 dias para correção; multa simples de até 10% do faturamento do grupo no Brasil no último exercício ou, na ausência de faturamento, de R$ 10,00 a R$ 1.000,00 por usuário registrado, limitada a R$ 50.000.000,00 por infração; proibição do exercício das atividades. Suspensão exige decisão judicial e filiais brasileiras respondem solidariamente pelas multas.
+Aplicadas pela **ANPD**: advertência com prazo de até 30 dias para medidas corretivas (I); multa simples de até 10% do faturamento do grupo econômico no Brasil no último exercício ou, ausente faturamento, de R$ 10,00 a R$ 1.000,00 por usuário cadastrado, limitada a R$ 50.000.000,00 por infração (II).
+
+Aplicadas pelo **Poder Judiciário**: suspensão temporária das atividades (III) e proibição do exercício das atividades (IV), executáveis por ordem de bloqueio a provedores de conexão, PTTs e serviços de DNS (§6º).
+
+Filial, sucursal ou estabelecimento no País de empresa estrangeira responde **solidariamente** pela multa (§2º); os valores são atualizados pelo IPCA (§4º).
 
 Esse regime é **cumulativo** com as sanções do art. 52 da LGPD.
 
 ## Fundamentação obrigatória
-Todo achado deste domínio deve citar o dispositivo do ECA Digital **e** o correlato na LGPD (art. 14, princípios do art. 6º e art. 46 quando for falha de segurança).
+Todo achado deste domínio deve citar o artigo do ECA Digital **e** o correlato na LGPD (art. 14, princípios do art. 6º e art. 46 quando for falha de segurança).
 
 ---
 

@@ -16,7 +16,8 @@ Desde **17/03/2026** o art. 14 da LGPD convive com o **Estatuto Digital da Crian
 - Sempre que este módulo identificar público infantojuvenil, **ativar também** [[eca-digital]].
 - A LGPD trata da **licitude do tratamento** (base legal, finalidade, consentimento parental); o ECA Digital trata do **desenho e da operação do serviço** (aferição de idade, supervisão parental, moderação, publicidade, transparência).
 - Um achado pode violar as duas normas ao mesmo tempo — nesse caso, citar ambos os fundamentos no `finding`.
-- Autodeclaração de idade deixou de ser aceitável como mecanismo de verificação: é insuficiente perante o ECA Digital e fragiliza os "esforços razoáveis" do art. 14, §5º.
+- Autodeclaração de idade é **expressamente vedada** em serviços com conteúdo impróprio ou proibido a menores de 18 anos, que exigem verificação confiável **a cada acesso** (art. 9º, §1º da Lei nº 15.211/2025). Nos demais serviços, a autodeclaração isolada não satisfaz os arts. 10, 12 e 14 do ECA Digital nem os "esforços razoáveis" do art. 14, §5º da LGPD.
+- Atenção ao limiar etário: a LGPD distingue criança (até 12 anos incompletos) de adolescente; o ECA Digital usa o corte de **até 16 anos** para a vinculação obrigatória de conta a responsável legal (art. 24) e de **menores de 18 anos** para conteúdo impróprio. Não unificar os três cortes.
 
 ## Checklist atômico
 - Há público infantojuvenil entre os titulares (ou o serviço é direcionado/atrativo a menores)?
