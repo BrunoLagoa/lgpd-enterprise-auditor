@@ -21,7 +21,9 @@ Definir formato obrigatório e ordem de construção do relatório final.
 
 ### `score_lgpd`
 - score 0-100;
-- classificação final canônica.
+- classificação final canônica;
+- score por área;
+- áreas `NAO_APLICAVEL`, com justificativa, e pesos ajustados (regra de `core/scoring-engine.md`).
 
 ### `checklist_conformidade`
 Tabela obrigatória:

@@ -5,7 +5,7 @@ Esta V2 modular organiza a auditoria em camadas para melhorar manutenção, esca
 
 ## Estrutura
 - `core/`: contratos canônicos (evidência, severidade, score, relatório).
-- `legal/`: base normativa LGPD/ANPD, bases legais e ECA Digital (`legal/eca-digital.md`, módulo `eca-digital`).
+- `legal/`: base normativa LGPD/ANPD, bases legais, ECA Digital (`legal/eca-digital.md`, módulo `eca-digital`) e deveres de plataformas digitais (`legal/plataformas-digitais.md`, módulo `plataformas-digitais`).
 - `governance/`: governança, DPO, RIPD e terceiros.
 - `cloud/`: postura cloud e exposição de infraestrutura.
 - `appsec/`: segurança de aplicações e APIs.
@@ -26,7 +26,7 @@ Esta V2 modular organiza a auditoria em camadas para melhorar manutenção, esca
 5. Reporting engine gera relatório final.
 
 ## Modo de uso
-- Modo direcionado: ativação por cenário (`saas_web`, `web_site`, `mobile_app`, `ai_llm_system`, `devsecops_pipeline`, `eca_digital_platform`).
+- Modo direcionado: ativação por cenário (`saas_web`, `web_site`, `mobile_app`, `ai_llm_system`, `devsecops_pipeline`, `eca_digital_platform`, `digital_platform`).
 - Modo legado (`full_audit`): cobertura equivalente à V1 para auditoria completa.
 
 ## Convenções de nomenclatura
@@ -40,6 +40,7 @@ Esta V2 modular organiza a auditoria em camadas para melhorar manutenção, esca
 - Mobile (Flutter/Firebase): `core`, `legal`, `governance`, `mobile`, `cloud`, `appsec`.
 - Pipeline (GitHub Actions/Docker/K8s): `core`, `legal`, `devsecops`, `cloud`, `appsec`.
 - Plataforma com público infantojuvenil (ECA Digital): `core`, `legal`, `eca-digital`, `governance`, `appsec`, `mobile`.
+- Plataforma digital com conteúdo de terceiros (Decretos nº 12.975 e 12.976/2026): `core`, `legal`, `plataformas-digitais`, `governance`, `appsec`, `cloud`.
 
 ## Norma vigente x norma em monitoramento
 - Só gera `finding` e `check_item` com status `NAO_CONFORME` a norma **vigente**.

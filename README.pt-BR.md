@@ -39,6 +39,7 @@ Este framework usa como referência principal a **Lei Geral de Proteção de Dad
 - **Texto oficial (Planalto):** [Lei nº 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
 - **Órgão regulador:** [ANPD](https://www.gov.br/anpd/) — desde a **Lei nº 15.352/2026**, denominada **Agência** Nacional de Proteção de Dados e submetida ao regime das agências reguladoras da Lei nº 13.848/2019 (art. 55-A da LGPD).
 - **Norma correlata:** [ECA Digital — Lei nº 15.211/2025](https://www.gov.br/anpd/pt-br/assuntos/eca-digital), em vigor desde 17/03/2026, regulamentada pelo Decreto nº 12.880/2026 e fiscalizada pela ANPD.
+- **Plataformas digitais:** [Decreto nº 12.975/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12975.htm) (atualiza a regulamentação do Marco Civil da Internet — dever de cuidado, notificação e remoção, anúncios, guarda de registros de acesso) e [Decreto nº 12.976/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12976.htm) (proteção de mulheres na internet), em vigor desde 20/07/2026 e fiscalizados pela ANPD.
 
 Regulamentos da ANPD considerados pelo framework:
 
@@ -56,7 +57,7 @@ Regulamentos da ANPD considerados pelo framework:
 
 | Item | Valor |
 |------|--------|
-| Última sincronização | `2026-08` |
+| Última sincronização | `2026-09` |
 
 ## Como o projeto está organizado
 
@@ -70,7 +71,8 @@ Regulamentos da ANPD considerados pelo framework:
 │   ├── lgpd-mobile.md
 │   ├── lgpd-ai-llm.md
 │   ├── lgpd-devsecops.md
-│   └── lgpd-eca-digital.md
+│   ├── lgpd-eca-digital.md
+│   └── lgpd-plataformas-digitais.md
 └── .agents/
     └── lgpd-enterprise-auditor/
         ├── core/
@@ -115,7 +117,7 @@ Use quando quiser cobertura total:
 - comando: `commands/lgpd-full-audit.md`
 - cenário: `full_audit`
 
-Módulos acionados: `core`, `legal`, `eca-digital`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
+Módulos acionados: `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
 ### 2) Auditoria por cenário
 
@@ -127,6 +129,7 @@ Use para escopo focado:
 - `lgpd-ai-llm` -> sistemas com IA/LLM
 - `lgpd-devsecops` -> pipelines e supply chain
 - `lgpd-eca-digital` -> plataformas acessadas por crianças e adolescentes (LGPD art. 14 + ECA Digital)
+- `lgpd-plataformas-digitais` -> provedores de aplicações com conteúdo de terceiros, anúncios pagos ou IA que gera imagem/voz (Decretos nº 12.975/2026 e 12.976/2026)
 
 ## Comandos disponíveis
 

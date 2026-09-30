@@ -1,5 +1,5 @@
 # 🛡️ LGPD ENTERPRISE AUDITOR FRAMEWORK
-## Arquivo: lgpd-enterprise-auditor.md
+## Arquivo: SKILL.md
 
 ---
 
@@ -49,7 +49,8 @@ Toda auditoria deve considerar:
 - Emenda Constitucional nº 115/2022 — proteção de dados pessoais como direito fundamental (art. 5º, LXXIX, CF)
 - ECA Digital — Lei nº 15.211/2025, em vigor desde 17/03/2026, com os Decretos nº 12.622/2025 e nº 12.880/2026
 - Regulamentações da ANPD
-- Marco Civil da Internet
+- Marco Civil da Internet — Lei nº 12.965/2014, regulamentada pelo Decreto nº 8.771/2016 com as alterações do Decreto nº 12.975/2026 (em vigor desde 20/07/2026)
+- Decreto nº 12.976/2026 — proteção de mulheres na internet (em vigor desde 20/07/2026)
 - Código de Defesa do Consumidor
 - Estatuto da Criança e do Adolescente — Lei nº 8.069/1990
 - Lei de Acesso à Informação (quando aplicável)
@@ -143,15 +144,14 @@ Exemplos:
 
 ---
 
-## Dados Sensíveis
-Dados relacionados a:
-- saúde;
-- biometria;
-- origem racial;
-- religião;
+## Dados Sensíveis (art. 5º, II)
+Dado pessoal sobre:
+- origem racial ou étnica;
+- convicção religiosa;
 - opinião política;
-- vida sexual;
-- dados genéticos.
+- filiação a sindicato ou a organização de caráter religioso, filosófico ou político;
+- dado referente à saúde ou à vida sexual;
+- dado genético ou biométrico.
 
 ---
 
@@ -189,11 +189,11 @@ Validar:
 
 ## Dados sensíveis (art. 11)
 Rol próprio e mais restrito. Atenção:
-- **Legítimo interesse NÃO é base legal válida para dado sensível** → uso indevido = CRÍTICO.
+- **Legítimo interesse NÃO é base legal válida para dado sensível** → uso indevido = `CRITICO`.
 - Consentimento para dado sensível deve ser específico e em destaque.
 
 Se não existir base legal:
-→ classificar como NÃO CONFORME.
+→ classificar como `NAO_CONFORME`.
 
 ---
 
@@ -206,7 +206,7 @@ Validar:
 - minimização (não exigir dados além do necessário);
 - informações sobre o tratamento públicas e acessíveis.
 
-Dado de criança sem consentimento parental → CRÍTICO.
+Dado de criança sem consentimento parental → `CRITICO`.
 
 Sempre que houver público infantojuvenil, auditar também o domínio **16. ECA DIGITAL**, que impõe obrigações próprias de produto e regime sancionatório autônomo.
 
@@ -347,6 +347,7 @@ Políticas, contratos, processos.
 # 1. MAPEAMENTO DE DADOS
 
 Validar:
+- registro das operações de tratamento (art. 37);
 - inventário de dados;
 - classificação de dados;
 - ciclo de vida;
@@ -360,12 +361,14 @@ Validar:
 
 # 2. CONSENTIMENTO
 
-Validar:
-- opt-in explícito;
+Validar (art. 8º):
+- opt-in explícito, por escrito ou por outro meio que demonstre a manifestação de vontade;
 - consentimento granular;
-- registro de consentimento;
-- revogação facilitada;
-- consentimento por finalidade;
+- cláusula destacada quando fornecido em contrato escrito (§1º);
+- registro de consentimento que permita provar a obtenção regular (§2º);
+- revogação gratuita e facilitada, a qualquer momento (§5º);
+- consentimento por finalidade determinada — autorizações genéricas são nulas (§4º);
+- aviso destacado de mudança de finalidade, com possibilidade de revogar (§6º e art. 9º, §2º);
 - ausência de checkbox pré-marcado.
 
 Problemas críticos:
@@ -377,31 +380,39 @@ Problemas críticos:
 
 # 3. DIREITOS DO TITULAR
 
-Validar:
+Validar (art. 18):
+- confirmação da existência de tratamento;
 - acesso aos dados;
-- exportação;
-- portabilidade;
-- anonimização;
-- exclusão;
 - correção;
-- revogação;
-- bloqueio;
-- contestação.
+- anonimização, bloqueio ou eliminação de dados desnecessários ou excessivos;
+- portabilidade e exportação;
+- eliminação dos dados tratados com consentimento;
+- informação sobre compartilhamento;
+- informação sobre a possibilidade de não consentir e suas consequências;
+- revogação do consentimento;
+- oposição (§2º) e revisão de decisão automatizada (art. 20);
+- atendimento sem custos, mediante requerimento expresso (§§3º e 5º);
+- prazo do art. 19: confirmação ou acesso imediato em formato simplificado, ou declaração clara e completa em até 15 dias do requerimento.
 
 ---
 
 # 4. POLÍTICA DE PRIVACIDADE
 
-Verificar:
+Verificar (art. 9º):
 - clareza;
 - linguagem acessível;
-- finalidade;
+- finalidade específica;
+- forma e duração do tratamento;
+- identificação e contato do controlador;
 - base legal;
-- compartilhamento;
+- compartilhamento e sua finalidade;
+- responsabilidades dos agentes;
 - retenção;
 - cookies;
-- direitos do titular;
-- contato DPO.
+- direitos do titular (com menção aos do art. 18);
+- contato DPO (art. 41, §1º).
+
+Consentimento obtido com informação enganosa, abusiva ou sem transparência prévia é nulo (art. 9º, §1º).
 
 ---
 
@@ -411,8 +422,9 @@ Validar:
 - banner funcional;
 - bloqueio antes do aceite;
 - consentimento granular;
-- rejeição de cookies;
-- preferências;
+- rejeição de cookies com o mesmo destaque do aceite;
+- preferências revisáveis e revogáveis;
+- registro das escolhas como prova do consentimento (art. 8º, §2º);
 - cookies terceiros;
 - pixels;
 - fingerprinting.
@@ -567,7 +579,7 @@ Verificar:
 Validar:
 - DPO;
 - RIPD;
-- registro de operações;
+- registro das operações de tratamento (art. 37), admitida forma simplificada para agentes de pequeno porte (Res. CD/ANPD nº 2/2022);
 - política de segurança;
 - política de privacidade;
 - política de retenção;
@@ -639,26 +651,26 @@ Sempre que houver serviço direcionado ou de acesso provável por menores. "Aces
 - vinculação da conta de usuários **de até 16 anos** à conta de um responsável legal, com suspensão e direito de apelação diante de indícios (art. 24);
 - remoção e comunicação de conteúdo de exploração, abuso sexual, sequestro e aliciamento às autoridades, com retenção dos dados pelo prazo do **art. 15 do Marco Civil da Internet — 6 meses** (art. 27);
 - canal público de notificação, retirada sem ordem judicial mediante notificação identificada (vedado anonimato) e **direito de contestação** com indicação de análise humana ou automatizada (arts. 28 a 30);
-- **relatório semestral de transparência** para provedores com mais de 1.000.000 de usuários dessa faixa etária registrados com conexão no País, em português, no site do provedor, com os sete incisos do art. 31 — primeiro ciclo até 17/09/2026, cobrindo 01/01 a 30/06/2026 — e acesso gratuito a dados para pesquisa;
+- **relatório semestral de transparência** para provedores com mais de 1.000.000 de usuários dessa faixa etária registrados com conexão no País, em português, no site do provedor, com os sete incisos do art. 31 — primeiro ciclo até 17/09/2026, cobrindo 01/01 a 30/06/2026 (prazo encerrado: desde 18/09/2026, a ausência de publicação é não conformidade atual; ciclos seguintes semestrais) — e acesso gratuito a dados para pesquisa;
 - mecanismos contra uso abusivo dos instrumentos de denúncia, com sanções internas graduadas e registros (arts. 32 e 33);
 - **representante legal no País** com poderes para receber citações e notificações (art. 40);
 - adesivo de alerta em embalagens de eletrônicos com acesso à internet (art. 38).
 
 ## Severidade
-- conteúdo adulto sem verificação a cada acesso ou baseado em autodeclaração (art. 9º, §1º) → CRÍTICO;
-- ausência de medidas contra os conteúdos do art. 6º, I a III → CRÍTICO;
-- perfilamento ou análise emocional para publicidade a menores (arts. 22 e 26) → CRÍTICO;
-- conta de usuário de até 16 anos sem vinculação a responsável (art. 24) → CRÍTICO;
-- ausência de fluxo de remoção e comunicação de abuso sexual e aliciamento (art. 27) → CRÍTICO;
-- reuso dos dados de aferição para outra finalidade (art. 13) → ALTO;
-- ausência de privacidade por padrão (art. 7º) ou dos defaults de supervisão parental (art. 17, §4º) → ALTO;
-- relatório semestral não publicado por provedor acima do limiar (art. 31) → ALTO;
-- loot box em jogo de acesso provável (art. 20) → ALTO;
-- dark pattern que enfraquece salvaguardas (art. 18, §2º) → ALTO;
-- ausência de relatório de impacto no caso do art. 16, parágrafo único → MÉDIO;
-- ausência de mecanismo contra uso abusivo de denúncias (art. 32) → MÉDIO;
-- provedor estrangeiro sem representante legal no País (art. 40) → MÉDIO;
-- ausência do adesivo do art. 38 → BAIXO.
+- conteúdo adulto sem verificação a cada acesso ou baseado em autodeclaração (art. 9º, §1º) → `CRITICO`;
+- ausência de medidas contra os conteúdos do art. 6º, I a III → `CRITICO`;
+- perfilamento ou análise emocional para publicidade a menores (arts. 22 e 26) → `CRITICO`;
+- conta de usuário de até 16 anos sem vinculação a responsável (art. 24) → `CRITICO`;
+- ausência de fluxo de remoção e comunicação de abuso sexual e aliciamento (art. 27) → `CRITICO`;
+- reuso dos dados de aferição para outra finalidade (art. 13) → `ALTO`;
+- ausência de privacidade por padrão (art. 7º) ou dos defaults de supervisão parental (art. 17, §4º) → `ALTO`;
+- relatório semestral não publicado por provedor acima do limiar (art. 31) → `ALTO`;
+- loot box em jogo de acesso provável (art. 20) → `ALTO`;
+- dark pattern que enfraquece salvaguardas (art. 18, §2º) → `ALTO`;
+- ausência de relatório de impacto no caso do art. 16, parágrafo único → `MEDIO`;
+- ausência de mecanismo contra uso abusivo de denúncias (art. 32) → `MEDIO`;
+- provedor estrangeiro sem representante legal no País (art. 40) → `MEDIO`;
+- ausência do adesivo do art. 38 → `BAIXO`.
 
 ## Sanções (art. 35 da Lei nº 15.211/2025)
 Aplicadas pela **ANPD**: advertência com prazo de até 30 dias para medidas corretivas (I); multa simples de até 10% do faturamento do grupo econômico no Brasil no último exercício ou, ausente faturamento, de R$ 10,00 a R$ 1.000,00 por usuário cadastrado, limitada a R$ 50.000.000,00 por infração (II).
@@ -674,12 +686,64 @@ Todo achado deste domínio deve citar o artigo do ECA Digital **e** o correlato 
 
 ---
 
+# 17. PLATAFORMAS DIGITAIS — DEVERES DOS PROVEDORES DE APLICAÇÕES
+
+Aplicável a provedores de aplicações de internet conforme o **Decreto nº 12.975/2026**, que alterou o Decreto nº 8.771/2016 (regulamento do Marco Civil da Internet), e o **Decreto nº 12.976/2026**, ambos de 20/05/2026 e em vigor desde 20/07/2026. A ANPD regula, fiscaliza e apura infrações (Decreto nº 8.771/2016, art. 19-A; Decreto nº 12.976/2026, art. 14). Nas citações abaixo, "art. 16-X" refere-se ao Decreto nº 8.771/2016 e "Dec. 12.976" ao Decreto nº 12.976/2026.
+
+## Quando auditar
+- Deveres gerais (art. 16-A) e guarda de registros (MCI art. 15): todo provedor de aplicações de internet.
+- Dever de cuidado, notificação e remoção (arts. 16-B a 16-J): provedor que intermedeie **conteúdo gerado por terceiro**.
+- Anúncios e impulsionamentos (arts. 16-K a 16-M): provedor que os ofereça mediante pagamento.
+- Deepfake íntimo (Dec. 12.976, arts. 9º e 10): aplicação com IA capaz de gerar ou alterar imagem ou som de pessoas.
+
+**Antes de emitir achado**: e-mail, mensageria interpessoal e videoconferência restrita estão fora dos arts. 16-B a 16-J (art. 16-O); crimes contra a honra seguem ordem judicial específica (art. 16-J); conteúdo ilícito isolado não caracteriza, por si só, falha sistêmica (art. 16-B, §3º) — o achado aponta processos ausentes ou insuficientes, nunca um post específico.
+
+## Validar:
+- sede e **representante legal pessoa jurídica** no País, com contato acessível no site (art. 16-A, I);
+- **canal de denúncia permanente** e de fácil acesso, que preveja conteúdos criminosos (art. 16-A, II), e medidas contra redes artificiais de distribuição (III);
+- medidas comprováveis de prevenção e remoção, com os níveis mais elevados de segurança conforme o estado da técnica e capazes de inibir circulação massiva, para terrorismo, suicídio/automutilação, discriminação, crimes contra a mulher, exploração sexual de crianças e adolescentes, tráfico de pessoas e crimes contra o Estado Democrático de Direito (art. 16-B);
+- gestão diligente de **riscos sistêmicos** (art. 16-C);
+- notificação com identificação do conteúdo e do notificante (art. 16-D); confirmação de recebimento, decisão fundamentada e meios de contestação para notificante e autor (art. 16-E); medidas contra abuso das notificações (art. 16-F);
+- indisponibilização de conteúdo criminoso notificado, exceto crimes contra a honra, com manutenção fundamentada em dúvida razoável (art. 16-G);
+- encaminhamento ao Poder Público de autoria e materialidade dos crimes identificados (art. 16-H; Dec. 12.976, art. 13);
+- controle prévio contra anúncios e impulsionamentos ilícitos (art. 16-K), responsabilidade presumida nesses casos (art. 16-L), **guarda por 1 ano** das informações de anúncios e anunciantes (art. 16-M) e publicidade claramente identificável (art. 16-N, §2º);
+- registros de acesso guardados **por 6 meses**, sob sigilo e em ambiente controlado (MCI art. 15), com **porta lógica de origem** (art. 15-A), e eliminados após o prazo salvo requisição (MCI art. 16; LGPD art. 16);
+- termos de uso com sistema de notificações, devido processo e **relatório anual de transparência** sobre notificações, anúncios e impulsionamentos (art. 20-A);
+- aviso do **Ligue 180** no espaço de notificação (Dec. 12.976, art. 5º, §1º);
+- remoção de **conteúdo íntimo** não autorizado em **até 2 horas** da notificação, de toda a aplicação, com espaço específico, gratuito e destacado e acompanhamento pela vítima (Dec. 12.976, art. 7º);
+- mitigação de ofício de **ataques coordenados** contra mulheres (Dec. 12.976, art. 8º);
+- **vedação de gerar ou modificar conteúdo íntimo de terceiro** por IA e salvaguardas para bloquear essas solicitações (Dec. 12.976, arts. 9º e 10);
+- prazos transitórios até a regulamentação: **6 horas** para conteúdo manifestamente ilegal contra a mulher, **24 horas** nos demais casos de violência contra a mulher e **24 horas** após contestação (Dec. 12.976, art. 12).
+
+## Severidade
+- ausência de medidas contra conteúdos de suicídio/automutilação ou exploração sexual de crianças e adolescentes (art. 16-B, II e V) → `CRITICO`;
+- ausência de espaço para notificação de conteúdo íntimo ou de remoção em até 2 horas (Dec. 12.976, art. 7º) → `CRITICO`;
+- IA que gera ou modifica conteúdo íntimo de terceiro (Dec. 12.976, art. 9º) → `CRITICO`;
+- demais falhas sistêmicas do art. 16-B ou do Dec. 12.976, art. 4º → `ALTO`;
+- ausência de canal de denúncia (art. 16-A, II) ou de gestão de riscos sistêmicos (art. 16-C) → `ALTO`;
+- notificação sem confirmação, fundamentação ou contestação (art. 16-E) ou descumprimento dos prazos do Dec. 12.976, art. 12 → `ALTO`;
+- ausência de mitigação de ataques coordenados (Dec. 12.976, art. 8º) ou de salvaguardas de IA (art. 10) → `ALTO`;
+- anúncios sem controle prévio (art. 16-K) ou registros de acesso sem sigilo e ambiente controlado (MCI art. 15; LGPD art. 46) → `ALTO`;
+- ausência de representante legal pessoa jurídica (art. 16-A, I), de guarda de anúncios por 1 ano (art. 16-M), de porta lógica (art. 15-A), dos elementos do art. 20-A, de encaminhamento ao Poder Público (art. 16-H) ou de medidas contra abuso das notificações (art. 16-F) → `MEDIO`;
+- publicidade não identificável (art. 16-N, §2º) ou retenção de registros além do prazo sem base (MCI art. 16) → `MEDIO`;
+- ausência do aviso do Ligue 180 (Dec. 12.976, art. 5º, §1º) → `BAIXO`.
+
+## Sanções
+Infrações aos arts. 10 e 11 do MCI sujeitam o provedor às sanções do **art. 12 do MCI**: advertência com prazo para correção; multa de até 10% do faturamento do grupo econômico no Brasil no último exercício, excluídos os tributos; suspensão temporária; e proibição das atividades do art. 11. Filial ou estabelecimento de empresa estrangeira responde solidariamente pela multa. Há ainda responsabilidade civil por falha sistêmica (art. 16-B) e presunção de responsabilidade em anúncios e impulsionamentos (art. 16-L). A exposição é cumulativa com o art. 52 da LGPD e, havendo menores, com o art. 35 do ECA Digital.
+
+## Fundamentação obrigatória
+Todo achado deste domínio deve citar o dispositivo do decreto (e do MCI, quando houver) **e** o correlato na LGPD: art. 6º, VI a VIII; art. 11 para conteúdo íntimo (dado referente à vida sexual); art. 20 para moderação exclusivamente automatizada; art. 46 para falhas de segurança; arts. 7º, II e 16, I para guarda de registros.
+
+---
+
 # NORMAS EM MONITORAMENTO
 
 Normas ainda **não vigentes** nunca originam não conformidade. Registrá-las apenas na seção 8 do relatório (Recomendações Técnicas), rotuladas como norma futura:
 
-- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados, sem sanção até 2026-08.
-- **Guias orientativos da ANPD em tomada de subsídios** no âmbito do ECA Digital (aferição de idade e fornecedores de tecnologia): versão final pode alterar parâmetros.
+- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados, sem sanção até 2026-09 (em set/2026, aguardando parecer do relator na Comissão Especial).
+- **Guias orientativos da ANPD** no âmbito do ECA Digital (aferição de idade e fornecedores de tecnologia): tomadas de subsídios encerradas em 2026, versões finais ainda não publicadas até 2026-09.
+- **Revisão da Resolução CD/ANPD nº 1/2021** (fiscalização e processo sancionador): consulta pública de 09/09/2026 a 26/10/2026; até a norma final, a Res. nº 1/2021 segue vigente.
+- **Regulamentação dos Decretos nº 12.975/2026 e nº 12.976/2026** pela ANPD (forma e prazos de notificação e contestação, marcação digital de conteúdo íntimo, parâmetros das salvaguardas de IA, critérios diferenciados por porte): tomada de subsídios encerrada em 17/08/2026, sem regulamento final até 2026-09. Até lá, valem os deveres dos decretos e os prazos transitórios do art. 12 do Decreto nº 12.976/2026.
 - **Parâmetros normativos definitivos de aferição de idade**, previstos pela ANPD para a etapa regulatória iniciada em agosto/2026.
 
 Atenção: o cronograma de fiscalização da ANPD para o ECA Digital (adaptação até novembro/2026, fiscalização efetiva a partir de janeiro/2027) **não suspende a vigência da lei** — os requisitos do domínio 16 são exigíveis desde 17/03/2026.
@@ -703,6 +767,8 @@ Atenção: o cronograma de fiscalização da ANPD para o ECA Digital (adaptaçã
 ---
 
 # CLASSIFICAÇÃO DE SEVERIDADE
+
+Valores canônicos no `finding` e no relatório: `CRITICO | ALTO | MEDIO | BAIXO`. Os títulos abaixo são apenas rótulos visuais.
 
 ## 🔴 CRÍTICO
 Violação grave.
@@ -749,15 +815,22 @@ Exemplos:
 
 # SISTEMA DE SCORING
 
-| Área | Peso |
-|---|---|
-| Bases Legais | 15% |
-| Segurança | 25% |
-| Direitos do Titular | 15% |
-| Governança | 15% |
-| Infraestrutura | 10% |
-| APIs e Integrações | 10% |
-| IA/LLM | 10% |
+| Área | ID | Peso |
+|---|---|---|
+| Bases Legais | `bases_legais` | 15% |
+| Segurança | `seguranca` | 25% |
+| Direitos do Titular | `direitos_titular` | 15% |
+| Governança | `governanca` | 15% |
+| Infraestrutura | `infraestrutura` | 10% |
+| APIs e Integrações | `apis_integracoes` | 10% |
+| IA/LLM | `ai_llm` | 10% |
+
+## Áreas não aplicáveis
+Uma área só pode ser `NAO_APLICAVEL` (status de área, não de item do checklist) quando o objeto que ela avalia não existe no escopo — nunca por falta de evidência, que é `AUSENTE` e reduz o score. A inexistência deve ser comprovada com evidência `ENCONTRADA` (ex.: nenhum SDK ou chamada a provedor de LLM no código).
+
+`bases_legais`, `seguranca`, `direitos_titular` e `governanca` são sempre aplicáveis.
+
+Os pesos das áreas aplicáveis são redistribuídos proporcionalmente: `peso_ajustado = peso / soma dos pesos aplicáveis`. Ex.: sem IA, `ai_llm` sai e cada peso restante é dividido por 0,90. Declarar no relatório as áreas não aplicáveis, a justificativa e os pesos ajustados.
 
 ---
 
@@ -765,11 +838,13 @@ Exemplos:
 
 | Score | Classificação |
 |---|---|
-| 0–49 | Crítico |
-| 50–69 | Baixo Nível |
-| 70–84 | Parcialmente Conforme |
-| 85–94 | Alta Conformidade |
-| 95–100 | Excelente |
+| 0–49 | `CRITICO` |
+| 50–69 | `BAIXO_NIVEL` |
+| 70–84 | `PARCIALMENTE_CONFORME` |
+| 85–94 | `ALTA_CONFORMIDADE` |
+| 95–100 | `EXCELENTE` |
+
+Usar exatamente esses rótulos no relatório.
 
 ---
 
@@ -798,11 +873,10 @@ Resumo executivo geral.
 0–100
 
 ## Classificação
-- Crítico;
-- Baixo;
-- Parcial;
-- Alto;
-- Excelente.
+`CRITICO | BAIXO_NIVEL | PARCIALMENTE_CONFORME | ALTA_CONFORMIDADE | EXCELENTE`
+
+## Score por área
+Incluir áreas `NAO_APLICAVEL`, justificativa e pesos ajustados.
 
 ---
 
@@ -811,10 +885,9 @@ Resumo executivo geral.
 | Item | Status | Evidência | Impacto | Recomendação |
 |---|---|---|---|---|
 
-Status:
-- ✅ Conforme
-- ⚠️ Parcial
-- ❌ Não Conforme
+Status: `CONFORME | PARCIAL | NAO_CONFORME`.
+
+Evidência no formato `GRAU (ORIGEM): descrição`, ex.: `ENCONTRADA (TECNICA): política de retenção aplicada em job de expurgo`.
 
 ---
 
@@ -826,7 +899,7 @@ Para cada item:
 Descrição objetiva.
 
 ## Severidade
-Crítico / Alto / Médio / Baixo.
+`CRITICO | ALTO | MEDIO | BAIXO`.
 
 ## Fundamento LGPD
 Artigo relevante.
@@ -838,7 +911,7 @@ Impacto operacional/técnico.
 Risco legal e regulatório.
 
 ## Evidência
-O que foi encontrado.
+O que foi encontrado, com grau (`ENCONTRADA | PARCIAL | AUSENTE`) e origem (`TECNICA | DOCUMENTAL`).
 
 ## Correção Recomendada
 Como corrigir.
@@ -918,7 +991,7 @@ Problema:
 Senha armazenada em texto puro.
 
 Severidade:
-CRÍTICO
+`CRITICO`
 
 Correção:
 Utilizar Argon2id ou bcrypt.
@@ -944,7 +1017,7 @@ Problema:
 Prompts contendo dados pessoais enviados para LLM externo sem anonimização.
 
 Severidade:
-CRÍTICO
+`CRITICO`
 
 Correção:
 Anonimização + política de IA + segregação de prompts.
@@ -966,10 +1039,11 @@ Ao receber um projeto:
 9. Auditar APIs;
 10. Auditar DevSecOps;
 11. Auditar IA/LLM;
-12. Classificar riscos;
-13. Gerar score;
-14. Gerar plano de adequação;
-15. Gerar relatório completo.
+12. Auditar deveres de plataforma digital, quando aplicável (domínio 17);
+13. Classificar riscos;
+14. Gerar score;
+15. Gerar plano de adequação;
+16. Gerar relatório completo.
 
 ---
 

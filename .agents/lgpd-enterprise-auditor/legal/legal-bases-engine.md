@@ -16,7 +16,7 @@ Definir validação de base legal por operação de tratamento, distinguindo dad
 - proteção do crédito (art. 7º, X).
 
 ## Bases legais para dados sensíveis (art. 11, LGPD)
-Dados sensíveis (origem racial/étnica, convicção religiosa, opinião política, filiação sindical, dado referente a saúde, vida sexual, dado genético ou biométrico) possuem rol **próprio e mais restrito**:
+Dados sensíveis (art. 5º, II: origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato ou a organização de caráter religioso, filosófico ou político, dado referente à saúde ou à vida sexual, dado genético ou biométrico) possuem rol **próprio e mais restrito**:
 - consentimento específico e destacado, para finalidades específicas (art. 11, I);
 - sem consentimento, apenas nas hipóteses do art. 11, II: obrigação legal/regulatória; políticas públicas; estudos por órgão de pesquisa (anonimizando quando possível); exercício regular de direitos; proteção da vida/incolumidade física; tutela da saúde por profissionais de saúde; garantia da prevenção à fraude e à segurança do titular.
 
@@ -30,6 +30,23 @@ Dados sensíveis (origem racial/étnica, convicção religiosa, opinião políti
 - base legal deve ser comprovável por evidência técnica e/ou documental;
 - consentimento (art. 7º) deve ser específico, granular e revogável; consentimento para dado sensível (art. 11, I) deve ser, ainda, específico e destacado;
 - uso de legítimo interesse deve ter justificativa formal documentada e teste de proporcionalidade/balanceamento (LIA).
+
+## Checklist atômico de consentimento (art. 8º)
+Aplicável sempre que o consentimento (art. 7º, I ou art. 11, I) for a base legal indicada. Para cookies e tracking no front-end, ver a seção de cookies de [[owasp-api]].
+- O consentimento é fornecido por escrito ou por outro meio que demonstre a manifestação de vontade (opt-in explícito, sem checkbox pré-marcado) (art. 8º, caput)?
+- Em contrato escrito, consta de cláusula destacada das demais (art. 8º, §1º)?
+- Há registro que permita ao controlador provar a obtenção regular do consentimento (art. 8º, §2º)?
+- Refere-se a finalidades determinadas, sem autorizações genéricas (art. 8º, §4º)?
+- A revogação é possível a qualquer momento, por procedimento gratuito e facilitado (art. 8º, §5º)?
+- Alterações de finalidade, forma, duração ou compartilhamento são informadas com destaque, permitindo revogar (art. 8º, §6º e art. 9º, §2º)?
+- Quando o tratamento é condição para o serviço, o titular é informado com destaque sobre isso e sobre como exercer seus direitos (art. 9º, §3º)?
+
+## Mapeamento para severidade e score
+- Legítimo interesse ou outra base do art. 7º aplicada a dado sensível: `CRITICO`.
+- Consentimento genérico ou com checkbox pré-marcado: `ALTO`.
+- Ausência de mecanismo de revogação do consentimento: `ALTO`.
+- Ausência de registro que prove o consentimento ou consentimento pouco granular: `MEDIO`.
+- Área de scoring primária: `bases_legais` (15%).
 
 ## Resultado da validação
 - `CONFORME`: base legal válida para o tipo de dado + evidência suficiente.

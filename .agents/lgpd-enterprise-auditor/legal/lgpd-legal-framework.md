@@ -8,7 +8,7 @@ Consolidar fundamentos legais que devem orientar toda auditoria.
 - Emenda Constitucional nº 115/2022 — proteção de dados pessoais como direito fundamental (art. 5º, LXXIX, CF)
 - Regulamentações da ANPD — ver [[anpd-guidelines]]
 - ECA Digital (Lei nº 15.211/2025) e Decreto nº 12.880/2026 — ver [[eca-digital]]
-- Marco Civil da Internet
+- Marco Civil da Internet (Lei nº 12.965/2014), regulamentado pelo Decreto nº 8.771/2016 com as alterações do Decreto nº 12.975/2026, e Decreto nº 12.976/2026 — ver [[plataformas-digitais]]
 - Código de Defesa do Consumidor
 - Estatuto da Criança e do Adolescente (Lei nº 8.069/1990)
 - Lei de Acesso a Informação (quando aplicável)

@@ -4,7 +4,7 @@
 Validar que a V2 modular mantém cobertura e consistência funcional da V1.
 
 ## Checklist de validação
-- [ ] Todos os 16 domínios da V1 estão mapeados em módulos V2.
+- [ ] Todos os 17 domínios da V1 estão mapeados em módulos V2.
 - [ ] Nenhum módulo redefine severidade fora do `core/severity-model.md`.
 - [ ] Nenhum módulo redefine score fora do `core/scoring-engine.md`.
 - [ ] Todos os achados usam contrato `finding`.
@@ -12,10 +12,18 @@ Validar que a V2 modular mantém cobertura e consistência funcional da V1.
 - [ ] Relatório final segue `core/reporting-engine.md`.
 - [ ] Toda não conformidade possui evidência associada.
 - [ ] Evidência usa os dois eixos canônicos em V1 e V2: `evidence_type` (`ENCONTRADA | PARCIAL | AUSENTE`) e `evidence_source` (`TECNICA | DOCUMENTAL`).
-- [ ] Rótulos de classificação final seguem padrão canônico V2.
+- [ ] Rótulos de classificação final seguem o padrão canônico em V1 e V2: `CRITICO | BAIXO_NIVEL | PARCIALMENTE_CONFORME | ALTA_CONFORMIDADE | EXCELENTE`.
+- [ ] Regra de área `NAO_APLICAVEL` e redistribuição proporcional de pesos idêntica em V1 (`SKILL.md`) e V2 (`core/scoring-engine.md`).
 - [ ] Modo `full_audit` ativa todos os módulos.
 - [ ] Matriz de ativação por cenário está coerente com o router.
 - [ ] Bases legais distinguem art. 7º (dados pessoais) de art. 11 (sensíveis) em V1 e V2.
+- [ ] Definição de dado sensível idêntica ao art. 5º, II em V1 e V2 (inclui filiação a sindicato ou a organização de caráter religioso, filosófico ou político).
+- [ ] Requisitos de consentimento (art. 8º) com checklist em V1 e V2 (`legal/legal-bases-engine.md`).
+- [ ] Cookies e tracking com checklist atômico na V2 (`appsec/owasp-api.md`), equivalente ao domínio 5 da V1.
+- [ ] Transparência e política de privacidade (art. 9º) cobertas em V1 e V2 (`legal/rights-of-data-subject.md`).
+- [ ] Prazo de atendimento ao titular (art. 19: imediato em formato simplificado ou declaração completa em até 15 dias) presente em V1 e V2.
+- [ ] Registro das operações de tratamento (art. 37), com forma simplificada para pequeno porte (Res. CD/ANPD nº 2/2022), presente em V1 e V2 (`governance/dpo-framework.md`).
+- [ ] Dados pessoais em logs de aplicação e de observabilidade cobertos na V2 (`appsec/owasp-api.md` e `cloud/aws-audit.md`), equivalente ao domínio 11 da V1.
 - [ ] Dados de crianças/adolescentes (art. 14) cobertos em V1 (`SKILL.md`) e V2 (`legal/children-adolescents.md`).
 - [ ] Transferência internacional (arts. 33-36) coberta em V1 e V2 (`legal/international-transfer.md`).
 - [ ] Prazo de comunicação de incidente (Res. CD/ANPD nº 15/2024, 3 dias úteis) presente em governança e template de incidente.
@@ -24,12 +32,16 @@ Validar que a V2 modular mantém cobertura e consistência funcional da V1.
 - [ ] Adequação da União Europeia (Res. CD/ANPD nº 32/2026) reconhecida em V1 e V2, com a ressalva de que dispensa apenas o mecanismo do art. 33.
 - [ ] ANPD denominada **Agência** Nacional de Proteção de Dados e submetida ao regime da Lei nº 13.848/2019 (Lei nº 15.352/2026, art. 55-A) em V1 e V2, preservando sua condição de autarquia de natureza especial e sem "corrigir" o termo legal *autoridade nacional*.
 - [ ] ECA Digital (Lei nº 15.211/2025, Decretos nº 12.622/2025 e nº 12.880/2026) coberto em V1 (`SKILL.md`, domínio 16) e V2 (`legal/eca-digital.md` + manifesto `eca-digital`).
-- [ ] Relatório semestral de transparência do art. 31 (limiar de 1.000.000 de usuários dessa faixa etária com conexão no País; sete incisos; primeiro ciclo até 17/09/2026) presente em V1, no módulo `eca-digital` e no `templates/eca-transparency-report-template.md`.
+- [ ] Relatório semestral de transparência do art. 31 (limiar de 1.000.000 de usuários dessa faixa etária com conexão no País; sete incisos; primeiro ciclo até 17/09/2026, prazo já encerrado) presente em V1, no módulo `eca-digital` e no `templates/eca-transparency-report-template.md`.
 - [ ] Vedação à autodeclaração de idade citada com a base correta em V1 e V2: expressa no art. 9º, §1º para conteúdo impróprio; nos demais casos, insuficiência perante os arts. 10, 12 e 14.
 - [ ] Os três cortes etários preservados sem unificação: criança até 12 anos incompletos (LGPD art. 14), vinculação de conta até 16 anos (ECA Digital art. 24) e conteúdo impróprio a menores de 18 anos (art. 9º).
 - [ ] Sanções do art. 35 descritas com a repartição de competência correta: advertência e multa pela ANPD; suspensão e proibição pelo Poder Judiciário.
 - [ ] Modulação e dispensa editorial do art. 39 consideradas antes de emitir achado, em V1 e V2.
-- [ ] Modo `full_audit` ativa também o módulo `eca-digital`.
+- [ ] Modo `full_audit` ativa também os módulos `eca-digital` e `plataformas-digitais`.
+- [ ] Deveres de plataformas digitais (Decreto nº 12.975/2026 — Decreto nº 8.771/2016, arts. 15-A, 16-A a 16-P, 19-A e 20-A — e Decreto nº 12.976/2026) cobertos em V1 (`SKILL.md`, domínio 17) e V2 (`legal/plataformas-digitais.md` + manifesto `plataformas-digitais`).
+- [ ] Exclusões do art. 16-O, regime de ordem judicial para crimes contra a honra (art. 16-J) e regra de que conteúdo isolado não caracteriza falha sistêmica consideradas antes de emitir achado, em V1 e V2.
+- [ ] Prazos do Decreto nº 12.976/2026 preservados sem unificação: conteúdo íntimo em até 2 horas (art. 7º, §1º); prazos transitórios de 6 horas e 24 horas e 24 horas após contestação (art. 12).
+- [ ] Guarda de registros de acesso por 6 meses com porta lógica (MCI art. 15 e art. 15-A) presente em V1, em `cloud/aws-audit.md` e em `legal/plataformas-digitais.md`.
 - [ ] Normas não vigentes (ex.: PL nº 2338/2023) aparecem apenas em seções "Em monitoramento" e nunca originam `NAO_CONFORME`.
 
 ## Evidências de teste esperadas

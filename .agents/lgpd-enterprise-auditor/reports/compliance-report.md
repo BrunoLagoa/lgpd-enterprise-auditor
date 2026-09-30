@@ -3,7 +3,7 @@
 ## 1. Score LGPD
 - score (0-100):
 - classificação:
-- score por área:
+- score por área (indicar áreas `NAO_APLICAVEL`, justificativa e pesos ajustados):
 
 ## 2. Situação regulatória
 - bases legais:

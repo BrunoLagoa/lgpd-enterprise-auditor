@@ -19,7 +19,7 @@ The repository contains two versions of the same auditor; both must stay functio
 
 - **V1 — monolith**: `SKILL.md` (~900 lines). A single self-contained prompt covering the full checklist, severity, scoring, and report format. It is the actual V1 source of truth.
 - **V2 — modular**: `.agents/lgpd-enterprise-auditor/` decomposed into layers. This is the canonical structure to extend.
-- `.agents/lgpd-enterprise-auditor/legacy/v1-monolith.md` is **not** a copy of `SKILL.md` — it is a short compatibility bridge that points back to `SKILL.md` and enumerates the **16 V1 domains** that `full_audit` must cover (mapeamento de dados, consentimento, direitos do titular, política de privacidade, cookies e tracking, segurança da informação, cloud security, mobile security, APIs e integrações, DevSecOps, logs e observabilidade, IA/LLM, governança, compartilhamento de dados, retenção e exclusão, ECA Digital).
+- `.agents/lgpd-enterprise-auditor/legacy/v1-monolith.md` is **not** a copy of `SKILL.md` — it is a short compatibility bridge that points back to `SKILL.md` and enumerates the **17 V1 domains** that `full_audit` must cover (mapeamento de dados, consentimento, direitos do titular, política de privacidade, cookies e tracking, segurança da informação, cloud security, mobile security, APIs e integrações, DevSecOps, logs e observabilidade, IA/LLM, governança, compartilhamento de dados, retenção e exclusão, ECA Digital, plataformas digitais).
 
 When you change audit logic (a checklist item, severity rule, scoring weight, or report field), check whether it must change in **both** V1 and V2. `validation/parity-checklist.md` and `validation/v1-to-v2-traceability.md` track this equivalence — update them when coverage shifts.
 
@@ -31,7 +31,7 @@ Canonical base path (referenced literally inside commands and meant to be copied
 - `core/` — the canonical **contracts** all other modules depend on. Edit these first; downstream modules and reports must conform:
   - `auditor-core.md` defines the data shapes `finding`, `check_item`, `module_output` (their fields and enum values).
   - `evidence-engine.md` (evidence rules and confidence scale), `severity-model.md` (CRITICO/ALTO/MEDIO/BAIXO), `scoring-engine.md` (per-area weights + final 0–100 classification), `reporting-engine.md` (mandatory report format).
-- `legal/` — LGPD/ANPD normative basis (`lgpd-legal-framework.md`, `anpd-guidelines.md`), legal bases for processing (`legal-bases-engine.md`, art. 7º vs art. 11), data-subject rights, children/adolescents (art. 14), international transfer (arts. 33–36), and `eca-digital.md`. Note the exception: `eca-digital.md` lives under `legal/` but is a **module of its own** (ID `eca-digital`, with `orchestrator/manifests/eca-digital.manifest.md`) because it implements a separate statute (Lei nº 15.211/2025), not an LGPD chapter.
+- `legal/` — LGPD/ANPD normative basis (`lgpd-legal-framework.md`, `anpd-guidelines.md`), legal bases for processing (`legal-bases-engine.md`, art. 7º vs art. 11), data-subject rights, children/adolescents (art. 14), international transfer (arts. 33–36), and `eca-digital.md`. Note the exception: `eca-digital.md` lives under `legal/` but is a **module of its own** (ID `eca-digital`, with `orchestrator/manifests/eca-digital.manifest.md`) because it implements a separate statute (Lei nº 15.211/2025), not an LGPD chapter. `plataformas-digitais.md` follows the same exception (ID `plataformas-digitais`, with its own manifest): it implements Decretos nº 12.975/2026 and nº 12.976/2026, the Marco Civil da Internet regulation that ANPD now enforces.
 - `governance/`, `cloud/`, `appsec/`, `mobile/`, `devsecops/`, `ai-llm/` — specialist audit modules, one per domain.
 - `orchestrator/` — scenario-based module activation. `router.md` holds the activation rules, `activation-matrix.md` the scenario→module table, and `manifests/*.manifest.md` declare each module's `required` flag, inputs, prerequisites, `activates_when`, and `primary_outputs`.
 - `templates/` — reusable compliance artifacts (RIPD, DPA, privacy/cookie policy, incident response, ECA Digital semiannual transparency report, age-assurance checklist).
@@ -50,9 +50,10 @@ The scenario IDs are snake_case and must stay identical across `orchestrator/rou
 | `ai_llm_system` | core, legal, governance, ai-llm, appsec |
 | `devsecops_pipeline` | core, legal, devsecops, cloud, appsec |
 | `eca_digital_platform` | core, legal, eca-digital, governance, appsec, mobile |
+| `digital_platform` | core, legal, plataformas-digitais, governance, appsec, cloud |
 | `full_audit` | all modules (V1 parity) |
 
-`eca-digital` is also added to **any** scenario by the normative trigger in `router.md` whenever minors are (or plausibly are) among the users.
+`eca-digital` is also added to **any** scenario by the normative trigger in `router.md` whenever minors are (or plausibly are) among the users. Likewise, `plataformas-digitais` is added to any scenario when the audited provider hosts publicly shared third-party content, sells ads/boosts, or offers AI that generates or alters people's image or voice.
 
 ## Critical naming rule
 
@@ -65,12 +66,13 @@ The orchestrator activates by module ID; the scoring engine computes by area ID.
 ## Scoring and reporting shapes
 
 - Score areas and weights (`core/scoring-engine.md`) must always sum to 100%: `bases_legais` 15, `seguranca` 25, `direitos_titular` 15, `governanca` 15, `infraestrutura` 10, `apis_integracoes` 10, `ai_llm` 10.
+- An area may be `NAO_APLICAVEL` only when its object does not exist in scope (never for missing evidence); its weight is redistributed proportionally across the applicable areas. `bases_legais`, `seguranca`, `direitos_titular` and `governanca` are always applicable. This rule lives in `core/scoring-engine.md` and the V1 scoring section of `SKILL.md`.
 - Final classification labels are exactly `CRITICO` (0–49), `BAIXO_NIVEL` (50–69), `PARCIALMENTE_CONFORME` (70–84), `ALTA_CONFORMIDADE` (85–94), `EXCELENTE` (95–100).
 - The report (`core/reporting-engine.md`) has 8 mandatory sections in this order: `resumo_executivo`, `score_lgpd`, `checklist_conformidade`, `nao_conformidades`, `itens_obrigatorios_ausentes`, `riscos_identificados`, `plano_adequacao`, `recomendacoes_tecnicas`. Every non-conformity in the checklist must reappear detailed in `nao_conformidades`.
 
 ## Commands (slash commands)
 
-`commands/*.md` are execution shortcuts (`lgpd-full-audit`, `lgpd-saas`, `lgpd-web`, `lgpd-mobile`, `lgpd-ai-llm`, `lgpd-devsecops`, `lgpd-eca-digital`). Each has YAML frontmatter (`name`, `description`, `license`, `metadata.author`, `metadata.version`) and then instructions that ask for missing context, select a scenario, list the modules to activate, and reference the canonical base path. When adding a command, mirror this frontmatter and keep the activated-module list consistent with `orchestrator/activation-matrix.md` and `orchestrator/router.md`.
+`commands/*.md` are execution shortcuts (`lgpd-full-audit`, `lgpd-saas`, `lgpd-web`, `lgpd-mobile`, `lgpd-ai-llm`, `lgpd-devsecops`, `lgpd-eca-digital`, `lgpd-plataformas-digitais`). Each has YAML frontmatter (`name`, `description`, `license`, `metadata.author`, `metadata.version`) and then instructions that ask for missing context, select a scenario, list the modules to activate, and reference the canonical base path. When adding a command, mirror this frontmatter and keep the activated-module list consistent with `orchestrator/activation-matrix.md` and `orchestrator/router.md`.
 
 ## Sync-date maintenance (required on every framework update)
 
@@ -78,7 +80,7 @@ Whenever you make a substantive update to the framework (audit logic, modules, c
 - `README.md` → the `| Last synchronization | \`YYYY-MM\` |` row
 - `README.pt-BR.md` → the `| Última sincronização | \`YYYY-MM\` |` row
 
-Keep the value identical in both files (currently `2026-08`). This row signals when the framework was last aligned with LGPD/ANPD; a stale date is misleading, so never skip it.
+Keep the value identical in both files (currently `2026-09`). This row signals when the framework was last aligned with LGPD/ANPD; a stale date is misleading, so never skip it.
 
 ## Where normative changes ripple
 
@@ -97,7 +99,7 @@ These rules are load-bearing across the whole framework — keep them intact:
 - Never mark anything compliant without evidence; every `finding` cites the applicable LGPD article.
 - Severity values are exactly `CRITICO | ALTO | MEDIO | BAIXO`; `check_item.status` is `CONFORME | PARCIAL | NAO_CONFORME`; deadlines `IMEDIATO | 30_DIAS | 90_DIAS | 180_DIAS`.
 - Evidence is classified on **two independent axes**, never mixed: `evidence_type` (degree of proof) is `ENCONTRADA | PARCIAL | AUSENTE`, and `evidence_source` (origin) is `TECNICA | DOCUMENTAL`. `CONFORME` requires `ENCONTRADA`; `CRITICO`/`ALTO` findings require an explicit `TECNICA` or `DOCUMENTAL` source. Both axes exist in V1 (`SKILL.md`, "SISTEMA DE EVIDÊNCIAS") and V2 (`core/evidence-engine.md` + `core/auditor-core.md`).
-- The `full_audit` scenario must activate every module (`core, legal, eca-digital, governance, cloud, appsec, mobile, devsecops, ai-llm`) to preserve V1 parity.
+- The `full_audit` scenario must activate every module (`core, legal, eca-digital, plataformas-digitais, governance, cloud, appsec, mobile, devsecops, ai-llm`) to preserve V1 parity.
 - Only **norms in force** produce `finding`s or a `NAO_CONFORME` status. Bills and draft guidance (e.g. PL nº 2338/2023) live in "Em monitoramento" sections and may only feed `recomendacoes_tecnicas`.
 - `core` and `legal` are always required regardless of scenario.
 - No module may redefine severity, scoring, or report format locally — those live only in `core/`.

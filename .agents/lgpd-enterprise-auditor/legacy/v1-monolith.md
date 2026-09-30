@@ -7,7 +7,7 @@ Preservar referência operacional da V1 enquanto a V2 modular entra em produçã
 - Arquivo monolítico original: `SKILL.md`, na raiz do repositório do framework (caminho relativo ao projeto que adota `.agents/lgpd-enterprise-auditor/`).
 
 ## Regra de compatibilidade
-- O modo `full_audit` da V2 deve cobrir os mesmos 16 domínios da V1:
+- O modo `full_audit` da V2 deve cobrir os mesmos 17 domínios da V1:
   1. mapeamento de dados
   2. consentimento
   3. direitos do titular
@@ -24,6 +24,7 @@ Preservar referência operacional da V1 enquanto a V2 modular entra em produçã
   14. compartilhamento de dados
   15. retenção e exclusão
   16. proteção de crianças e adolescentes no ambiente digital (ECA Digital — Lei nº 15.211/2025)
+  17. plataformas digitais e conteúdo de terceiros (Decretos nº 12.975/2026 e nº 12.976/2026)
 
 ## Critérios mínimos de paridade
 - manter classificação de severidade em 4 níveis;

@@ -19,6 +19,10 @@ Precisões que evitam erro de citação:
 - O termo **"autoridade nacional" permanece no texto da LGPD** (art. 5º, XIX e ao longo da lei). Não corrigir citações legais que o usem: o nome próprio do órgão é *Agência Nacional de Proteção de Dados*, e *autoridade nacional* é o termo técnico da lei.
 - Efeito prático para auditoria: ampliação da capacidade fiscalizatória (carreira própria de regulação e fiscalização, com 200 vagas, criada fora da LGPD) e nova competência sobre o **ECA Digital** — ver [[eca-digital]].
 
+### Competências da ANPD além da LGPD
+- **ECA Digital** (Lei nº 15.211/2025; Decreto nº 12.622/2025) — ver [[eca-digital]].
+- **Marco Civil da Internet**: desde 20/07/2026, a ANPD regula, fiscaliza e apura infrações quanto aos direitos dos usuários e aos deveres dos provedores de aplicações de internet (Decreto nº 8.771/2016, art. 19-A, incluído pelo Decreto nº 12.975/2026), inclusive a proteção de mulheres no ambiente digital (Decreto nº 12.976/2026, art. 14). A atuação é sistêmica: é vedado à ANPD notificar provedores para moderação de conteúdos isolados (art. 16-I, parágrafo único) — ver [[plataformas-digitais]].
+
 Histórico de alterações da LGPD: Leis nº 13.853/2019, nº 14.010/2020 (art. 65, I-A), nº 14.460/2022 e nº 15.352/2026.
 
 ## Regulamentos vinculantes da ANPD a considerar
@@ -72,6 +76,7 @@ Não são vinculantes, mas expressam o entendimento da ANPD e servem como **evid
 
 ## Em monitoramento (não vigente — não gera não conformidade)
 Itens abaixo **não podem** originar `finding` nem `check_item` com status `NAO_CONFORME`. Usar apenas na seção `recomendacoes_tecnicas` do relatório, sempre rotulados como norma não vigente:
-- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados. Prevê classificação por nível de risco, direitos dos afetados e governança de IA.
-- **Guias orientativos da ANPD em tomada de subsídios** (ex.: aferição de idade e fornecedores de tecnologia no âmbito do ECA Digital): a versão final pode alterar parâmetros; tratar a versão em consulta como referência preliminar.
+- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados — em set/2026, aguardando parecer do relator na Comissão Especial, sem data de votação. Prevê classificação por nível de risco, direitos dos afetados e governança de IA.
+- **Guias orientativos da ANPD no âmbito do ECA Digital** (aferição de idade e fornecedores de tecnologia): tomadas de subsídios encerradas em 2026, versões finais ainda não publicadas até 2026-09; tratar as versões em consulta como referência preliminar.
+- **Revisão da Resolução CD/ANPD nº 1/2021** (Regulamento de Fiscalização e do Processo Administrativo Sancionador): consulta pública aberta em 09/09/2026, audiência pública em 24/09/2026 e contribuições até 26/10/2026. A minuta adapta a fiscalização ao ECA Digital, ao regime de agência reguladora e às novas atribuições sobre provedores de aplicações de internet. Até a publicação da norma final, a Res. CD/ANPD nº 1/2021 segue vigente e continua sendo a referência de risco sancionatório.
 - **Normas complementares do ECA Digital ainda não publicadas**: parâmetros definitivos de aferição de idade previstos para a etapa regulatória iniciada em agosto/2026 — ver [[eca-digital]].

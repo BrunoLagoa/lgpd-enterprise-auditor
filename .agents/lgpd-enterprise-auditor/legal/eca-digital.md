@@ -112,7 +112,7 @@ Obrigatório para provedores de aplicações com **mais de 1.000.000 de usuário
 
 Parágrafo único: acesso **gratuito** a dados para pesquisa acadêmica, científica, tecnológica, de inovação ou jornalística, vedado uso comercial.
 
-**Primeiro ciclo:** publicação até **17/09/2026**, cobrindo 01/01 a 30/06/2026 — ou 17/03 a 30/06/2026 para provedores sem dados de janeiro e fevereiro. Ver [[eca-transparency-report-template]].
+**Primeiro ciclo:** publicação até **17/09/2026**, cobrindo 01/01 a 30/06/2026 — ou 17/03 a 30/06/2026 para provedores sem dados de janeiro e fevereiro. **Prazo encerrado:** desde 18/09/2026, provedor acima do limiar sem relatório publicado está em não conformidade atual. Os ciclos seguintes são semestrais. Ver [[eca-transparency-report-template]].
 
 ### 13. Uso abusivo dos instrumentos de denúncia (arts. 32 e 33)
 Mecanismos para identificar uso abusivo das denúncias (censura, perseguição), com informação clara aos usuários, sanções internas graduadas, notificação, direito a recurso, prazos e **registros detalhados** dos casos e sanções.
@@ -192,8 +192,8 @@ A lei **é exigível desde 17/03/2026**; o cronograma descreve a postura fiscali
 Todo `finding` deste módulo deve citar **o artigo do ECA Digital** e o **correlato na LGPD** (art. 14 e/ou princípios do art. 6º; art. 46 quando for falha de segurança). Achado sem correlato LGPD explícito quebra o contrato de `finding` em [[auditor-core]].
 
 ## Em monitoramento (não vigente — não gera não conformidade)
-- Guia orientativo da ANPD sobre aferição de idade atualizado em maio/2026 (Processo nº 00261.003182/2026-47), em tomada de subsídios até 09/07/2026.
-- Guia sobre "Fornecedores de produtos ou serviços de tecnologia da informação" (Processo nº 00261.002701/2026-50), tomada de subsídios encerrada em 15/06/2026.
+- Guia orientativo da ANPD sobre aferição de idade atualizado em maio/2026 (Processo nº 00261.003182/2026-47): tomada de subsídios encerrada em 09/07/2026; versão final prevista para a Etapa II e ainda não publicada até 2026-09.
+- Guia sobre "Fornecedores de produtos ou serviços de tecnologia da informação" (Processo nº 00261.002701/2026-50): tomada de subsídios encerrada em 15/06/2026; versão final ainda não publicada até 2026-09.
 - Regulamentos ainda pendentes previstos na própria lei: requisitos mínimos de aferição de idade e supervisão parental em lojas/SO (art. 12, §3º), diretrizes de supervisão parental (art. 17, §1º), prazos de notificação às autoridades (art. 27, §1º), critérios de acesso a dados para pesquisa (art. 31, parágrafo único) e critérios de modulação de obrigações (art. 39, §3º).
 - Parâmetros normativos definitivos de aferição de idade previstos para a Etapa II (a partir de agosto/2026).
 

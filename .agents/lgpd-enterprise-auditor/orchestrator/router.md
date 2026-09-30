@@ -8,7 +8,8 @@ Ativar apenas módulos relevantes ao contexto do projeto, preservando cobertura 
 - cloud provider;
 - integrações de terceiros;
 - presença de IA/LLM;
-- maturidade de DevSecOps.
+- maturidade de DevSecOps;
+- faixa etária do público: serviço direcionado a menores, de acesso provável por eles ou com cadastro sem bloqueio etário (insumo do gatilho normativo de `eca-digital`).
 
 ## Regras de ativação
 
@@ -22,6 +23,7 @@ Ativar apenas módulos relevantes ao contexto do projeto, preservando cobertura 
 - `ai_llm_system`: `core`, `legal`, `governance`, `ai-llm`, `appsec`.
 - `devsecops_pipeline`: `core`, `legal`, `devsecops`, `cloud`, `appsec`.
 - `eca_digital_platform`: `core`, `legal`, `eca-digital`, `governance`, `appsec`, `mobile`.
+- `digital_platform`: `core`, `legal`, `plataformas-digitais`, `governance`, `appsec`, `cloud`.
 
 ### Gatilhos técnicos adicionais
 - Se usar `Firebase` ou storage cloud, adicionar `cloud`.
@@ -39,9 +41,17 @@ Adicionar `eca-digital` a **qualquer** cenário quando houver indício de usuár
 
 Esse gatilho é **normativo, não técnico**: na dúvida sobre a presença de menores, ativar o módulo e registrar a incerteza como evidência `PARCIAL`.
 
+### Gatilho normativo — plataformas digitais
+Adicionar `plataformas-digitais` a **qualquer** cenário quando o auditado for provedor de aplicações de internet que:
+- intermedeie conteúdo gerado por terceiros com difusão pública (rede social, vídeo, fórum, comentários públicos, marketplace com anúncios de usuários, grupos abertos);
+- ofereça, mediante pagamento, ferramentas de anúncio ou impulsionamento de conteúdo;
+- disponibilize IA ou recurso equivalente capaz de gerar ou alterar imagem ou som de pessoas.
+
+Serviços exclusivamente de e-mail, mensageria interpessoal ou videoconferência restrita estão fora dos arts. 16-B a 16-J (art. 16-O do Decreto nº 8.771/2016). Mesmo sem o módulo ativo, os deveres gerais do art. 16-A e a guarda de registros de acesso (MCI art. 15) são verificados por `governance` e `cloud` em todo provedor de aplicações.
+
 ## Modo de compatibilidade V1
 `full_audit` ativa todos os módulos:
-`core`, `legal`, `eca-digital`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
+`core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
 ## Saída do roteador
 - lista de módulos ativos;

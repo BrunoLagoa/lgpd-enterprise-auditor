@@ -40,6 +40,7 @@ This framework uses the **General Data Protection Law (LGPD)** as its primary le
 - **Official text (Planalto):** [Law No. 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
 - **Regulatory authority:** [ANPD](https://www.gov.br/anpd/) — since **Law No. 15.352/2026**, renamed National Data Protection **Agency** and placed under the regulatory-agency regime of Law No. 13.848/2019 (LGPD art. 55-A).
 - **Related statute:** [Digital Statute of the Child and Adolescent — Law No. 15.211/2025](https://www.gov.br/anpd/pt-br/assuntos/eca-digital), in force since 2026-03-17, regulated by Decree No. 12.880/2026 and enforced by ANPD.
+- **Digital platforms:** [Decree No. 12.975/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12975.htm) (updates the Internet Civil Framework regulation — duty of care, notice and takedown, ads, access-log retention) and [Decree No. 12.976/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12976.htm) (protection of women online), in force since 2026-07-20 and enforced by ANPD.
 
 ANPD regulations covered by the framework:
 
@@ -57,7 +58,7 @@ ANPD regulations covered by the framework:
 
 | Item | Value |
 |------|--------|
-| Last synchronization | `2026-08` |
+| Last synchronization | `2026-09` |
 
 ## How the project is organized
 
@@ -71,7 +72,8 @@ ANPD regulations covered by the framework:
 │   ├── lgpd-mobile.md
 │   ├── lgpd-ai-llm.md
 │   ├── lgpd-devsecops.md
-│   └── lgpd-eca-digital.md
+│   ├── lgpd-eca-digital.md
+│   └── lgpd-plataformas-digitais.md
 └── .agents/
     └── lgpd-enterprise-auditor/
         ├── core/
@@ -116,7 +118,7 @@ Use when you need full coverage:
 - command: `commands/lgpd-full-audit.md`
 - scenario: `full_audit`
 
-Activated modules: `core`, `legal`, `eca-digital`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
+Activated modules: `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
 ### 2) Scenario-based audit
 
@@ -128,6 +130,7 @@ Use for focused scope:
 - `lgpd-ai-llm` -> AI/LLM systems
 - `lgpd-devsecops` -> pipelines and supply chain
 - `lgpd-eca-digital` -> platforms accessed by children and adolescents (LGPD art. 14 + Digital Statute)
+- `lgpd-plataformas-digitais` -> internet application providers with third-party content, paid ads or image/voice-generating AI (Decrees 12.975/2026 and 12.976/2026)
 
 ## Available commands
 

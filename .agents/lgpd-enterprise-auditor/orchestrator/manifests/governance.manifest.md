@@ -2,7 +2,7 @@
 
 - `module`: governance
 - `required`: false
-- `inputs`: estrutura organizacional, políticas, processo de incidentes, gestão de terceiros
+- `inputs`: estrutura organizacional, registro das operações de tratamento (art. 37), políticas, processo de incidentes, gestão de terceiros
 - `prerequisites`: core, legal
 - `activates_when`: contexto corporativo, compliance contínuo, terceiros relevantes
-- `primary_outputs`: maturidade de governança, lacunas de accountability, plano organizacional
+- `primary_outputs`: maturidade de governança, registro das operações de tratamento e mapeamento de dados, lacunas de accountability, plano organizacional

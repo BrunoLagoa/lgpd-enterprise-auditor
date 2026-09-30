@@ -2,9 +2,9 @@
 
 Modelo do relatório exigido pelo **art. 31 da Lei nº 15.211/2025** dos provedores de aplicações de internet com **mais de 1.000.000 de usuários nessa faixa etária registrados, com conexão de internet no território nacional**. Publicação **semestral, em língua portuguesa, no sítio eletrônico do provedor**.
 
-As seções 3 a 9 abaixo cobrem os sete incisos do art. 31; as seções 1, 2 e 10 são apoio de auditoria.
+Mapeamento dos sete incisos do art. 31: I e II → seção 3.1; III → seção 4; IV → seção 3.2; V → seção 7.1; VI → seção 3.3; VII → seção 8; parágrafo único → seção 7.2. As demais seções (1, 2, corpo da 3, 5, 6, corpo da 7, 9 e 10) são apoio de auditoria e não substituem os incisos.
 
-**Primeiro ciclo:** publicação até **17/09/2026**, cobrindo 01/01 a 30/06/2026 — ou 17/03 a 30/06/2026 para provedores sem dados de janeiro e fevereiro.
+**Primeiro ciclo:** publicação até **17/09/2026**, cobrindo 01/01 a 30/06/2026 — ou 17/03 a 30/06/2026 para provedores sem dados de janeiro e fevereiro. **Prazo encerrado:** desde 18/09/2026, provedor acima do limiar sem relatório publicado está em não conformidade atual. Os ciclos seguintes são semestrais.
 
 Ver [[eca-digital]] para o módulo de auditoria correspondente.
 
