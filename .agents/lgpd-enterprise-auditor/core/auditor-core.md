@@ -1,7 +1,7 @@
-# Auditor Core (V2)
+# Auditor Core
 
 ## Objetivo
-Estabelecer os contratos canônicos da auditoria LGPD Enterprise V2, garantindo consistência entre módulos especialistas, scoring e relatórios.
+Estabelecer os contratos canônicos da auditoria LGPD Enterprise, garantindo consistência entre módulos especialistas, scoring e relatórios.
 
 ## Princípios obrigatórios
 - Não assumir conformidade sem evidência.
@@ -58,5 +58,5 @@ Resultado padrão por módulo:
 5. Calcular score por área e score global.
 6. Gerar relatório com formato obrigatório.
 
-## Compatibilidade V1
-O modo `full_audit` deve ativar os mesmos domínios cobertos pela V1 para manter paridade funcional durante a migração.
+## Cobertura completa
+O modo `full_audit` ativa todos os módulos e cobre os 17 domínios de auditoria definidos em `orchestrator/full-audit.md`, os mesmos da skill (`SKILL.md`).

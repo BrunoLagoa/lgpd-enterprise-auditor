@@ -1,4 +1,4 @@
-# Rights of Data Subject (V2)
+# Rights of Data Subject
 
 ## Objetivo
 Padronizar avaliação dos direitos do titular (arts. 17 a 22 da LGPD) e da transparência devida a ele (art. 9º).

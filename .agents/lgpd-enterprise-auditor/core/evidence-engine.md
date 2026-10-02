@@ -1,4 +1,4 @@
-# Evidence Engine (V2)
+# Evidence Engine
 
 ## Objetivo
 Padronizar a classificação de evidências para impedir conclusões sem comprovação e suportar auditoria rastreável.

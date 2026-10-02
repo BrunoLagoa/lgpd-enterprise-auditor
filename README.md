@@ -63,8 +63,8 @@ The framework (`.agents/lgpd-enterprise-auditor/`) is the same for every tool; o
 | `opencode` — OpenCode | `.opencode/commands/lgpd-*.md` | `.agents/skills/lgpd-enterprise-auditor/` |
 | `agents` — Codex, Gemini CLI and similar | — (no slash commands) | `.agents/skills/lgpd-enterprise-auditor/` (always installed) |
 
-- **Without the skill (default):** you run the audit through the slash commands (`/lgpd-saas`, `/lgpd-full-audit`…), which use the modular V2.
-- **With the skill:** the assistant can also start the audit from a plain request ("audit this project for LGPD"), loading the V1 monolith (`SKILL.md`).
+- **Without the skill (default):** you run the audit through the slash commands (`/lgpd-saas`, `/lgpd-full-audit`…), which run the modular framework (`.agents/lgpd-enterprise-auditor/`).
+- **With the skill:** the assistant can also start the audit from a plain request ("audit this project for LGPD"), loading the self-contained skill (`SKILL.md`).
 - Several tools in the same project are supported: run the installer once per tool. They share the framework folder.
 
 ### Update, check and uninstall
@@ -164,8 +164,7 @@ ANPD regulations covered by the framework:
         ├── orchestrator/
         ├── templates/
         ├── reports/
-        ├── validation/
-        └── legacy/
+        └── validation/
 ```
 
 ### Canonical source

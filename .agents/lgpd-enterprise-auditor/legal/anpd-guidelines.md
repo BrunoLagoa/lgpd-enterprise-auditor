@@ -1,4 +1,4 @@
-# ANPD Guidelines (V2)
+# ANPD Guidelines
 
 ## Objetivo
 Guiar a aderência regulatória contínua com foco em evidência auditável.

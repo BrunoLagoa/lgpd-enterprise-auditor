@@ -1,6 +1,6 @@
 ---
 name: lgpd-full-audit
-description: Executa auditoria LGPD completa em modo full_audit na V2 modular.
+description: Executa auditoria LGPD completa (full_audit), com todos os modulos ativos.
 license: MIT
 metadata:
   author: BrunoCastro
@@ -17,7 +17,7 @@ Antes de iniciar, se ainda nao estiver mapeado, solicite:
 - existencia de usuarios menores de 18 anos (ECA Digital);
 - intermediacao de conteudo de terceiros, anuncios/impulsionamento pagos ou IA que gera imagem/voz (plataformas digitais).
 
-Execute no modo `full_audit` com cobertura total da V2:
+Execute no modo `full_audit` com cobertura total:
 - `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
 Regras obrigatorias:

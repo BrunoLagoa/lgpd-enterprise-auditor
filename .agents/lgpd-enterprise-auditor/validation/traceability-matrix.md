@@ -1,6 +1,6 @@
-# Validation - V1 to V2 Traceability Matrix
+# Validação — matriz de rastreabilidade (domínios → módulos)
 
-| Domínio V1 | Módulo(s) V2 | Contratos do core usados |
+| Domínio de auditoria | Módulo(s) | Contratos do core usados |
 |---|---|---|
 | Mapeamento de dados | `governance` (registro das operações, art. 37), `legal` | `check_item`, `finding`, `reporting` |
 | Consentimento | `legal` (`legal-bases-engine.md`, art. 8º), `appsec` (cookies) | `check_item`, `finding` |

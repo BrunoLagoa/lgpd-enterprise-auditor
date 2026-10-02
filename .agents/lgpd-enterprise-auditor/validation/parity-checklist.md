@@ -1,49 +1,49 @@
-# Validation - Parity Checklist V1 to V2
+# Validação — checklist de paridade entre a skill e o framework modular
 
 ## Objetivo
-Validar que a V2 modular mantém cobertura e consistência funcional da V1.
+Validar que o framework modular (`.agents/lgpd-enterprise-auditor/`) e a skill (`SKILL.md`) mantêm a mesma cobertura e consistência funcional.
 
 ## Checklist de validação
-Última verificação completa: **2026-10-02**, item a item, contra `SKILL.md` e os módulos da V2. Ao alterar um item coberto aqui, desmarcar e reverificar antes de marcar de novo.
+Última verificação completa: **2026-10-02**, item a item, contra `SKILL.md` e os módulos do framework. Ao alterar um item coberto aqui, desmarcar e reverificar antes de marcar de novo.
 
-- [x] Todos os 17 domínios da V1 estão mapeados em módulos V2.
+- [x] Todos os 17 domínios de auditoria estão mapeados em módulos do framework (`validation/traceability-matrix.md`).
 - [x] Nenhum módulo redefine severidade fora do `core/severity-model.md`.
 - [x] Nenhum módulo redefine score fora do `core/scoring-engine.md`.
 - [x] Todos os achados usam contrato `finding`.
 - [x] Todos os itens avaliados usam contrato `check_item`.
 - [x] Relatório final segue `core/reporting-engine.md`.
 - [x] Toda não conformidade possui evidência associada.
-- [x] Evidência usa os dois eixos canônicos em V1 e V2: `evidence_type` (`ENCONTRADA | PARCIAL | AUSENTE`) e `evidence_source` (`TECNICA | DOCUMENTAL`).
-- [x] Rótulos de classificação final seguem o padrão canônico em V1 e V2: `CRITICO | BAIXO_NIVEL | PARCIALMENTE_CONFORME | ALTA_CONFORMIDADE | EXCELENTE`.
-- [x] Regra de área `NAO_APLICAVEL` e redistribuição proporcional de pesos idêntica em V1 (`SKILL.md`) e V2 (`core/scoring-engine.md`).
+- [x] Evidência usa os dois eixos canônicos na skill e no framework: `evidence_type` (`ENCONTRADA | PARCIAL | AUSENTE`) e `evidence_source` (`TECNICA | DOCUMENTAL`).
+- [x] Rótulos de classificação final seguem o padrão canônico na skill e no framework: `CRITICO | BAIXO_NIVEL | PARCIALMENTE_CONFORME | ALTA_CONFORMIDADE | EXCELENTE`.
+- [x] Regra de área `NAO_APLICAVEL` e redistribuição proporcional de pesos idêntica na skill (`SKILL.md`) e no framework (`core/scoring-engine.md`).
 - [x] Modo `full_audit` ativa todos os módulos.
 - [x] Matriz de ativação por cenário está coerente com o router.
-- [x] Bases legais distinguem art. 7º (dados pessoais) de art. 11 (sensíveis) em V1 e V2.
-- [x] Definição de dado sensível idêntica ao art. 5º, II em V1 e V2 (inclui filiação a sindicato ou a organização de caráter religioso, filosófico ou político).
-- [x] Requisitos de consentimento (art. 8º) com checklist em V1 e V2 (`legal/legal-bases-engine.md`).
-- [x] Cookies e tracking com checklist atômico na V2 (`appsec/owasp-api.md`), equivalente ao domínio 5 da V1.
-- [x] Transparência e política de privacidade (art. 9º) cobertas em V1 e V2 (`legal/rights-of-data-subject.md`).
-- [x] Prazo de atendimento ao titular (art. 19: imediato em formato simplificado ou declaração completa em até 15 dias) presente em V1 e V2.
-- [x] Registro das operações de tratamento (art. 37), com forma simplificada para pequeno porte (Res. CD/ANPD nº 2/2022), presente em V1 e V2 (`governance/dpo-framework.md`).
-- [x] Dados pessoais em logs de aplicação e de observabilidade cobertos na V2 (`appsec/owasp-api.md` e `cloud/aws-audit.md`), equivalente ao domínio 11 da V1.
-- [x] Dados de crianças/adolescentes (art. 14) cobertos em V1 (`SKILL.md`) e V2 (`legal/children-adolescents.md`).
-- [x] Transferência internacional (arts. 33-36) coberta em V1 e V2 (`legal/international-transfer.md`).
+- [x] Bases legais distinguem art. 7º (dados pessoais) de art. 11 (sensíveis) na skill e no framework.
+- [x] Definição de dado sensível idêntica ao art. 5º, II na skill e no framework (inclui filiação a sindicato ou a organização de caráter religioso, filosófico ou político).
+- [x] Requisitos de consentimento (art. 8º) com checklist na skill e no framework (`legal/legal-bases-engine.md`).
+- [x] Cookies e tracking com checklist atômico no framework (`appsec/owasp-api.md`), equivalente ao domínio 5 da skill.
+- [x] Transparência e política de privacidade (art. 9º) cobertas na skill e no framework (`legal/rights-of-data-subject.md`).
+- [x] Prazo de atendimento ao titular (art. 19: imediato em formato simplificado ou declaração completa em até 15 dias) presente na skill e no framework.
+- [x] Registro das operações de tratamento (art. 37), com forma simplificada para pequeno porte (Res. CD/ANPD nº 2/2022), presente na skill e no framework (`governance/dpo-framework.md`).
+- [x] Dados pessoais em logs de aplicação e de observabilidade cobertos no framework (`appsec/owasp-api.md` e `cloud/aws-audit.md`), equivalente ao domínio 11 da skill.
+- [x] Dados de crianças/adolescentes (art. 14) cobertos na skill (`SKILL.md`) e no framework (`legal/children-adolescents.md`).
+- [x] Transferência internacional (arts. 33-36) coberta na skill e no framework (`legal/international-transfer.md`).
 - [x] Prazo de comunicação de incidente (Res. CD/ANPD nº 15/2024, 3 dias úteis) presente em governança e template de incidente.
-- [x] Regulamento do encarregado (Res. CD/ANPD nº 18/2024 — ato escrito, datado e assinado; DPO pessoa jurídica; dispensa de indicação para pequeno porte) presente em V1 (`SKILL.md`) e V2 (`governance/dpo-framework.md`).
-- [x] Cláusulas-padrão contratuais (Res. CD/ANPD nº 19/2024) com prazo de adaptação encerrado em 23/08/2025 refletidas em V1, em `legal/international-transfer.md` e no `templates/dpa-template.md`.
-- [x] Adequação da União Europeia (Res. CD/ANPD nº 32/2026) reconhecida em V1 e V2, com a ressalva de que dispensa apenas o mecanismo do art. 33.
-- [x] ANPD denominada **Agência** Nacional de Proteção de Dados e submetida ao regime da Lei nº 13.848/2019 (Lei nº 15.352/2026, art. 55-A) em V1 e V2, preservando sua condição de autarquia de natureza especial e sem "corrigir" o termo legal *autoridade nacional*.
-- [x] ECA Digital (Lei nº 15.211/2025, Decretos nº 12.622/2025 e nº 12.880/2026) coberto em V1 (`SKILL.md`, domínio 16) e V2 (`legal/eca-digital.md` + manifesto `eca-digital`).
-- [x] Relatório semestral de transparência do art. 31 (limiar de 1.000.000 de usuários dessa faixa etária com conexão no País; sete incisos; primeiro ciclo até 17/09/2026, prazo já encerrado) presente em V1, no módulo `eca-digital` e no `templates/eca-transparency-report-template.md`.
-- [x] Vedação à autodeclaração de idade citada com a base correta em V1 e V2: expressa no art. 9º, §1º para conteúdo impróprio; nos demais casos, insuficiência perante os arts. 10, 12 e 14.
+- [x] Regulamento do encarregado (Res. CD/ANPD nº 18/2024 — ato escrito, datado e assinado; DPO pessoa jurídica; dispensa de indicação para pequeno porte) presente na skill (`SKILL.md`) e no framework (`governance/dpo-framework.md`).
+- [x] Cláusulas-padrão contratuais (Res. CD/ANPD nº 19/2024) com prazo de adaptação encerrado em 23/08/2025 refletidas na skill, em `legal/international-transfer.md` e no `templates/dpa-template.md`.
+- [x] Adequação da União Europeia (Res. CD/ANPD nº 32/2026) reconhecida na skill e no framework, com a ressalva de que dispensa apenas o mecanismo do art. 33.
+- [x] ANPD denominada **Agência** Nacional de Proteção de Dados e submetida ao regime da Lei nº 13.848/2019 (Lei nº 15.352/2026, art. 55-A) na skill e no framework, preservando sua condição de autarquia de natureza especial e sem "corrigir" o termo legal *autoridade nacional*.
+- [x] ECA Digital (Lei nº 15.211/2025, Decretos nº 12.622/2025 e nº 12.880/2026) coberto na skill (`SKILL.md`, domínio 16) e no framework (`legal/eca-digital.md` + manifesto `eca-digital`).
+- [x] Relatório semestral de transparência do art. 31 (limiar de 1.000.000 de usuários dessa faixa etária com conexão no País; sete incisos; primeiro ciclo até 17/09/2026, prazo já encerrado) presente na skill, no módulo `eca-digital` e no `templates/eca-transparency-report-template.md`.
+- [x] Vedação à autodeclaração de idade citada com a base correta na skill e no framework: expressa no art. 9º, §1º para conteúdo impróprio; nos demais casos, insuficiência perante os arts. 10, 12 e 14.
 - [x] Os três cortes etários preservados sem unificação: criança até 12 anos incompletos (LGPD art. 14), vinculação de conta até 16 anos (ECA Digital art. 24) e conteúdo impróprio a menores de 18 anos (art. 9º).
 - [x] Sanções do art. 35 descritas com a repartição de competência correta: advertência e multa pela ANPD; suspensão e proibição pelo Poder Judiciário.
-- [x] Modulação e dispensa editorial do art. 39 consideradas antes de emitir achado, em V1 e V2.
+- [x] Modulação e dispensa editorial do art. 39 consideradas antes de emitir achado, na skill e no framework.
 - [x] Modo `full_audit` ativa também os módulos `eca-digital` e `plataformas-digitais`.
-- [x] Deveres de plataformas digitais (Decreto nº 12.975/2026 — Decreto nº 8.771/2016, arts. 15-A, 16-A a 16-P, 19-A e 20-A — e Decreto nº 12.976/2026) cobertos em V1 (`SKILL.md`, domínio 17) e V2 (`legal/plataformas-digitais.md` + manifesto `plataformas-digitais`).
-- [x] Exclusões do art. 16-O, regime de ordem judicial para crimes contra a honra (art. 16-J) e regra de que conteúdo isolado não caracteriza falha sistêmica consideradas antes de emitir achado, em V1 e V2.
+- [x] Deveres de plataformas digitais (Decreto nº 12.975/2026 — Decreto nº 8.771/2016, arts. 15-A, 16-A a 16-P, 19-A e 20-A — e Decreto nº 12.976/2026) cobertos na skill (`SKILL.md`, domínio 17) e no framework (`legal/plataformas-digitais.md` + manifesto `plataformas-digitais`).
+- [x] Exclusões do art. 16-O, regime de ordem judicial para crimes contra a honra (art. 16-J) e regra de que conteúdo isolado não caracteriza falha sistêmica consideradas antes de emitir achado, na skill e no framework.
 - [x] Prazos do Decreto nº 12.976/2026 preservados sem unificação: conteúdo íntimo em até 2 horas (art. 7º, §1º); prazos transitórios de 6 horas e 24 horas e 24 horas após contestação (art. 12).
-- [x] Guarda de registros de acesso por 6 meses com porta lógica (MCI art. 15 e art. 15-A) presente em V1, em `cloud/aws-audit.md` e em `legal/plataformas-digitais.md`.
+- [x] Guarda de registros de acesso por 6 meses com porta lógica (MCI art. 15 e art. 15-A) presente na skill, em `cloud/aws-audit.md` e em `legal/plataformas-digitais.md`.
 - [x] Normas não vigentes (ex.: PL nº 2338/2023) aparecem apenas em seções "Em monitoramento" e nunca originam `NAO_CONFORME`.
 
 ## Evidências de teste esperadas

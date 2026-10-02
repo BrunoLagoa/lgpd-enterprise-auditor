@@ -1,4 +1,4 @@
-# Relatório Executivo (V2)
+# Relatório Executivo
 
 > Visão por público do relatório canônico definido em `core/reporting-engine.md`. Não substitui as 8 seções obrigatórias, que continuam sendo entregues na ordem canônica.
 

@@ -1,4 +1,4 @@
-# Reporting Engine (V2)
+# Reporting Engine
 
 ## Objetivo
 Definir formato obrigatório e ordem de construção do relatório final.
