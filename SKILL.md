@@ -1,3 +1,12 @@
+---
+name: lgpd-enterprise-auditor
+description: Auditoria de conformidade LGPD (Lei nº 13.709/2018) orientada a evidências, com ECA Digital e plataformas digitais — checklist em 17 domínios, severidade, score 0–100 e relatório com plano de adequação. Use quando o usuário pedir auditoria, diagnóstico ou adequação à LGPD/ANPD de um sistema, SaaS, site, app mobile, pipeline DevSecOps ou sistema de IA/LLM.
+license: MIT
+metadata:
+  author: BrunoCastro
+  version: "1.1.0"
+---
+
 # 🛡️ LGPD ENTERPRISE AUDITOR FRAMEWORK
 ## Arquivo: SKILL.md
 

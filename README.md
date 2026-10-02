@@ -58,7 +58,7 @@ ANPD regulations covered by the framework:
 
 | Item | Value |
 |------|--------|
-| Last synchronization | `2026-09` |
+| Last synchronization | `2026-10` |
 
 ## How the project is organized
 

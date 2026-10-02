@@ -57,7 +57,7 @@ Regulamentos da ANPD considerados pelo framework:
 
 | Item | Valor |
 |------|--------|
-| Última sincronização | `2026-09` |
+| Última sincronização | `2026-10` |
 
 ## Como o projeto está organizado
 

@@ -17,7 +17,7 @@ Documentation is bilingual but the split is deliberate:
 
 The repository contains two versions of the same auditor; both must stay functionally equivalent ("parity"):
 
-- **V1 — monolith**: `SKILL.md` (~900 lines). A single self-contained prompt covering the full checklist, severity, scoring, and report format. It is the actual V1 source of truth.
+- **V1 — monolith**: `SKILL.md` (~900 lines). A single self-contained prompt covering the full checklist, severity, scoring, and report format. It is the actual V1 source of truth. It starts with the same YAML frontmatter as `commands/*.md` (`name: lgpd-enterprise-auditor`) so it can be installed as a Claude Code skill (`.claude/skills/lgpd-enterprise-auditor/SKILL.md`); keep `name` equal to that directory name.
 - **V2 — modular**: `.agents/lgpd-enterprise-auditor/` decomposed into layers. This is the canonical structure to extend.
 - `.agents/lgpd-enterprise-auditor/legacy/v1-monolith.md` is **not** a copy of `SKILL.md` — it is a short compatibility bridge that points back to `SKILL.md` and enumerates the **17 V1 domains** that `full_audit` must cover (mapeamento de dados, consentimento, direitos do titular, política de privacidade, cookies e tracking, segurança da informação, cloud security, mobile security, APIs e integrações, DevSecOps, logs e observabilidade, IA/LLM, governança, compartilhamento de dados, retenção e exclusão, ECA Digital, plataformas digitais).
 
@@ -80,7 +80,7 @@ Whenever you make a substantive update to the framework (audit logic, modules, c
 - `README.md` → the `| Last synchronization | \`YYYY-MM\` |` row
 - `README.pt-BR.md` → the `| Última sincronização | \`YYYY-MM\` |` row
 
-Keep the value identical in both files (currently `2026-09`). This row signals when the framework was last aligned with LGPD/ANPD; a stale date is misleading, so never skip it.
+Keep the value identical in both files (currently `2026-10`). This row signals when the framework was last aligned with LGPD/ANPD; a stale date is misleading, so never skip it.
 
 ## Where normative changes ripple
 
