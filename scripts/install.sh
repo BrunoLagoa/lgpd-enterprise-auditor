@@ -149,7 +149,7 @@ Ações:
 
 Opções:
   --target <claude|cursor|vscode|opencode|agents>  Ferramenta (obrigatória com --non-interactive no install)
-  --with-skill            Instala também a skill (V1 monolítica)
+  --with-skill            Instala também a skill
   --no-skill              Não instala a skill (padrão)
   --project-dir <dir>     Projeto de destino (padrão: raiz git do diretório atual)
   --version <ref|local>   Tag, branch ou "local" (padrão: última tag publicada)
@@ -683,7 +683,7 @@ run_install() {
   elif [[ -z "$WITH_SKILL" ]]; then
     WITH_SKILL=0
     if [[ "$NON_INTERACTIVE" -eq 0 ]]; then
-      prompt_out "2 - Instalar também a skill (V1 monolítica)?"$'\n'
+      prompt_out "2 - Instalar também a skill?"$'\n'
       prompt_out "    Permite acionar a auditoria em linguagem natural, sem slash command."$'\n'
       if confirm "    Instalar a skill?" "n"; then WITH_SKILL=1; fi
     fi
