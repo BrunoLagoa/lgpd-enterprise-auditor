@@ -106,7 +106,7 @@ Day-to-day work is committed straight to `main`. When a branch does exist and th
 
 1. `git fetch --prune origin`, then identify the merged branch: the current branch if it is not `main`; otherwise the branch named by the user, or the head branch of the most recently merged PR (`gh pr list --state merged --limit 1 --json headRefName,number,mergedAt`).
 2. Verify it really is merged before deleting anything: `gh pr view <branch> --json state,mergedAt` must report `MERGED`, or the branch must appear in `git branch --merged origin/main`. If neither confirms it, **stop and ask** — never delete unverified work.
-3. `git switch main && git pull --ff-only origin main`.
+3. `git switch main && git fetch origin && git merge --ff-only origin/main` (a plain `git pull` can fail here with "Cannot fast-forward to multiple branches").
 4. Delete the local branch with `git branch -d <branch>`. Use `-D` only when step 2 confirmed a squash or rebase merge through `gh` (the repo allows both, so `-d` can refuse a branch that is in fact merged).
 5. Delete the remote branch with `git push origin --delete <branch>`. The repo does not auto-delete head branches on merge (`deleteBranchOnMerge: false`); if the branch is already gone remotely, treat it as done.
 6. `git fetch --prune origin` and report what was deleted, locally and on `origin`, plus the commit `main` is now at.

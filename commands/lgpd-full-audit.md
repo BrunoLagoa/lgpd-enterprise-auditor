@@ -4,7 +4,7 @@ description: Executa auditoria LGPD completa (full_audit), com todos os modulos 
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # LGPD Full Audit
