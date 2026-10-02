@@ -85,6 +85,12 @@ The orchestrator activates by module ID; the scoring engine computes by area ID.
 - `install.ps1` and `tests/test-install.ps1` must keep their UTF-8 BOM (Windows PowerShell 5.1 misreads accented text without it); files the installers write must be UTF-8 **without** BOM, or the YAML frontmatter breaks.
 - Tests: `scripts/tests/test-install.sh` and `scripts/tests/test-install.ps1` run offline against the local clone (`--version local`). CI (`.github/workflows/install.yml`) runs ShellCheck, the bash tests on Ubuntu and on macOS `/bin/bash` 3.2, and the PowerShell tests on Windows with both `pwsh` and `powershell` 5.1.
 
+## Versioning and releases
+
+- There is **one project version**: `metadata.version` in `SKILL.md`, repeated in every `commands/*.md`. They must always be equal; `scripts/tests/test-versions.sh` enforces it in CI (`.github/workflows/versions.yml`), together with a matching `## [X.Y.Z]` section in `CHANGELOG.md` and, on tag pushes, tag `vX.Y.Z`.
+- `CHANGELOG.md` follows Keep a Changelog in **Brazilian Portuguese** (sections `Adicionado`, `Alterado`, `Corrigido`, `Removido`). Every user-visible change goes under `## [Não lançado]` in the same commit.
+- To release: move the `[Não lançado]` entries to a new `## [X.Y.Z] - YYYY-MM-DD` section, bump `metadata.version` in `SKILL.md` and all `commands/*.md`, update the compare links at the bottom of the changelog, commit, then tag `vX.Y.Z` and create the GitHub Release from that changelog section. The installer's default version is the latest `v*` tag, so an untagged change never reaches users who install with the default.
+
 ## Git attribution (mandatory)
 
 Never sign anything as Claude or any AI agent. Commits, merges, rebases, tags, pull requests, PR descriptions, reviews and comments carry **only the user's signature** (the configured `git user.name` / `user.email`):

@@ -94,6 +94,14 @@ curl -fsSL https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/
 
 Each installation records a manifest in `.agents/lgpd-enterprise-auditor/.install/<tool>.json`; `update`, `check` and `uninstall` rely on it and never touch files that are not part of the framework.
 
+When you accept the backup offered on reinstall, a copy goes to `.lgpd-auditor-backup/` in your project — add it to your `.gitignore`:
+
+```gitignore
+.lgpd-auditor-backup/
+```
+
+Release notes for each version are in the [CHANGELOG](./CHANGELOG.md).
+
 ### Manual installation
 
 Copy `.agents/lgpd-enterprise-auditor/` to the root of your project and the files in `commands/` to your tool's commands folder (table above). For the skill, copy `SKILL.md` to `<skills folder>/lgpd-enterprise-auditor/SKILL.md`.

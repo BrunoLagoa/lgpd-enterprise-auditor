@@ -507,6 +507,7 @@ function Backup-Existing([string]$Name) {
     if (Test-SafeRelPath ([string]$manifest.skillDir)) { Copy-RelPath ([string]$manifest.skillDir) $backupDir }
   }
   Write-Info "Backup criado em $backupDir"
+  Write-Info "Dica: adicione .lgpd-auditor-backup/ ao .gitignore do projeto."
 }
 
 function Install-Framework {

@@ -582,6 +582,7 @@ backup_existing() {
     fi
   fi
   log_info "Backup criado em ${backup_dir}"
+  log_info "Dica: adicione .lgpd-auditor-backup/ ao .gitignore do projeto."
 }
 
 install_framework() {
