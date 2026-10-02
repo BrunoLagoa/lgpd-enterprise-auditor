@@ -111,7 +111,7 @@ Ações:
 
 Opções:
   -Target <claude|cursor|vscode|opencode|agents>  Ferramenta (obrigatória com -NonInteractive no install)
-  -WithSkill              Instala também a skill (V1 monolítica)
+  -WithSkill              Instala também a skill
   -NoSkill                Não instala a skill (padrão)
   -ProjectDir <dir>       Projeto de destino (padrão: raiz git do diretório atual)
   -Version <ref|local>    Tag, branch ou "local" (padrão: última tag publicada)
@@ -600,7 +600,7 @@ function Invoke-Install {
   } elseif (-not $script:Skill) {
     $script:Skill = "0"
     if (-not $NonInteractive) {
-      Write-Host "2 - Instalar também a skill (V1 monolítica)?"
+      Write-Host "2 - Instalar também a skill?"
       Write-Host "    Permite acionar a auditoria em linguagem natural, sem slash command."
       if (Confirm-Choice "    Instalar a skill?" "n") { $script:Skill = "1" }
     }

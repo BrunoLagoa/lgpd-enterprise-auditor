@@ -24,6 +24,7 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 - Relatórios por público (`reports/`) passam a remeter ao relatório canônico; normas em monitoramento ficam só em `recomendacoes_tecnicas`.
 - `ai-llm`: rotulagem de conteúdo sintético movida para "Em monitoramento"; orientações preliminares da ANPD no `eca-digital` marcadas como não vinculantes.
 - README da V2 lista os cenários `web_site` e `full_audit`; evidências de teste esperadas incluem `digital_platform`.
+- Instaladores: a pergunta do assistente passa a ser "Instalar também a skill?", sem o rótulo "(V1 monolítica)", também na ajuda de `--with-skill` / `-WithSkill`.
 
 ### Corrigido
 - `commands/lgpd-plataformas-digitais.md` estava na versão `1.0.0`; alinhado em `1.1.0`.
