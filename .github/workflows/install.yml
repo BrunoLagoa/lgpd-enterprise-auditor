@@ -34,14 +34,14 @@ jobs:
         run: ${{ matrix.bash }} scripts/tests/test-install.sh
 
   powershell:
-    strategy:
-      fail-fast: false
-      matrix:
-        # pwsh = PowerShell 7; powershell = Windows PowerShell 5.1 (padrão do Windows).
-        shell: [pwsh, powershell]
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Testes do install.ps1
-        shell: ${{ matrix.shell }}
+      - name: Testes do install.ps1 (PowerShell 7)
+        shell: pwsh
+        run: ./scripts/tests/test-install.ps1
+      # Windows PowerShell 5.1 é o padrão do Windows; roda mesmo se o passo anterior falhar.
+      - name: Testes do install.ps1 (Windows PowerShell 5.1)
+        if: success() || failure()
+        shell: powershell
         run: ./scripts/tests/test-install.ps1
