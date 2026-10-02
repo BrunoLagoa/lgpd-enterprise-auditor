@@ -27,6 +27,8 @@ function New-Project([string]$Name) {
 }
 
 function Invoke-Installer {
+  # Erros esperados do instalador vão para o stderr; no 5.1, com Stop, isso viraria exceção.
+  $ErrorActionPreference = "Continue"
   $output = & $Shell -NoProfile -ExecutionPolicy Bypass -File $Installer @args -ProjectDir $script:Current 2>&1
   $script:LastLog = ($output | Out-String)
   return $LASTEXITCODE
@@ -151,3 +153,4 @@ if ($script:Failures -gt 0) {
   exit 1
 }
 Write-Host "Todos os testes passaram."
+exit 0
