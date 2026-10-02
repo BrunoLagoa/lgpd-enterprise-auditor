@@ -27,4 +27,4 @@ Regras obrigatorias:
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
 - validar risco de prompt injection e vazamento contextual;
 - exigir base legal para tratamento de dados em IA;
-- consolidar score e relatorio no padrao V2.
+- consolidar score e relatorio no padrao de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.

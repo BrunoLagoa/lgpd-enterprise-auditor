@@ -1,4 +1,4 @@
-# Severity Model (V2)
+# Severity Model
 
 ## Objetivo
 Normalizar severidade dos achados para priorização técnica e jurídica consistente.

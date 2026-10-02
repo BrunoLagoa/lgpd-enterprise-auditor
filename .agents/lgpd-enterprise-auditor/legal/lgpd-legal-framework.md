@@ -1,4 +1,4 @@
-# LGPD Legal Framework (V2)
+# LGPD Legal Framework
 
 ## Objetivo
 Consolidar fundamentos legais que devem orientar toda auditoria.

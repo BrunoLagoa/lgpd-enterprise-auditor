@@ -1,7 +1,7 @@
-# Router (V2)
+# Router
 
 ## Objetivo
-Ativar apenas módulos relevantes ao contexto do projeto, preservando cobertura completa no modo legado.
+Ativar apenas módulos relevantes ao contexto do projeto, preservando cobertura completa no modo `full_audit`.
 
 ## Entradas mínimas
 - stack (frontend/backend/mobile);
@@ -49,8 +49,8 @@ Adicionar `plataformas-digitais` a **qualquer** cenário quando o auditado for p
 
 Serviços exclusivamente de e-mail, mensageria interpessoal ou videoconferência restrita estão fora dos arts. 16-B a 16-J (art. 16-O do Decreto nº 8.771/2016). Mesmo sem o módulo ativo, os deveres gerais do art. 16-A e a guarda de registros de acesso (MCI art. 15) são verificados por `governance` e `cloud` em todo provedor de aplicações.
 
-## Modo de compatibilidade V1
-`full_audit` ativa todos os módulos:
+## Auditoria completa
+`full_audit` ativa todos os módulos (cobertura em `orchestrator/full-audit.md`):
 `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
 ## Saída do roteador

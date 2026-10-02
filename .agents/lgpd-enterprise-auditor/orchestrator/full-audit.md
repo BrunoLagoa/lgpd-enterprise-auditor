@@ -1,18 +1,18 @@
-# Legacy V1 Monolith Compatibility
+# Full Audit — cobertura completa
 
 ## Objetivo
-Preservar referência operacional da V1 enquanto a V2 modular entra em produção.
+Definir a cobertura obrigatória do modo `full_audit` e sua equivalência com a skill (`SKILL.md`), a versão autocontida do auditor.
 
-## Fonte de verdade da V1
-- Arquivo monolítico original: `SKILL.md`, na raiz do repositório do framework.
-- Em um projeto auditado, a V1 só existe se a skill tiver sido instalada (opcional no `scripts/install.sh` / `scripts/install.ps1`). Procure nesta ordem:
+## Skill (`SKILL.md`)
+- Arquivo de origem: `SKILL.md`, na raiz do repositório do framework.
+- Em um projeto auditado, a skill só existe se tiver sido instalada (opcional no `scripts/install.sh` / `scripts/install.ps1`). Procure nesta ordem:
   1. `.claude/skills/lgpd-enterprise-auditor/SKILL.md` (Claude Code);
   2. `.agents/skills/lgpd-enterprise-auditor/SKILL.md` (Cursor, VS Code + Copilot, OpenCode, Codex, Gemini CLI e similares);
   3. `SKILL.md` na raiz do projeto (cópia manual).
-- A ausência da V1 não bloqueia a auditoria: a V2 modular cobre os 17 domínios abaixo por conta própria.
+- A ausência da skill não bloqueia a auditoria: o framework modular cobre os 17 domínios abaixo por conta própria.
 
-## Regra de compatibilidade
-- O modo `full_audit` da V2 deve cobrir os mesmos 17 domínios da V1:
+## Domínios obrigatórios
+- O modo `full_audit` cobre os 17 domínios de auditoria, os mesmos da skill:
   1. mapeamento de dados
   2. consentimento
   3. direitos do titular
@@ -31,7 +31,7 @@ Preservar referência operacional da V1 enquanto a V2 modular entra em produçã
   16. proteção de crianças e adolescentes no ambiente digital (ECA Digital — Lei nº 15.211/2025)
   17. plataformas digitais e conteúdo de terceiros (Decretos nº 12.975/2026 e nº 12.976/2026)
 
-## Critérios mínimos de paridade
+## Critérios mínimos de equivalência com a skill
 - manter classificação de severidade em 4 níveis;
 - manter score global 0-100 e classificação final canônica;
 - manter formato obrigatório do relatório;

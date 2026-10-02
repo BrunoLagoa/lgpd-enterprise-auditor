@@ -1,4 +1,4 @@
-# Scoring Engine (V2)
+# Scoring Engine
 
 ## Objetivo
 Padronizar cálculo e classificação do score LGPD em escala 0-100.
@@ -49,7 +49,7 @@ O relatório deve declarar em `score_lgpd` as áreas `NAO_APLICAVEL`, a justific
 - `95-100`: `EXCELENTE`
 
 ## Normalização de rótulos
-Para evitar ambiguidades da V1, os relatórios devem usar exatamente os rótulos canônicos acima.
+Para evitar ambiguidades, os relatórios devem usar exatamente os rótulos canônicos acima.
 
 ## Convenção de identificadores
 - IDs de módulo usam kebab-case (ex.: `ai-llm`).

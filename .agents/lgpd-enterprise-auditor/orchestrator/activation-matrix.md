@@ -1,4 +1,4 @@
-# Activation Matrix (V2)
+# Activation Matrix
 
 ## Matriz por cenário
 
@@ -11,7 +11,7 @@
 | Pipeline (GitHub Actions + Docker + K8s) | X | X |  |  |  | X | X |  | X |  |
 | Plataforma com público infantojuvenil (ECA Digital) | X | X | X |  | X |  | X | X |  |  |
 | Plataforma digital com conteúdo de terceiros (Decretos nº 12.975 e 12.976/2026) | X | X |  | X | X | X | X |  |  |  |
-| Full Audit (compatibilidade V1) | X | X | X | X | X | X | X | X | X | X |
+| Full Audit (cobertura completa) | X | X | X | X | X | X | X | X | X | X |
 
 Identificadores de cenário: `saas_web`, `web_site`, `ai_llm_system`, `mobile_app`, `devsecops_pipeline`, `eca_digital_platform`, `digital_platform`, `full_audit`.
 

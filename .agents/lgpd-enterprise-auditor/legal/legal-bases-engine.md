@@ -1,4 +1,4 @@
-# Legal Bases Engine (V2)
+# Legal Bases Engine
 
 ## Objetivo
 Definir validação de base legal por operação de tratamento, distinguindo dados pessoais (art. 7º) de dados pessoais sensíveis (art. 11).

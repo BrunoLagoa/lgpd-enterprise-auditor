@@ -1,7 +1,7 @@
-# LGPD Enterprise Auditor Framework V2
+# LGPD Enterprise Auditor — framework modular
 
 ## Visão geral
-Esta V2 modular organiza a auditoria em camadas para melhorar manutenção, escalabilidade e especialização sem perder compatibilidade com a V1.
+O framework organiza a auditoria em camadas para facilitar manutenção, escalabilidade e especialização, com cobertura equivalente à da skill (`SKILL.md`).
 
 ## Estrutura
 - `core/`: contratos canônicos (evidência, severidade, score, relatório).
@@ -12,11 +12,10 @@ Esta V2 modular organiza a auditoria em camadas para melhorar manutenção, esca
 - `mobile/`: segurança/privacidade mobile.
 - `devsecops/`: CI/CD, supply chain, containers e Kubernetes.
 - `ai-llm/`: riscos de IA generativa, RAG e retenção.
-- `orchestrator/`: roteamento de módulos por cenário.
+- `orchestrator/`: roteamento de módulos por cenário e cobertura do `full_audit` (`full-audit.md`).
 - `templates/`: modelos de políticas e artefatos de conformidade.
 - `reports/`: formatos de relatório por público.
-- `legacy/`: ponte de compatibilidade V1.
-- `validation/`: validação de paridade V1->V2.
+- `validation/`: checklist de paridade com a skill e matriz de rastreabilidade dos domínios.
 
 ## Fluxo de execução
 1. Capturar contexto do projeto (stack, dados, integrações).
@@ -27,7 +26,7 @@ Esta V2 modular organiza a auditoria em camadas para melhorar manutenção, esca
 
 ## Modo de uso
 - Modo direcionado: ativação por cenário (`saas_web`, `web_site`, `mobile_app`, `ai_llm_system`, `devsecops_pipeline`, `eca_digital_platform`, `digital_platform`).
-- Modo legado (`full_audit`): cobertura equivalente à V1 para auditoria completa.
+- Auditoria completa (`full_audit`): ativa todos os módulos e cobre os 17 domínios de auditoria.
 
 ## Convenções de nomenclatura
 - Módulos: kebab-case (ex.: `ai-llm`).
@@ -42,7 +41,7 @@ Esta V2 modular organiza a auditoria em camadas para melhorar manutenção, esca
 - Pipeline (GitHub Actions/Docker/K8s): `core`, `legal`, `devsecops`, `cloud`, `appsec`.
 - Plataforma com público infantojuvenil (ECA Digital): `core`, `legal`, `eca-digital`, `governance`, `appsec`, `mobile`.
 - Plataforma digital com conteúdo de terceiros (Decretos nº 12.975 e 12.976/2026): `core`, `legal`, `plataformas-digitais`, `governance`, `appsec`, `cloud`.
-- Auditoria completa (`full_audit`, paridade com a V1): `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
+- Auditoria completa (`full_audit`): `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
 ## Norma vigente x norma em monitoramento
 - Só gera `finding` e `check_item` com status `NAO_CONFORME` a norma **vigente**.
