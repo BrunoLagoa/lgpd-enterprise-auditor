@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para sites e landing pages.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # LGPD Web Site / Landing Page
