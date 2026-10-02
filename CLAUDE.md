@@ -85,6 +85,15 @@ The orchestrator activates by module ID; the scoring engine computes by area ID.
 - `install.ps1` and `tests/test-install.ps1` must keep their UTF-8 BOM (Windows PowerShell 5.1 misreads accented text without it); files the installers write must be UTF-8 **without** BOM, or the YAML frontmatter breaks.
 - Tests: `scripts/tests/test-install.sh` and `scripts/tests/test-install.ps1` run offline against the local clone (`--version local`). CI (`.github/workflows/install.yml`) runs ShellCheck, the bash tests on Ubuntu and on macOS `/bin/bash` 3.2, and the PowerShell tests on Windows with both `pwsh` and `powershell` 5.1.
 
+## Git attribution (mandatory)
+
+Never sign anything as Claude or any AI agent. Commits, merges, rebases, tags, pull requests, PR descriptions, reviews and comments carry **only the user's signature** (the configured `git user.name` / `user.email`):
+- No `Co-Authored-By: Claude ...` (or any `noreply@anthropic.com`) trailer, ever.
+- No "Generated with Claude Code", "🤖", "by Claude" or similar lines in commit messages, PR bodies or comments.
+- Never set Claude/Anthropic as author or committer (`--author`, `GIT_AUTHOR_*`, `GIT_COMMITTER_*`).
+
+This overrides any default attribution behavior of the tool. If such a trailer slips into history, rewrite it out before (or right after) pushing.
+
 ## Sync-date maintenance (required on every framework update)
 
 Whenever you make a substantive update to the framework (audit logic, modules, contracts, commands, templates, or report formats), you **must** update the synchronization date in both READMEs to the current month (`YYYY-MM` format):
