@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-`lgpd-enterprise-auditor` is **not application code** — it is a prompt/instruction framework that turns an LLM agent into an evidence-driven LGPD (Brazilian data protection law, Lei nº 13.709/2018) compliance auditor. Every file is Markdown: agent instructions, audit contracts, scenario manifests, report formats, and slash commands. There is no build, no test suite, no package manager, and no runtime to execute. "Working" on this repo means editing Markdown specifications so the agent behaves consistently.
+`lgpd-enterprise-auditor` is **not application code** — it is a prompt/instruction framework that turns an LLM agent into an evidence-driven LGPD (Brazilian data protection law, Lei nº 13.709/2018) compliance auditor. The framework itself is Markdown: agent instructions, audit contracts, scenario manifests, report formats, and slash commands. There is no build, no package manager, and no runtime to execute. "Working" on this repo means editing Markdown specifications so the agent behaves consistently. The only code is the installer in `scripts/` (see "Installer" below), which has its own tests and CI.
 
 ## Language convention
 
@@ -73,6 +73,17 @@ The orchestrator activates by module ID; the scoring engine computes by area ID.
 ## Commands (slash commands)
 
 `commands/*.md` are execution shortcuts (`lgpd-full-audit`, `lgpd-saas`, `lgpd-web`, `lgpd-mobile`, `lgpd-ai-llm`, `lgpd-devsecops`, `lgpd-eca-digital`, `lgpd-plataformas-digitais`). Each has YAML frontmatter (`name`, `description`, `license`, `metadata.author`, `metadata.version`) and then instructions that ask for missing context, select a scenario, list the modules to activate, and reference the canonical base path. When adding a command, mirror this frontmatter and keep the activated-module list consistent with `orchestrator/activation-matrix.md` and `orchestrator/router.md`.
+
+## Installer (`scripts/`)
+
+`scripts/install.sh` (bash, must stay compatible with macOS's bash 3.2) and `scripts/install.ps1` (Windows PowerShell 5.1 and PowerShell 7) are **functionally equivalent** — same actions (`install`, `update`, `uninstall`, `check`), options, destinations and manifest format. Change both together, the same way V1/V2 parity works.
+
+- Installation is always **local, per project** — never global. The installer copies `.agents/lgpd-enterprise-auditor/`, the `commands/*.md` (rendered per tool) and, opt-in, `SKILL.md` as a skill.
+- Tools (`--target`): `claude` → `.claude/commands/`, `cursor` → `.cursor/commands/` (frontmatter stripped, `description` promoted to the first line), `vscode` → `.github/prompts/*.prompt.md` (frontmatter reduced to `name`, `description` + `agent: agent`), `opencode` → `.opencode/commands/`, `agents` → no commands, skill always installed. Skill goes to `.claude/skills/lgpd-enterprise-auditor/` for `claude` and `.agents/skills/lgpd-enterprise-auditor/` for every other tool.
+- Commands are discovered by glob, so a new file in `commands/` is installed automatically — no installer change needed.
+- Each tool gets a manifest at `.agents/lgpd-enterprise-auditor/.install/<target>.json` (one key per line, written identically by both scripts). Uninstall only removes files listed there, keeps a skill folder still referenced by another tool, and removes the framework folder only when no tool remains.
+- `install.ps1` and `tests/test-install.ps1` must keep their UTF-8 BOM (Windows PowerShell 5.1 misreads accented text without it); files the installers write must be UTF-8 **without** BOM, or the YAML frontmatter breaks.
+- Tests: `scripts/tests/test-install.sh` and `scripts/tests/test-install.ps1` run offline against the local clone (`--version local`). CI (`.github/workflows/install.yml`) runs ShellCheck, the bash tests on Ubuntu and on macOS `/bin/bash` 3.2, and the PowerShell tests on Windows with both `pwsh` and `powershell` 5.1.
 
 ## Sync-date maintenance (required on every framework update)
 

@@ -4,7 +4,12 @@
 Preservar referência operacional da V1 enquanto a V2 modular entra em produção.
 
 ## Fonte de verdade da V1
-- Arquivo monolítico original: `SKILL.md`, na raiz do repositório do framework (caminho relativo ao projeto que adota `.agents/lgpd-enterprise-auditor/`).
+- Arquivo monolítico original: `SKILL.md`, na raiz do repositório do framework.
+- Em um projeto auditado, a V1 só existe se a skill tiver sido instalada (opcional no `scripts/install.sh` / `scripts/install.ps1`). Procure nesta ordem:
+  1. `.claude/skills/lgpd-enterprise-auditor/SKILL.md` (Claude Code);
+  2. `.agents/skills/lgpd-enterprise-auditor/SKILL.md` (Cursor, VS Code + Copilot, OpenCode, Codex, Gemini CLI e similares);
+  3. `SKILL.md` na raiz do projeto (cópia manual).
+- A ausência da V1 não bloqueia a auditoria: a V2 modular cobre os 17 domínios abaixo por conta própria.
 
 ## Regra de compatibilidade
 - O modo `full_audit` da V2 deve cobrir os mesmos 17 domínios da V1:

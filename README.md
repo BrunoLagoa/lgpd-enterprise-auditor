@@ -33,6 +33,71 @@ This project was designed to operate as an auditable and modular system, ready t
 
 In practice, it enables complete or targeted audits with consistent criteria, evidence, and remediation planning.
 
+## Installation
+
+One interactive command, run from the root of the project you want to audit. It asks which AI tool you use and whether to also install the skill, shows a summary and installs everything **locally, inside that project** (there is no global install).
+
+**macOS / Linux / WSL / Git Bash**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.sh | bash -s -- install
+```
+
+**Windows (PowerShell)**
+
+```powershell
+powershell -ExecutionPolicy Bypass -Command "iwr https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.ps1 -OutFile $env:TEMP\lgpd-install.ps1; & $env:TEMP\lgpd-install.ps1 install"
+```
+
+Prefer to read the script before running it? Download it (`curl -fsSL <url> -o install.sh`), review it, then run `bash install.sh install`.
+
+### Where files land
+
+The framework (`.agents/lgpd-enterprise-auditor/`) is the same for every tool; only the commands and the optional skill change place:
+
+| Tool (`--target`) | Commands | Skill (optional) |
+|---|---|---|
+| `claude` — Claude Code | `.claude/commands/lgpd-*.md` | `.claude/skills/lgpd-enterprise-auditor/` |
+| `cursor` — Cursor | `.cursor/commands/lgpd-*.md` | `.agents/skills/lgpd-enterprise-auditor/` |
+| `vscode` — VS Code + GitHub Copilot | `.github/prompts/lgpd-*.prompt.md` | `.agents/skills/lgpd-enterprise-auditor/` |
+| `opencode` — OpenCode | `.opencode/commands/lgpd-*.md` | `.agents/skills/lgpd-enterprise-auditor/` |
+| `agents` — Codex, Gemini CLI and similar | — (no slash commands) | `.agents/skills/lgpd-enterprise-auditor/` (always installed) |
+
+- **Without the skill (default):** you run the audit through the slash commands (`/lgpd-saas`, `/lgpd-full-audit`…), which use the modular V2.
+- **With the skill:** the assistant can also start the audit from a plain request ("audit this project for LGPD"), loading the V1 monolith (`SKILL.md`).
+- Several tools in the same project are supported: run the installer once per tool. They share the framework folder.
+
+### Update, check and uninstall
+
+| Action | Command (bash) | PowerShell |
+|---|---|---|
+| Update every installed tool | `… \| bash -s -- update` | `… install.ps1 update` |
+| Check the installation | `… \| bash -s -- check` | `… install.ps1 check` |
+| Uninstall | `… \| bash -s -- uninstall` | `… install.ps1 uninstall` |
+
+`…` stands for the same `curl …/install.sh` or `iwr …/install.ps1` prefix used to install.
+
+Scripted / CI use (no questions):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.sh \
+  | bash -s -- install --non-interactive --target cursor --with-skill
+```
+
+| Option (bash) | PowerShell | Description |
+|---|---|---|
+| `--target <tool>` | `-Target` | `claude`, `cursor`, `vscode`, `opencode` or `agents` (required with `--non-interactive`) |
+| `--with-skill` / `--no-skill` | `-WithSkill` / `-NoSkill` | Install the skill or not (default: no) |
+| `--project-dir <dir>` | `-ProjectDir` | Target project (default: git root of the current directory) |
+| `--version <ref>` | `-Version` | Tag or branch (default: latest published tag) |
+| `--non-interactive` | `-NonInteractive` | Run without questions |
+
+Each installation records a manifest in `.agents/lgpd-enterprise-auditor/.install/<tool>.json`; `update`, `check` and `uninstall` rely on it and never touch files that are not part of the framework.
+
+### Manual installation
+
+Copy `.agents/lgpd-enterprise-auditor/` to the root of your project and the files in `commands/` to your tool's commands folder (table above). For the skill, copy `SKILL.md` to `<skills folder>/lgpd-enterprise-auditor/SKILL.md`.
+
 ## Legal basis and updates
 
 This framework uses the **General Data Protection Law (LGPD)** as its primary legal reference:
@@ -65,6 +130,10 @@ ANPD regulations covered by the framework:
 ```text
 .
 ├── SKILL.md
+├── scripts/
+│   ├── install.sh
+│   ├── install.ps1
+│   └── tests/
 ├── commands/
 │   ├── lgpd-full-audit.md
 │   ├── lgpd-saas.md

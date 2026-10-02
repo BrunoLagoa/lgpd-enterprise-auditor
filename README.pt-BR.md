@@ -32,6 +32,71 @@ O `lgpd-enterprise-auditor` é um framework que combina:
 
 Na prática, ele permite rodar auditorias completas ou direcionadas com consistência de critérios, evidências e plano de adequação.
 
+## Instalação
+
+Um único comando interativo, executado na raiz do projeto que você quer auditar. Ele pergunta qual ferramenta de IA você usa e se quer instalar também a skill, mostra um resumo e instala tudo **localmente, dentro desse projeto** (não existe instalação global).
+
+**macOS / Linux / WSL / Git Bash**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.sh | bash -s -- install
+```
+
+**Windows (PowerShell)**
+
+```powershell
+powershell -ExecutionPolicy Bypass -Command "iwr https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.ps1 -OutFile $env:TEMP\lgpd-install.ps1; & $env:TEMP\lgpd-install.ps1 install"
+```
+
+Prefere ler o script antes de rodar? Baixe (`curl -fsSL <url> -o install.sh`), revise e depois execute `bash install.sh install`.
+
+### Onde os arquivos ficam
+
+O framework (`.agents/lgpd-enterprise-auditor/`) é o mesmo para todas as ferramentas; só os comandos e a skill opcional mudam de lugar:
+
+| Ferramenta (`--target`) | Comandos | Skill (opcional) |
+|---|---|---|
+| `claude` — Claude Code | `.claude/commands/lgpd-*.md` | `.claude/skills/lgpd-enterprise-auditor/` |
+| `cursor` — Cursor | `.cursor/commands/lgpd-*.md` | `.agents/skills/lgpd-enterprise-auditor/` |
+| `vscode` — VS Code + GitHub Copilot | `.github/prompts/lgpd-*.prompt.md` | `.agents/skills/lgpd-enterprise-auditor/` |
+| `opencode` — OpenCode | `.opencode/commands/lgpd-*.md` | `.agents/skills/lgpd-enterprise-auditor/` |
+| `agents` — Codex, Gemini CLI e similares | — (sem slash commands) | `.agents/skills/lgpd-enterprise-auditor/` (sempre instalada) |
+
+- **Sem a skill (padrão):** a auditoria é acionada pelos slash commands (`/lgpd-saas`, `/lgpd-full-audit`…), que usam a V2 modular.
+- **Com a skill:** o assistente também pode iniciar a auditoria a partir de um pedido em linguagem natural ("faça uma auditoria LGPD deste projeto"), carregando a V1 monolítica (`SKILL.md`).
+- Várias ferramentas no mesmo projeto são suportadas: rode o instalador uma vez por ferramenta. Elas compartilham a pasta do framework.
+
+### Atualizar, verificar e desinstalar
+
+| Ação | Comando (bash) | PowerShell |
+|---|---|---|
+| Atualizar todas as ferramentas instaladas | `… \| bash -s -- update` | `… install.ps1 update` |
+| Verificar a instalação | `… \| bash -s -- check` | `… install.ps1 check` |
+| Desinstalar | `… \| bash -s -- uninstall` | `… install.ps1 uninstall` |
+
+`…` representa o mesmo prefixo `curl …/install.sh` ou `iwr …/install.ps1` usado na instalação.
+
+Uso em scripts / CI (sem perguntas):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.sh \
+  | bash -s -- install --non-interactive --target cursor --with-skill
+```
+
+| Opção (bash) | PowerShell | Descrição |
+|---|---|---|
+| `--target <ferramenta>` | `-Target` | `claude`, `cursor`, `vscode`, `opencode` ou `agents` (obrigatória com `--non-interactive`) |
+| `--with-skill` / `--no-skill` | `-WithSkill` / `-NoSkill` | Instala ou não a skill (padrão: não) |
+| `--project-dir <dir>` | `-ProjectDir` | Projeto de destino (padrão: raiz git do diretório atual) |
+| `--version <ref>` | `-Version` | Tag ou branch (padrão: última tag publicada) |
+| `--non-interactive` | `-NonInteractive` | Executa sem perguntas |
+
+Cada instalação registra um manifesto em `.agents/lgpd-enterprise-auditor/.install/<ferramenta>.json`; `update`, `check` e `uninstall` se baseiam nele e nunca mexem em arquivos que não sejam do framework.
+
+### Instalação manual
+
+Copie `.agents/lgpd-enterprise-auditor/` para a raiz do seu projeto e os arquivos de `commands/` para a pasta de comandos da sua ferramenta (tabela acima). Para a skill, copie `SKILL.md` para `<pasta de skills>/lgpd-enterprise-auditor/SKILL.md`.
+
 ## Base legal e atualização
 
 Este framework usa como referência principal a **Lei Geral de Proteção de Dados (LGPD)**:
@@ -64,6 +129,10 @@ Regulamentos da ANPD considerados pelo framework:
 ```text
 .
 ├── SKILL.md
+├── scripts/
+│   ├── install.sh
+│   ├── install.ps1
+│   └── tests/
 ├── commands/
 │   ├── lgpd-full-audit.md
 │   ├── lgpd-saas.md
