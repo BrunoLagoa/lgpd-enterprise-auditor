@@ -4,11 +4,17 @@
 Auditar segurança de aplicação web e APIs com foco em riscos LGPD, incluindo cookies/tracking no front-end e dados pessoais em logs de aplicação.
 
 ## Checklist atômico
+- Todo tráfego usa HTTPS, com HSTS e cabeçalhos de segurança (CSP, entre outros) configurados?
 - Há proteção contra XSS, CSRF, SSRF e SQL Injection?
 - Autenticação é robusta (MFA quando aplicável)?
 - Autorização impede acesso indevido (RBAC/ABAC)?
 - Sessões/tokens têm proteção adequada (expiração, rotação, escopo)?
 - Há rate limiting e proteção contra abuso?
+- Há segregação de ambientes e de funções e trilha de auditoria dos acessos a dados pessoais no backend?
+- APIs validam tokens corretamente (JWT: assinatura, algoritmo, expiração e audiência) e usam OAuth com escopos mínimos?
+- As respostas das APIs expõem só os campos necessários, sem exposição excessiva de dados pessoais?
+- APIs públicas estão inventariadas e API keys ficam fora do código, dos repositórios e do front-end?
+- A comunicação com integrações e entre serviços é criptografada em trânsito?
 - Entradas/saídas são validadas e sanitizadas?
 - Logs da aplicação evitam registrar dados pessoais e sensíveis (CPF, e-mail, telefone, tokens, senhas, payloads completos) ou os mascaram antes da gravação?
 
@@ -39,6 +45,7 @@ Fundamento: art. 7º, I e art. 8º (consentimento livre, informado, inequívoco,
 - Falha explorável com exfiltração de dados pessoais: `CRITICO`.
 - Senhas ou tokens em texto puro nos logs: `CRITICO`.
 - Falha de autenticação/autorização sem exploração confirmada: `ALTO`.
+- Ausência de HTTPS em rotas com dados pessoais, API sem autenticação adequada ou com exposição excessiva de dados pessoais: `ALTO`.
 - Logs da aplicação com dados pessoais sem mascaramento: `ALTO`.
 - Cookies/pixels de publicidade ou analytics de terceiros disparados antes do aceite, sem outra base legal documentada: `ALTO`.
 - Categorias de cookies pré-marcadas ou ausência de mecanismo de revogação: `ALTO`.

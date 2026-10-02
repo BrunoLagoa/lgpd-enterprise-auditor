@@ -160,7 +160,9 @@ Dado pessoal sobre:
 - opinião política;
 - filiação a sindicato ou a organização de caráter religioso, filosófico ou político;
 - dado referente à saúde ou à vida sexual;
-- dado genético ou biométrico.
+- dado genético ou biométrico;
+
+quando vinculado a uma pessoa natural.
 
 ---
 
@@ -211,9 +213,11 @@ Se não existir base legal:
 Validar:
 - tratamento sempre no melhor interesse;
 - consentimento específico e em destaque de pelo menos um dos pais/responsável para crianças;
-- mecanismo confiável de verificação de idade (autodeclaração simples é insuficiente);
+- mecanismo confiável de verificação de idade: a autodeclaração é **expressamente vedada** em conteúdo impróprio a menores de 18 anos, que exige verificação a cada acesso (ECA Digital, art. 9º, §1º); nos demais serviços, a autodeclaração isolada não satisfaz os arts. 10, 12 e 14 do ECA Digital nem os "esforços razoáveis" do art. 14, §5º da LGPD;
 - minimização (não exigir dados além do necessário);
 - informações sobre o tratamento públicas e acessíveis.
+
+Três cortes etários, que **não devem ser unificados**: criança até 12 anos incompletos (LGPD, art. 14), vinculação de conta a responsável para usuários de até 16 anos (ECA Digital, art. 24) e conteúdo impróprio a menores de 18 anos (ECA Digital, art. 9º).
 
 Dado de criança sem consentimento parental → `CRITICO`.
 
@@ -610,7 +614,7 @@ Verificar:
 - DPA;
 - transferência internacional (arts. 33-36: exige mecanismo legal — adequação ANPD, cláusulas-padrão contratuais, consentimento específico, etc.);
 - incorporação das cláusulas-padrão contratuais da Res. CD/ANPD nº 19/2024 aos contratos: o prazo de adaptação encerrou em 23/08/2025, logo contrato sem CPC é não conformidade atual;
-- transferência para a União Europeia: a Res. CD/ANPD nº 32/2026 reconheceu grau adequado de proteção e dispensa CPC, mantendo base legal, informação ao titular e contrato de operador;
+- transferência para a União Europeia: a Res. CD/ANPD nº 32/2026 reconheceu grau adequado de proteção e dispensa CPC — apenas o mecanismo do art. 33 —, mantendo base legal, informação ao titular, contrato de operador e as garantias de segurança do art. 46;
 - demais destinos (inclusive Estados Unidos e Reino Unido) permanecem sem adequação reconhecida e exigem CPC ou outro mecanismo do art. 33;
 - cobertura de subprocessadores de segundo nível pelo mesmo mecanismo;
 - analytics;
@@ -705,7 +709,7 @@ Aplicável a provedores de aplicações de internet conforme o **Decreto nº 12.
 - Anúncios e impulsionamentos (arts. 16-K a 16-M): provedor que os ofereça mediante pagamento.
 - Deepfake íntimo (Dec. 12.976, arts. 9º e 10): aplicação com IA capaz de gerar ou alterar imagem ou som de pessoas.
 
-**Antes de emitir achado**: e-mail, mensageria interpessoal e videoconferência restrita estão fora dos arts. 16-B a 16-J (art. 16-O); crimes contra a honra seguem ordem judicial específica (art. 16-J); conteúdo ilícito isolado não caracteriza, por si só, falha sistêmica (art. 16-B, §3º) — o achado aponta processos ausentes ou insuficientes, nunca um post específico.
+**Antes de emitir achado**: e-mail, mensageria interpessoal e videoconferência restrita estão fora dos arts. 16-B a 16-J (art. 16-O); crimes contra a honra seguem ordem judicial específica (art. 16-J); conteúdo ilícito isolado não caracteriza, por si só, falha sistêmica (art. 16-B, §3º), e a apuração avalia atuação diligente, proporcional e célere, vedada a responsabilização fundada apenas na manutenção ou remoção isolada de conteúdo (art. 16-I) — o achado aponta processos ausentes ou insuficientes, nunca um post específico.
 
 ## Validar:
 - sede e **representante legal pessoa jurídica** no País, com contato acessível no site (art. 16-A, I);
@@ -719,14 +723,14 @@ Aplicável a provedores de aplicações de internet conforme o **Decreto nº 12.
 - registros de acesso guardados **por 6 meses**, sob sigilo e em ambiente controlado (MCI art. 15), com **porta lógica de origem** (art. 15-A), e eliminados após o prazo salvo requisição (MCI art. 16; LGPD art. 16);
 - termos de uso com sistema de notificações, devido processo e **relatório anual de transparência** sobre notificações, anúncios e impulsionamentos (art. 20-A);
 - aviso do **Ligue 180** no espaço de notificação (Dec. 12.976, art. 5º, §1º);
-- remoção de **conteúdo íntimo** não autorizado em **até 2 horas** da notificação, de toda a aplicação, com espaço específico, gratuito e destacado e acompanhamento pela vítima (Dec. 12.976, art. 7º);
+- remoção de **conteúdo íntimo** não autorizado em **até 2 horas** da notificação, de toda a aplicação, com espaço específico, gratuito e destacado e acompanhamento pela vítima (Dec. 12.976, art. 7º, §1º);
 - mitigação de ofício de **ataques coordenados** contra mulheres (Dec. 12.976, art. 8º);
 - **vedação de gerar ou modificar conteúdo íntimo de terceiro** por IA e salvaguardas para bloquear essas solicitações (Dec. 12.976, arts. 9º e 10);
 - prazos transitórios até a regulamentação: **6 horas** para conteúdo manifestamente ilegal contra a mulher, **24 horas** nos demais casos de violência contra a mulher e **24 horas** após contestação (Dec. 12.976, art. 12).
 
 ## Severidade
 - ausência de medidas contra conteúdos de suicídio/automutilação ou exploração sexual de crianças e adolescentes (art. 16-B, II e V) → `CRITICO`;
-- ausência de espaço para notificação de conteúdo íntimo ou de remoção em até 2 horas (Dec. 12.976, art. 7º) → `CRITICO`;
+- ausência de espaço para notificação de conteúdo íntimo ou de remoção em até 2 horas (Dec. 12.976, art. 7º, §1º) → `CRITICO`;
 - IA que gera ou modifica conteúdo íntimo de terceiro (Dec. 12.976, art. 9º) → `CRITICO`;
 - demais falhas sistêmicas do art. 16-B ou do Dec. 12.976, art. 4º → `ALTO`;
 - ausência de canal de denúncia (art. 16-A, II) ou de gestão de riscos sistêmicos (art. 16-C) → `ALTO`;
@@ -752,7 +756,7 @@ Normas ainda **não vigentes** nunca originam não conformidade. Registrá-las a
 - **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados, sem sanção até 2026-09 (em set/2026, aguardando parecer do relator na Comissão Especial).
 - **Guias orientativos da ANPD** no âmbito do ECA Digital (aferição de idade e fornecedores de tecnologia): tomadas de subsídios encerradas em 2026, versões finais ainda não publicadas até 2026-09.
 - **Revisão da Resolução CD/ANPD nº 1/2021** (fiscalização e processo sancionador): consulta pública de 09/09/2026 a 26/10/2026; até a norma final, a Res. nº 1/2021 segue vigente.
-- **Regulamentação dos Decretos nº 12.975/2026 e nº 12.976/2026** pela ANPD (forma e prazos de notificação e contestação, marcação digital de conteúdo íntimo, parâmetros das salvaguardas de IA, critérios diferenciados por porte): tomada de subsídios encerrada em 17/08/2026, sem regulamento final até 2026-09. Até lá, valem os deveres dos decretos e os prazos transitórios do art. 12 do Decreto nº 12.976/2026.
+- **Regulamentação dos Decretos nº 12.975/2026 e nº 12.976/2026** pela ANPD (forma e prazos de notificação e contestação, marcação digital de conteúdo íntimo, parâmetros das salvaguardas de IA, critérios diferenciados por porte — art. 16-P): tomada de subsídios encerrada em 17/08/2026, sem regulamento final até 2026-09. Até lá, valem os deveres dos decretos e os prazos transitórios do art. 12 do Decreto nº 12.976/2026.
 - **Parâmetros normativos definitivos de aferição de idade**, previstos pela ANPD para a etapa regulatória iniciada em agosto/2026.
 
 Atenção: o cronograma de fiscalização da ANPD para o ECA Digital (adaptação até novembro/2026, fiscalização efetiva a partir de janeiro/2027) **não suspende a vigência da lei** — os requisitos do domínio 16 são exigíveis desde 17/03/2026.
@@ -984,7 +988,10 @@ Problema:
 Checkbox pré-marcado.
 
 Severidade:
-ALTO
+`ALTO`
+
+Evidência:
+`ENCONTRADA (TECNICA)`: checkbox de consentimento renderizado já marcado no formulário de cadastro.
 
 Fundamento:
 Art. 8º LGPD
@@ -1002,6 +1009,12 @@ Senha armazenada em texto puro.
 Severidade:
 `CRITICO`
 
+Evidência:
+`ENCONTRADA (TECNICA)`: coluna de senha da tabela de usuários com valores legíveis.
+
+Fundamento:
+Art. 46 LGPD
+
 Correção:
 Utilizar Argon2id ou bcrypt.
 
@@ -1013,7 +1026,13 @@ Problema:
 Logs exibem CPF completo.
 
 Severidade:
-ALTO
+`ALTO`
+
+Evidência:
+`ENCONTRADA (TECNICA)`: amostra de log da aplicação com CPF completo em requisição de cadastro.
+
+Fundamento:
+Arts. 6º, III e 46 LGPD
 
 Correção:
 Mascaramento e minimização.
@@ -1027,6 +1046,12 @@ Prompts contendo dados pessoais enviados para LLM externo sem anonimização.
 
 Severidade:
 `CRITICO`
+
+Evidência:
+`ENCONTRADA (TECNICA)`: payload da chamada ao LLM com nome e CPF do cliente no prompt.
+
+Fundamento:
+Arts. 6º, III e 46 LGPD; art. 11 quando houver dado sensível; arts. 33 a 36 quando o provedor do LLM tratar os dados fora do País.
 
 Correção:
 Anonimização + política de IA + segregação de prompts.

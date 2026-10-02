@@ -12,7 +12,7 @@ Referências de artigo verificadas no texto oficial (Planalto, consulta em 2026-
 - **Decreto nº 12.622/2025** — atribuiu à ANPD a competência de regulamentar, zelar e fiscalizar a Lei nº 15.211/2025.
 - **Decreto nº 12.880/2026** (18/03/2026) — regulamenta a lei e institui a Política Nacional de Promoção e Proteção dos Direitos da Criança e do Adolescente no Ambiente Digital.
 - Normas conexas citadas pela própria lei: ECA (Lei nº 8.069/1990), LGPD (Lei nº 13.709/2018), CDC (Lei nº 8.078/1990), Marco Civil da Internet (Lei nº 12.965/2014), Marco Legal dos Jogos Eletrônicos (Lei nº 14.852/2024) e Estatuto da Pessoa com Deficiência (Lei nº 13.146/2015).
-- Orientações preliminares da ANPD sobre aferição de idade (março/2026) e Radar Tecnológico nº 5.
+- Orientações preliminares da ANPD sobre aferição de idade (março/2026) e Radar Tecnológico nº 5 — **não vinculantes**: servem de referência técnica, mas nunca fundamentam `finding` ou `NAO_CONFORME`.
 
 ## Escopo de aplicação (art. 1º)
 A lei alcança **todo produto ou serviço de TI direcionado a crianças e adolescentes no País ou de acesso provável por eles**, independentemente de onde seja desenvolvido, fabricado, ofertado ou operado.

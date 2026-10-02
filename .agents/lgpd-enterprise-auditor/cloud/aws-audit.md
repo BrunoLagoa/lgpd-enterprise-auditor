@@ -7,6 +7,9 @@ Avaliar postura de segurança e privacidade em ambientes cloud (AWS/Azure/GCP).
 - Há ativos públicos indevidos (ex.: buckets com dados pessoais)?
 - Políticas IAM seguem privilégio mínimo?
 - Chaves/secrets estão em serviço dedicado (KMS/Secrets Manager equivalente)?
+- Bancos de dados com dados pessoais têm criptografia em repouso, controle de acesso, segregação e mascaramento em ambientes não produtivos?
+- Backups e réplicas são criptografados, têm acesso restrito e seguem a política de retenção (a eliminação também os alcança)?
+- Há firewall/WAF, IDS/IPS e monitoramento centralizado (SIEM ou equivalente) capaz de detectar acesso indevido a dados pessoais?
 - Logs de auditoria cloud estão ativos e protegidos?
 - Logs e observabilidade (CloudWatch, Datadog, Sentry, ELK etc.) têm retenção definida, acesso por privilégio mínimo e mascaramento de dados pessoais?
 - A exportação de logs a ferramentas de terceiros está coberta por contrato de operador e, se os dados saírem do País, por mecanismo do art. 33?
@@ -26,6 +29,7 @@ Avaliar postura de segurança e privacidade em ambientes cloud (AWS/Azure/GCP).
 ## Mapeamento para severidade e score
 - Exposição pública de dado pessoal/sensível: `CRITICO`.
 - Acesso excessivo e ausência de trilha de auditoria: `ALTO`.
+- Banco de dados, backup ou réplica com dados pessoais sem criptografia em repouso: `ALTO`.
 - Logs com dados pessoais exportados a terceiros sem contrato de operador ou sem mecanismo do art. 33: `ALTO`.
 - Logs de observabilidade sem política de retenção: `MEDIO`.
 - Registros de acesso a aplicações sem guarda de 6 meses, sem porta lógica ou retidos além do prazo sem base legal: `MEDIO`.

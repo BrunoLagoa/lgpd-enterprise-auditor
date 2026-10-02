@@ -1,5 +1,7 @@
 # Relatório de Compliance (V2)
 
+> Visão por público do relatório canônico definido em `core/reporting-engine.md`. Não substitui as 8 seções obrigatórias, que continuam sendo entregues na ordem canônica.
+
 ## 1. Score LGPD
 - score (0-100):
 - classificação:
@@ -13,7 +15,7 @@
 - crianças e adolescentes (LGPD art. 14 e ECA Digital — Lei nº 15.211/2025), quando aplicável:
 
 ## 2.1 Normas em monitoramento
-Registrar aqui normas ainda não vigentes que impactarão o escopo (ex.: PL nº 2338/2023 — Marco Legal da IA; guias da ANPD em tomada de subsídios). Estes itens **não** entram no score nem em não conformidades.
+Normas ainda não vigentes (ex.: PL nº 2338/2023 — Marco Legal da IA; guias da ANPD em tomada de subsídios) ficam **somente** em `recomendacoes_tecnicas` do relatório canônico. Aqui, apenas referenciar esses itens; eles **não** entram no score nem em não conformidades.
 
 ## 3. Itens obrigatórios ausentes
 - processos:

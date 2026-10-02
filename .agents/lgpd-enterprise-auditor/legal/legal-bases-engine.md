@@ -16,7 +16,7 @@ Definir validação de base legal por operação de tratamento, distinguindo dad
 - proteção do crédito (art. 7º, X).
 
 ## Bases legais para dados sensíveis (art. 11, LGPD)
-Dados sensíveis (art. 5º, II: origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato ou a organização de caráter religioso, filosófico ou político, dado referente à saúde ou à vida sexual, dado genético ou biométrico) possuem rol **próprio e mais restrito**:
+Dados sensíveis (art. 5º, II: dado pessoal sobre origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato ou a organização de caráter religioso, filosófico ou político, dado referente à saúde ou à vida sexual, dado genético ou biométrico, quando vinculado a uma pessoa natural) possuem rol **próprio e mais restrito**:
 - consentimento específico e destacado, para finalidades específicas (art. 11, I);
 - sem consentimento, apenas nas hipóteses do art. 11, II: obrigação legal/regulatória; políticas públicas; estudos por órgão de pesquisa (anonimizando quando possível); exercício regular de direitos; proteção da vida/incolumidade física; tutela da saúde por profissionais de saúde; garantia da prevenção à fraude e à segurança do titular.
 

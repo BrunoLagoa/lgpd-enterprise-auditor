@@ -7,6 +7,8 @@ Avaliar riscos de privacidade e segurança em apps iOS/Android/Flutter/React Nat
 - Dados sensíveis são armazenados de forma segura no dispositivo?
 - Permissões solicitadas seguem necessidade mínima?
 - Existe prevenção de vazamento via clipboard/log local?
+- O app detecta jailbreak/root e reduz a exposição de dados pessoais nesses dispositivos?
+- Deep links e app links são validados, sem expor dados ou ações sensíveis por URL?
 - SDKs de tracking/analytics possuem controle de consentimento?
 - Regras de backend mobile (ex.: Firebase rules) estão restritivas?
 - Identificadores de dispositivo são usados com base legal adequada?

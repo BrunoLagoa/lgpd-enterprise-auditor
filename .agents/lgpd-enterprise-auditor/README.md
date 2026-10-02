@@ -36,11 +36,13 @@ Esta V2 modular organiza a auditoria em camadas para melhorar manutenção, esca
 
 ## Cenários rápidos
 - SaaS (React/Node/Postgres/AWS): `core`, `legal`, `governance`, `cloud`, `appsec`, `devsecops`.
+- Site institucional ou landing page: `core`, `legal`, `governance`, `appsec`, `cloud`.
 - IA/LLM (RAG): `core`, `legal`, `governance`, `ai-llm`, `appsec`.
 - Mobile (Flutter/Firebase): `core`, `legal`, `governance`, `mobile`, `cloud`, `appsec`.
 - Pipeline (GitHub Actions/Docker/K8s): `core`, `legal`, `devsecops`, `cloud`, `appsec`.
 - Plataforma com público infantojuvenil (ECA Digital): `core`, `legal`, `eca-digital`, `governance`, `appsec`, `mobile`.
 - Plataforma digital com conteúdo de terceiros (Decretos nº 12.975 e 12.976/2026): `core`, `legal`, `plataformas-digitais`, `governance`, `appsec`, `cloud`.
+- Auditoria completa (`full_audit`, paridade com a V1): `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
 ## Norma vigente x norma em monitoramento
 - Só gera `finding` e `check_item` com status `NAO_CONFORME` a norma **vigente**.

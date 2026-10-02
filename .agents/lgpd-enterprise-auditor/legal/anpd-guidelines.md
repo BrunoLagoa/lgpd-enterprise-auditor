@@ -34,7 +34,7 @@ Histórico de alterações da LGPD: Leis nº 13.853/2019, nº 14.010/2020 (art. 
 - **Resolução CD/ANPD nº 19/2024** — Regulamento de Transferência Internacional de Dados e **cláusulas-padrão contratuais (CPC)** — ver [[international-transfer]].
 - **Resolução CD/ANPD nº 30/2025** — Mapa de Temas Prioritários de fiscalização para o biênio 2026-2027.
 - **Resolução CD/ANPD nº 31/2025** — atualização da Agenda Regulatória 2025-2026.
-- **Resolução CD/ANPD nº 32/2026** (26/01/2026) — reconhece a **União Europeia** como organismo internacional com grau adequado de proteção de dados.
+- **Resolução CD/ANPD nº 32/2026** (26/01/2026) — reconhece a **União Europeia** como organismo internacional com grau adequado de proteção de dados. Dispensa apenas o mecanismo do art. 33 — ver [[international-transfer]].
 
 ## Comunicação de incidente de segurança (Res. CD/ANPD nº 15/2024)
 - Comunicar à ANPD e aos titulares incidente que possa acarretar **risco ou dano relevante**.

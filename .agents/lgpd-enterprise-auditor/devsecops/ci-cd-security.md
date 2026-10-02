@@ -9,6 +9,7 @@ Auditar pipeline CI/CD, cadeia de dependências e segurança de containers.
 - SAST/DAST são executados em estágio apropriado?
 - SBOM é gerado e armazenado?
 - Imagens Docker passam por scanning de vulnerabilidades?
+- Infraestrutura como código (Terraform, CloudFormation, Helm etc.) passa por scanning de configuração (IaC scanning)?
 - Ambiente Kubernetes segue controles de RBAC e hardening?
 
 ## Critérios de evidência

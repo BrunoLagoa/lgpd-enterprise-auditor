@@ -15,6 +15,10 @@ Avaliar governança de privacidade, accountability e controles organizacionais.
 - Conteúdo mínimo esperado: inventário e classificação dos dados (comum, sensível, de criança/adolescente), finalidade, base legal (art. 7º ou 11), categorias de titulares, compartilhamentos e transferências internacionais, retenção/descarte e medidas de segurança.
 - Agentes de tratamento de pequeno porte podem cumprir a obrigação de forma **simplificada** (Res. CD/ANPD nº 2/2022), mas não estão dispensados dela.
 
+## Retenção e eliminação (arts. 15 e 16)
+- O tratamento termina quando a finalidade é alcançada ou os dados deixam de ser necessários, ao fim do período de tratamento, por comunicação do titular (inclusive revogação) ou por determinação da ANPD (art. 15).
+- Terminado o tratamento, os dados devem ser eliminados; a conservação só é autorizada para cumprimento de obrigação legal ou regulatória, estudo por órgão de pesquisa (anonimizados sempre que possível), transferência a terceiro respeitados os requisitos de tratamento, ou uso exclusivo do controlador com dados anonimizados e vedado o acesso por terceiro (art. 16).
+
 ## Checklist atômico
 - Existe registro das operações de tratamento (art. 37) atualizado, com inventário e classificação de dados, ciclo de vida, compartilhamentos e retenção, sem dados órfãos (sem finalidade ou responsável)?
 - Existe DPO/encarregado formalmente designado por ato escrito, datado e assinado (Res. CD/ANPD nº 18/2024)?
@@ -22,7 +26,10 @@ Avaliar governança de privacidade, accountability e controles organizacionais.
 - O encarregado possui autonomia, acesso à alta direção e ausência de conflito de interesses?
 - Se o agente é de pequeno porte e não indicou encarregado, existe canal de comunicação alternativo divulgado?
 - Existe RIPD para operações de maior risco?
-- Existe política de retenção aprovada e aplicada?
+- Existe política de retenção aprovada e aplicada, com prazo por categoria de dado e a hipótese do art. 16 que justifica cada conservação?
+- A eliminação ou anonimização ao fim do prazo é automática e alcança réplicas, backups e operadores?
+- O descarte de dados e mídias é seguro e registrado?
+- Retenções legais (ex.: fiscais, trabalhistas, registros de acesso do MCI art. 15) estão identificadas e limitadas ao prazo legal?
 - Existe processo de resposta a incidentes com responsáveis definidos e prazo de comunicação à ANPD/titulares de 3 dias úteis (Res. CD/ANPD nº 15/2024)?
 - Existe gestão de terceiros com cláusulas de proteção de dados?
 - Se o auditado é provedor de aplicações de internet: há sede e representante legal pessoa jurídica no País, com contato acessível no site, e canal de denúncia permanente de fácil acesso (Decreto nº 8.771/2016, art. 16-A, com a redação do Decreto nº 12.975/2026)? Ver [[plataformas-digitais]].
@@ -30,6 +37,7 @@ Avaliar governança de privacidade, accountability e controles organizacionais.
 
 ## Critérios de evidência
 - registro das operações de tratamento versionado;
+- política de retenção e evidência de execução da eliminação (jobs de expurgo, logs de descarte);
 - nomeação formal do DPO;
 - RIPD(s) atualizados;
 - políticas versionadas;
@@ -40,6 +48,7 @@ Avaliar governança de privacidade, accountability e controles organizacionais.
 - Falha de DPO/RIPD em cenário crítico: `ALTO` ou `CRITICO`.
 - Ausência de registro das operações de tratamento (art. 37): `MEDIO`; `ALTO` quando houver tratamento de dados sensíveis ou de crianças e adolescentes.
 - Encarregado exercendo a função sem ato formal de indicação: `MEDIO`.
+- Retenção sem prazo definido ou sem fundamento no art. 16 (retenção obscura): `MEDIO`.
 - Falhas documentais de baixa materialidade: `BAIXO` ou `MEDIO`.
 - Área de scoring primária: `governanca` (15%).
 

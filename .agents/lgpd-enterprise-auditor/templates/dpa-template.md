@@ -19,7 +19,7 @@
 ## 4. Transferência internacional
 - base legal e mecanismos de salvaguarda;
 - mecanismo do art. 33 aplicável a cada destino, escolhido entre:
-  - **decisão de adequação** — para a União Europeia, conforme Resolução CD/ANPD nº 32/2026 (dispensa CPC);
+  - **decisão de adequação** — para a União Europeia, conforme Resolução CD/ANPD nº 32/2026 (dispensa apenas o mecanismo do art. 33 — CPC; base legal, informação ao titular, contrato de operador e garantias do art. 46 permanecem obrigatórios);
   - **cláusulas-padrão contratuais (CPC)** da Resolução CD/ANPD nº 19/2024 — obrigatórias para os demais destinos, sem período de adaptação desde 23/08/2025;
   - cláusulas contratuais específicas, normas corporativas globais ou selos, quando aprovados pela ANPD;
 - anexo de CPC incorporado ao contrato, com identificação de versão e data;
