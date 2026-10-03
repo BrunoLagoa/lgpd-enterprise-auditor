@@ -9,7 +9,8 @@ metadata:
 
 # LGPD Web Site / Landing Page
 
-Antes de iniciar, se ainda nao estiver mapeado, solicite:
+Antes de perguntar, leia o que o projeto ja documenta (`CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependencias e de infraestrutura) e apresente o contexto inferido. Pergunte apenas o que faltar ou nao puder ser confirmado:
+- natureza do agente de tratamento: pessoa natural ou juridica, com ou sem fins economicos, porte (agente de pequeno porte, Res. CD/ANPD 2/2022) e se ha tratamento de alto risco;
 - tipo de pagina (site institucional, landing page, blog, portal);
 - stack e hospedagem (Next.js, React, WordPress, Vercel, Netlify, etc.);
 - formularios e dados coletados (nome, email, telefone, empresa);

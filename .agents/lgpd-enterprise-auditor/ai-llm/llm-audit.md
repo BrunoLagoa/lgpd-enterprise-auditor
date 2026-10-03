@@ -36,7 +36,7 @@ Ver [[anpd-guidelines]] para a lista completa e para os temas prioritários de f
 - Geração ou modificação de conteúdo íntimo de terceiro por IA (Decreto nº 12.976/2026, art. 9º): `CRITICO` — detalhado em [[plataformas-digitais]].
 - Retenção inadequada de prompts e embeddings: `ALTO`.
 - Ausência parcial de política de IA: `MEDIO`.
-- Área de scoring primária: `ai_llm` (10%), `bases_legais` (15%) e `governanca` (15%).
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `ai_llm` (domínio 12) para todos os itens deste módulo.
 
 ## Em monitoramento (não vigente — não gera não conformidade)
 - **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados, sem sanção até 2026-09 (em set/2026, aguardando parecer do relator na Comissão Especial). Prevê classificação por nível de risco, direitos de transparência/explicação/contestação, governança de IA e sanções próprias.

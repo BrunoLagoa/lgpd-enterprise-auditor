@@ -23,4 +23,4 @@ Auditar pipeline CI/CD, cadeia de dependências e segurança de containers.
 - Segredo exposto em pipeline/artefato público: `CRITICO`.
 - Ausência total de varredura de segurança: `ALTO`.
 - Cobertura parcial de scanning e hardening: `MEDIO`.
-- Área de scoring primária: `seguranca` (25%) e `infraestrutura` (10%).
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `seguranca` (domínio 10) para todos os itens deste módulo.

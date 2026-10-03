@@ -58,6 +58,7 @@ Nas citações deste módulo, "art. 16-X" refere-se ao Decreto nº 8.771/2016 co
 - Indisponibilizar, mediante notificação do SNDC ou, quando ligada a políticas públicas, da AGU, publicidade enganosa, abusiva ou fraudulenta (art. 37 do CDC); conteúdo **não claramente identificável como publicidade** é considerado publicidade enganosa (art. 16-N, §2º).
 
 ### 5. Guarda de registros e proteção de dados (MCI arts. 10, 15 e 16; art. 15-A)
+A guarda dos registros de acesso por 6 meses é avaliada **uma única vez**, como item do módulo `cloud` (`cloud/cloud-audit.md`, área `infraestrutura`). Aqui, apenas referenciar aquele item, sem reprovar o mesmo requisito de novo.
 - Registros de acesso a aplicações mantidos **por 6 meses, sob sigilo, em ambiente controlado e de segurança** (MCI art. 15), incluindo a **porta lógica de origem** associada ao IP sempre que necessária à identificação inequívoca do terminal, independentemente de requisição (art. 15-A).
 - Disponibilização de registros somente mediante ordem judicial, preservadas intimidade, vida privada, honra e imagem (MCI art. 10 e art. 15, §3º).
 - Vedada a guarda de registros de acesso a outras aplicações sem consentimento prévio e de dados pessoais excessivos em relação à finalidade (MCI art. 16).
@@ -132,7 +133,7 @@ Nas citações deste módulo, "art. 16-X" refere-se ao Decreto nº 8.771/2016 co
 - Ausência de procedimento de encaminhamento ao Poder Público (art. 16-H; Dec. 12.976, art. 13): `MEDIO`.
 - Ausência de mecanismo contra uso abusivo das notificações (art. 16-F): `MEDIO`.
 - Ausência do aviso do Ligue 180 no espaço de notificação (Dec. 12.976, art. 5º, §1º): `BAIXO`.
-- Áreas de scoring primárias: `governanca` (15%) e `seguranca` (25%); fluxo de notificação e contestação pontua em `direitos_titular` (15%); salvaguardas de IA em `ai_llm` (10%); guarda de registros em `infraestrutura` (10%).
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `governanca` (domínio 17) para todos os itens deste módulo.
 
 ## Regra de fundamentação
 Todo `finding` deste módulo deve citar o dispositivo do decreto (e o artigo do MCI, quando houver) **e** o correlato na LGPD — em regra: art. 6º, VI a VIII (transparência, segurança, prevenção); art. 11 para conteúdo íntimo; art. 20 para moderação exclusivamente automatizada; art. 46 para falhas de segurança; arts. 7º, II e 16, I para guarda de registros. Achado sem correlato LGPD explícito quebra o contrato de `finding` em [[auditor-core]].
@@ -148,6 +149,6 @@ Todo `finding` deste módulo deve citar o dispositivo do decreto (e o artigo do 
 ## Relação com outros módulos
 - Notificação, remoção e retenção de conteúdo envolvendo menores (ECA Digital, arts. 27 a 33): ver [[eca-digital]].
 - IA generativa, deepfakes e moderação automatizada: ver [[llm-audit]].
-- Guarda e segurança de registros e logs: ver [[aws-audit]] e [[owasp-api]].
+- Guarda e segurança de registros e logs: ver [[cloud-audit]] e [[owasp-api]].
 - Representante legal, governança e relatórios de transparência: ver [[dpo-framework]].
 - Direito de revisão de decisão automatizada (LGPD art. 20): ver [[rights-of-data-subject]].

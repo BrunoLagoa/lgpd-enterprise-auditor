@@ -1,0 +1,44 @@
+# Exemplos
+
+Exemplos públicos de uso do LGPD Enterprise Auditor. Todos os projetos e dados desta pasta são **fictícios**.
+
+## `saas-demo/` — AgendaFácil
+
+Um SaaS pequeno e inventado de agendamento para clínicas (Node.js/Express, páginas estáticas, Vercel e Postgres). Ele trata dados de saúde e tem **falhas intencionais**, ao lado de controles bem feitos, para mostrar o framework em ação.
+
+| Arquivo | O que é |
+|---|---|
+| [`saas-demo/README.md`](saas-demo/README.md) | Descrição do projeto fictício e contexto da empresa |
+| [`saas-demo/relatorio-auditoria-lgpd.md`](saas-demo/relatorio-auditoria-lgpd.md) | Relatório completo gerado pela auditoria |
+| [`saas-demo/docs/lgpd/politica-de-privacidade.md`](saas-demo/docs/lgpd/politica-de-privacidade.md) | Política de privacidade propositalmente incompleta |
+
+O relatório mostra: as 8 seções obrigatórias na ordem canônica, a natureza do agente (pequeno porte com tratamento de alto risco, sem modulação de severidade), o checklist com evidências por arquivo e linha, o cálculo do score passo a passo (com `ai_llm` como `NAO_APLICAVEL` e pesos ajustados), os scores técnico e documental, um registro de aceite de risco, o glossário e o aviso legal.
+
+O projeto **não deve ser usado em produção** nem como base para um sistema real.
+
+## Como o exemplo foi produzido
+
+O relatório foi gerado com o comando `/lgpd-saas`, que ativa o cenário `saas_web` (`core`, `legal`, `governance`, `appsec`, `cloud`, `devsecops`). O agente seguiu `.agents/lgpd-enterprise-auditor/orchestrator/router.md` e os contratos de `core/`: levantou o contexto a partir dos arquivos do projeto, avaliou cada item com evidência, calculou o score com a fórmula de `core/scoring-engine.md` e montou o relatório conforme `core/reporting-engine.md`.
+
+## Como reproduzir
+
+A partir da raiz deste repositório:
+
+```bash
+./scripts/install.sh install --target claude --version local --project-dir examples/saas-demo
+cd examples/saas-demo
+claude
+```
+
+Antes de rodar, tire `relatorio-auditoria-lgpd.md` da pasta (ou renomeie-o), para que o agente não use o relatório pronto como ponto de partida. No Claude Code, rode `/lgpd-saas`. Para outras ferramentas, troque `--target` (`cursor`, `vscode`, `opencode` ou `agents`). O `--version local` instala o framework a partir desta cópia do repositório, em vez da última versão publicada.
+
+O resultado não será idêntico palavra por palavra, mas o score deve ser reproduzível a partir do checklist: com as mesmas evidências, a mesma `criticality` e o mesmo status por item, a fórmula leva ao mesmo número. Os arquivos criados pelo instalador (`.agents/`, `.claude/` etc.) estão no `.gitignore` do exemplo. Para removê-los, use `./scripts/install.sh uninstall --project-dir examples/saas-demo --non-interactive`.
+
+## Relatórios reais são confidenciais
+
+Este relatório é público apenas porque o projeto é fictício. Um relatório de auditoria real descreve falhas que podem estar abertas e deve:
+
+- começar com a marcação `CONFIDENCIAL — uso interno`;
+- **nunca** ser versionado em repositório público; prefira um local fora do repositório auditado ou uma pasta ignorada pelo git (ex.: `docs/lgpd/auditorias/`, listada no `.gitignore`);
+- ser compartilhado só com quem precisa agir sobre os achados;
+- ter nome com data e escopo, como `auditoria-lgpd-AAAA-MM-<cenario>.md`.

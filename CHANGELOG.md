@@ -6,6 +6,26 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o lançamento público.
+
+### Adicionado
+- Cálculo do score fechado e reproduzível: `CONFORME` = 1, `PARCIAL` = 0,5, `NAO_CONFORME` = 0, com peso do item pela criticidade (4/3/2/1) (#4).
+- Mapa de áreas por domínio: cada item do checklist pontua em uma única área; novos campos `score_area`, `criticality` e `control_type` no `check_item` (#5).
+- Modulação de severidade por porte e exposição (Res. CD/ANPD nº 2/2022), limitada a um nível e vedada nos casos graves (#6).
+- Score técnico e score documental, informativos, ao lado do score global (#7).
+- Natureza do agente de tratamento como entrada inicial obrigatória do router, dos comandos e da skill (#8).
+- Dados de acesso público e manifestamente públicos (art. 7º, §§ 3º, 4º e 7º), incluindo dado sensível divulgado por órgão oficial (#9).
+- Registro de risco aceito no achado (quem, quando, justificativa e revisão), sem efeito no score (#11).
+- Relatório: "o que fazer agora" com esforço `P | M | G`, coluna `Área` no checklist, glossário, aviso legal fixo e marcação de confidencialidade (#12, #13, #15).
+- Exemplo público em `examples/saas-demo/`: SaaS fictício com falhas propositais e relatório completo (#16).
+- Arquivos de comunidade: `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, modelos de issue (bug, atualização normativa, melhoria) e de PR (#16).
+
+### Alterado
+- Antes de perguntar, a auditoria lê o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`, README, `docs/`) e pergunta só o que falta (#14).
+- Módulo de cloud generalizado para PaaS e hospedagem compartilhada, com validação das respostas de produção; `cloud/aws-audit.md` passa a ser `cloud/cloud-audit.md` (#10).
+- Regras de consistência apontadas ao gerar o exemplo: itens `PARCIAL` também geram achado (severidade da lacuna, limitada à criticidade); contagem única de uma mesma falha; precedência da regra de severidade mais específica; transferência internacional distingue mecanismo comprovadamente ausente (`CRITICO`) de não evidenciado (`ALTO`); dispensa de encarregado e registro simplificado não valem para pequeno porte com tratamento de alto risco; severidade explícita para encarregado/RIPD, resposta a incidentes e DPA com operadores; `IMEDIATO` definido como até 7 dias.
+- `README.md` passa a ser em português (canônico) e a versão em inglês vai para `README.en.md`, com resumo do produto, badges, link para o exemplo e aviso legal (#15, #16).
+
 ## [1.2.0] - 2026-10-02
 
 ### Adicionado

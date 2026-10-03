@@ -56,4 +56,4 @@ Quando o consentimento é requerido, ele é nulo se as informações tiverem con
 - Resposta fora do prazo do art. 19 ou inexistência de fluxo de exclusão/portabilidade: `MEDIO`.
 - Política de privacidade incompleta frente ao art. 9º: `MEDIO`.
 - Problemas de clareza ou linguagem da política: `BAIXO`.
-- Área de scoring primária: `direitos_titular` (15%); transparência contribui para `bases_legais` (15%).
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `direitos_titular` (domínios 3 e 4) para todos os itens deste módulo.

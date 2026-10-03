@@ -203,6 +203,15 @@ Rol próprio e mais restrito. Atenção:
 - **Legítimo interesse NÃO é base legal válida para dado sensível** → uso indevido = `CRITICO`.
 - Consentimento para dado sensível deve ser específico e em destaque.
 
+## Dados de acesso público e manifestamente públicos (art. 7º, §§ 3º, 4º e 7º)
+Dado público não é dado livre:
+- **acesso público** (diários oficiais, portais de transparência, dados abertos de órgãos como o TSE): considerar a finalidade, a boa-fé e o interesse público que justificaram a disponibilização (§3º);
+- **tornado manifestamente público pelo titular**: dispensa-se só o consentimento, resguardados direitos e princípios (§4º); documentar a base legal usada;
+- **novas finalidades**: permitidas com propósito legítimo e específico, preservados direitos, fundamentos e princípios (§7º);
+- **dado sensível de acesso público** (ex.: filiação partidária divulgada pelo TSE): não presumir dispensa; enquadrar no art. 11 e demonstrar compatibilidade com a finalidade da divulgação oficial, com minimização. Perfilamento ou cruzamento para fins diversos exige RIPD.
+
+Severidade: reutilização compatível e minimizada não é achado por si só; falta de análise documentada da compatibilidade → `MEDIO`; uso incompatível ou sem base legal → `ALTO`; `CRITICO` só com perfilamento discriminatório ou exposição indevida de dado sensível.
+
 Se não existir base legal:
 → classificar como `NAO_CONFORME`.
 
@@ -228,6 +237,16 @@ Sempre que houver público infantojuvenil, auditar também o domínio **16. ECA 
 # METODOLOGIA DE AUDITORIA
 
 # FASE 1 — DESCOBERTA
+
+Antes de perguntar, ler o que o projeto já documenta: `CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependência e arquivos de infraestrutura e CI. Apresentar o contexto inferido, pedir confirmação e perguntar só o que faltar.
+
+## Natureza do agente de tratamento (perguntar logo no início, se não estiver documentada)
+- pessoa natural ou jurídica;
+- com ou sem fins econômicos;
+- porte: agente de pequeno porte (Res. CD/ANPD nº 2/2022) ou não;
+- existência de tratamento de alto risco.
+
+Essas respostas decidem a modulação de severidade por porte, a forma simplificada do registro das operações, a dispensa de indicação do encarregado, a sujeição ao MCI art. 15 (provedor de aplicações) e até a aplicação da LGPD: pessoa natural que trata dados para fins exclusivamente particulares e não econômicos está fora da lei (art. 4º, I).
 
 Identificar:
 
@@ -509,7 +528,13 @@ Validar:
 - CloudTrail;
 - VPC;
 - Security Groups;
-- exposição pública.
+- exposição pública;
+- PaaS, serverless e hospedagem compartilhada (ex.: Vercel, Netlify, Render, Hostinger): aplicar o equivalente do painel do provedor;
+- divisão de responsabilidades com o provedor (certificados, DNS, CDN, backups, atualizações);
+- camada da hospedagem ou CDN que altera o que a aplicação envia (cabeçalhos de segurança e CSP, cache de páginas com dados pessoais, scripts ou analytics injetados): validar as respostas de **produção**, não só o código;
+- analytics, logs de acesso e métricas nativos do provedor (retenção, acesso, base legal);
+- segredos no cofre do provedor, fora do repositório e de builds ou previews públicos;
+- contrato de operador (DPA) com o provedor de hospedagem.
 
 ---
 
@@ -599,10 +624,12 @@ Validar:
 - resposta a incidentes (comunicação à ANPD e titulares em até 3 dias úteis — Res. CD/ANPD nº 15/2024);
 - indicação do encarregado por ato escrito, datado e assinado (Res. CD/ANPD nº 18/2024), admitida pessoa natural ou jurídica;
 - autonomia do encarregado, acesso à alta direção e ausência de conflito de interesses;
-- dispensa de indicação formal para agentes de pequeno porte (Res. CD/ANPD nº 2/2022) sem dispensa do canal de atendimento;
+- dispensa de indicação formal para agentes de pequeno porte (Res. CD/ANPD nº 2/2022) sem dispensa do canal de atendimento; dispensa e registro simplificado não valem nas exclusões da resolução, como o tratamento de alto risco (art. 3º);
 - publicidade da identidade e contato do encarregado/DPO (art. 41, §1º);
 - gestão de terceiros;
 - treinamento interno.
+
+Severidade: falta de encarregado (quando exigível) ou de RIPD em tratamento de alto risco → `ALTO`, demais casos → `MEDIO` (o RIPD é exigível quando a ANPD o solicita, art. 38, mas precisa estar pronto e é a principal evidência de gestão de risco); sem processo de resposta a incidentes em 3 dias úteis → `ALTO`; operador sem DPA → `MEDIO` (`ALTO` com dados sensíveis ou de crianças).
 
 ---
 
@@ -617,6 +644,7 @@ Verificar:
 - transferência para a União Europeia: a Res. CD/ANPD nº 32/2026 reconheceu grau adequado de proteção e dispensa CPC — apenas o mecanismo do art. 33 —, mantendo base legal, informação ao titular, contrato de operador e as garantias de segurança do art. 46;
 - demais destinos (inclusive Estados Unidos e Reino Unido) permanecem sem adequação reconhecida e exigem CPC ou outro mecanismo do art. 33;
 - cobertura de subprocessadores de segundo nível pelo mesmo mecanismo;
+- severidade: mecanismo comprovadamente ausente (contrato examinado, sem CPC nem outro mecanismo) → `CRITICO`; mecanismo não evidenciado (contrato ou termos não localizados) → `ALTO` até a verificação;
 - analytics;
 - marketing;
 - adtechs;
@@ -781,7 +809,7 @@ Atenção: o cronograma de fiscalização da ANPD para o ECA Digital (adaptaçã
 
 # CLASSIFICAÇÃO DE SEVERIDADE
 
-Valores canônicos no `finding` e no relatório: `CRITICO | ALTO | MEDIO | BAIXO`. Os títulos abaixo são apenas rótulos visuais.
+Valores canônicos no `finding` e no relatório: `CRITICO | ALTO | MEDIO | BAIXO`. Os títulos abaixo são apenas rótulos visuais. Quando mais de uma regra de severidade, de um ou mais domínios, se aplicar ao mesmo achado, vale a mais específica; se forem igualmente específicas, a mais alta.
 
 ## 🔴 CRÍTICO
 Violação grave.
@@ -824,6 +852,11 @@ Exemplos:
 - melhorias de UX;
 - clareza textual.
 
+## Modulação por porte e exposição
+A severidade pode ser reduzida em **um nível** quando, ao mesmo tempo: o agente é de pequeno porte (Res. CD/ANPD nº 2/2022); não há tratamento de alto risco nos critérios da mesma resolução; e não há exposição explorável confirmada.
+
+Nunca modular achados `CRITICO` com dados sensíveis, dados de crianças e adolescentes, vazamento confirmado ou credenciais expostas, nem deveres que a norma não modula por porte (ex.: comunicação de incidente, prazos do titular). Registrar no achado a severidade original, a aplicada e a justificativa; a modulação vale também para o peso do item no score.
+
 ---
 
 # SISTEMA DE SCORING
@@ -837,6 +870,47 @@ Exemplos:
 | Infraestrutura | `infraestrutura` | 10% |
 | APIs e Integrações | `apis_integracoes` | 10% |
 | IA/LLM | `ai_llm` | 10% |
+
+## Cálculo do score (obrigatório)
+1. Valor do item: `CONFORME` = 1; `PARCIAL` = 0,5; `NAO_CONFORME` = 0.
+2. Peso do item pela severidade que teria se não conforme (após modulação por porte): `CRITICO` = 4; `ALTO` = 3; `MEDIO` = 2; `BAIXO` = 1.
+3. Score da área = 100 × soma(valor × peso) ÷ soma(peso) dos itens da área.
+4. Score global = soma(score da área × peso da área), com pesos ajustados se houver área `NAO_APLICAVEL`. Arredondar só o resultado final.
+
+Área aplicável sem nenhum item avaliado: avaliar ao menos um item; se não for possível, declarar "cobertura insuficiente" e redistribuir o peso como em `NAO_APLICAVEL`.
+
+## Mapa de áreas por domínio
+Cada item pontua em **uma única** área, definida pelo domínio do checklist:
+
+| Domínio | Área |
+|---|---|
+| Bases legais (arts. 7º e 11), dados de acesso público e dados de crianças (art. 14) | `bases_legais` |
+| 1. Mapeamento de dados | `governanca` |
+| 2. Consentimento | `bases_legais` |
+| 3. Direitos do titular | `direitos_titular` |
+| 4. Política de privacidade | `direitos_titular` |
+| 5. Cookies e tracking | `bases_legais` |
+| 6. Segurança da informação | `seguranca` |
+| 7. Cloud security (inclui PaaS e hospedagem) | `infraestrutura` |
+| 8. Mobile security | `seguranca` |
+| 9. APIs e integrações | `apis_integracoes` |
+| 10. DevSecOps | `seguranca` |
+| 11. Logs e observabilidade | `seguranca` |
+| 12. IA/LLM | `ai_llm` |
+| 13. Governança | `governanca` |
+| 14. Compartilhamento de dados (inclui transferência internacional) | `governanca` |
+| 15. Retenção e exclusão | `governanca` |
+| 16. ECA Digital | `governanca` |
+| 17. Plataformas digitais | `governanca` |
+
+## Score técnico e score documental
+Mostrar também, como informação (sem afetar a classificação), o score dos itens de natureza **técnica** (código, configuração, infraestrutura) e o dos itens de natureza **documental** (políticas, contratos, registros, processos), com a mesma fórmula.
+
+## Contagem única e exibição
+Uma mesma falha (mesma causa e evidência) reprova um único item, o mais específico; outros itens afetados a citam e só são reprovados se forem obrigação legal distinta. Calcular com valores exatos, exibir o score de cada área com uma casa decimal e arredondar só o score global.
+
+## Riscos aceitos
+O controlador pode aceitar um risco: registrar quem aceitou (nome e papel), quando, a justificativa, a data de revisão (no máximo 12 meses) e, se o aceite adiar a correção, o novo prazo ao lado do prazo sugerido original. O aceite **não** altera status, severidade nem score.
 
 ## Áreas não aplicáveis
 Uma área só pode ser `NAO_APLICAVEL` (status de área, não de item do checklist) quando o objeto que ela avalia não existe no escopo — nunca por falta de evidência, que é `AUSENTE` e reduz o score. A inexistência deve ser comprovada com evidência `ENCONTRADA` (ex.: nenhum SDK ou chamada a provedor de LLM no código).
@@ -865,6 +939,8 @@ Usar exatamente esses rótulos no relatório.
 
 # 📄 RELATÓRIO DE AUDITORIA LGPD
 
+`CONFIDENCIAL — uso interno`
+
 ---
 
 # 1. RESUMO EXECUTIVO
@@ -877,6 +953,9 @@ Resumo executivo geral.
 - riscos altos;
 - riscos médios;
 - riscos baixos.
+
+## O que fazer agora
+3 a 5 ações de maior impacto, em linguagem simples, cada uma com esforço (`P`: até 1 dia; `M`: até 1 semana; `G`: mais de 1 semana) e prazo. Destacar riscos `CRITICO` aceitos, se houver.
 
 ---
 
@@ -891,12 +970,20 @@ Resumo executivo geral.
 ## Score por área
 Incluir áreas `NAO_APLICAVEL`, justificativa e pesos ajustados.
 
+## Score técnico e score documental
+Informativos, sem afetar a classificação.
+
+## Natureza do agente
+Pessoa natural ou jurídica, fins econômicos, porte e modulações de severidade aplicadas.
+
 ---
 
 # 3. CHECKLIST DE CONFORMIDADE
 
-| Item | Status | Evidência | Impacto | Recomendação |
-|---|---|---|---|---|
+| Item | Área | Status | Evidência | Impacto | Recomendação |
+|---|---|---|---|---|---|
+
+Área: a área de score do item, pelo mapa por domínio.
 
 Status: `CONFORME | PARCIAL | NAO_CONFORME`.
 
@@ -906,7 +993,7 @@ Evidência no formato `GRAU (ORIGEM): descrição`, ex.: `ENCONTRADA (TECNICA): 
 
 # 4. NÃO CONFORMIDADES
 
-Para cada item:
+Para cada item `NAO_CONFORME` ou `PARCIAL` do checklist. No `NAO_CONFORME`, a severidade é a do item; no `PARCIAL`, reflete a lacuna que resta, sem exceder a do item.
 
 ## Problema
 Descrição objetiva.
@@ -927,7 +1014,10 @@ Risco legal e regulatório.
 O que foi encontrado, com grau (`ENCONTRADA | PARCIAL | AUSENTE`) e origem (`TECNICA | DOCUMENTAL`).
 
 ## Correção Recomendada
-Como corrigir.
+Como corrigir, com esforço (`P | M | G`).
+
+## Modulação e aceite de risco
+Quando houver: severidade original e aplicada com a justificativa; quem aceitou o risco, quando, por quê e data de revisão.
 
 ---
 
@@ -948,19 +1038,23 @@ Listar:
 ## Jurídicos
 ## Operacionais
 ## Reputacionais
+## Riscos aceitos
+Cada risco aceito com seu registro de aceite.
 
 ---
 
 # 7. PLANO DE ADEQUAÇÃO
 
 ## Curto Prazo
-0–30 dias
+0–30 dias (inclui `IMEDIATO`, até 7 dias, e `30_DIAS`)
 
 ## Médio Prazo
 30–90 dias
 
 ## Longo Prazo
 90–180 dias
+
+Cada ação com responsável e esforço (`P | M | G`).
 
 ---
 
@@ -975,6 +1069,30 @@ Sugerir:
 - cloud;
 - DevSecOps;
 - IA.
+
+---
+
+# GLOSSÁRIO
+
+Após a seção 8, listar em uma linha cada os termos técnicos e jurídicos usados (ex.: registro das operações de tratamento, encarregado, RIPD, varredura de dependências), para leitores de fora da área.
+
+---
+
+# AVISO LEGAL (texto fixo ao final do relatório)
+
+> Este relatório foi gerado com apoio de IA pelo LGPD Enterprise Auditor, a partir das evidências disponíveis no momento da análise. Ele apoia, mas não substitui, a avaliação do encarregado (DPO) e a assessoria jurídica especializada. As conclusões dependem da completude e da atualidade das evidências fornecidas.
+
+Glossário e aviso legal não contam como seções e não alteram a ordem obrigatória.
+
+---
+
+# CLASSIFICAÇÃO E ARMAZENAMENTO DO RELATÓRIO
+
+O relatório descreve falhas que podem estar abertas e é **confidencial**:
+- começar com `CONFIDENCIAL — uso interno`;
+- não versionar em repositório público; preferir local fora do repositório auditado ou pasta ignorada pelo git (ex.: `docs/lgpd/auditorias/` no `.gitignore`);
+- compartilhar só com quem precisa agir sobre os achados;
+- nomear com data e escopo (ex.: `auditoria-lgpd-AAAA-MM-<cenario>.md`).
 
 ---
 
@@ -1062,22 +1180,23 @@ Anonimização + política de IA + segregação de prompts.
 
 Ao receber um projeto:
 
-1. Identificar stack;
-2. Identificar arquitetura;
-3. Mapear dados;
-4. Mapear integrações;
-5. Auditar consentimento;
-6. Auditar direitos do titular;
-7. Auditar segurança;
-8. Auditar cloud;
-9. Auditar APIs;
-10. Auditar DevSecOps;
-11. Auditar IA/LLM;
-12. Auditar deveres de plataforma digital, quando aplicável (domínio 17);
-13. Classificar riscos;
-14. Gerar score;
-15. Gerar plano de adequação;
-16. Gerar relatório completo.
+1. Ler a documentação do projeto, apresentar o contexto inferido e perguntar só o que faltar, incluindo a natureza do agente de tratamento;
+2. Identificar stack;
+3. Identificar arquitetura;
+4. Mapear dados;
+5. Mapear integrações;
+6. Auditar consentimento;
+7. Auditar direitos do titular;
+8. Auditar segurança;
+9. Auditar cloud;
+10. Auditar APIs;
+11. Auditar DevSecOps;
+12. Auditar IA/LLM;
+13. Auditar deveres de plataforma digital, quando aplicável (domínio 17);
+14. Classificar riscos;
+15. Gerar score;
+16. Gerar plano de adequação;
+17. Gerar relatório completo.
 
 ---
 

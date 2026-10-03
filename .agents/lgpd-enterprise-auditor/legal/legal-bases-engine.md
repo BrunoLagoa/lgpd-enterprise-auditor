@@ -31,6 +31,21 @@ Dados sensíveis (art. 5º, II: dado pessoal sobre origem racial ou étnica, con
 - consentimento (art. 7º) deve ser específico, granular e revogável; consentimento para dado sensível (art. 11, I) deve ser, ainda, específico e destacado;
 - uso de legítimo interesse deve ter justificativa formal documentada e teste de proporcionalidade/balanceamento (LIA).
 
+## Dados de acesso público e dados manifestamente públicos (art. 7º, §§ 3º, 4º e 7º)
+Dado público não é dado livre: estar acessível muda a análise, mas não afasta a LGPD.
+- **Dados de acesso público** (ex.: diários oficiais, portais de transparência, dados abertos de órgãos como o TSE): o tratamento deve considerar a finalidade, a boa-fé e o interesse público que justificaram sua disponibilização (art. 7º, §3º).
+- **Dados tornados manifestamente públicos pelo próprio titular**: dispensa-se apenas o **consentimento**, resguardados os direitos do titular e os princípios do art. 6º (art. 7º, §4º). Documentar qual base legal sustenta o tratamento (com frequência o legítimo interesse, com teste de balanceamento).
+- **Tratamento posterior para novas finalidades** é possível se houver propósito legítimo e específico e se forem preservados os direitos do titular, os fundamentos e os princípios (art. 7º, §7º).
+- **Dado sensível de acesso público** (ex.: filiação partidária ou dados de candidatos divulgados pelo TSE): não presumir dispensa. Enquadrar em uma hipótese do art. 11 e demonstrar compatibilidade com a finalidade da divulgação oficial (art. 7º, §3º); reutilização alinhada a essa finalidade, como transparência e controle social, com minimização, tende a ser legítima. Perfilamento ou combinação com outras bases para fins diversos exige avaliação de risco (RIPD).
+
+Checklist:
+- A origem pública de cada conjunto de dados está identificada (fonte, data de coleta, finalidade original da divulgação)?
+- A finalidade do tratamento é compatível com a que justificou a divulgação, ou a nova finalidade é legítima e específica (art. 7º, §§ 3º e 7º)?
+- Há base legal documentada (a dispensa do §4º é só do consentimento) e, para dado sensível, enquadramento no art. 11?
+- Os dados são minimizados e os direitos do titular (correção, oposição, eliminação quando cabível) seguem atendidos?
+
+Severidade: reutilização compatível e minimizada **não é achado por si só**. Ausência de análise documentada da compatibilidade: `MEDIO`. Uso incompatível com a finalidade da divulgação ou sem base legal: `ALTO`. `CRITICO` apenas com perfilamento discriminatório ou exposição indevida de dado sensível.
+
 ## Checklist atômico de consentimento (art. 8º)
 Aplicável sempre que o consentimento (art. 7º, I ou art. 11, I) for a base legal indicada. Para cookies e tracking no front-end, ver a seção de cookies de [[owasp-api]].
 - O consentimento é fornecido por escrito ou por outro meio que demonstre a manifestação de vontade (opt-in explícito, sem checkbox pré-marcado) (art. 8º, caput)?
@@ -46,7 +61,7 @@ Aplicável sempre que o consentimento (art. 7º, I ou art. 11, I) for a base leg
 - Consentimento genérico ou com checkbox pré-marcado: `ALTO`.
 - Ausência de mecanismo de revogação do consentimento: `ALTO`.
 - Ausência de registro que prove o consentimento ou consentimento pouco granular: `MEDIO`.
-- Área de scoring primária: `bases_legais` (15%).
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `bases_legais` para todos os itens deste módulo.
 
 ## Resultado da validação
 - `CONFORME`: base legal válida para o tipo de dado + evidência suficiente.
