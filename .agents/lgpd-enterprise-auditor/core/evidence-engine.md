@@ -20,6 +20,7 @@ Quando `evidence_type` for `AUSENTE`, registrar em `evidence_source` a origem on
 ## Regras de validação
 - Cada `check_item` e cada `finding` deve possuir `evidence`, `evidence_type` e `evidence_source`.
 - Todo `NAO_CONFORME` deve trazer `evidence_type` `AUSENTE` ou `PARCIAL`.
+- O grau mede a comprovação do **controle exigido**, não a prova do problema: quando a análise encontra a violação (ex.: CPF em log), o controle está `AUSENTE` e a descrição cita o que foi encontrado.
 - Todo `CONFORME` deve trazer `evidence_type` `ENCONTRADA`.
 - Todo `PARCIAL` (status) deve trazer `evidence_type` `PARCIAL`.
 - Para achados `CRITICO` e `ALTO`, exigir pelo menos uma evidência `TECNICA` ou `DOCUMENTAL` explícita e rastreável.
