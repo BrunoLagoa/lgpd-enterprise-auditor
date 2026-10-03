@@ -119,7 +119,8 @@ If it prints anything, fix the commits (`git commit --amend` / `git rebase`) **b
 
 1. Rewrite it out and force-push; repeat for every branch and tag that contains the commit.
 2. Confirm the history is clean on all refs: `git fetch origin '+refs/pull/*/head:refs/remotes/pr/*'`, then `git log --all --format='%B' | grep -ciE '^co-authored-by:|noreply@anthropic'` must print `0` (delete the `refs/remotes/pr/*` refs afterwards).
-3. Tell the user that the Contributors sidebar may lag: a force-push does not refresh it, and switching the default branch to a temporary branch and back did not refresh it immediately either. The old commit also stays reachable by SHA on GitHub until it is garbage-collected. If the sidebar stays stale, only GitHub Support can purge the cached views and orphaned commits — the user opens that ticket; never claim the remote is fixed based on the history alone.
+3. Refresh the Contributors sidebar — force-pushing and ordinary pushes to `main` did not do it. What worked on 2026-10-03: create a temporary branch on `origin` at the same commit as `main`, make it the default branch (`gh api -X PATCH repos/BrunoLagoa/lgpd-enterprise-auditor -f default_branch=<tmp>`), switch the default back to `main`, delete the temporary branch, then push a commit to `main`. Do it only with no open PRs, and confirm `default_branch` is `main` again at the end.
+4. Verify on the page itself, not only through the API: `curl -sL 'https://github.com/BrunoLagoa/lgpd-enterprise-auditor/contributors_list?current_repository=lgpd-enterprise-auditor&deferred=true' | grep -o 'alt="@[^"]*"'` must list only the owner. Never claim the remote is fixed based on the history alone. The old commit stays reachable by SHA on GitHub until it is garbage-collected; only GitHub Support can purge it, and the user opens that ticket.
 
 ## Post-merge branch cleanup (automatic)
 
