@@ -110,7 +110,7 @@ This overrides any default attribution behavior of the tool. Claude Code's `attr
 **Check before every push** (and before opening or merging a PR) — this must print nothing:
 
 ```bash
-git log origin/main..HEAD --format='%h %an <%ae> | %cn <%ce>%n%B' | grep -inE 'co-authored-by|noreply@anthropic\.com|generated with|🤖'
+git log origin/main..HEAD --format='%h %an <%ae> | %cn <%ce>%n%B' | grep -inE '^co-authored-by:|noreply@anthropic\.com|generated with claude|🤖'
 ```
 
 If it prints anything, fix the commits (`git commit --amend` / `git rebase`) **before** pushing. Read the PR body the same way before `gh pr create` / `gh pr merge` (a squash merge copies the PR text into the commit).
@@ -118,7 +118,7 @@ If it prints anything, fix the commits (`git commit --amend` / `git rebase`) **b
 **Why prevention matters more than cleanup:** a single `Co-Authored-By: Claude` commit is enough for GitHub to list `claude` under **Contributors**, and that sidebar is a cache separate from the git history. It happened here: commit `08a4e75` (2026-08-12) carried the trailer; it was rewritten out and force-pushed on 2026-10-02, yet the sidebar still showed `claude` a day later while the history and `gh api repos/BrunoLagoa/lgpd-enterprise-auditor/contributors` were already clean. So if a trailer does reach `origin`:
 
 1. Rewrite it out and force-push; repeat for every branch and tag that contains the commit.
-2. Confirm the history is clean on all refs: `git fetch origin '+refs/pull/*/head:refs/remotes/pr/*'`, then `git log --all --format='%B' | grep -ciE 'co-authored-by|noreply@anthropic'` must print `0` (delete the `refs/remotes/pr/*` refs afterwards).
+2. Confirm the history is clean on all refs: `git fetch origin '+refs/pull/*/head:refs/remotes/pr/*'`, then `git log --all --format='%B' | grep -ciE '^co-authored-by:|noreply@anthropic'` must print `0` (delete the `refs/remotes/pr/*` refs afterwards).
 3. Tell the user that the Contributors sidebar may lag: a force-push does not refresh it, and switching the default branch to a temporary branch and back did not refresh it immediately either. The old commit also stays reachable by SHA on GitHub until it is garbage-collected. If the sidebar stays stale, only GitHub Support can purge the cached views and orphaned commits — the user opens that ticket; never claim the remote is fixed based on the history alone.
 
 ## Post-merge branch cleanup (automatic)
