@@ -8,6 +8,9 @@
 - classificação:
 - score por área (indicar áreas `NAO_APLICAVEL`, justificativa e pesos ajustados):
 - score técnico e score documental (informativos):
+- cobertura global e por área (marcar **score parcial** se a global for menor que 80%):
+- verificações pendentes que podem alterar o score:
+- papel do auditado por fluxo de dados (controlador, operador ou ambos):
 - natureza do agente de tratamento e modulações de severidade por porte:
 
 ## 2. Situação regulatória

@@ -8,6 +8,7 @@ Antes de perguntar, ler o que o projeto já documenta: `CLAUDE.md`, `AGENTS.md`,
 
 ## Entradas mínimas
 - natureza do agente de tratamento: pessoa natural ou jurídica, com ou sem fins econômicos, porte (agente de pequeno porte, Res. CD/ANPD nº 2/2022) e existência de tratamento de alto risco — define se há modulação de severidade (`core/severity-model.md`), se valem a forma simplificada do registro e a dispensa de indicação do encarregado, se o serviço é provedor de aplicações sujeito ao MCI art. 15 e se a LGPD se aplica (art. 4º, I);
+- papel do auditado em cada fluxo de dados: **controlador**, **operador** ou ambos (ex.: um SaaS B2B costuma ser operador dos dados que seus clientes inserem e controlador dos dados das contas e de cobrança) — define quais obrigações são dele e quais ficam `NAO_APLICAVEL` (`legal/legal-bases-engine.md`);
 - stack (frontend/backend/mobile);
 - cloud provider, PaaS ou hospedagem (ex.: AWS, Vercel, hospedagem compartilhada);
 - integrações de terceiros;
@@ -42,6 +43,8 @@ Adicionar `eca-digital` a **qualquer** cenário quando houver indício de usuár
 - cadastro que aceite ou não bloqueie usuários menores de 18 anos;
 - jogos eletrônicos, itens virtuais pagos ou monetização por engajamento;
 - app classificado para faixa etária inferior a 18 anos nas lojas.
+
+Bloqueio etário baseado só em idade ou data de nascimento **autodeclarada não afasta** o gatilho quando houver qualquer outro indício desta lista: a autodeclaração isolada é insuficiente (arts. 10, 12 e 14 do ECA Digital; LGPD art. 14, §5º). Sem nenhum outro indício (ex.: serviço B2B ou profissional, sem atrativo para menores), o módulo não é ativado e a decisão vai para o escopo excluído, com a justificativa.
 
 Esse gatilho é **normativo, não técnico**: na dúvida sobre a presença de menores, ativar o módulo e registrar a incerteza como evidência `PARCIAL`.
 

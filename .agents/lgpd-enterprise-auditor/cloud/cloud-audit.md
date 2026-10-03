@@ -6,7 +6,7 @@ Avaliar postura de segurança e privacidade de onde a aplicação roda:
 - **PaaS e serverless** (ex.: Vercel, Netlify, Render, Heroku, Cloudflare);
 - **hospedagem compartilhada** (ex.: Hostinger, Locaweb, HostGator).
 
-Os itens abaixo usam termos de IaaS; em PaaS e hospedagem, aplicar o equivalente do painel do provedor e registrar como `PARCIAL` ou fora de alcance o que o provedor não expõe ao cliente.
+Os itens abaixo usam termos de IaaS; em PaaS e hospedagem, aplicar o equivalente do painel do provedor. O que o provedor não expõe ao cliente e o que só pode ser conferido com acesso ao painel ou à produção fica `NAO_VERIFICADO`, com o acesso necessário; o que não existe no escopo (ex.: VPC e security groups em hospedagem compartilhada) fica `NAO_APLICAVEL` (`core/scoring-engine.md`).
 
 ## Checklist atômico
 - Há ativos públicos indevidos (ex.: buckets com dados pessoais)?

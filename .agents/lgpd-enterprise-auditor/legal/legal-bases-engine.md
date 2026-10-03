@@ -31,6 +31,26 @@ Dados sensíveis (art. 5º, II: dado pessoal sobre origem racial ou étnica, con
 - consentimento (art. 7º) deve ser específico, granular e revogável; consentimento para dado sensível (art. 11, I) deve ser, ainda, específico e destacado;
 - uso de legítimo interesse deve ter justificativa formal documentada e teste de proporcionalidade/balanceamento (LIA).
 
+## Papel do auditado: controlador ou operador
+Antes de exigir base legal, identificar o papel do auditado **em cada fluxo de dados** (art. 5º, VI e VII):
+- **Controlador**: decide sobre o tratamento. Responde por base legal, transparência, direitos do titular e comunicação de incidentes.
+- **Operador**: trata dados em nome do controlador e segundo as instruções dele (art. 39). Um SaaS B2B costuma ser operador dos dados que seus clientes inserem (ex.: pacientes de uma clínica) e controlador dos dados das contas, de cobrança e de uso do próprio produto.
+- Quem usa os dados recebidos para **finalidade própria** (ex.: analytics de produto, treino de modelo, marketing) passa a ser controlador dessa finalidade e precisa de base legal própria.
+
+Quando o auditado é operador de um fluxo, **não** são achado dele, e ficam `NAO_APLICAVEL` com essa justificativa: a escolha da base legal, a coleta de consentimento, a política de privacidade dirigida aos titulares, o canal de direitos, o relatório de impacto (art. 38) e a comunicação de incidente à ANPD e aos titulares (art. 48) — obrigações do controlador. Agente com papel misto segue as regras do controlador nos fluxos em que é controlador (inclusive encarregado e RIPD) e as do operador nos demais. Continuam exigíveis do operador:
+- Há contrato ou termo com o controlador que defina objeto, instruções, segurança, suboperadores e devolução ou eliminação dos dados ao fim (art. 39)?
+- O tratamento se limita às instruções documentadas, sem uso dos dados para finalidade própria?
+- Suboperadores (hospedagem, e-mail, analytics) são informados ao controlador e cobertos por contrato equivalente?
+- Há medidas de segurança próprias (art. 46) e registro das operações que realiza (art. 37)?
+- Existe processo para avisar o controlador sem demora em caso de incidente e para apoiá-lo no atendimento a titulares?
+- Ao fim do contrato, os dados são devolvidos ou eliminados conforme instrução do controlador (art. 16)?
+
+Contagem única: a segurança e o registro das operações do operador são avaliados nos itens de segurança e de registro já existentes, e o contrato com suboperador é o mesmo item do DPA com operadores de `governance/dpo-framework.md` — não criar item duplicado.
+
+A indicação de encarregado pelo operador é facultativa (Res. CD/ANPD nº 18/2024). O operador responde solidariamente quando descumpre a LGPD ou as instruções lícitas do controlador (art. 42, §1º, I).
+
+Severidade: operador que usa os dados para finalidade própria sem base legal: `ALTO` (`CRITICO` com dado sensível ou de crianças e adolescentes). Ausência de contrato com o controlador ou de processo de aviso de incidente: `ALTO`. Suboperador não informado ou sem contrato: `MEDIO` (`ALTO` com dado sensível ou de crianças e adolescentes). Sem processo de apoio ao controlador nos pedidos de titulares, ou sem devolução ou eliminação definida para o fim do contrato: `MEDIO`. Para essas regras, conta como dado sensível também o dado que **revele** informação sensível e possa causar dano ao titular (art. 11, §1º) — ex.: o registro de que alguém agendou consulta numa clínica. Área de score: `governanca` (domínio 14); o uso para finalidade própria pontua em `bases_legais`.
+
 ## Dados de acesso público e dados manifestamente públicos (art. 7º, §§ 3º, 4º e 7º)
 Dado público não é dado livre: estar acessível muda a análise, mas não afasta a LGPD.
 - **Dados de acesso público** (ex.: diários oficiais, portais de transparência, dados abertos de órgãos como o TSE): o tratamento deve considerar a finalidade, a boa-fé e o interesse público que justificaram sua disponibilização (art. 7º, §3º).

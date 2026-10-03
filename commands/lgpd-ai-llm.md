@@ -4,13 +4,14 @@ description: Executa auditoria LGPD direcionada para sistemas com IA/LLM.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.3.2"
+  version: "1.4.0"
 ---
 
 # LGPD IA/LLM
 
 Antes de perguntar, leia o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependências e de infraestrutura) e apresente o contexto inferido. Pergunte apenas o que faltar ou não puder ser confirmado:
 - natureza do agente de tratamento: pessoa natural ou jurídica, com ou sem fins econômicos, porte (agente de pequeno porte, Res. CD/ANPD nº 2/2022) e se há tratamento de alto risco;
+- papel do auditado em cada fluxo de dados: controlador, operador ou ambos;
 - provedores de IA/LLM utilizados;
 - uso de prompts, embeddings, RAG e fine-tuning;
 - política de retenção e transferência internacional;

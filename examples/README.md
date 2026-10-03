@@ -12,7 +12,13 @@ Um SaaS pequeno e inventado de agendamento para clínicas (Node.js/Express, pág
 | [`saas-demo/relatorio-auditoria-lgpd.md`](saas-demo/relatorio-auditoria-lgpd.md) | Relatório completo gerado pela auditoria |
 | [`saas-demo/docs/lgpd/politica-de-privacidade.md`](saas-demo/docs/lgpd/politica-de-privacidade.md) | Política de privacidade propositalmente incompleta |
 
-O relatório mostra: as 8 seções obrigatórias na ordem canônica, a natureza do agente (pequeno porte com tratamento de alto risco, sem modulação de severidade), o checklist com evidências por arquivo e linha, o cálculo do score passo a passo (com `ai_llm` como `NAO_APLICAVEL` e pesos ajustados), os scores técnico e documental, um registro de aceite de risco, o glossário e o aviso legal.
+O relatório mostra:
+
+- as 8 seções obrigatórias na ordem canônica, o glossário e o aviso legal;
+- a natureza e o papel do agente: pequeno porte com tratamento de alto risco (sem modulação de severidade), operador dos dados dos pacientes e controlador das contas das clínicas e do rastreamento que ele mesmo instalou;
+- o checklist com evidências por arquivo e linha e com nível de confiança, mais a tabela de itens fora do cálculo (`NAO_APLICAVEL` e `NAO_VERIFICADO`);
+- o cálculo do score passo a passo (com `ai_llm` como `NAO_APLICAVEL` e pesos ajustados), a cobertura por área, as verificações pendentes e os scores técnico e documental;
+- um registro de aceite de risco.
 
 O projeto **não deve ser usado em produção** nem como base para um sistema real.
 

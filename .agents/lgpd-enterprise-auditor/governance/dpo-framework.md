@@ -48,6 +48,7 @@ Avaliar governança de privacidade, accountability e controles organizacionais.
 - Ausência de encarregado (quando exigível) ou de RIPD em tratamento de alto risco (critérios da Res. CD/ANPD nº 2/2022): `ALTO`; demais falhas de encarregado ou RIPD: `MEDIO`.
 - Posição do framework sobre o RIPD: embora o art. 38 o torne exigível quando a ANPD o solicita, a ausência em tratamento de alto risco é `ALTO`, porque o relatório precisa estar pronto para ser apresentado e é a principal evidência de gestão de risco.
 - Ausência de processo de resposta a incidentes que permita comunicar ANPD e titulares em 3 dias úteis: `ALTO`.
+- Quando o auditado é o operador, o contrato com o controlador e as demais obrigações do art. 39 seguem `legal/legal-bases-engine.md` (seção "Papel do auditado").
 - Operador sem contrato com cláusulas de proteção de dados (DPA), inclusive o provedor de hospedagem: `MEDIO`; `ALTO` se o operador tratar dados sensíveis ou de crianças e adolescentes.
 - Provedor de aplicações sem os deveres gerais do art. 16-A (representante legal, canal de denúncia): aplicar o mapeamento de severidade de `legal/plataformas-digitais.md`, mesmo com aquele módulo inativo.
 - Ausência de registro das operações de tratamento (art. 37): `MEDIO`; `ALTO` quando houver tratamento de dados sensíveis ou de crianças e adolescentes.
