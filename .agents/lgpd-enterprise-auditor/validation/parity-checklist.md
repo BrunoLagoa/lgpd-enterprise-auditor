@@ -60,6 +60,7 @@ Validar que o framework modular (`.agents/lgpd-enterprise-auditor/`) e a skill (
 - [x] Papel do auditado por fluxo (controlador ou operador), com as obrigações do operador (art. 39) e o que fica `NAO_APLICAVEL` para ele, na skill e no framework (`legal/legal-bases-engine.md`).
 - [x] Gatilho do ECA Digital: bloqueio por idade autodeclarada não afasta a auditoria quando há outro indício de acesso por menores, na skill (domínio 16) e em `orchestrator/router.md`.
 - [x] Relatório com marcação de confidencialidade, "o que fazer agora", coluna `Área`, esforço `P | M | G`, riscos aceitos, glossário e aviso legal fixo, na skill e no framework (`core/reporting-engine.md` e `reports/*.md`).
+- [x] Formato de saída perguntado sempre no início (`.md`, `.md` e `.html`, ou só `.html`), com `.md` quando não há resposta e só o resumo em tela quando há arquivo gravado; o `.html` é gerado pelo modelo `reports/html-report-template.html`, preenchendo só o bloco de dados (`reports/html-report.md`), na skill ("Arquivos do relatório") e no framework (`core/reporting-engine.md`).
 
 ## Evidências de teste esperadas
 - execução de cenário `saas_web`;

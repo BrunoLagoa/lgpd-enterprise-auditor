@@ -70,6 +70,7 @@ for target in claude cursor vscode opencode; do
     opencode) dir=".opencode/commands"; pattern="lgpd-*.md" ;;
   esac
   check "${target}: framework instalado" exists ".agents/lgpd-enterprise-auditor/core/auditor-core.md"
+  check "${target}: modelo do relatório em HTML instalado" exists ".agents/lgpd-enterprise-auditor/reports/html-report-template.html"
   check "${target}: ${COMMAND_COUNT} comandos em ${dir}" equals "$(count_files "$dir" "$pattern")" "$COMMAND_COUNT"
   check "${target}: manifesto criado" exists ".agents/lgpd-enterprise-auditor/.install/${target}.json"
   check "${target}: sem skill" missing ".agents/skills"

@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para sites e landing pages.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.4.0"
+  version: "1.5.0"
 ---
 
 # LGPD Web Site / Landing Page
@@ -19,6 +19,8 @@ Antes de perguntar, leia o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`
 - integrações de marketing/CRM (RD Station, HubSpot, Mailchimp);
 - existência de política de privacidade e banner de cookies.
 
+Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se o pedido já disser: `.md`, `.md` e `.html` (resultado completo, com custo maior) ou só `.html` (versão visual, para abrir no navegador).
+
 Ative o cenário `web_site`:
 - `core`, `legal`, `governance`, `appsec`, `cloud`.
 
@@ -32,4 +34,5 @@ Regras obrigatórias:
 - validar base legal de captura de leads, consentimento de cookies e trackers antes do aceite, aplicando a seção de cookies de `.agents/lgpd-enterprise-auditor/appsec/owasp-api.md` e o `.agents/lgpd-enterprise-auditor/templates/cookie-policy-template.md`;
 - validar minimização de dados no formulário e compartilhamento com terceiros;
 - exigir evidência por requisito;
-- produzir relatório conforme `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.
+- produzir relatório conforme `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`;
+- gravar o relatório no formato escolhido (`.md`, `.md` e `.html`, ou só `.html`), conforme a seção "Arquivos gerados" de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.

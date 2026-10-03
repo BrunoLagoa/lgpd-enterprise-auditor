@@ -14,7 +14,7 @@ O framework organiza a auditoria em camadas para facilitar manutenção, escalab
 - `ai-llm/`: riscos de IA generativa, RAG e retenção.
 - `orchestrator/`: roteamento de módulos por cenário e cobertura do `full_audit` (`full-audit.md`).
 - `templates/`: modelos de políticas e artefatos de conformidade.
-- `reports/`: formatos de relatório por público.
+- `reports/`: formatos de relatório por público e modelo do relatório em HTML (`html-report.md` e `html-report-template.html`).
 - `validation/`: checklist de paridade com a skill e matriz de rastreabilidade dos domínios.
 
 ## Fluxo de execução

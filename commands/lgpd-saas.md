@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para SaaS web.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.4.0"
+  version: "1.5.0"
 ---
 
 # LGPD SaaS Web
@@ -16,6 +16,8 @@ Antes de perguntar, leia o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`
 - banco de dados e cloud provider;
 - integrações (analytics, pagamentos, CRM, etc.);
 - dados pessoais/sensíveis tratados.
+
+Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se o pedido já disser: `.md`, `.md` e `.html` (resultado completo, com custo maior) ou só `.html` (versão visual, para abrir no navegador).
 
 Ative o cenário `saas_web`:
 - `core`, `legal`, `governance`, `appsec`, `cloud`, `devsecops`.
@@ -29,4 +31,5 @@ Regras obrigatórias:
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
 - exigir evidência por item auditado;
 - gerar score e classificação final;
-- produzir relatório conforme `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.
+- produzir relatório conforme `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`;
+- gravar o relatório no formato escolhido (`.md`, `.md` e `.html`, ou só `.html`), conforme a seção "Arquivos gerados" de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.

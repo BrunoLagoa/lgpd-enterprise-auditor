@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para sistemas com IA/LLM.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.4.0"
+  version: "1.5.0"
 ---
 
 # LGPD IA/LLM
@@ -16,6 +16,8 @@ Antes de perguntar, leia o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`
 - uso de prompts, embeddings, RAG e fine-tuning;
 - política de retenção e transferência internacional;
 - tipos de dados pessoais/sensíveis enviados para IA.
+
+Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se o pedido já disser: `.md`, `.md` e `.html` (resultado completo, com custo maior) ou só `.html` (versão visual, para abrir no navegador).
 
 Ative o cenário `ai_llm_system`:
 - `core`, `legal`, `governance`, `ai-llm`, `appsec`.
@@ -29,4 +31,5 @@ Regras obrigatórias:
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
 - validar risco de prompt injection e vazamento contextual;
 - exigir base legal para tratamento de dados em IA;
-- consolidar score e relatório no padrão de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.
+- consolidar score e relatório no padrão de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`;
+- gravar o relatório no formato escolhido (`.md`, `.md` e `.html`, ou só `.html`), conforme a seção "Arquivos gerados" de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.

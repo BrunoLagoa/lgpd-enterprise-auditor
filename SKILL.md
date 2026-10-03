@@ -4,7 +4,7 @@ description: Auditoria de conformidade LGPD (Lei nº 13.709/2018) orientada a ev
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.4.0"
+  version: "1.5.0"
 ---
 
 # 🛡️ LGPD ENTERPRISE AUDITOR FRAMEWORK
@@ -253,7 +253,7 @@ Sempre que houver público infantojuvenil, auditar também o domínio **16. ECA 
 
 # FASE 1 — DESCOBERTA
 
-Antes de perguntar, ler o que o projeto já documenta: `CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependência e arquivos de infraestrutura e CI. Apresentar o contexto inferido, pedir confirmação e perguntar só o que faltar.
+Antes de perguntar, ler o que o projeto já documenta: `CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependência e arquivos de infraestrutura e CI. Apresentar o contexto inferido, pedir confirmação e perguntar só o que faltar. Na mesma rodada, perguntar sempre o formato de saída do relatório (`.md`, `.md` e `.html`, ou só `.html`; ver "Arquivos do relatório"), salvo se o pedido já disser.
 
 ## Natureza do agente de tratamento (perguntar logo no início, se não estiver documentada)
 - pessoa natural ou jurídica;
@@ -1131,13 +1131,40 @@ Glossário e aviso legal não contam como seções e não alteram a ordem obriga
 
 ---
 
+# ARQUIVOS DO RELATÓRIO
+
+Perguntar **sempre**, logo no início e junto com as demais perguntas, em qual formato gravar o relatório, salvo se o pedido já disser:
+
+| Formato | O que é gravado | Para quê |
+|---|---|---|
+| `.md` | o relatório em Markdown, no formato obrigatório acima | versionar, comparar auditorias, servir de entrada para outra ferramenta |
+| `.md` e `.html` | os dois arquivos, com o mesmo nome base e na mesma pasta | resultado completo; os dados são escritos duas vezes, então a auditoria custa mais |
+| `.html` | só a visualização para o navegador | leitura por quem decide e por quem corrige, com score em destaque, filtros, busca e impressão |
+
+Em qualquer formato, o relatório traz as 8 seções, na ordem obrigatória, o glossário e o aviso legal.
+
+Como gerar o `.html`:
+1. copiar o modelo `.agents/lgpd-enterprise-auditor/reports/html-report-template.html` para o destino, sem ler nem reescrever o conteúdo;
+2. no arquivo copiado, substituir a linha `{"_modelo": true}` pelo JSON com os dados do relatório, na estrutura de `.agents/lgpd-enterprise-auditor/reports/html-report.md`;
+3. não alterar mais nada: estilo, script, marcação de confidencialidade e aviso legal são fixos;
+4. no JSON, usar os valores canônicos (`NAO_CONFORME`, `CRITICO`, `30_DIAS`) e escrever o caractere "menor que" como `\u003c`.
+
+Regras:
+- em `.md` e `.html`, os dois arquivos trazem os mesmos dados; havendo divergência, vale o `.md`;
+- o `.html` é um arquivo único, sem recursos externos; se o modelo não estiver instalado no projeto, gravar o `.md` e informar que a versão em HTML depende do framework modular (`.agents/lgpd-enterprise-auditor/`);
+- sem resposta do usuário (execução sem interação), gravar o `.md`;
+- com arquivo gravado, a resposta em tela traz só o resumo (score, classificação, cobertura, não conformidades por severidade, "o que fazer agora" e o caminho dos arquivos), sem repetir o relatório inteiro, salvo pedido do usuário;
+- sem acesso de escrita a arquivos, entregar o relatório completo em texto.
+
+---
+
 # CLASSIFICAÇÃO E ARMAZENAMENTO DO RELATÓRIO
 
-O relatório descreve falhas que podem estar abertas e é **confidencial**:
+O relatório, em qualquer formato, descreve falhas que podem estar abertas e é **confidencial**:
 - começar com `CONFIDENCIAL — uso interno`;
 - não versionar em repositório público; preferir local fora do repositório auditado ou pasta ignorada pelo git (ex.: `docs/lgpd/auditorias/` no `.gitignore`);
 - compartilhar só com quem precisa agir sobre os achados;
-- nomear com data e escopo (ex.: `auditoria-lgpd-AAAA-MM-<cenario>.md`).
+- nomear com data e escopo (ex.: `auditoria-lgpd-AAAA-MM-<cenario>.md` ou `.html`).
 
 ---
 
@@ -1225,7 +1252,7 @@ Anonimização + política de IA + segregação de prompts.
 
 Ao receber um projeto:
 
-1. Ler a documentação do projeto, apresentar o contexto inferido e perguntar só o que faltar, incluindo a natureza do agente de tratamento;
+1. Ler a documentação do projeto, apresentar o contexto inferido e perguntar só o que faltar, incluindo a natureza do agente de tratamento e o formato de saída do relatório;
 2. Identificar stack;
 3. Identificar arquitetura;
 4. Mapear dados;

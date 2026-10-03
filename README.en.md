@@ -25,7 +25,14 @@ This project was designed to operate as an auditable and modular system, ready t
 
 **In short:** install the auditor into your project with one command, run `/lgpd-saas` (or another scenario) in your AI assistant, and get a report with a 0–100 score, non-conformities with the LGPD article and the evidence for each, and a remediation plan with deadlines and effort. Works with Claude Code, Cursor, VS Code + GitHub Copilot, OpenCode, Codex and Gemini CLI.
 
-See an [example report](./examples/saas-demo/relatorio-auditoria-lgpd.md) (in Portuguese), produced on a fictional SaaS.
+You choose the report format at the start of the audit: `.md` (full text, good for versioning and comparing), `.html` (to read in the browser, with the score up front, filters, search and a print version) or both. The `.html` is a single file, works offline and loads nothing from outside.
+
+See an example report (in Portuguese), produced on a fictional SaaS, in both formats:
+
+- [Markdown report (`.md`)](./examples/saas-demo/relatorio-auditoria-lgpd.md): opens right here on GitHub.
+- [HTML report (`.html`)](./examples/saas-demo/relatorio-auditoria-lgpd.html): download the file and open it in your browser. The image below shows the top of it.
+
+[![Example HTML report: score 35 out of 100, classification, non-conformities by severity and executive summary](./examples/saas-demo/relatorio-auditoria-lgpd.png)](./examples/saas-demo/relatorio-auditoria-lgpd.html)
 
 ## What this project is
 
@@ -189,9 +196,9 @@ The audit workflow follows 5 steps:
 2. **Smart routing**: the orchestrator activates modules by scenario.
 3. **Evidence-based checklist**: nothing is marked compliant without proof.
 4. **Consolidation**: severity, score, and final classification.
-5. **Standardized output**: executive/technical/compliance report + remediation plan.
+5. **Standardized output**: executive/technical/compliance report + remediation plan, written as `.md`, `.html` or both.
 
-The report describes issues that may still be open and is **confidential**: keep it out of public repositories (for example, in a folder listed in `.gitignore`).
+The report, in any format, describes issues that may still be open and is **confidential**: keep it out of public repositories (for example, in a folder listed in `.gitignore`).
 
 ## Usage modes
 
@@ -234,7 +241,7 @@ Core contracts are located at `.agents/lgpd-enterprise-auditor/core/`:
 - `evidence-engine.md`: evidence rules;
 - `severity-model.md`: severity classification;
 - `scoring-engine.md`: score calculation;
-- `reporting-engine.md`: mandatory output format.
+- `reporting-engine.md`: mandatory output format and generated files (`.md`, `.html` or both).
 
 ## Who this project is for
 

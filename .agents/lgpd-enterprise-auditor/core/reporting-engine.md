@@ -84,12 +84,29 @@ Listar à parte os **riscos aceitos**, com o registro de aceite de cada um.
 
 Glossário e aviso legal não contam como seções e não alteram a ordem obrigatória.
 
+## Arquivos gerados
+O relatório tem três formatos de saída. Perguntar **sempre** qual o usuário quer, logo no início, na mesma rodada das perguntas do levantamento de contexto (`orchestrator/router.md`), salvo se o pedido já disser:
+
+| Formato | O que é gravado | Para quê |
+|---|---|---|
+| `.md` | o relatório em Markdown | versionar, comparar auditorias, servir de entrada para outra ferramenta |
+| `.md` e `.html` | os dois arquivos, com o mesmo nome base e na mesma pasta | resultado completo; os dados são escritos duas vezes, então a auditoria custa mais |
+| `.html` | só a visualização para o navegador | leitura por quem decide e por quem corrige, com score em destaque, filtros, busca e impressão |
+
+Regras:
+- em qualquer formato, o relatório traz as 8 seções, na ordem obrigatória, e os anexos acima;
+- o `.html` é gerado a partir do modelo `reports/html-report-template.html`, preenchendo só o bloco de dados, conforme `reports/html-report.md`; é um arquivo único, sem recursos externos, e não redefine formato, severidade nem score;
+- em `.md` e `.html`, os dois arquivos trazem os mesmos dados; havendo divergência, vale o `.md`;
+- sem resposta do usuário (execução sem interação), gravar o `.md`;
+- com arquivo gravado, a resposta em tela traz só o resumo (score, classificação, cobertura, não conformidades por severidade, "o que fazer agora" e o caminho dos arquivos), sem repetir o relatório inteiro, salvo pedido do usuário;
+- sem acesso de escrita a arquivos, entregar o relatório completo em texto.
+
 ## Classificação e armazenamento
-O relatório descreve falhas que podem estar abertas e é **confidencial**:
+O relatório, em qualquer formato, descreve falhas que podem estar abertas e é **confidencial**:
 - iniciar o documento com a marcação `CONFIDENCIAL — uso interno`;
 - não versionar em repositório público; preferir local fora do repositório auditado ou pasta ignorada pelo git (ex.: `docs/lgpd/auditorias/`, listada no `.gitignore`);
 - compartilhar só com quem precisa agir sobre os achados;
-- nomear com data e escopo (ex.: `auditoria-lgpd-AAAA-MM-<cenario>.md`) para permitir comparação entre auditorias.
+- nomear com data e escopo (ex.: `auditoria-lgpd-AAAA-MM-<cenario>.md` ou `.html`) para permitir comparação entre auditorias.
 
 ## Regra de consistência
 Todo item `NAO_CONFORME` ou `PARCIAL` do checklist deve aparecer detalhado em `nao_conformidades`.

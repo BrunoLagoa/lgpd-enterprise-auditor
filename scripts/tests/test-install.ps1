@@ -58,6 +58,7 @@ try {
     Install-Quiet -Target $target | Out-Null
     $dir = $dirs[$target][0]
     Test-Check "${target}: framework instalado" (Test-Exists ".agents/lgpd-enterprise-auditor/core/auditor-core.md")
+    Test-Check "${target}: modelo do relatório em HTML instalado" (Test-Exists ".agents/lgpd-enterprise-auditor/reports/html-report-template.html")
     Test-Check "${target}: $CommandCount comandos em $dir" ((Get-Count $dir $dirs[$target][1]) -eq $CommandCount)
     Test-Check "${target}: manifesto criado" (Test-Exists ".agents/lgpd-enterprise-auditor/.install/$target.json")
     Test-Check "${target}: sem skill" (-not (Test-Exists ".agents/skills"))

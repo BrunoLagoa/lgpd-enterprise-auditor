@@ -24,7 +24,14 @@ Este projeto foi desenhado para funcionar como um sistema auditável e modular, 
 
 **Em resumo:** você instala o auditor no seu projeto com um comando, roda `/lgpd-saas` (ou outro cenário) no seu assistente de IA e recebe um relatório com score de 0 a 100, não conformidades com o artigo da LGPD e a evidência de cada uma, e um plano de adequação com prazos e esforço. Funciona com Claude Code, Cursor, VS Code + GitHub Copilot, OpenCode, Codex e Gemini CLI.
 
-Veja um [relatório de exemplo](./examples/saas-demo/relatorio-auditoria-lgpd.md), gerado sobre um SaaS fictício.
+Você escolhe o formato do relatório no início da auditoria: `.md` (texto completo, bom para versionar e comparar), `.html` (para ler no navegador, com o score em destaque, filtros, busca e versão para impressão) ou os dois. O `.html` é um arquivo único, funciona offline e não carrega nada de fora.
+
+Veja um relatório de exemplo, gerado sobre um SaaS fictício, nos dois formatos:
+
+- [Relatório em Markdown (`.md`)](./examples/saas-demo/relatorio-auditoria-lgpd.md): abre aqui mesmo, no GitHub.
+- [Relatório em HTML (`.html`)](./examples/saas-demo/relatorio-auditoria-lgpd.html): baixe o arquivo e abra no navegador. A imagem abaixo mostra o topo dele.
+
+[![Relatório de exemplo em HTML: score 35 de 100, classificação, não conformidades por severidade e resumo executivo](./examples/saas-demo/relatorio-auditoria-lgpd.png)](./examples/saas-demo/relatorio-auditoria-lgpd.html)
 
 ## O que é este projeto
 
@@ -188,9 +195,9 @@ O fluxo da auditoria segue 5 passos:
 2. **Roteamento inteligente**: o orquestrador ativa módulos por cenário.
 3. **Checklist com evidência**: nada é marcado como conforme sem comprovação.
 4. **Consolidação**: severidade, score e classificação final.
-5. **Saída padronizada**: relatório executivo/técnico/compliance + plano de adequação.
+5. **Saída padronizada**: relatório executivo/técnico/compliance + plano de adequação, gravado em `.md`, em `.html` ou nos dois.
 
-O relatório descreve falhas que podem estar abertas e é **confidencial**: guarde-o fora de repositórios públicos (por exemplo, numa pasta listada no `.gitignore`).
+O relatório, em qualquer formato, descreve falhas que podem estar abertas e é **confidencial**: guarde-o fora de repositórios públicos (por exemplo, numa pasta listada no `.gitignore`).
 
 ## Modos de uso
 
@@ -233,7 +240,7 @@ Os contratos centrais estão em `.agents/lgpd-enterprise-auditor/core/`:
 - `evidence-engine.md`: regras de evidência;
 - `severity-model.md`: classificação de severidade;
 - `scoring-engine.md`: cálculo de score;
-- `reporting-engine.md`: formato obrigatório da saída.
+- `reporting-engine.md`: formato obrigatório da saída e arquivos gerados (`.md`, `.html` ou os dois).
 
 ## Para quem este projeto é útil
 

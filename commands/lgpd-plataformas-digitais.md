@@ -4,7 +4,7 @@ description: Executa auditoria LGPD + deveres de plataformas digitais (Decretos 
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.4.0"
+  version: "1.5.0"
 ---
 
 # LGPD + Plataformas Digitais (conteúdo de terceiros)
@@ -22,6 +22,8 @@ Antes de perguntar, leia o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`
 - termos de uso e relatório anual de transparência;
 - funcionalidades de IA capazes de gerar ou alterar imagem ou som de pessoas.
 
+Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se o pedido já disser: `.md`, `.md` e `.html` (resultado completo, com custo maior) ou só `.html` (versão visual, para abrir no navegador).
+
 Ative o cenário `digital_platform`:
 - `core`, `legal`, `plataformas-digitais`, `governance`, `appsec`, `cloud`.
 
@@ -37,4 +39,5 @@ Regras obrigatórias:
 - fundamentar cada achado no dispositivo do decreto (e do Marco Civil, quando houver) e no correlato da LGPD;
 - registrar exposição cumulativa: sanções do art. 12 do Marco Civil e do art. 52 da LGPD (e do art. 35 do ECA Digital, havendo menores);
 - exigir evidência por requisito;
-- produzir relatório conforme `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.
+- produzir relatório conforme `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`;
+- gravar o relatório no formato escolhido (`.md`, `.md` e `.html`, ou só `.html`), conforme a seção "Arquivos gerados" de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.

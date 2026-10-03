@@ -4,7 +4,7 @@ description: Executa auditoria direcionada de LGPD + ECA Digital (Lei nº 15.211
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.4.0"
+  version: "1.5.0"
 ---
 
 # LGPD + ECA Digital (público infantojuvenil)
@@ -23,6 +23,8 @@ Antes de perguntar, leia o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`
 - fluxo de denúncia, moderação e remoção de conteúdo, com política de retenção;
 - país de origem do provedor e existência de representante legal no Brasil.
 
+Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se o pedido já disser: `.md`, `.md` e `.html` (resultado completo, com custo maior) ou só `.html` (versão visual, para abrir no navegador).
+
 Ative o cenário `eca_digital_platform`:
 - `core`, `legal`, `eca-digital`, `governance`, `appsec`, `mobile`.
 
@@ -40,4 +42,5 @@ Regras obrigatórias:
 - fundamentar cada achado no dispositivo do ECA Digital e no correlato da LGPD (art. 14 e/ou art. 6º);
 - registrar exposição cumulativa: sanções do art. 35 da Lei nº 15.211/2025 e do art. 52 da LGPD;
 - exigir evidência por requisito;
-- produzir relatório conforme `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.
+- produzir relatório conforme `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`;
+- gravar o relatório no formato escolhido (`.md`, `.md` e `.html`, ou só `.html`), conforme a seção "Arquivos gerados" de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.

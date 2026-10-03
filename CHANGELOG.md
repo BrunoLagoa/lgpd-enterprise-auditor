@@ -6,6 +6,19 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.5.0] - 2026-10-03
+
+### Adicionado
+- Escolha do formato de saída: a auditoria pergunta sempre, logo no início, se o relatório deve ser gravado em `.md`, em `.md` e `.html`, ou só em `.html`; sem resposta, grava o `.md`.
+- Relatório em HTML: a auditoria pode gravar um `.html` para leitura no navegador, com score e medidor, score por área, checklist e não conformidades com filtro e busca, plano por prazo, tema claro e escuro e versão para impressão ou PDF. É um arquivo único, offline, sem recursos externos.
+- Modelo `reports/html-report-template.html` e especificação `reports/html-report.md`: a auditoria copia o modelo e preenche só um bloco de dados em JSON; o modelo recalcula o score a partir do checklist e alerta quando os números declarados não batem.
+- Versão em HTML do relatório de exemplo (`examples/saas-demo/relatorio-auditoria-lgpd.html`) e imagem dele nos READMEs.
+- Teste `scripts/tests/test-html-report.sh` e workflow `html-report.yml` (modelo preenchível e offline; exemplo em dia com o modelo), e `scripts/update-example-report.sh` para reaplicar o modelo ao exemplo.
+
+### Alterado
+- `core/reporting-engine.md`, a skill e os comandos passam a definir os arquivos gerados; quando os dois são gravados, têm o mesmo nome base e os mesmos dados, e em divergência vale o `.md`.
+- Com arquivo gravado, a resposta em tela traz só o resumo (score, classificação, cobertura, não conformidades por severidade, "o que fazer agora" e o caminho dos arquivos), sem repetir o relatório inteiro.
+
 ## [1.4.0] - 2026-10-03
 
 ### Adicionado
@@ -106,7 +119,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.4.0...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.2...v1.4.0
 [1.3.2]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.0...v1.3.1

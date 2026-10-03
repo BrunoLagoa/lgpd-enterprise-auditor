@@ -60,7 +60,7 @@ Resultado padrão por módulo:
 - `recommendations`: recomendações priorizadas.
 
 ## Fluxo mínimo de execução
-1. Levantar o contexto: primeiro ler o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependência e de infraestrutura); apresentar o contexto inferido e perguntar só o que faltar, incluindo a natureza do agente de tratamento (entradas de `orchestrator/router.md`).
+1. Levantar o contexto: primeiro ler o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependência e de infraestrutura); apresentar o contexto inferido e perguntar só o que faltar, incluindo a natureza do agente de tratamento (entradas de `orchestrator/router.md`) e o formato de saída do relatório (`core/reporting-engine.md`).
 2. Ativar módulos por contexto via orquestrador.
 3. Executar checklist com evidência obrigatória.
 4. Classificar achados por severidade.
