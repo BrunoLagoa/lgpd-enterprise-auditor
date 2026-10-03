@@ -1,41 +1,46 @@
 # LGPD Enterprise Auditor
 
 <p align="center">
-  <img src="./assets/logo-lgpd-enterprise-auditor.webp" alt="LGPD Enterprise Auditor Logo" width="355" />
+  <img src="./assets/logo-lgpd-enterprise-auditor.webp" alt="Logo LGPD Enterprise Auditor" width="355" />
 </p>
 
 <p align="center">
   <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/stargazers"><img src="https://img.shields.io/github/stars/BrunoLagoa/lgpd-enterprise-auditor?style=social" alt="GitHub stars" /></a>
+  <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/latest"><img src="https://img.shields.io/github/v/release/BrunoLagoa/lgpd-enterprise-auditor" alt="Release" /></a>
+  <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/actions/workflows/install.yml"><img src="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/actions/workflows/install.yml/badge.svg" alt="CI" /></a>
   <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License MIT" /></a>
   <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor"><img src="https://hits.sh/github.com/BrunoLagoa/lgpd-enterprise-auditor.svg?label=Project%20views&color=f1c40f" alt="Project views" /></a>
 </p>
 
 <!-- README-I18N:START -->
 
-**English** | [Português (Brasil)](./README.pt-BR.md)
+**Português (Brasil)** | [English](./README.en.md)
 
 <!-- README-I18N:END -->
 
+Framework de auditoria LGPD orientado a evidências, com foco em segurança, governança e uso de IA em engenharia de software.
 
-An evidence-driven LGPD auditing framework focused on security, governance, and AI usage in software engineering.
+Este projeto foi desenhado para funcionar como um sistema auditável e modular, pronto para ser reutilizado em diferentes produtos e times.
 
-This project was designed to operate as an auditable and modular system, ready to be reused across products and teams.
+**Em resumo:** você instala o auditor no seu projeto com um comando, roda `/lgpd-saas` (ou outro cenário) no seu assistente de IA e recebe um relatório com score de 0 a 100, não conformidades com o artigo da LGPD e a evidência de cada uma, e um plano de adequação com prazos e esforço. Funciona com Claude Code, Cursor, VS Code + GitHub Copilot, OpenCode, Codex e Gemini CLI.
 
-## What this project is
+Veja um [relatório de exemplo](./examples/saas-demo/relatorio-auditoria-lgpd.md), gerado sobre um SaaS fictício.
 
-`lgpd-enterprise-auditor` is a framework that combines:
+## O que é este projeto
 
-- legal auditing (LGPD + ANPD);
-- technical auditing (appsec, cloud, mobile, devsecops, AI/LLM);
-- severity and scoring model;
-- standardized reporting format;
-- practical commands for scenario-based execution.
+O `lgpd-enterprise-auditor` é um framework que combina:
 
-In practice, it enables complete or targeted audits with consistent criteria, evidence, and remediation planning.
+- auditoria jurídica (LGPD + ANPD);
+- auditoria técnica (appsec, cloud, mobile, devsecops, IA/LLM);
+- modelo de severidade e score;
+- formato de relatório padronizado;
+- comandos práticos para execução por cenário.
 
-## Installation
+Na prática, ele permite rodar auditorias completas ou direcionadas com consistência de critérios, evidências e plano de adequação.
 
-One interactive command, run from the root of the project you want to audit. It asks which AI tool you use and whether to also install the skill, shows a summary and installs everything **locally, inside that project** (there is no global install).
+## Instalação
+
+Um único comando interativo, executado na raiz do projeto que você quer auditar. Ele pergunta qual ferramenta de IA você usa e se quer instalar também a skill, mostra um resumo e instala tudo **localmente, dentro desse projeto** (não existe instalação global).
 
 **macOS / Linux / WSL / Git Bash**
 
@@ -49,91 +54,91 @@ curl -fsSL https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/
 powershell -ExecutionPolicy Bypass -Command "iwr https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.ps1 -OutFile $env:TEMP\lgpd-install.ps1; & $env:TEMP\lgpd-install.ps1 install"
 ```
 
-Prefer to read the script before running it? Download it (`curl -fsSL <url> -o install.sh`), review it, then run `bash install.sh install`.
+Prefere ler o script antes de rodar? Baixe (`curl -fsSL <url> -o install.sh`), revise e depois execute `bash install.sh install`.
 
-### Where files land
+### Onde os arquivos ficam
 
-The framework (`.agents/lgpd-enterprise-auditor/`) is the same for every tool; only the commands and the optional skill change place:
+O framework (`.agents/lgpd-enterprise-auditor/`) é o mesmo para todas as ferramentas; só os comandos e a skill opcional mudam de lugar:
 
-| Tool (`--target`) | Commands | Skill (optional) |
+| Ferramenta (`--target`) | Comandos | Skill (opcional) |
 |---|---|---|
 | `claude` — Claude Code | `.claude/commands/lgpd-*.md` | `.claude/skills/lgpd-enterprise-auditor/` |
 | `cursor` — Cursor | `.cursor/commands/lgpd-*.md` | `.agents/skills/lgpd-enterprise-auditor/` |
 | `vscode` — VS Code + GitHub Copilot | `.github/prompts/lgpd-*.prompt.md` | `.agents/skills/lgpd-enterprise-auditor/` |
 | `opencode` — OpenCode | `.opencode/commands/lgpd-*.md` | `.agents/skills/lgpd-enterprise-auditor/` |
-| `agents` — Codex, Gemini CLI and similar | — (no slash commands) | `.agents/skills/lgpd-enterprise-auditor/` (always installed) |
+| `agents` — Codex, Gemini CLI e similares | — (sem slash commands) | `.agents/skills/lgpd-enterprise-auditor/` (sempre instalada) |
 
-- **Without the skill (default):** you run the audit through the slash commands (`/lgpd-saas`, `/lgpd-full-audit`…), which run the modular framework (`.agents/lgpd-enterprise-auditor/`).
-- **With the skill:** the assistant can also start the audit from a plain request ("audit this project for LGPD"), loading the self-contained skill (`SKILL.md`).
-- Several tools in the same project are supported: run the installer once per tool. They share the framework folder.
+- **Sem a skill (padrão):** a auditoria é acionada pelos slash commands (`/lgpd-saas`, `/lgpd-full-audit`…), que executam o framework modular (`.agents/lgpd-enterprise-auditor/`).
+- **Com a skill:** o assistente também pode iniciar a auditoria a partir de um pedido em linguagem natural ("faça uma auditoria LGPD deste projeto"), carregando a skill autocontida (`SKILL.md`).
+- Várias ferramentas no mesmo projeto são suportadas: rode o instalador uma vez por ferramenta. Elas compartilham a pasta do framework.
 
-### Update, check and uninstall
+### Atualizar, verificar e desinstalar
 
-| Action | Command (bash) | PowerShell |
+| Ação | Comando (bash) | PowerShell |
 |---|---|---|
-| Update every installed tool | `… \| bash -s -- update` | `… install.ps1 update` |
-| Check the installation | `… \| bash -s -- check` | `… install.ps1 check` |
-| Uninstall | `… \| bash -s -- uninstall` | `… install.ps1 uninstall` |
+| Atualizar todas as ferramentas instaladas | `… \| bash -s -- update` | `… install.ps1 update` |
+| Verificar a instalação | `… \| bash -s -- check` | `… install.ps1 check` |
+| Desinstalar | `… \| bash -s -- uninstall` | `… install.ps1 uninstall` |
 
-`…` stands for the same `curl …/install.sh` or `iwr …/install.ps1` prefix used to install.
+`…` representa o mesmo prefixo `curl …/install.sh` ou `iwr …/install.ps1` usado na instalação.
 
-Scripted / CI use (no questions):
+Uso em scripts / CI (sem perguntas):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.sh \
   | bash -s -- install --non-interactive --target cursor --with-skill
 ```
 
-| Option (bash) | PowerShell | Description |
+| Opção (bash) | PowerShell | Descrição |
 |---|---|---|
-| `--target <tool>` | `-Target` | `claude`, `cursor`, `vscode`, `opencode` or `agents` (required with `--non-interactive`) |
-| `--with-skill` / `--no-skill` | `-WithSkill` / `-NoSkill` | Install the skill or not (default: no) |
-| `--project-dir <dir>` | `-ProjectDir` | Target project (default: git root of the current directory) |
-| `--version <ref>` | `-Version` | Tag or branch (default: latest published tag) |
-| `--non-interactive` | `-NonInteractive` | Run without questions |
+| `--target <ferramenta>` | `-Target` | `claude`, `cursor`, `vscode`, `opencode` ou `agents` (obrigatória com `--non-interactive`) |
+| `--with-skill` / `--no-skill` | `-WithSkill` / `-NoSkill` | Instala ou não a skill (padrão: não) |
+| `--project-dir <dir>` | `-ProjectDir` | Projeto de destino (padrão: raiz git do diretório atual) |
+| `--version <ref>` | `-Version` | Tag ou branch (padrão: última tag publicada) |
+| `--non-interactive` | `-NonInteractive` | Executa sem perguntas |
 
-Each installation records a manifest in `.agents/lgpd-enterprise-auditor/.install/<tool>.json`; `update`, `check` and `uninstall` rely on it and never touch files that are not part of the framework.
+Cada instalação registra um manifesto em `.agents/lgpd-enterprise-auditor/.install/<ferramenta>.json`; `update`, `check` e `uninstall` se baseiam nele e nunca mexem em arquivos que não sejam do framework.
 
-When you accept the backup offered on reinstall, a copy goes to `.lgpd-auditor-backup/` in your project — add it to your `.gitignore`:
+Se você aceitar o backup oferecido na reinstalação, a cópia vai para `.lgpd-auditor-backup/` no seu projeto — adicione essa pasta ao `.gitignore`:
 
 ```gitignore
 .lgpd-auditor-backup/
 ```
 
-Release notes for each version are in the [CHANGELOG](./CHANGELOG.md).
+As notas de cada versão estão no [CHANGELOG](./CHANGELOG.md).
 
-### Manual installation
+### Instalação manual
 
-Copy `.agents/lgpd-enterprise-auditor/` to the root of your project and the files in `commands/` to your tool's commands folder (table above). For the skill, copy `SKILL.md` to `<skills folder>/lgpd-enterprise-auditor/SKILL.md`.
+Copie `.agents/lgpd-enterprise-auditor/` para a raiz do seu projeto e os arquivos de `commands/` para a pasta de comandos da sua ferramenta (tabela acima). Para a skill, copie `SKILL.md` para `<pasta de skills>/lgpd-enterprise-auditor/SKILL.md`.
 
-## Legal basis and updates
+## Base legal e atualização
 
-This framework uses the **General Data Protection Law (LGPD)** as its primary legal reference:
+Este framework usa como referência principal a **Lei Geral de Proteção de Dados (LGPD)**:
 
-- **Official text (Planalto):** [Law No. 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
-- **Regulatory authority:** [ANPD](https://www.gov.br/anpd/) — since **Law No. 15.352/2026**, renamed National Data Protection **Agency** and placed under the regulatory-agency regime of Law No. 13.848/2019 (LGPD art. 55-A).
-- **Related statute:** [Digital Statute of the Child and Adolescent — Law No. 15.211/2025](https://www.gov.br/anpd/pt-br/assuntos/eca-digital), in force since 2026-03-17, regulated by Decree No. 12.880/2026 and enforced by ANPD.
-- **Digital platforms:** [Decree No. 12.975/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12975.htm) (updates the Internet Civil Framework regulation — duty of care, notice and takedown, ads, access-log retention) and [Decree No. 12.976/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12976.htm) (protection of women online), in force since 2026-07-20 and enforced by ANPD.
+- **Texto oficial (Planalto):** [Lei nº 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
+- **Órgão regulador:** [ANPD](https://www.gov.br/anpd/) — desde a **Lei nº 15.352/2026**, denominada **Agência** Nacional de Proteção de Dados e submetida ao regime das agências reguladoras da Lei nº 13.848/2019 (art. 55-A da LGPD).
+- **Norma correlata:** [ECA Digital — Lei nº 15.211/2025](https://www.gov.br/anpd/pt-br/assuntos/eca-digital), em vigor desde 17/03/2026, regulamentada pelo Decreto nº 12.880/2026 e fiscalizada pela ANPD.
+- **Plataformas digitais:** [Decreto nº 12.975/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12975.htm) (atualiza a regulamentação do Marco Civil da Internet — dever de cuidado, notificação e remoção, anúncios, guarda de registros de acesso) e [Decreto nº 12.976/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12976.htm) (proteção de mulheres na internet), em vigor desde 20/07/2026 e fiscalizados pela ANPD.
 
-ANPD regulations covered by the framework:
+Regulamentos da ANPD considerados pelo framework:
 
-| Resolution | Subject |
+| Resolução | Assunto |
 |---|---|
-| CD/ANPD No. 1/2021 | Inspection and administrative sanctioning procedure |
-| CD/ANPD No. 2/2022 | Small-scale processing agents |
-| CD/ANPD No. 4/2023 | Dosimetry and application of sanctions |
-| CD/ANPD No. 15/2024 | Security incident communication (3 business days) |
-| CD/ANPD No. 18/2024 | Data protection officer (DPO) duties |
-| CD/ANPD No. 19/2024 | International data transfer and standard contractual clauses |
-| CD/ANPD No. 30/2025 | Priority enforcement themes map 2026-2027 |
-| CD/ANPD No. 31/2025 | Regulatory agenda 2025-2026 |
-| CD/ANPD No. 32/2026 | European Union recognized as providing an adequate level of protection |
+| CD/ANPD nº 1/2021 | Processo de fiscalização e processo administrativo sancionador |
+| CD/ANPD nº 2/2022 | Agentes de tratamento de pequeno porte |
+| CD/ANPD nº 4/2023 | Dosimetria e aplicação de sanções |
+| CD/ANPD nº 15/2024 | Comunicação de incidente de segurança (3 dias úteis) |
+| CD/ANPD nº 18/2024 | Atuação do encarregado (DPO) |
+| CD/ANPD nº 19/2024 | Transferência internacional e cláusulas-padrão contratuais |
+| CD/ANPD nº 30/2025 | Mapa de Temas Prioritários de fiscalização 2026-2027 |
+| CD/ANPD nº 31/2025 | Agenda Regulatória 2025-2026 |
+| CD/ANPD nº 32/2026 | União Europeia reconhecida como grau adequado de proteção |
 
-| Item | Value |
+| Item | Valor |
 |------|--------|
-| Last synchronization | `2026-10` |
+| Última sincronização | `2026-10` |
 
-## How the project is organized
+## Como o projeto está organizado
 
 ```text
 .
@@ -167,107 +172,116 @@ ANPD regulations covered by the framework:
         └── validation/
 ```
 
-### Canonical source
+### Fonte canônica
 
-The canonical base path for the modular framework is:
+O caminho base canônico do framework modular é:
 
 `.agents/lgpd-enterprise-auditor/`
 
-This is the expected standard for projects that adopt the same structure.
+Esse é o padrão esperado para projetos que adotarem a mesma estrutura.
 
-## How it works
+## Como funciona
 
-The audit workflow follows 5 steps:
+O fluxo da auditoria segue 5 passos:
 
-1. **Project context**: stack, processed data, integrations, and operational setup.
-2. **Smart routing**: the orchestrator activates modules by scenario.
-3. **Evidence-based checklist**: nothing is marked compliant without proof.
-4. **Consolidation**: severity, score, and final classification.
-5. **Standardized output**: executive/technical/compliance report + remediation plan.
+1. **Contexto do projeto**: stack, dados tratados, integrações e operação.
+2. **Roteamento inteligente**: o orquestrador ativa módulos por cenário.
+3. **Checklist com evidência**: nada é marcado como conforme sem comprovação.
+4. **Consolidação**: severidade, score e classificação final.
+5. **Saída padronizada**: relatório executivo/técnico/compliance + plano de adequação.
 
-## Usage modes
+O relatório descreve falhas que podem estar abertas e é **confidencial**: guarde-o fora de repositórios públicos (por exemplo, numa pasta listada no `.gitignore`).
 
-### 1) Full audit
+## Modos de uso
 
-Use when you need full coverage:
+### 1) Auditoria completa
 
-- command: `commands/lgpd-full-audit.md`
-- scenario: `full_audit`
+Use quando quiser cobertura total:
 
-Activated modules: `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
+- comando: `commands/lgpd-full-audit.md`
+- cenário: `full_audit`
 
-### 2) Scenario-based audit
+Módulos acionados: `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
-Use for focused scope:
+### 2) Auditoria por cenário
 
-- `lgpd-saas` -> web SaaS
-- `lgpd-web` -> websites and landing pages
-- `lgpd-mobile` -> mobile app
-- `lgpd-ai-llm` -> AI/LLM systems
-- `lgpd-devsecops` -> pipelines and supply chain
-- `lgpd-eca-digital` -> platforms accessed by children and adolescents (LGPD art. 14 + Digital Statute)
-- `lgpd-plataformas-digitais` -> internet application providers with third-party content, paid ads or image/voice-generating AI (Decrees 12.975/2026 and 12.976/2026)
+Use para escopo focado:
 
-## Available commands
+- `lgpd-saas` -> SaaS web
+- `lgpd-web` -> sites e landing pages
+- `lgpd-mobile` -> app mobile
+- `lgpd-ai-llm` -> sistemas com IA/LLM
+- `lgpd-devsecops` -> pipelines e supply chain
+- `lgpd-eca-digital` -> plataformas acessadas por crianças e adolescentes (LGPD art. 14 + ECA Digital)
+- `lgpd-plataformas-digitais` -> provedores de aplicações com conteúdo de terceiros, anúncios pagos ou IA que gera imagem/voz (Decretos nº 12.975/2026 e 12.976/2026)
 
-Commands in `commands/` are execution shortcuts for the agent.
+## Comandos disponíveis
 
-All commands include:
+Os comandos em `commands/` são atalhos de execução para o agente.
 
-- metadata (`name`, `description`, `license`, `author`, `version`);
-- minimum context collection when not mapped yet;
-- mandatory evidence and consistency rules aligned with the modular framework.
+Todos incluem:
 
-## Audit contracts (summary)
+- metadados (`name`, `description`, `license`, `author`, `version`);
+- coleta de contexto mínimo quando não mapeado;
+- regras obrigatórias de evidência e consistência com o framework modular.
 
-Core contracts are located at `.agents/lgpd-enterprise-auditor/core/`:
+## Contratos de auditoria (resumo)
 
-- `auditor-core.md`: canonical structures (`finding`, `check_item`, `module_output`);
-- `evidence-engine.md`: evidence rules;
-- `severity-model.md`: severity classification;
-- `scoring-engine.md`: score calculation;
-- `reporting-engine.md`: mandatory output format.
+Os contratos centrais estão em `.agents/lgpd-enterprise-auditor/core/`:
 
-## Who this project is for
+- `auditor-core.md`: estruturas canônicas (`finding`, `check_item`, `module_output`);
+- `evidence-engine.md`: regras de evidência;
+- `severity-model.md`: classificação de severidade;
+- `scoring-engine.md`: cálculo de score;
+- `reporting-engine.md`: formato obrigatório da saída.
 
-- engineering and platform teams;
-- information security and AppSec teams;
-- compliance and privacy teams;
-- LGPD readiness consultancies;
-- squads using generative AI in production.
+## Para quem este projeto é útil
 
-## Adoption best practices
+- times de engenharia e plataforma;
+- segurança da informação e AppSec;
+- compliance e privacidade;
+- consultorias de adequação LGPD;
+- squads com uso de IA generativa em produção.
 
-- keep `.agents/lgpd-enterprise-auditor/` versioned together with the product;
-- adapt commands by domain without breaking core contracts;
-- record technical and documentary evidence per item;
-- review score and non-conformities per release;
-- treat auditing as a continuous process, not a one-time event.
+## Boas práticas de adoção
 
-## Suggested roadmap
+- manter `.agents/lgpd-enterprise-auditor/` versionado junto ao produto;
+- adaptar comandos por domínio, sem quebrar contratos do core;
+- registrar evidências técnicas e documentais por item;
+- revisar score e não conformidades por release;
+- tratar auditoria como processo contínuo, não evento isolado.
 
-- richer templates by industry (healthtech, fintech, gov);
-- evidence collection automation;
-- environment-based risk matrix generation;
-- comparative reports between releases;
-- CI/CD pipeline integration.
+## Roadmap sugerido
 
-## People Behind LGPD Enterprise Auditor
+- templates mais ricos por setor (healthtech, fintech, gov);
+- automação de coleta de evidências;
+- geração de matriz de risco por ambiente;
+- relatórios comparativos entre releases;
+- integração com pipelines CI/CD.
 
-This project evolves with contributions from people who believe in disciplined, practical, and auditable AI software engineering.
+## Pessoas por trás do LGPD Enterprise Auditor
+
+Este projeto evolui com contribuições de pessoas que acreditam em engenharia de software com IA de forma disciplinada, prática e auditável.
 
 <p align="left">
   <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=BrunoLagoa/lgpd-enterprise-auditor&max=100" alt="Project contributors" width="45" />
+    <img src="https://contrib.rocks/image?repo=BrunoLagoa/lgpd-enterprise-auditor&max=100" alt="Contribuidores do projeto" width="45" />
   </a>
 </p>
 
-Want to appear here too? Open an issue, suggest improvements, or submit a PR.
+Quer aparecer aqui também? Abra uma issue, sugira melhorias ou envie um PR.
 
-## Support
+## Suporte e contribuição
 
-For support, open an issue on GitHub. Bug reports, feature requests, and usage questions are welcome.
+- Dúvidas: use as [Discussions](https://github.com/BrunoLagoa/lgpd-enterprise-auditor/discussions).
+- Bugs, melhorias e **atualizações normativas**: abra uma [issue](https://github.com/BrunoLagoa/lgpd-enterprise-auditor/issues/new/choose).
+- Para contribuir, leia o [guia de contribuição](./CONTRIBUTING.md) e o [código de conduta](./CODE_OF_CONDUCT.md). Vulnerabilidades: siga a [política de segurança](./SECURITY.md).
+- Notas de cada versão: [CHANGELOG](./CHANGELOG.md).
 
-## License
+## Aviso legal
 
-This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for full terms.
+O LGPD Enterprise Auditor apoia auditorias de conformidade com a LGPD, mas **não substitui** a avaliação do encarregado (DPO) nem a assessoria jurídica especializada. Os relatórios são gerados com apoio de IA, a partir das evidências disponíveis, e as conclusões dependem da completude e da atualidade dessas evidências.
+
+## Licença
+
+Este projeto está licenciado sob os termos da licença MIT. Consulte o arquivo [`LICENSE`](LICENSE) para os termos completos.
