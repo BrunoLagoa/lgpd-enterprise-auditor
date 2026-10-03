@@ -1,4 +1,4 @@
-# ANPD Guidelines
+# Regulamentação e orientações da ANPD
 
 ## Objetivo
 Guiar a aderência regulatória contínua com foco em evidência auditável.

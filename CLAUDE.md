@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Documentation is bilingual but the split is deliberate:
 - **User-facing docs** are maintained in Brazilian Portuguese + English: `README.md` is Portuguese and canonical (the audience is Brazilian), `README.en.md` is the English version; keep both in sync. Community files (`CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `.github/ISSUE_TEMPLATE/`, `.github/pull_request_template.md`) and `CHANGELOG.md` are Portuguese only. The `<!-- README-I18N:START -->` / `END` markers delimit the language-switcher block — don't break them.
 - **Framework internals** (everything under `.agents/`, `SKILL.md`, and `commands/`) are written in **Brazilian Portuguese**. Match this when editing framework files — do not translate them to English.
-- Note the diacritics split inside the framework: files under `.agents/` and `SKILL.md` use full Portuguese accentuation, while `commands/*.md` are currently written without diacritics ("cenario", "obrigatorias"). Match the style of the file you are editing instead of normalizing across the tree.
+- All Portuguese text uses full, correct accentuation — `.agents/`, `SKILL.md` and `commands/*.md` alike (command descriptions show up in the assistants' slash-command menus). Identifiers inside backticks (scenario, module and score-area IDs, enum values such as `NAO_CONFORME`) stay without accents. Framework file titles are in Portuguese, following the pattern `# Núcleo — …` (core), `# Módulo X — …` (modules), `# Manifesto — \`id\`` and `# Modelo — …` (templates).
 
 ## Two parallel artifacts: the skill and the modular framework
 

@@ -1,4 +1,4 @@
-# Manifest - legal
+# Manifesto — `legal`
 
 - `module`: legal
 - `required`: true

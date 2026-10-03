@@ -1,4 +1,4 @@
-# Evidence Engine
+# Núcleo — motor de evidências
 
 ## Objetivo
 Padronizar a classificação de evidências para impedir conclusões sem comprovação e suportar auditoria rastreável.

@@ -1,4 +1,4 @@
-# Router
+# Roteador de módulos
 
 ## Objetivo
 Ativar apenas módulos relevantes ao contexto do projeto, preservando cobertura completa no modo `full_audit`.

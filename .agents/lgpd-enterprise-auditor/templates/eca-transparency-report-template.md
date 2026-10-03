@@ -1,4 +1,4 @@
-# Template - Relatório Semestral de Transparência (ECA Digital)
+# Modelo — relatório semestral de transparência (ECA Digital)
 
 Modelo do relatório exigido pelo **art. 31 da Lei nº 15.211/2025** dos provedores de aplicações de internet com **mais de 1.000.000 de usuários nessa faixa etária registrados, com conexão de internet no território nacional**. Publicação **semestral, em língua portuguesa, no sítio eletrônico do provedor**.
 

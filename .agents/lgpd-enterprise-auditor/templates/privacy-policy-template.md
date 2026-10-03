@@ -1,4 +1,4 @@
-# Template - Política de Privacidade
+# Modelo — política de privacidade
 
 ## 1. Controlador e contato
 - Nome da organização:

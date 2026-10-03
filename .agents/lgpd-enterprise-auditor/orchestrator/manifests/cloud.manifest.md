@@ -1,4 +1,4 @@
-# Manifest - cloud
+# Manifesto — `cloud`
 
 - `module`: cloud
 - `required`: false

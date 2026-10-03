@@ -1,4 +1,4 @@
-# Template - RIPD
+# Modelo — relatório de impacto à proteção de dados (RIPD)
 
 ## 1. Contexto do tratamento
 - processo analisado;

@@ -1,4 +1,4 @@
-# Template - Política de Cookies
+# Modelo — política de cookies
 
 ## 1. Tipos de cookies
 - estritamente necessários;

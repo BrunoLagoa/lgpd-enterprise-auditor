@@ -1,4 +1,4 @@
-# Manifest - appsec
+# Manifesto — `appsec`
 
 - `module`: appsec
 - `required`: false

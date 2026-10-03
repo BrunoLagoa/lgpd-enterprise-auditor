@@ -1,4 +1,4 @@
-# DevSecOps Module - CI/CD and Supply Chain
+# Módulo DevSecOps — CI/CD e cadeia de suprimentos
 
 ## Escopo
 Auditar pipeline CI/CD, cadeia de dependências e segurança de containers.

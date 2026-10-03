@@ -1,4 +1,4 @@
-# Cloud Module - Cloud, PaaS and Hosting Audit
+# Módulo Cloud — cloud, PaaS e hospedagem
 
 ## Escopo
 Avaliar postura de segurança e privacidade de onde a aplicação roda:

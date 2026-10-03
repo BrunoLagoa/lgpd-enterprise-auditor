@@ -1,4 +1,4 @@
-# Auditor Core
+# Núcleo — contratos do auditor
 
 ## Objetivo
 Estabelecer os contratos canônicos da auditoria LGPD Enterprise, garantindo consistência entre módulos especialistas, scoring e relatórios.

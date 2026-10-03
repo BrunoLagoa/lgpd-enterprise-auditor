@@ -1,4 +1,4 @@
-# Manifest - ai-llm
+# Manifesto — `ai-llm`
 
 - `module`: ai-llm
 - `required`: false

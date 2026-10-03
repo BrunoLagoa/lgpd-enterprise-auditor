@@ -1,4 +1,4 @@
-# Mobile Module - Mobile Privacy and Security
+# Módulo Mobile — privacidade e segurança em aplicativos
 
 ## Escopo
 Avaliar riscos de privacidade e segurança em apps iOS/Android/Flutter/React Native.

@@ -1,4 +1,4 @@
-# Legal Bases Engine
+# Bases legais do tratamento (arts. 7º e 11, LGPD)
 
 ## Objetivo
 Definir validação de base legal por operação de tratamento, distinguindo dados pessoais (art. 7º) de dados pessoais sensíveis (art. 11).

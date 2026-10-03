@@ -1,4 +1,4 @@
-# Manifest - core
+# Manifesto — `core`
 
 - `module`: core
 - `required`: true

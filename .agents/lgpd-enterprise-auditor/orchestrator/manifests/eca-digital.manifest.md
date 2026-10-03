@@ -1,4 +1,4 @@
-# Manifest - eca-digital
+# Manifesto — `eca-digital`
 
 - `module`: eca-digital
 - `required`: false

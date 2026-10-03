@@ -1,4 +1,4 @@
-# Reporting Engine
+# Núcleo — formato do relatório
 
 ## Objetivo
 Definir formato obrigatório e ordem de construção do relatório final.
