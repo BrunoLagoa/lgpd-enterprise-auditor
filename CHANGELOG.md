@@ -6,6 +6,8 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.3.1] - 2026-10-02
+
 ### Alterado
 - Comandos (`commands/*.md`) com acentuação completa, inclusive nas descrições exibidas no menu dos assistentes, e citações legais padronizadas (`nº`, `§`).
 - Títulos dos arquivos do framework em português (`Núcleo — …`, `Módulo X — …`, `Manifesto — …`, `Modelo — …`).
@@ -86,7 +88,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.0...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/tag/v1.1.0

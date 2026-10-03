@@ -4,7 +4,7 @@ description: Executa auditoria LGPD + deveres de plataformas digitais (Decretos 
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.3.0"
+  version: "1.3.1"
 ---
 
 # LGPD + Plataformas Digitais (conteúdo de terceiros)
