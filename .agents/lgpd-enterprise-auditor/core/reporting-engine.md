@@ -27,6 +27,8 @@ Definir formato obrigatório e ordem de construção do relatório final.
 - score por área;
 - áreas `NAO_APLICAVEL`, com justificativa, e pesos ajustados (regra de `core/scoring-engine.md`);
 - `score_tecnico` e `score_documental` (informativos);
+- cobertura global e por área; se a global for menor que 80%, marcar **score parcial** ao lado da classificação; área com cobertura menor que 50% recebe a marca **cobertura baixa**;
+- verificações pendentes que podem alterar o score: itens `NAO_VERIFICADO` (com o acesso necessário) e itens cuja severidade depende de verificação ainda não feita;
 - natureza do agente de tratamento e eventuais modulações de severidade por porte.
 
 ### `checklist_conformidade`
@@ -40,7 +42,12 @@ Status permitidos:
 - `PARCIAL`
 - `NAO_CONFORME`
 
-A célula `Evidência` deve registrar os dois eixos de `core/evidence-engine.md` no formato `GRAU (ORIGEM): descrição`, ex.: `ENCONTRADA (TECNICA): política de retenção aplicada em job de expurgo`.
+A célula `Evidência` deve registrar os eixos de `core/evidence-engine.md` no formato `GRAU (ORIGEM), confiança NIVEL: descrição`, ex.: `ENCONTRADA (TECNICA), confiança ALTA: política de retenção aplicada em job de expurgo`. A origem pode ser `TECNICA`, `DOCUMENTAL` ou `TECNICA + DOCUMENTAL`; com mais de uma evidência, separar as descrições por ponto e vírgula.
+
+A tabela principal lista só itens `APLICAVEL`. Logo abaixo, uma segunda tabela traz os itens fora do cálculo:
+`Item | Área | Aplicabilidade | Justificativa ou acesso necessário`
+
+com `NAO_APLICAVEL` (inexistência comprovada ou obrigação de outro agente) e `NAO_VERIFICADO` (o que impediu a verificação e o acesso necessário).
 
 ### `nao_conformidades`
 Para cada achado:
@@ -49,7 +56,7 @@ Para cada achado:
 - fundamento LGPD;
 - impacto técnico;
 - impacto jurídico;
-- evidência (com `evidence_type` e `evidence_source`);
+- evidência (com `evidence_type`, `evidence_source` e `evidence_confidence`);
 - correção recomendada, com esforço (`P | M | G`);
 - modulação de severidade, quando houver;
 - aceite de risco, quando houver (quem aceitou, quando, justificativa e data de revisão).

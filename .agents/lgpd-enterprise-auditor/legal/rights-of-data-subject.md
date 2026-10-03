@@ -3,6 +3,9 @@
 ## Objetivo
 Padronizar avaliação dos direitos do titular (arts. 17 a 22 da LGPD) e da transparência devida a ele (art. 9º).
 
+## Quando o auditado é operador
+Os direitos do titular e a transparência são obrigações do **controlador**. Se o auditado for só operador do fluxo, os itens deste módulo ficam `NAO_APLICAVEL` para aquele fluxo; avalia-se apenas se ele tem processo para apoiar o controlador no atendimento (`legal/legal-bases-engine.md`, seção "Papel do auditado").
+
 ## Direitos mínimos a validar (art. 18)
 - confirmação da existência de tratamento (I);
 - acesso aos dados (II);

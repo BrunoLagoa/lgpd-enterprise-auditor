@@ -4,7 +4,7 @@
 Validar que o framework modular (`.agents/lgpd-enterprise-auditor/`) e a skill (`SKILL.md`) mantêm a mesma cobertura e consistência funcional.
 
 ## Checklist de validação
-Última verificação completa: **2026-10-02**, item a item, contra `SKILL.md` e os módulos do framework. Ao alterar um item coberto aqui, desmarcar e reverificar antes de marcar de novo.
+Última verificação completa: **2026-10-03**, item a item, contra `SKILL.md` e os módulos do framework. Ao alterar um item coberto aqui, desmarcar e reverificar antes de marcar de novo.
 
 - [x] Todos os 17 domínios de auditoria estão mapeados em módulos do framework (`validation/traceability-matrix.md`).
 - [x] Nenhum módulo redefine severidade fora do `core/severity-model.md`.
@@ -55,6 +55,10 @@ Validar que o framework modular (`.agents/lgpd-enterprise-auditor/`) e a skill (
 - [x] Cloud cobre IaaS, PaaS e hospedagem compartilhada, com validação das respostas de produção, na skill (domínio 7) e no framework (`cloud/cloud-audit.md`).
 - [x] Itens `PARCIAL` também geram achado, com severidade da lacuna restante limitada à criticidade do item; contagem única de uma mesma falha; precedência da regra de severidade mais específica — na skill e no framework.
 - [x] Transferência internacional distingue mecanismo comprovadamente ausente (`CRITICO`) de não evidenciado (`ALTO`), e dispensa de encarregado e registro simplificado não valem para pequeno porte com tratamento de alto risco — na skill e no framework.
+- [x] Aplicabilidade por item (`APLICAVEL | NAO_APLICAVEL | NAO_VERIFICADO`), com os mesmos limites, cobertura e marca de score parcial abaixo de 80%, na skill e no framework (`core/scoring-engine.md`).
+- [x] Mais de uma evidência por item, origem `TECNICA + DOCUMENTAL` e confiança `ALTA | MEDIA | BAIXA` sem efeito no score, na skill e no framework (`core/evidence-engine.md`).
+- [x] Papel do auditado por fluxo (controlador ou operador), com as obrigações do operador (art. 39) e o que fica `NAO_APLICAVEL` para ele, na skill e no framework (`legal/legal-bases-engine.md`).
+- [x] Gatilho do ECA Digital: bloqueio por idade autodeclarada não afasta a auditoria quando há outro indício de acesso por menores, na skill (domínio 16) e em `orchestrator/router.md`.
 - [x] Relatório com marcação de confidencialidade, "o que fazer agora", coluna `Área`, esforço `P | M | G`, riscos aceitos, glossário e aviso legal fixo, na skill e no framework (`core/reporting-engine.md` e `reports/*.md`).
 
 ## Evidências de teste esperadas

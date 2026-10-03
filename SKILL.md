@@ -4,7 +4,7 @@ description: Auditoria de conformidade LGPD (Lei nº 13.709/2018) orientada a ev
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.3.2"
+  version: "1.4.0"
 ---
 
 # 🛡️ LGPD ENTERPRISE AUDITOR FRAMEWORK
@@ -203,6 +203,21 @@ Rol próprio e mais restrito. Atenção:
 - **Legítimo interesse NÃO é base legal válida para dado sensível** → uso indevido = `CRITICO`.
 - Consentimento para dado sensível deve ser específico e em destaque.
 
+## Papel do auditado: controlador ou operador
+Identificar o papel em cada fluxo (art. 5º, VI e VII). O controlador decide sobre o tratamento e responde por base legal, transparência, direitos e comunicação de incidentes. O operador trata em nome do controlador, segundo as instruções dele (art. 39). Quem usa os dados recebidos para finalidade própria (analytics de produto, treino de modelo, marketing) vira controlador dessa finalidade e precisa de base legal própria.
+
+Quando o auditado é operador de um fluxo, ficam `NAO_APLICAVEL` para ele — por serem do controlador — a escolha da base legal, a coleta de consentimento, a política de privacidade aos titulares, o canal de direitos, o relatório de impacto (art. 38) e a comunicação de incidente à ANPD e aos titulares (art. 48). Agente com papel misto segue as regras do controlador nos fluxos em que é controlador (inclusive encarregado e RIPD). Validar no operador:
+- contrato ou termo com o controlador (objeto, instruções, segurança, suboperadores, devolução ou eliminação ao fim);
+- tratamento limitado às instruções, sem uso para finalidade própria;
+- suboperadores informados ao controlador e cobertos por contrato equivalente;
+- segurança própria (art. 46) e registro das operações (art. 37);
+- processo para avisar o controlador sem demora em incidente e apoiá-lo no atendimento a titulares;
+- devolução ou eliminação dos dados ao fim do contrato (art. 16).
+
+A indicação de encarregado pelo operador é facultativa (Res. CD/ANPD nº 18/2024). O operador responde solidariamente quando descumpre a LGPD ou as instruções lícitas do controlador (art. 42, §1º, I).
+
+Severidade: uso para finalidade própria sem base legal → `ALTO` (`CRITICO` com dado sensível ou de crianças); sem contrato com o controlador ou sem processo de aviso de incidente → `ALTO`; suboperador não informado ou sem contrato → `MEDIO` (`ALTO` com dado sensível ou de crianças); sem apoio ao controlador nos pedidos de titulares ou sem devolução ou eliminação definida → `MEDIO`. Conta como sensível também o dado que **revele** informação sensível e possa causar dano (art. 11, §1º). Contagem única: segurança, registro e contrato com suboperador usam os itens já existentes, sem duplicar.
+
 ## Dados de acesso público e manifestamente públicos (art. 7º, §§ 3º, 4º e 7º)
 Dado público não é dado livre:
 - **acesso público** (diários oficiais, portais de transparência, dados abertos de órgãos como o TSE): considerar a finalidade, a boa-fé e o interesse público que justificaram a disponibilização (§3º);
@@ -244,7 +259,8 @@ Antes de perguntar, ler o que o projeto já documenta: `CLAUDE.md`, `AGENTS.md`,
 - pessoa natural ou jurídica;
 - com ou sem fins econômicos;
 - porte: agente de pequeno porte (Res. CD/ANPD nº 2/2022) ou não;
-- existência de tratamento de alto risco.
+- existência de tratamento de alto risco;
+- papel em cada fluxo de dados: controlador, operador ou ambos (ex.: SaaS B2B é operador dos dados que os clientes inserem e controlador dos dados das contas).
 
 Essas respostas decidem a modulação de severidade por porte, a forma simplificada do registro das operações, a dispensa de indicação do encarregado, a sujeição ao MCI art. 15 (provedor de aplicações) e até a aplicação da LGPD: pessoa natural que trata dados para fins exclusivamente particulares e não econômicos está fora da lei (art. 4º, I).
 
@@ -371,7 +387,16 @@ Políticas, contratos, processos.
 - todo item `NAO_CONFORME` exige grau `PARCIAL` ou `AUSENTE`;
 - o grau mede a comprovação do **controle exigido**, não a prova do problema: quando a análise encontra a violação (ex.: CPF em log), o controle está `AUSENTE` e a descrição cita o que foi encontrado;
 - achados `CRITICO` e `ALTO` exigem origem `TECNICA` ou `DOCUMENTAL` explícita e rastreável;
-- os eixos não se substituem: `TECNICA` ou `DOCUMENTAL` não comprovam conformidade por si só.
+- os eixos não se substituem: `TECNICA` ou `DOCUMENTAL` não comprovam conformidade por si só;
+- um item pode reunir várias evidências, de origens diferentes; o grau continua único e a origem pode ser `TECNICA`, `DOCUMENTAL` ou `TECNICA + DOCUMENTAL`, cada evidência com seu rastro;
+- item `NAO_APLICAVEL` exige evidência `ENCONTRADA` da inexistência do objeto; item `NAO_VERIFICADO` não tem grau: registra o que impediu a verificação e o acesso necessário.
+
+## Confiança da evidência
+- `ALTA`: evidência direta e rastreável do que o item exige — técnica e documental coerentes quando o item pede as duas; ou a prova direta, em item puramente técnico ou documental;
+- `MEDIA`: evidência direta, mas de um lado só quando o item pede os dois;
+- `BAIXA`: evidência indireta, incompleta, sem rastro completo ou só declaração do auditado.
+
+Documento ausente: `ALTA` quando o auditado confirma que não existe ou um arquivo evidencia a lacuna; `MEDIA` quando só não foi localizado; `BAIXA` quando a fonte não foi examinada. A confiança não altera status, severidade nem score. Achado `CRITICO` ou `ALTO` com confiança `BAIXA` deve indicar a verificação que elevaria a confiança.
 
 ---
 
@@ -671,7 +696,7 @@ Validar:
 Aplicável a todo produto ou serviço de tecnologia da informação direcionado a — ou **de acesso provável por** — crianças e adolescentes no País, conforme a **Lei nº 15.211/2025** (em vigor desde 17/03/2026, art. 41-A), o **Decreto nº 12.880/2026** e a fiscalização da ANPD. Alcança aplicações de internet, softwares, **sistemas operacionais**, **lojas de aplicativos** e jogos eletrônicos conectados (art. 2º, I).
 
 ## Quando auditar
-Sempre que houver serviço direcionado ou de acesso provável por menores. "Acesso provável" (art. 1º, parágrafo único) = probabilidade de uso e atratividade + facilidade de acesso + grau de risco à privacidade, segurança ou desenvolvimento biopsicossocial. Na dúvida, auditar e registrar a incerteza como evidência PARCIAL.
+Sempre que houver serviço direcionado ou de acesso provável por menores. "Acesso provável" (art. 1º, parágrafo único) = probabilidade de uso e atratividade + facilidade de acesso + grau de risco à privacidade, segurança ou desenvolvimento biopsicossocial. Na dúvida, auditar e registrar a incerteza como evidência PARCIAL. Bloqueio etário baseado só em idade ou data de nascimento autodeclarada **não afasta** a auditoria deste domínio quando houver outro indício de acesso por menores; sem nenhum outro indício (ex.: serviço B2B ou profissional), o domínio não é auditado e a decisão é registrada com a justificativa.
 
 **Antes de emitir achado, checar a modulação do art. 39**: as obrigações dos arts. 6º, 17, 18, 19, 20, 27, 28, 29, 31, 32 e 40 são proporcionais ao grau de interferência sobre o conteúdo, ao número de usuários e ao porte; serviços com controle editorial e conteúdo licenciado são dispensados se cumprirem classificação indicativa, transparência etária, mediação parental e canal de denúncias (art. 39, §1º).
 
@@ -880,6 +905,15 @@ Nunca modular achados `CRITICO` com dados sensíveis, dados de crianças e adole
 
 Área aplicável sem nenhum item avaliado: avaliar ao menos um item; se não for possível, declarar "cobertura insuficiente" e redistribuir o peso como em `NAO_APLICAVEL`.
 
+## Aplicabilidade do item e cobertura
+- `APLICAVEL`: avaliado; recebe status e entra no score.
+- `NAO_APLICAVEL`: o objeto não existe no escopo, com evidência `ENCONTRADA` da inexistência, ou a obrigação é de outro agente (ex.: consentimento quando o auditado é só operador). Fora do score, com a justificativa.
+- `NAO_VERIFICADO`: o requisito vale, mas depende de acesso que o auditor não tem (produção, painel do provedor, sistema de terceiro). Fora do score, com o motivo e o acesso necessário.
+
+Falta de evidência não é nenhum dos dois: documento, contrato ou política que o auditado deveria apresentar e não apresentou é `AUSENTE` e reduz o score. `NAO_VERIFICADO` só cabe em controle técnico fora do alcance do auditor: o que pode existir só no provedor (retenção de logs, backup, MFA do painel) é `NAO_VERIFICADO`; o que deveria aparecer no repositório (varredura no CI, rate limiting) é `NAO_CONFORME`, com verificação pendente.
+
+Cobertura = itens com status ÷ (itens com status + itens `NAO_VERIFICADO`), global e por área. Abaixo de 80% na global, marcar o resultado como **score parcial**; área abaixo de 50% recebe a marca **cobertura baixa**. O peso do item segue a regra de severidade aplicável ao estado atual da evidência; quando uma verificação pendente puder mudar a severidade, listar o item entre as verificações pendentes.
+
 ## Mapa de áreas por domínio
 Cada item pontua em **uma única** área, definida pelo domínio do checklist:
 
@@ -974,8 +1008,11 @@ Incluir áreas `NAO_APLICAVEL`, justificativa e pesos ajustados.
 ## Score técnico e score documental
 Informativos, sem afetar a classificação.
 
-## Natureza do agente
-Pessoa natural ou jurídica, fins econômicos, porte e modulações de severidade aplicadas.
+## Cobertura e verificações pendentes
+Cobertura global e por área; marcar **score parcial** se a global for menor que 80%. Listar as verificações pendentes que podem alterar o score: itens `NAO_VERIFICADO` (com o acesso necessário) e itens cuja severidade depende de verificação ainda não feita.
+
+## Natureza e papel do agente
+Pessoa natural ou jurídica, fins econômicos, porte, modulações de severidade aplicadas e papel em cada fluxo de dados (controlador, operador ou ambos).
 
 ---
 
@@ -988,7 +1025,14 @@ Pessoa natural ou jurídica, fins econômicos, porte e modulações de severidad
 
 Status: `CONFORME | PARCIAL | NAO_CONFORME`.
 
-Evidência no formato `GRAU (ORIGEM): descrição`, ex.: `ENCONTRADA (TECNICA): política de retenção aplicada em job de expurgo`.
+Evidência no formato `GRAU (ORIGEM), confiança NIVEL: descrição`, ex.: `ENCONTRADA (TECNICA), confiança ALTA: política de retenção aplicada em job de expurgo`. A origem pode ser `TECNICA`, `DOCUMENTAL` ou `TECNICA + DOCUMENTAL`; com mais de uma evidência, separar as descrições por ponto e vírgula.
+
+A tabela lista só itens aplicáveis. Logo abaixo, uma segunda tabela com os itens fora do cálculo:
+
+| Item | Área | Aplicabilidade | Justificativa ou acesso necessário |
+|---|---|---|---|
+
+Aplicabilidade: `NAO_APLICAVEL` ou `NAO_VERIFICADO`.
 
 ---
 
@@ -1012,7 +1056,7 @@ Impacto operacional/técnico.
 Risco legal e regulatório.
 
 ## Evidência
-O que foi encontrado, com grau (`ENCONTRADA | PARCIAL | AUSENTE`) e origem (`TECNICA | DOCUMENTAL`).
+O que foi encontrado, com grau (`ENCONTRADA | PARCIAL | AUSENTE`), origem (`TECNICA | DOCUMENTAL`, ou as duas) e confiança (`ALTA | MEDIA | BAIXA`).
 
 ## Correção Recomendada
 Como corrigir, com esforço (`P | M | G`).
@@ -1110,7 +1154,7 @@ Severidade:
 `ALTO`
 
 Evidência:
-`AUSENTE (TECNICA)`: não há opt-in explícito — o checkbox de consentimento é renderizado já marcado no formulário de cadastro.
+`AUSENTE (TECNICA), confiança ALTA`: não há opt-in explícito — o checkbox de consentimento é renderizado já marcado no formulário de cadastro.
 
 Fundamento:
 Art. 8º LGPD
@@ -1129,7 +1173,7 @@ Severidade:
 `CRITICO`
 
 Evidência:
-`AUSENTE (TECNICA)`: não há hash de senha — a coluna de senha da tabela de usuários guarda valores legíveis.
+`AUSENTE (TECNICA), confiança ALTA`: não há hash de senha — a coluna de senha da tabela de usuários guarda valores legíveis.
 
 Fundamento:
 Art. 46 LGPD
@@ -1148,7 +1192,7 @@ Severidade:
 `ALTO`
 
 Evidência:
-`AUSENTE (TECNICA)`: não há mascaramento — amostra de log da aplicação traz CPF completo em requisição de cadastro.
+`AUSENTE (TECNICA), confiança ALTA`: não há mascaramento — amostra de log da aplicação traz CPF completo em requisição de cadastro.
 
 Fundamento:
 Arts. 6º, III e 46 LGPD
@@ -1167,7 +1211,7 @@ Severidade:
 `CRITICO`
 
 Evidência:
-`AUSENTE (TECNICA)`: não há anonimização antes do envio — o payload da chamada ao LLM leva nome e CPF do cliente no prompt.
+`AUSENTE (TECNICA), confiança ALTA`: não há anonimização antes do envio — o payload da chamada ao LLM leva nome e CPF do cliente no prompt.
 
 Fundamento:
 Arts. 6º, III e 46 LGPD; art. 11 quando houver dado sensível; arts. 33 a 36 quando o provedor do LLM tratar os dados fora do País.

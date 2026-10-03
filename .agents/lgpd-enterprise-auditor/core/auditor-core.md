@@ -19,9 +19,10 @@ Estrutura mínima para cada não conformidade. Todo `check_item` com status `NAO
 - `problem`: descrição objetiva do problema.
 - `severity`: `CRITICO | ALTO | MEDIO | BAIXO`.
 - `lgpd_article`: artigo(s) aplicáveis da LGPD.
-- `evidence_type`: grau de comprovação - `ENCONTRADA | PARCIAL | AUSENTE`.
-- `evidence_source`: origem da evidência - `TECNICA | DOCUMENTAL`.
-- `evidence`: evidência observada.
+- `evidence_type`: grau de comprovação do controle - `ENCONTRADA | PARCIAL | AUSENTE` (um único grau por achado).
+- `evidence_source`: origem da evidência - `TECNICA | DOCUMENTAL`; um achado pode ter as duas origens (`TECNICA + DOCUMENTAL`).
+- `evidence`: uma ou mais evidências observadas, cada uma com sua origem e descrição rastreável.
+- `evidence_confidence`: confiança da evidência - `ALTA | MEDIA | BAIXA` (`core/evidence-engine.md`).
 - `technical_impact`: impacto técnico.
 - `legal_impact`: impacto jurídico/regulatório.
 - `recommendation`: ação recomendada.
@@ -37,19 +38,21 @@ Estrutura mínima de checklist:
 - `domain`: domínio de auditoria (um dos 17 de `orchestrator/full-audit.md`, ex.: `consentimento`, `apis_integracoes`).
 - `score_area`: área de score em que o item pontua - exatamente uma, definida pelo domínio (mapa em `core/scoring-engine.md`).
 - `criticality`: severidade que o item teria se não conforme - `CRITICO | ALTO | MEDIO | BAIXO`; define o peso do item no score.
-- `control_type`: natureza do controle - `TECNICO` (código, configuração, infraestrutura) ou `DOCUMENTAL` (política, contrato, registro, processo).
+- `control_type`: natureza do controle - `TECNICO` (código, configuração, infraestrutura) ou `DOCUMENTAL` (política, contrato, registro, processo). Item que exige os dois é classificado por onde o controle é executado: em sistema, `TECNICO`; por ato formal, `DOCUMENTAL`.
 - `item`: requisito validado.
-- `status`: `CONFORME | PARCIAL | NAO_CONFORME`.
-- `evidence`: evidência associada.
-- `evidence_type`: `ENCONTRADA | PARCIAL | AUSENTE`.
-- `evidence_source`: `TECNICA | DOCUMENTAL`.
+- `applicability`: `APLICAVEL | NAO_APLICAVEL | NAO_VERIFICADO` (regras em `core/scoring-engine.md`). Só item `APLICAVEL` tem `status` e entra no score.
+- `status`: `CONFORME | PARCIAL | NAO_CONFORME` (apenas para item `APLICAVEL`).
+- `evidence`: uma ou mais evidências, cada uma com sua origem e descrição rastreável.
+- `evidence_type`: `ENCONTRADA | PARCIAL | AUSENTE` (um único grau por item).
+- `evidence_source`: `TECNICA | DOCUMENTAL`; um item pode ter as duas origens (`TECNICA + DOCUMENTAL`).
+- `evidence_confidence`: `ALTA | MEDIA | BAIXA` (`core/evidence-engine.md`).
 - `impact`: impacto caso falha.
 - `recommendation`: correção sugerida.
 
 ### `module_output`
 Resultado padrão por módulo:
 - `module`: nome do módulo.
-- `coverage`: percentual de cobertura de itens aplicáveis.
+- `coverage`: cobertura do módulo - itens com `status` ÷ (itens com `status` + itens `NAO_VERIFICADO`), em percentual.
 - `check_items`: lista de `check_item`.
 - `findings`: lista de `finding`.
 - `score_partial`: score parcial do módulo (0-100).

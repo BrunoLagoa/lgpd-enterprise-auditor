@@ -6,6 +6,18 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.4.0] - 2026-10-03
+
+### Adicionado
+- Aplicabilidade por item do checklist: `APLICAVEL`, `NAO_APLICAVEL` (objeto inexistente ou obrigação de outro agente) e `NAO_VERIFICADO` (fora do alcance do auditor), com tabela de itens fora do cálculo, indicador de cobertura, marca de **score parcial** quando a cobertura global fica abaixo de 80% e de **cobertura baixa** para área abaixo de 50% (#17).
+- Mais de uma evidência por item, origem `TECNICA + DOCUMENTAL` e confiança da evidência (`ALTA | MEDIA | BAIXA`) no checklist, nos achados e no relatório; lista de verificações pendentes que podem alterar o score (#18).
+- Papel do auditado em cada fluxo de dados (controlador, operador ou ambos), com as obrigações do operador (art. 39) e o que deixa de ser achado dele (#19).
+
+### Alterado
+- Gatilho do ECA Digital: bloqueio por idade ou data de nascimento autodeclarada não afasta a ativação do módulo quando há outro indício de acesso por menores (#20).
+- Evidência no relatório passa ao formato `GRAU (ORIGEM), confiança NIVEL: descrição`.
+- Relatório de exemplo (`examples/saas-demo`) refeito com as regras desta versão.
+
 ## [1.3.2] - 2026-10-03
 
 ### Corrigido
@@ -94,7 +106,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.2...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.2...v1.4.0
 [1.3.2]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.2.0...v1.3.0
