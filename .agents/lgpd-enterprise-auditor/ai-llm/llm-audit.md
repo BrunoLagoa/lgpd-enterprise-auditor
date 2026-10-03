@@ -1,4 +1,4 @@
-# AI-LLM Module - AI Governance and Privacy
+# Módulo IA/LLM — governança e privacidade em inteligência artificial
 
 ## Escopo
 Auditar uso de IA/LLM com foco em privacidade, segurança e conformidade regulatória.

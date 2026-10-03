@@ -1,6 +1,6 @@
 ---
 name: lgpd-full-audit
-description: Executa auditoria LGPD completa (full_audit), com todos os modulos ativos.
+description: Executa auditoria LGPD completa (full_audit), com todos os módulos ativos.
 license: MIT
 metadata:
   author: BrunoCastro
@@ -9,21 +9,21 @@ metadata:
 
 # LGPD Full Audit
 
-Antes de perguntar, leia o que o projeto ja documenta (`CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependencias e de infraestrutura) e apresente o contexto inferido. Pergunte apenas o que faltar ou nao puder ser confirmado:
-- natureza do agente de tratamento: pessoa natural ou juridica, com ou sem fins economicos, porte (agente de pequeno porte, Res. CD/ANPD 2/2022) e se ha tratamento de alto risco;
+Antes de perguntar, leia o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependências e de infraestrutura) e apresente o contexto inferido. Pergunte apenas o que faltar ou não puder ser confirmado:
+- natureza do agente de tratamento: pessoa natural ou jurídica, com ou sem fins econômicos, porte (agente de pequeno porte, Res. CD/ANPD nº 2/2022) e se há tratamento de alto risco;
 - stack completa (frontend, backend, banco, cloud);
-- dados pessoais e dados sensiveis tratados;
-- integracoes de terceiros;
+- dados pessoais e dados sensíveis tratados;
+- integrações de terceiros;
 - contexto de DevSecOps e IA/LLM;
-- existencia de usuarios menores de 18 anos (ECA Digital);
-- intermediacao de conteudo de terceiros, anuncios/impulsionamento pagos ou IA que gera imagem/voz (plataformas digitais).
+- existência de usuários menores de 18 anos (ECA Digital);
+- intermediação de conteúdo de terceiros, anúncios/impulsionamento pagos ou IA que gera imagem/voz (plataformas digitais).
 
 Execute no modo `full_audit` com cobertura total:
 - `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
 
-Regras obrigatorias:
-- considerar `.agents/lgpd-enterprise-auditor/` como caminho base canonico em qualquer projeto;
+Regras obrigatórias:
+- considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
-- nao assumir conformidade sem evidencia;
+- não assumir conformidade sem evidência;
 - aplicar severidade e score conforme `.agents/lgpd-enterprise-auditor/core/`;
-- gerar saida no formato de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.
+- gerar saída no formato de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.

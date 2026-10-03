@@ -1,4 +1,4 @@
-# Manifest - governance
+# Manifesto — `governance`
 
 - `module`: governance
 - `required`: false

@@ -7,25 +7,25 @@ metadata:
   version: "1.3.0"
 ---
 
-# LGPD AI/LLM
+# LGPD IA/LLM
 
-Antes de perguntar, leia o que o projeto ja documenta (`CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependencias e de infraestrutura) e apresente o contexto inferido. Pergunte apenas o que faltar ou nao puder ser confirmado:
-- natureza do agente de tratamento: pessoa natural ou juridica, com ou sem fins economicos, porte (agente de pequeno porte, Res. CD/ANPD 2/2022) e se ha tratamento de alto risco;
+Antes de perguntar, leia o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependências e de infraestrutura) e apresente o contexto inferido. Pergunte apenas o que faltar ou não puder ser confirmado:
+- natureza do agente de tratamento: pessoa natural ou jurídica, com ou sem fins econômicos, porte (agente de pequeno porte, Res. CD/ANPD nº 2/2022) e se há tratamento de alto risco;
 - provedores de IA/LLM utilizados;
 - uso de prompts, embeddings, RAG e fine-tuning;
-- politica de retencao e transferencia internacional;
-- tipos de dados pessoais/sensiveis enviados para IA.
+- política de retenção e transferência internacional;
+- tipos de dados pessoais/sensíveis enviados para IA.
 
-Ative o cenario `ai_llm_system`:
+Ative o cenário `ai_llm_system`:
 - `core`, `legal`, `governance`, `ai-llm`, `appsec`.
 
-Adicione `eca-digital` se menores forem expostos a recomendacao algoritmica, perfilamento ou conteudo gerado por IA (gatilho normativo do router — ECA Digital, Lei 15.211/2025).
+Adicione `eca-digital` se menores forem expostos a recomendação algorítmica, perfilamento ou conteúdo gerado por IA (gatilho normativo do router — ECA Digital, Lei nº 15.211/2025).
 
-Adicione `plataformas-digitais` se a IA puder gerar ou alterar imagem ou som de pessoas (vedacao de conteudo intimo do art. 9 do Decreto 12.976/2026) ou moderar conteudo de terceiros (gatilho normativo do router — Decretos 12.975/2026 e 12.976/2026).
+Adicione `plataformas-digitais` se a IA puder gerar ou alterar imagem ou som de pessoas (vedação de conteúdo íntimo do art. 9º do Decreto nº 12.976/2026) ou moderar conteúdo de terceiros (gatilho normativo do router — Decretos nº 12.975/2026 e nº 12.976/2026).
 
-Regras obrigatorias:
-- considerar `.agents/lgpd-enterprise-auditor/` como caminho base canonico em qualquer projeto;
+Regras obrigatórias:
+- considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
 - validar risco de prompt injection e vazamento contextual;
 - exigir base legal para tratamento de dados em IA;
-- consolidar score e relatorio no padrao de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.
+- consolidar score e relatório no padrão de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`.

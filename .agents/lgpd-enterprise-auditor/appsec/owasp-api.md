@@ -1,4 +1,4 @@
-# AppSec Module - OWASP Web/API
+# Módulo AppSec — segurança de aplicações web e APIs (OWASP)
 
 ## Escopo
 Auditar segurança de aplicação web e APIs com foco em riscos LGPD, incluindo cookies/tracking no front-end e dados pessoais em logs de aplicação.

@@ -1,4 +1,4 @@
-# Manifest - mobile
+# Manifesto — `mobile`
 
 - `module`: mobile
 - `required`: false

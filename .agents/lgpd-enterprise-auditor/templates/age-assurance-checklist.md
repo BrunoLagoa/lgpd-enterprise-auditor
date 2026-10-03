@@ -1,4 +1,4 @@
-# Checklist - Aferição de Idade (ECA Digital)
+# Checklist — aferição de idade (ECA Digital)
 
 Roteiro auditável de mecanismos confiáveis de aferição de idade, alinhado aos **arts. 9º a 15 e 24 da Lei nº 15.211/2025**, às orientações preliminares da ANPD (março/2026) e ao Radar Tecnológico nº 5. Usar junto de [[eca-digital]].
 

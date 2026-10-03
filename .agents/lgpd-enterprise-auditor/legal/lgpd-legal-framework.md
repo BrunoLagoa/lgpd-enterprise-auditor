@@ -1,4 +1,4 @@
-# LGPD Legal Framework
+# Base normativa da LGPD
 
 ## Objetivo
 Consolidar fundamentos legais que devem orientar toda auditoria.

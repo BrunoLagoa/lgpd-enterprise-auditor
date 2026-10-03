@@ -1,4 +1,4 @@
-# Rights of Data Subject
+# Direitos do titular e transparência (arts. 9º, 18 e 19, LGPD)
 
 ## Objetivo
 Padronizar avaliação dos direitos do titular (arts. 17 a 22 da LGPD) e da transparência devida a ele (art. 9º).

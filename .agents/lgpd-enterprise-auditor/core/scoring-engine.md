@@ -1,4 +1,4 @@
-# Scoring Engine
+# Núcleo — cálculo do score
 
 ## Objetivo
 Padronizar cálculo e classificação do score LGPD em escala 0-100.

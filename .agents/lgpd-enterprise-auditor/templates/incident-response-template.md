@@ -1,4 +1,4 @@
-# Template - Resposta a Incidentes de Dados
+# Modelo — resposta a incidentes de dados
 
 ## 1. Identificação do incidente
 - data/hora:

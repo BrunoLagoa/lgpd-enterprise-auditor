@@ -1,4 +1,4 @@
-# Full Audit — cobertura completa
+# Auditoria completa (`full_audit`) — cobertura obrigatória
 
 ## Objetivo
 Definir a cobertura obrigatória do modo `full_audit` e sua equivalência com a skill (`SKILL.md`), a versão autocontida do auditor.

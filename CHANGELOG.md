@@ -6,6 +6,10 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+### Alterado
+- Comandos (`commands/*.md`) com acentuação completa, inclusive nas descrições exibidas no menu dos assistentes, e citações legais padronizadas (`nº`, `§`).
+- Títulos dos arquivos do framework em português (`Núcleo — …`, `Módulo X — …`, `Manifesto — …`, `Modelo — …`).
+
 ## [1.3.0] - 2026-10-02
 
 Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o lançamento público.

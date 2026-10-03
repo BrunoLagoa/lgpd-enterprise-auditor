@@ -31,7 +31,7 @@ O repositório distribui o mesmo auditor em duas formas, ambas atuais: a **skill
 
 - READMEs: `README.md` (português, canônico) e `README.en.md` (inglês) mantidos em sincronia.
 - Internos do framework (`.agents/`, `SKILL.md`, `commands/`): português do Brasil.
-- `.agents/` e `SKILL.md` usam acentuação completa; `commands/*.md` são escritos **sem diacríticos** ("cenario", "obrigatorias"). Siga o estilo do arquivo que estiver editando.
+- Todo texto em português usa acentuação completa e correta, inclusive em `commands/*.md` (a descrição dos comandos aparece no menu dos assistentes). Identificadores entre crases (IDs de cenário, de módulo, de área e valores como `NAO_CONFORME`) ficam sem acento. Títulos dos arquivos do framework em português: `# Núcleo — …`, `# Módulo X — …`, `# Manifesto — \`id\`` e `# Modelo — …`.
 
 ## Changelog e data de sincronização
 

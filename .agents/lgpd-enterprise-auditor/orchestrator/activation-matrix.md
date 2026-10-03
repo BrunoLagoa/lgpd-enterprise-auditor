@@ -1,4 +1,4 @@
-# Activation Matrix
+# Matriz de ativação por cenário
 
 ## Matriz por cenário
 

@@ -1,4 +1,4 @@
-# Governance Module - DPO Framework
+# Módulo Governança — encarregado, registro das operações e accountability
 
 ## Escopo
 Avaliar governança de privacidade, accountability e controles organizacionais.

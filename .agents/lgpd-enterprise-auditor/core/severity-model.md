@@ -1,4 +1,4 @@
-# Severity Model
+# Núcleo — modelo de severidade
 
 ## Objetivo
 Normalizar severidade dos achados para priorização técnica e jurídica consistente.

@@ -1,4 +1,4 @@
-# Manifest - devsecops
+# Manifesto — `devsecops`
 
 - `module`: devsecops
 - `required`: false

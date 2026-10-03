@@ -1,4 +1,4 @@
-# Manifest - plataformas-digitais
+# Manifesto — `plataformas-digitais`
 
 - `module`: plataformas-digitais
 - `required`: false

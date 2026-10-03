@@ -1,4 +1,4 @@
-# Template - DPA (Data Processing Agreement)
+# Modelo — acordo de tratamento de dados (DPA)
 
 ## 1. Partes e objeto
 - controlador:
