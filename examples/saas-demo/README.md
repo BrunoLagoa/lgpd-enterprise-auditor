@@ -2,7 +2,7 @@
 
 > **Atenção:** este projeto é **fictício** e **intencionalmente falho**. Ele existe apenas para demonstrar o uso do LGPD Enterprise Auditor e **não deve ser usado em produção**, nem como base para um sistema real. A empresa, as pessoas, os CNPJs, os domínios e todos os dados são inventados.
 
-O relatório gerado pelo framework para este projeto está em [`relatorio-auditoria-lgpd.md`](relatorio-auditoria-lgpd.md).
+O relatório gerado pelo framework para este projeto está em [`relatorio-auditoria-lgpd.md`](relatorio-auditoria-lgpd.md). A versão visual, com os mesmos dados, está em [`relatorio-auditoria-lgpd.html`](relatorio-auditoria-lgpd.html): baixe o arquivo e abra no navegador.
 
 ## O que é
 

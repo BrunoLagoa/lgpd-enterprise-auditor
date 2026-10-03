@@ -1,6 +1,6 @@
 CONFIDENCIAL — uso interno
 
-> **Exemplo público com dados fictícios.** Este relatório foi produzido sobre o projeto fictício e intencionalmente falho de `examples/saas-demo/` para demonstrar o LGPD Enterprise Auditor. Empresa, pessoas, CNPJ, domínios e dados são inventados. Relatórios reais descrevem falhas que podem estar abertas: são confidenciais, não devem ser versionados em repositório público e seguem a convenção de nome `auditoria-lgpd-AAAA-MM-<cenario>.md` de `core/reporting-engine.md`. Este arquivo foge das duas regras só por ser um exemplo público.
+> **Exemplo público com dados fictícios.** Este relatório foi produzido sobre o projeto fictício e intencionalmente falho de `examples/saas-demo/` para demonstrar o LGPD Enterprise Auditor. Empresa, pessoas, CNPJ, domínios e dados são inventados. Relatórios reais descrevem falhas que podem estar abertas: são confidenciais, não devem ser versionados em repositório público e seguem a convenção de nome `auditoria-lgpd-AAAA-MM-<cenario>.md` de `core/reporting-engine.md`. Este arquivo foge das duas regras só por ser um exemplo público. A versão visual deste mesmo relatório está em [`relatorio-auditoria-lgpd.html`](relatorio-auditoria-lgpd.html).
 
 # Relatório de auditoria LGPD — AgendaFácil
 
@@ -10,7 +10,7 @@ CONFIDENCIAL — uso interno
 | Data da análise | 2026-10-03 |
 | Comando | `/lgpd-saas` |
 | Cenário | `saas_web` |
-| Framework | LGPD Enterprise Auditor 1.4.0, base canônica `.agents/lgpd-enterprise-auditor/` |
+| Framework | LGPD Enterprise Auditor 1.5.0, base canônica `.agents/lgpd-enterprise-auditor/` |
 | Método | leitura estática dos arquivos do repositório; sem acesso ao ambiente de produção, aos painéis da Vercel, do banco e do GitHub, nem a contratos fora do repositório |
 
 ## Contexto e escopo

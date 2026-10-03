@@ -10,6 +10,7 @@ Um SaaS pequeno e inventado de agendamento para clínicas (Node.js/Express, pág
 |---|---|
 | [`saas-demo/README.md`](saas-demo/README.md) | Descrição do projeto fictício e contexto da empresa |
 | [`saas-demo/relatorio-auditoria-lgpd.md`](saas-demo/relatorio-auditoria-lgpd.md) | Relatório completo gerado pela auditoria |
+| [`saas-demo/relatorio-auditoria-lgpd.html`](saas-demo/relatorio-auditoria-lgpd.html) | O mesmo relatório na versão visual, para abrir no navegador (baixe o arquivo) |
 | [`saas-demo/docs/lgpd/politica-de-privacidade.md`](saas-demo/docs/lgpd/politica-de-privacidade.md) | Política de privacidade propositalmente incompleta |
 
 O relatório mostra:
@@ -18,7 +19,8 @@ O relatório mostra:
 - a natureza e o papel do agente: pequeno porte com tratamento de alto risco (sem modulação de severidade), operador dos dados dos pacientes e controlador das contas das clínicas e do rastreamento que ele mesmo instalou;
 - o checklist com evidências por arquivo e linha e com nível de confiança, mais a tabela de itens fora do cálculo (`NAO_APLICAVEL` e `NAO_VERIFICADO`);
 - o cálculo do score passo a passo (com `ai_llm` como `NAO_APLICAVEL` e pesos ajustados), a cobertura por área, as verificações pendentes e os scores técnico e documental;
-- um registro de aceite de risco.
+- um registro de aceite de risco;
+- a versão em HTML, com os mesmos dados: score com medidor, checklist e não conformidades com filtro e busca, plano por prazo e conferência automática do cálculo.
 
 O projeto **não deve ser usado em produção** nem como base para um sistema real.
 
@@ -36,7 +38,7 @@ cd examples/saas-demo
 claude
 ```
 
-Antes de rodar, tire `relatorio-auditoria-lgpd.md` da pasta (ou renomeie-o), para que o agente não use o relatório pronto como ponto de partida. No Claude Code, rode `/lgpd-saas`. Para outras ferramentas, troque `--target` (`cursor`, `vscode`, `opencode` ou `agents`). O `--version local` instala o framework a partir desta cópia do repositório, em vez da última versão publicada.
+Antes de rodar, tire `relatorio-auditoria-lgpd.md` e `relatorio-auditoria-lgpd.html` da pasta (ou renomeie-os), para que o agente não use o relatório pronto como ponto de partida. No Claude Code, rode `/lgpd-saas`. Para outras ferramentas, troque `--target` (`cursor`, `vscode`, `opencode` ou `agents`). O `--version local` instala o framework a partir desta cópia do repositório, em vez da última versão publicada.
 
 O resultado não será idêntico palavra por palavra, mas o score deve ser reproduzível a partir do checklist: com as mesmas evidências, a mesma `criticality` e o mesmo status por item, a fórmula leva ao mesmo número. Os arquivos criados pelo instalador (`.agents/`, `.claude/` etc.) estão no `.gitignore` do exemplo. Para removê-los, use `./scripts/install.sh uninstall --project-dir examples/saas-demo --non-interactive`.
 
@@ -47,4 +49,4 @@ Este relatório é público apenas porque o projeto é fictício. Um relatório 
 - começar com a marcação `CONFIDENCIAL — uso interno`;
 - **nunca** ser versionado em repositório público; prefira um local fora do repositório auditado ou uma pasta ignorada pelo git (ex.: `docs/lgpd/auditorias/`, listada no `.gitignore`);
 - ser compartilhado só com quem precisa agir sobre os achados;
-- ter nome com data e escopo, como `auditoria-lgpd-AAAA-MM-<cenario>.md`.
+- ter nome com data e escopo, como `auditoria-lgpd-AAAA-MM-<cenario>.md` e `auditoria-lgpd-AAAA-MM-<cenario>.html`.
