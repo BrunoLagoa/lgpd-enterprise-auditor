@@ -4,7 +4,7 @@ description: Auditoria de conformidade LGPD (Lei nº 13.709/2018) orientada a ev
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.3.1"
+  version: "1.3.2"
 ---
 
 # 🛡️ LGPD ENTERPRISE AUDITOR FRAMEWORK
@@ -369,6 +369,7 @@ Políticas, contratos, processos.
 - todo item `CONFORME` exige grau `ENCONTRADA`;
 - todo item `PARCIAL` exige grau `PARCIAL`;
 - todo item `NAO_CONFORME` exige grau `PARCIAL` ou `AUSENTE`;
+- o grau mede a comprovação do **controle exigido**, não a prova do problema: quando a análise encontra a violação (ex.: CPF em log), o controle está `AUSENTE` e a descrição cita o que foi encontrado;
 - achados `CRITICO` e `ALTO` exigem origem `TECNICA` ou `DOCUMENTAL` explícita e rastreável;
 - os eixos não se substituem: `TECNICA` ou `DOCUMENTAL` não comprovam conformidade por si só.
 
@@ -1109,7 +1110,7 @@ Severidade:
 `ALTO`
 
 Evidência:
-`ENCONTRADA (TECNICA)`: checkbox de consentimento renderizado já marcado no formulário de cadastro.
+`AUSENTE (TECNICA)`: não há opt-in explícito — o checkbox de consentimento é renderizado já marcado no formulário de cadastro.
 
 Fundamento:
 Art. 8º LGPD
@@ -1128,7 +1129,7 @@ Severidade:
 `CRITICO`
 
 Evidência:
-`ENCONTRADA (TECNICA)`: coluna de senha da tabela de usuários com valores legíveis.
+`AUSENTE (TECNICA)`: não há hash de senha — a coluna de senha da tabela de usuários guarda valores legíveis.
 
 Fundamento:
 Art. 46 LGPD
@@ -1147,7 +1148,7 @@ Severidade:
 `ALTO`
 
 Evidência:
-`ENCONTRADA (TECNICA)`: amostra de log da aplicação com CPF completo em requisição de cadastro.
+`AUSENTE (TECNICA)`: não há mascaramento — amostra de log da aplicação traz CPF completo em requisição de cadastro.
 
 Fundamento:
 Arts. 6º, III e 46 LGPD
@@ -1166,7 +1167,7 @@ Severidade:
 `CRITICO`
 
 Evidência:
-`ENCONTRADA (TECNICA)`: payload da chamada ao LLM com nome e CPF do cliente no prompt.
+`AUSENTE (TECNICA)`: não há anonimização antes do envio — o payload da chamada ao LLM leva nome e CPF do cliente no prompt.
 
 Fundamento:
 Arts. 6º, III e 46 LGPD; art. 11 quando houver dado sensível; arts. 33 a 36 quando o provedor do LLM tratar os dados fora do País.

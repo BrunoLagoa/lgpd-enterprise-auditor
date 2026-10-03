@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para sistemas com IA/LLM.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.3.1"
+  version: "1.3.2"
 ---
 
 # LGPD IA/LLM

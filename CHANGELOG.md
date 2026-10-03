@@ -6,6 +6,12 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.3.2] - 2026-10-03
+
+### Corrigido
+- Skill: os quatro exemplos de não conformidade registravam a evidência como `ENCONTRADA (TECNICA)`, contrariando a regra de que item `NAO_CONFORME` exige grau `PARCIAL` ou `AUSENTE`; passam a usar `AUSENTE (TECNICA)`.
+- Regra de evidência explicitada na skill e em `core/evidence-engine.md`: o grau mede a comprovação do controle exigido, não a prova do problema.
+
 ## [1.3.1] - 2026-10-02
 
 ### Alterado
@@ -88,7 +94,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.1...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.2...HEAD
+[1.3.2]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.1.0...v1.2.0
