@@ -27,4 +27,4 @@ Avaliar riscos de privacidade e segurança em apps iOS/Android/Flutter/React Nat
 - Exposição local de dado sensível sem proteção: `CRITICO`.
 - Tracking sem consentimento granular: `ALTO`.
 - Permissões excessivas sem exploração direta: `MEDIO`.
-- Área de scoring primária: `seguranca` (25%), `infraestrutura` (10%) e `bases_legais` (15%).
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `seguranca` (domínio 8); consentimento de SDKs de tracking e uso de identificadores de dispositivo pontuam em `bases_legais` (domínio 5); sinal de idade e bloqueio próprio pontuam em `governanca` (domínio 16).

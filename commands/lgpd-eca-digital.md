@@ -9,7 +9,8 @@ metadata:
 
 # LGPD + ECA Digital (publico infantojuvenil)
 
-Antes de iniciar, se ainda nao estiver mapeado, solicite:
+Antes de perguntar, leia o que o projeto ja documenta (`CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependencias e de infraestrutura) e apresente o contexto inferido. Pergunte apenas o que faltar ou nao puder ser confirmado:
+- natureza do agente de tratamento: pessoa natural ou juridica, com ou sem fins economicos, porte (agente de pequeno porte, Res. CD/ANPD 2/2022) e se ha tratamento de alto risco;
 - tipo de produto (rede social, plataforma de video, jogo, mensageria, marketplace, app educacional);
 - publico-alvo declarado e publico real (ha usuarios menores de 18 anos?);
 - volume de usuarios registrados menores de 18 anos (limiar de 1 milhao define o relatorio de transparencia);

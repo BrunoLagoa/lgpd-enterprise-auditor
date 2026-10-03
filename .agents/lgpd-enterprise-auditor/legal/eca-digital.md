@@ -186,7 +186,7 @@ A lei **é exigível desde 17/03/2026**; o cronograma descreve a postura fiscali
 - Ausência de mecanismo contra uso abusivo de denúncias (art. 32): `MEDIO`.
 - Provedor estrangeiro sem representante legal no País (art. 40): `MEDIO`.
 - Ausência do adesivo do art. 38 em embalagens: `BAIXO`.
-- Áreas de scoring primárias: `bases_legais` (15%), `direitos_titular` (15%) e `governanca` (15%); riscos de exposição de dados de menores contribuem para `seguranca` (25%).
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `governanca` (domínio 16); itens de consentimento parental e de tratamento de dados de crianças pela LGPD (art. 14) pontuam em `bases_legais`.
 
 ## Regra de fundamentação
 Todo `finding` deste módulo deve citar **o artigo do ECA Digital** e o **correlato na LGPD** (art. 14 e/ou princípios do art. 6º; art. 46 quando for falha de segurança). Achado sem correlato LGPD explícito quebra o contrato de `finding` em [[auditor-core]].

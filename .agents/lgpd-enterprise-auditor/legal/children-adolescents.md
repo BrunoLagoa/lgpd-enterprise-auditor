@@ -29,7 +29,7 @@ Desde **17/03/2026** o art. 14 da LGPD convive com o **Estatuto Digital da Crian
 ## Mapeamento para severidade e score
 - Tratamento de dado de criança sem consentimento parental: `CRITICO`.
 - Ausência de verificação de idade em serviço com público infantil: `ALTO` pela LGPD e `CRITICO` quando o serviço estiver no escopo do ECA Digital.
-- Área de scoring primária: `bases_legais` e `direitos_titular`.
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `bases_legais` (dados de crianças, art. 14) para todos os itens deste módulo.
 
 ## Relação com outros módulos
 - Obrigações do ECA Digital (aferição de idade, supervisão parental, transparência): ver [[eca-digital]].

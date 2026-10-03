@@ -25,7 +25,7 @@ Validar que o framework modular (`.agents/lgpd-enterprise-auditor/`) e a skill (
 - [x] Transparência e política de privacidade (art. 9º) cobertas na skill e no framework (`legal/rights-of-data-subject.md`).
 - [x] Prazo de atendimento ao titular (art. 19: imediato em formato simplificado ou declaração completa em até 15 dias) presente na skill e no framework.
 - [x] Registro das operações de tratamento (art. 37), com forma simplificada para pequeno porte (Res. CD/ANPD nº 2/2022), presente na skill e no framework (`governance/dpo-framework.md`).
-- [x] Dados pessoais em logs de aplicação e de observabilidade cobertos no framework (`appsec/owasp-api.md` e `cloud/aws-audit.md`), equivalente ao domínio 11 da skill.
+- [x] Dados pessoais em logs de aplicação e de observabilidade cobertos no framework (`appsec/owasp-api.md` e `cloud/cloud-audit.md`), equivalente ao domínio 11 da skill.
 - [x] Dados de crianças/adolescentes (art. 14) cobertos na skill (`SKILL.md`) e no framework (`legal/children-adolescents.md`).
 - [x] Transferência internacional (arts. 33-36) coberta na skill e no framework (`legal/international-transfer.md`).
 - [x] Prazo de comunicação de incidente (Res. CD/ANPD nº 15/2024, 3 dias úteis) presente em governança e template de incidente.
@@ -43,8 +43,19 @@ Validar que o framework modular (`.agents/lgpd-enterprise-auditor/`) e a skill (
 - [x] Deveres de plataformas digitais (Decreto nº 12.975/2026 — Decreto nº 8.771/2016, arts. 15-A, 16-A a 16-P, 19-A e 20-A — e Decreto nº 12.976/2026) cobertos na skill (`SKILL.md`, domínio 17) e no framework (`legal/plataformas-digitais.md` + manifesto `plataformas-digitais`).
 - [x] Exclusões do art. 16-O, regime de ordem judicial para crimes contra a honra (art. 16-J) e regra de que conteúdo isolado não caracteriza falha sistêmica consideradas antes de emitir achado, na skill e no framework.
 - [x] Prazos do Decreto nº 12.976/2026 preservados sem unificação: conteúdo íntimo em até 2 horas (art. 7º, §1º); prazos transitórios de 6 horas e 24 horas e 24 horas após contestação (art. 12).
-- [x] Guarda de registros de acesso por 6 meses com porta lógica (MCI art. 15 e art. 15-A) presente na skill, em `cloud/aws-audit.md` e em `legal/plataformas-digitais.md`.
+- [x] Guarda de registros de acesso por 6 meses com porta lógica (MCI art. 15 e art. 15-A) presente na skill, em `cloud/cloud-audit.md` e em `legal/plataformas-digitais.md`.
 - [x] Normas não vigentes (ex.: PL nº 2338/2023) aparecem apenas em seções "Em monitoramento" e nunca originam `NAO_CONFORME`.
+- [x] Cálculo do score fechado e idêntico na skill e no framework (`core/scoring-engine.md`): valor por status (`CONFORME` 1, `PARCIAL` 0,5, `NAO_CONFORME` 0) e peso por criticidade (4/3/2/1).
+- [x] Mapa de áreas por domínio idêntico na skill e no framework; cada item pontua em uma única área e nenhum módulo escolhe área caso a caso.
+- [x] Score técnico e score documental informativos, sem efeito na classificação, na skill e no framework.
+- [x] Modulação de severidade por porte (Res. CD/ANPD nº 2/2022) com as mesmas condições e vedações na skill e no framework (`core/severity-model.md`).
+- [x] Registro de risco aceito, sem efeito em status, severidade ou score, na skill e no framework (`core/auditor-core.md`).
+- [x] Leitura da documentação do projeto antes de perguntar e natureza do agente de tratamento como entrada inicial, na skill (fase 1 e modo de operação), em `orchestrator/router.md` e em todos os `commands/*.md`.
+- [x] Dados de acesso público e manifestamente públicos (art. 7º, §§ 3º, 4º e 7º), inclusive dado sensível divulgado por órgão oficial, na skill e no framework (`legal/legal-bases-engine.md`).
+- [x] Cloud cobre IaaS, PaaS e hospedagem compartilhada, com validação das respostas de produção, na skill (domínio 7) e no framework (`cloud/cloud-audit.md`).
+- [x] Itens `PARCIAL` também geram achado, com severidade da lacuna restante limitada à criticidade do item; contagem única de uma mesma falha; precedência da regra de severidade mais específica — na skill e no framework.
+- [x] Transferência internacional distingue mecanismo comprovadamente ausente (`CRITICO`) de não evidenciado (`ALTO`), e dispensa de encarregado e registro simplificado não valem para pequeno porte com tratamento de alto risco — na skill e no framework.
+- [x] Relatório com marcação de confidencialidade, "o que fazer agora", coluna `Área`, esforço `P | M | G`, riscos aceitos, glossário e aviso legal fixo, na skill e no framework (`core/reporting-engine.md` e `reports/*.md`).
 
 ## Evidências de teste esperadas
 - execução de cenário `saas_web`;

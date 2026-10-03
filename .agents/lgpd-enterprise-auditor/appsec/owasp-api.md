@@ -52,4 +52,4 @@ Fundamento: art. 7º, I e art. 8º (consentimento livre, informado, inequívoco,
 - Rejeição sem destaque equivalente, consentimento pouco granular ou ausência de registro das escolhas: `MEDIO`.
 - Ausência parcial de hardening e validações: `MEDIO`.
 - Imprecisões na classificação de cookies da política: `BAIXO`.
-- Área de scoring primária: `seguranca` (25%) e `apis_integracoes` (10%); cookies e consentimento pontuam em `bases_legais` (15%).
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `seguranca` (domínios 6 e 11); itens de APIs e integrações (tokens JWT/OAuth e escopos, dados expostos em respostas, API keys, rate limiting de APIs, criptografia com integrações) pontuam em `apis_integracoes` (domínio 9); cookies e consentimento pontuam em `bases_legais` (domínio 5).

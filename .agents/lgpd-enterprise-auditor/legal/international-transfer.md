@@ -40,12 +40,12 @@ A transferência só é permitida quando houver pelo menos um:
 - Dados sensíveis transferidos têm proteção e base legal reforçadas?
 
 ## Mapeamento para severidade e score
-- Transferência internacional de dados sensíveis sem mecanismo legal: `CRITICO`.
-- Transferência para destino sem adequação e sem CPC após 23/08/2025: `CRITICO`.
-- Transferência sem CPC/DPA ou sem informação ao titular: `ALTO`.
+- Destino sem adequação e mecanismo do art. 33 **comprovadamente ausente** (contrato ou termos examinados, sem as CPC da Res. CD/ANPD nº 19/2024 nem outro mecanismo): `CRITICO`.
+- Mecanismo **não evidenciado** (contrato ou termos do provedor não localizados ou não examinados; termos padrão podem conter as cláusulas): `ALTO`, com evidência `AUSENTE`, até a verificação.
+- Transferência sem informação ao titular: `ALTO`.
 - Contrato com CPC incorporadas, mas sem cobertura dos subprocessadores: `MEDIO`.
-- Área de scoring primária: `bases_legais` e `governanca`; contribui também para `infraestrutura`.
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `governanca` (domínio 14) para todos os itens deste módulo.
 
 ## Relação com outros módulos
-- Postura cloud e exposição: ver [[aws-audit]].
+- Postura cloud e exposição: ver [[cloud-audit]].
 - Gestão de operadores/subprocessadores e DPA: ver [[dpo-framework]].

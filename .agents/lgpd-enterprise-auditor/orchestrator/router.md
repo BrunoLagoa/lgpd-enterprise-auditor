@@ -3,9 +3,13 @@
 ## Objetivo
 Ativar apenas módulos relevantes ao contexto do projeto, preservando cobertura completa no modo `full_audit`.
 
+## Levantamento de contexto
+Antes de perguntar, ler o que o projeto já documenta: `CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependência (`package.json`, `requirements.txt`, `pubspec.yaml` etc.) e arquivos de infraestrutura e CI. Apresentar o contexto inferido, pedir confirmação e perguntar só o que faltar. As entradas abaixo são obrigatórias; as que não puderem ser inferidas com segurança devem ser perguntadas logo no início.
+
 ## Entradas mínimas
+- natureza do agente de tratamento: pessoa natural ou jurídica, com ou sem fins econômicos, porte (agente de pequeno porte, Res. CD/ANPD nº 2/2022) e existência de tratamento de alto risco — define se há modulação de severidade (`core/severity-model.md`), se valem a forma simplificada do registro e a dispensa de indicação do encarregado, se o serviço é provedor de aplicações sujeito ao MCI art. 15 e se a LGPD se aplica (art. 4º, I);
 - stack (frontend/backend/mobile);
-- cloud provider;
+- cloud provider, PaaS ou hospedagem (ex.: AWS, Vercel, hospedagem compartilhada);
 - integrações de terceiros;
 - presença de IA/LLM;
 - maturidade de DevSecOps;
