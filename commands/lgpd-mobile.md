@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para aplicacoes mobile.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.2.0"
+  version: "1.3.0"
 ---
 
 # LGPD Mobile App
