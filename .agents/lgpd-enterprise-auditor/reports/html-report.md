@@ -35,14 +35,14 @@ As chaves das seções são os IDs canônicos de `core/reporting-engine.md`. Os 
 
 | Chave | Conteúdo |
 |---|---|
-| `meta` | `audited` (nome do auditado), `subtitle`, `date` (`AAAA-MM-DD`), `command`, `scenario`, `modules` (lista), `framework_version`, `method` e `notice` (aviso opcional no topo) |
+| `meta` | `audited` (nome do auditado), `subtitle`, `date` (`AAAA-MM-DD`), `command`, `scenario`, `modules` (lista de IDs dos módulos ativos), `framework_version` (a `metadata.version` do comando ou da skill em uso), `method` e `notice` (aviso opcional no topo) |
 | `context` | texto: contexto inferido, escopo, módulos ativados, escopo excluído e limitações |
 | `resumo_executivo` | `overview` (nível geral de conformidade), `strengths` (pontos fortes), `accepted_risks` (frase de destaque sobre riscos aceitos; a tabela de riscos aceitos é montada pelo modelo) e `actions`: "o que fazer agora", lista de `{ action, why, effort, deadline, items }` |
 | `score_lgpd` | `score`, `classification` (já com o teto de classificação aplicado), `coverage`, `score_tecnico`, `score_documental`, `agent_nature`, `agent_role`, `severity_modulation`, `areas`, `pending_checks` e `out_of_scope` |
 | `score_lgpd.out_of_scope` | lista de textos: os domínios que o cenário não auditou (vazia ou omitida no `full_audit`) |
 | `score_lgpd.areas` | uma entrada por área: `{ id, score, weight, adjusted_weight, coverage }`; área não aplicável: `{ id, weight, applicability: "NAO_APLICAVEL", justification }`; área aplicável sem nenhum item avaliado (cobertura insuficiente): `{ id, weight, coverage: 0, justification }`, sem `score` |
 | `score_lgpd.pending_checks` | itens cujo status ou severidade dependem de verificação: `{ item, current, may_change, check }`. Os itens `NAO_VERIFICADO` não entram aqui: o modelo os lista a partir do checklist |
-| `checklist_conformidade` | todos os itens do catálogo dos módulos ativos, um `check_item` por item: `id` (o ID do catálogo, ex.: `SE-03`; item extra usa `EX-nn` e traz `justification`), `domain`, `score_area`, `criticality`, `control_type`, `item`, `applicability`, `status`, `evidence`, `evidence_type`, `evidence_source`, `evidence_confidence`, `impact`, `recommendation`. Item `NAO_APLICAVEL` ou `NAO_VERIFICADO` não tem `status` e traz `justification` (justificativa ou acesso necessário) |
+| `checklist_conformidade` | todos os itens do catálogo dos módulos ativos, um `check_item` por item: `id` (o ID do catálogo, ex.: `SE-03`; item extra usa `EX-nn` e traz `justification`), `domain`, `score_area`, `criticality`, `control_type`, `item`, `applicability`, `status`, `evidence`, `evidence_type`, `evidence_source`, `evidence_confidence`, `impact`, `recommendation`. Item `NAO_APLICAVEL` ou `NAO_VERIFICADO` não tem `status` nem campos de evidência: traz só `justification`, que no `NAO_APLICAVEL` inclui o rastro da evidência de inexistência (arquivo e linha) e no `NAO_VERIFICADO`, o que impediu a verificação e o acesso necessário |
 | `nao_conformidades` | todos os `finding`: `id`, `item_id` (ID do `check_item` que o gerou), `module`, `title`, `problem`, `severity`, `severity_note` (por que essa severidade), `lgpd_article`, `evidence`, `evidence_type`, `evidence_source`, `evidence_confidence`, `technical_impact`, `legal_impact`, `recommendation`, `owner`, `deadline_suggestion`, `effort` e, quando houver, `severity_modulation` (`original`, `applied`, `justification`) e `risk_acceptance` (`accepted_by`, `accepted_at`, `justification`, `review_at`, `accepted_deadline`) |
 | `itens_obrigatorios_ausentes` | lista de `{ requirement, norm, items }` |
 | `riscos_identificados` | `tecnicos`, `juridicos`, `operacionais` e `reputacionais`: listas de texto |
@@ -59,7 +59,7 @@ Exemplo reduzido, só para mostrar a forma (dois itens de uma única área: 2 de
 
 ```json
 {
-  "meta": { "audited": "Exemplo Ltda.", "date": "2026-10-03", "command": "/lgpd-web", "scenario": "web_site", "framework_version": "1.6.0" },
+  "meta": { "audited": "Exemplo Ltda.", "date": "2026-10-03", "command": "/lgpd-web", "scenario": "web_site", "framework_version": "1.6.1" },
   "resumo_executivo": {
     "overview": "Score 40/100, `CRITICO`. O principal risco é o rastreamento sem consentimento (CK-02).",
     "actions": [

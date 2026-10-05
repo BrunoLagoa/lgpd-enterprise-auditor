@@ -6,6 +6,17 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.6.1] - 2026-10-05
+
+### Corrigido
+Ajustes vindos do primeiro teste de ponta a ponta da v1.6.0 (auditoria feita só com o que o instalador coloca no projeto):
+- Marca **classificação limitada por achado crítico**: o núcleo e a skill mandavam mostrá-la sempre que houvesse achado crítico, e o modelo HTML só quando o teto reduz a classificação. Vale a segunda regra nos três.
+- Regra "ler só os arquivos de `files`" completada: `core/` vale sempre, `reports/html-report.md` e o modelo são usados quando há `.html`, e referência a módulo não ativado não precisa ser seguida.
+- Relatório em `.md`: a célula `Item` do checklist passa a trazer `ID · criticality · control_type`, sem os quais o score não pode ser refeito, e o bloco "Contexto e escopo" antes da seção 1 fica previsto no formato.
+- `GV-02` e `GV-11` deixam de poder contar a mesma falta: o texto diz qual dos dois vale em cada caso.
+- `reports/html-report.md`: onde registrar a evidência de item `NAO_APLICAVEL` e de onde vem `framework_version`.
+- Pasta do relatório fora do `.gitignore`: a auditoria avisa no resumo e não altera o arquivo.
+
 ### Alterado
 - Comandos de instalação dos READMEs passam a baixar o instalador da última release (`releases/latest/download/`), e não mais da branch `main`: o script executado é o da mesma versão do framework que ele instala, e pode ser conferido com o `SHA256SUMS` da release.
 
@@ -156,7 +167,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.0...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.1...HEAD
+[1.6.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.2...v1.4.0

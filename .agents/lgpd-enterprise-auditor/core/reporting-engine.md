@@ -13,6 +13,9 @@ Definir formato obrigatório e ordem de construção do relatório final.
 7. `plano_adequacao`
 8. `recomendacoes_tecnicas`
 
+## Antes das 8 seções
+Um bloco **Contexto e escopo**, que não conta como seção: o contexto levantado e sua fonte, a natureza e o papel do agente de tratamento, a saída do roteador (módulos ativos, com a justificativa, e escopo excluído, com a evidência) e as limitações da análise (o que não pôde ser acessado). No `.html`, é o campo `context`.
+
 ## Campos mínimos por seção
 
 ### `resumo_executivo`
@@ -36,7 +39,7 @@ Definir formato obrigatório e ordem de construção do relatório final.
 Tabela obrigatória:
 `Item | Área | Status | Evidência | Impacto | Recomendação`
 
-A coluna `Item` começa pelo ID do item no catálogo (ex.: `SE-03`), seguido do texto do item; item extra (`EX-nn`) vem identificado como tal. A coluna `Área` traz a `score_area` do item (mapa de `core/scoring-engine.md`).
+A coluna `Item` segue o formato `ID · criticality · control_type — texto do item` (ex.: `SE-03 · ALTO · TECNICO — …`), com os valores do catálogo: sem a `criticality`, o score não pode ser refeito a partir do relatório. Item extra (`EX-nn`) vem identificado como tal. A coluna `Área` traz a `score_area` do item (mapa de `core/scoring-engine.md`).
 
 O checklist traz todos os itens do catálogo dos módulos ativos: os `APLICAVEL` na tabela principal e os demais na tabela de itens fora do cálculo.
 
@@ -107,7 +110,7 @@ Regras:
 ## Classificação e armazenamento
 O relatório, em qualquer formato, descreve falhas que podem estar abertas e é **confidencial**:
 - iniciar o documento com a marcação `CONFIDENCIAL — uso interno`;
-- não versionar em repositório público; preferir local fora do repositório auditado ou pasta ignorada pelo git (ex.: `docs/lgpd/auditorias/`, listada no `.gitignore`);
+- não versionar em repositório público; preferir local fora do repositório auditado ou pasta ignorada pelo git (ex.: `docs/lgpd/auditorias/`, listada no `.gitignore`); se a pasta de destino não estiver ignorada, avisar no resumo, sem alterar o `.gitignore` por conta própria;
 - compartilhar só com quem precisa agir sobre os achados;
 - nomear com data e escopo (ex.: `auditoria-lgpd-AAAA-MM-<cenario>.md` ou `.html`) para permitir comparação entre auditorias.
 

@@ -4,7 +4,7 @@ description: Auditoria de conformidade LGPD (Lei nº 13.709/2018) orientada a ev
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.6.0"
+  version: "1.6.1"
 ---
 
 # 🛡️ LGPD ENTERPRISE AUDITOR FRAMEWORK
@@ -414,7 +414,7 @@ Os itens do checklist são fixos: o catálogo abaixo, organizado pelos 17 domín
 Aplicabilidade por grupo de itens (prefixo do ID). Fora da condição, o item fica `NAO_APLICAVEL`, com a evidência:
 
 - `OP`: só quando o auditado é operador em algum fluxo; `DP`: só com dado obtido de fonte pública; `CS`: só quando o consentimento é a base legal (o consentimento de cookies é avaliado nos itens `CK`); `CA`: só com crianças ou adolescentes entre os titulares; `TI`: só quando dado pessoal sai do País;
-- `GV-06` e `GV-07`: só para provedor de aplicações de internet; `GV-11`: só para agente de pequeno porte sem encarregado indicado; `DT-08`: só com decisão automatizada que afete o titular;
+- `GV-06` e `GV-07`: só para provedor de aplicações de internet; `GV-02` e `GV-11` nunca valem juntos: agente de pequeno porte dispensado de indicar encarregado (sem tratamento de alto risco) tem `GV-02` `NAO_APLICAVEL` e é avaliado por `GV-11`; nos demais casos vale `GV-02`, e `GV-11` fica `NAO_APLICAVEL`; `DT-08`: só com decisão automatizada que afete o titular;
 - `CK`: só com cookies, pixels, tags ou SDKs de terceiros; `MB`: só com app mobile; `DS`: só com pipeline, containers ou infraestrutura como código; `IA`: só com uso de IA/LLM;
 - `ECA` e `MB-09`: só com público infantojuvenil (regras do domínio 16, adiante); `PD`: só nos casos do domínio 17, adiante.
 
@@ -985,7 +985,7 @@ Os pesos das áreas aplicáveis são redistribuídos proporcionalmente: `peso_aj
 Usar exatamente esses rótulos no relatório.
 
 ## Teto de classificação
-Havendo ao menos uma não conformidade de severidade `CRITICO` (já considerada a modulação por porte), a classificação não passa de `PARCIALMENTE_CONFORME`, qualquer que seja o score. O número do score não muda; mostrar ao lado da classificação a marca **classificação limitada por achado crítico** e os achados que a causam. O aceite de risco não afasta o teto; corrigido o achado, a classificação volta a seguir só a faixa do score.
+Havendo ao menos uma não conformidade de severidade `CRITICO` (já considerada a modulação por porte), a classificação não passa de `PARCIALMENTE_CONFORME`, qualquer que seja o score. O número do score não muda. Quando o teto de fato reduz a classificação (o score cairia em `ALTA_CONFORMIDADE` ou `EXCELENTE`), mostrar ao lado dela a marca **classificação limitada por achado crítico** e os achados que a causam; com o score já em `PARCIALMENTE_CONFORME` ou abaixo, o teto não muda nada e a marca não aparece. O aceite de risco não afasta o teto; corrigido o achado, a classificação volta a seguir só a faixa do score.
 
 ## Escopo do score
 O score mede o que foi auditado. Só a auditoria dos 17 domínios (`full_audit`) vale para a organização inteira. Se a auditoria for restrita a parte deles, mostrar ao lado da classificação a marca **escopo direcionado** e listar no relatório os domínios que ficaram de fora.
@@ -997,6 +997,8 @@ O score mede o que foi auditado. Só a auditoria dos 17 domínios (`full_audit`)
 # 📄 RELATÓRIO DE AUDITORIA LGPD
 
 `CONFIDENCIAL — uso interno`
+
+Antes da seção 1, um bloco **Contexto e escopo** (não conta como seção): o contexto levantado e sua fonte, a natureza e o papel do agente de tratamento, os domínios auditados e os que ficaram de fora, com o motivo, e as limitações da análise (o que não pôde ser acessado).
 
 ---
 
@@ -1045,7 +1047,7 @@ Pessoa natural ou jurídica, fins econômicos, porte, modulações de severidade
 | Item | Área | Status | Evidência | Impacto | Recomendação |
 |---|---|---|---|---|---|
 
-Item: o ID do catálogo seguido do texto do item (item extra, `EX-nn`, identificado como tal). Área: a área de score do item, pelo mapa por domínio.
+Item: `ID · criticidade · controle — texto do item` (ex.: `SE-03 · ALTO · TECNICO — …`), com os valores do catálogo; sem a criticidade o score não pode ser refeito a partir do relatório. Item extra (`EX-nn`) vem identificado como tal. Área: a área de score do item, pelo mapa por domínio.
 
 Status: `CONFORME | PARCIAL | NAO_CONFORME`.
 
@@ -1186,7 +1188,7 @@ Regras:
 
 O relatório, em qualquer formato, descreve falhas que podem estar abertas e é **confidencial**:
 - começar com `CONFIDENCIAL — uso interno`;
-- não versionar em repositório público; preferir local fora do repositório auditado ou pasta ignorada pelo git (ex.: `docs/lgpd/auditorias/` no `.gitignore`);
+- não versionar em repositório público; preferir local fora do repositório auditado ou pasta ignorada pelo git (ex.: `docs/lgpd/auditorias/` no `.gitignore`); se a pasta de destino não estiver ignorada, avisar no resumo, sem alterar o `.gitignore` por conta própria;
 - compartilhar só com quem precisa agir sobre os achados;
 - nomear com data e escopo (ex.: `auditoria-lgpd-AAAA-MM-<cenario>.md` ou `.html`).
 

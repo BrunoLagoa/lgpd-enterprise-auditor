@@ -138,7 +138,7 @@ O relatório deve declarar em `score_lgpd` as áreas `NAO_APLICAVEL`, a justific
 - `95-100`: `EXCELENTE`
 
 ## Teto de classificação
-Havendo ao menos um `finding` de severidade `CRITICO` (já considerada a modulação por porte), a classificação final não passa de `PARCIALMENTE_CONFORME`, qualquer que seja o score. O número do score não muda; o relatório mostra ao lado da classificação a marca **classificação limitada por achado crítico** e os achados que a causam.
+Havendo ao menos um `finding` de severidade `CRITICO` (já considerada a modulação por porte), a classificação final não passa de `PARCIALMENTE_CONFORME`, qualquer que seja o score. O número do score não muda. Quando o teto de fato reduz a classificação (o score cairia em `ALTA_CONFORMIDADE` ou `EXCELENTE`), o relatório mostra ao lado dela a marca **classificação limitada por achado crítico** e os achados que a causam; com o score já em `PARCIALMENTE_CONFORME` ou abaixo, o teto não muda nada e a marca não aparece.
 
 O aceite de risco não afasta o teto. Corrigido o achado, a classificação volta a seguir só a faixa do score.
 

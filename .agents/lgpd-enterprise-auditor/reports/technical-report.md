@@ -15,7 +15,7 @@
 |---|---|---|---|---|---|
 |  |  |  |  |  |  |
 
-Começar `Item` pelo ID do catálogo (ex.: `SE-03`). Preencher `Área` com a área de score do item (mapa por domínio de `core/scoring-engine.md`) e `Evidência` como `GRAU (ORIGEM), confiança NIVEL: descrição`, conforme `core/evidence-engine.md`. A tabela lista só itens `APLICAVEL`.
+Preencher `Item` como `ID · criticality · control_type — texto do item` (ex.: `SE-03 · ALTO · TECNICO — …`). Preencher `Área` com a área de score do item (mapa por domínio de `core/scoring-engine.md`) e `Evidência` como `GRAU (ORIGEM), confiança NIVEL: descrição`, conforme `core/evidence-engine.md`. A tabela lista só itens `APLICAVEL`.
 
 ### Itens fora do cálculo
 | Item | Área | Aplicabilidade | Justificativa ou acesso necessário |

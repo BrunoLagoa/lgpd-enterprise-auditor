@@ -20,7 +20,7 @@ Avaliar governança de privacidade, accountability e controles organizacionais.
 - Terminado o tratamento, os dados devem ser eliminados; a conservação só é autorizada para cumprimento de obrigação legal ou regulatória, estudo por órgão de pesquisa (anonimizados sempre que possível), transferência a terceiro respeitados os requisitos de tratamento, ou uso exclusivo do controlador com dados anonimizados e vedado o acesso por terceiro (art. 16).
 
 ## Checklist atômico
-Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`. `GV-06` e `GV-07` só se aplicam a provedor de aplicações de internet; `GV-11`, só a agente de pequeno porte que não indicou encarregado. Quando o auditado é só operador, `GV-03` e `GV-08` ficam `NAO_APLICAVEL` nos fluxos em que ele não é controlador.
+Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`. `GV-06` e `GV-07` só se aplicam a provedor de aplicações de internet; `GV-02` e `GV-11` nunca valem juntos: agente de pequeno porte dispensado de indicar encarregado (Res. CD/ANPD nº 2/2022, sem tratamento de alto risco) tem `GV-02` `NAO_APLICAVEL` e é avaliado por `GV-11`; nos demais casos vale `GV-02`, e `GV-11` fica `NAO_APLICAVEL`. Quando o auditado é só operador, `GV-03` e `GV-08` ficam `NAO_APLICAVEL` nos fluxos em que ele não é controlador.
 
 | ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
 |---|---|---|---|---|---|---|
