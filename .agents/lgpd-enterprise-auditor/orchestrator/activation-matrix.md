@@ -16,7 +16,7 @@
 Identificadores de cenário: `saas_web`, `web_site`, `ai_llm_system`, `mobile_app`, `devsecops_pipeline`, `eca_digital_platform`, `digital_platform`, `full_audit`.
 
 ## Notas de aplicação
-- Módulos não marcados podem ser adicionados por gatilho de risco.
+- Módulos não marcados são adicionados pelos gatilhos técnicos e normativos de `router.md`.
 - `eca-digital` é adicionado a qualquer cenário pelo gatilho normativo de público infantojuvenil descrito em `router.md`, mesmo quando não marcado na linha.
 - `plataformas-digitais` é adicionado a qualquer cenário pelo gatilho normativo de plataformas digitais descrito em `router.md` (conteúdo de terceiros com difusão pública, anúncios/impulsionamento pagos ou IA que gera ou altera imagem/som de pessoas).
-- Se houver dados sensíveis ou processamento crítico, elevar cobertura para `full_audit`.
+- Cenário diferente de `full_audit` gera relatório com a marca **escopo direcionado** e a lista dos domínios não auditados (`core/scoring-engine.md`, "Escopo do score").

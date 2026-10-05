@@ -40,6 +40,22 @@ O titular tem direito ao acesso facilitado às informações sobre o tratamento,
 
 Quando o consentimento é requerido, ele é nulo se as informações tiverem conteúdo enganoso ou abusivo ou não tiverem sido apresentadas previamente com transparência (art. 9º, §1º).
 
+## Checklist atômico
+Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`. A revogação do consentimento é avaliada em `CS-05` (`legal/legal-bases-engine.md`) e, para cookies, em `CK-03`; `DT-08` só se aplica quando há decisão automatizada que afete o titular.
+
+| ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
+|---|---|---|---|---|---|---|
+| `DT-01` | Existe canal de atendimento claro e funcional para o exercício dos direitos do art. 18? | 3 | `ALTO` | — | `DOCUMENTAL` | art. 18 |
+| `DT-02` | Há fluxo que responda aos pedidos sem custos e no prazo do art. 19 (confirmação ou acesso imediato em formato simplificado, ou declaração completa em até 15 dias)? | 3 | `MEDIO` | — | `DOCUMENTAL` | arts. 18, §§3º a 5º, e 19 |
+| `DT-03` | Há política ou aviso de privacidade publicado, de acesso fácil e ostensivo? | 4 | `ALTO` | — | `DOCUMENTAL` | art. 9º |
+| `DT-04` | A política traz o conteúdo do art. 9º (finalidade específica, forma e duração, controlador e contato, uso compartilhado, responsabilidades dos agentes e direitos do art. 18), além da base legal por finalidade e da retenção? | 4 | `MEDIO` | — | `DOCUMENTAL` | art. 9º, I a VII |
+| `DT-05` | A política usa linguagem clara e acessível e indica versão e data de atualização? | 4 | `BAIXO` | — | `DOCUMENTAL` | arts. 6º, VI e 9º |
+| `DT-06` | Há processo operacional para correção, anonimização, bloqueio, eliminação e portabilidade dos dados? | 3 | `MEDIO` | — | `TECNICO` | art. 18, III a VI |
+| `DT-07` | O titular consegue saber com quem os dados foram compartilhados e, quando o consentimento é a base, que pode negá-lo e com que consequências? | 3 | `MEDIO` | — | `DOCUMENTAL` | art. 18, VII e VIII |
+| `DT-08` | Há meio de pedir a revisão de decisões tomadas unicamente por tratamento automatizado, com informação sobre os critérios usados? | 3 | `MEDIO` | — | `TECNICO` | art. 20 |
+| `DT-09` | Correções, eliminações, anonimizações e bloqueios são comunicados aos agentes com quem os dados foram compartilhados? | 3 | `MEDIO` | — | `TECNICO` | art. 18, §6º |
+| `DT-10` | Há trilha auditável dos pedidos (data, tipo, resposta e confirmação da execução)? | 3 | `MEDIO` | — | `DOCUMENTAL` | arts. 6º, X e 18 |
+
 ## Critérios de conformidade
 - canal de atendimento claro e funcional;
 - prazo de resposta definido e compatível com o art. 19;
@@ -59,4 +75,4 @@ Quando o consentimento é requerido, ele é nulo se as informações tiverem con
 - Resposta fora do prazo do art. 19 ou inexistência de fluxo de exclusão/portabilidade: `MEDIO`.
 - Política de privacidade incompleta frente ao art. 9º: `MEDIO`.
 - Problemas de clareza ou linguagem da política: `BAIXO`.
-- Área de score (mapa por domínio de `core/scoring-engine.md`): `direitos_titular` (domínios 3 e 4) para todos os itens deste módulo.
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `direitos_titular` (domínios 3 e 4) para todos os itens deste módulo. A criticidade de cada item está na tabela acima.

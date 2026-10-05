@@ -32,7 +32,7 @@ See an example report (in Portuguese), produced on a fictional SaaS, in both for
 - [Markdown report (`.md`)](./examples/saas-demo/relatorio-auditoria-lgpd.md): opens right here on GitHub.
 - [HTML report (`.html`)](./examples/saas-demo/relatorio-auditoria-lgpd.html): download the file and open it in your browser. The image below shows the top of it.
 
-[![Example HTML report: score 35 out of 100, classification, non-conformities by severity and executive summary](./examples/saas-demo/relatorio-auditoria-lgpd.png)](./examples/saas-demo/relatorio-auditoria-lgpd.html)
+[![Example HTML report: score 33 out of 100, classification, non-conformities by severity and executive summary](./examples/saas-demo/relatorio-auditoria-lgpd.png)](./examples/saas-demo/relatorio-auditoria-lgpd.html)
 
 ## What this project is
 
@@ -63,6 +63,18 @@ powershell -ExecutionPolicy Bypass -Command "iwr https://raw.githubusercontent.c
 ```
 
 Prefer to read the script before running it? Download it (`curl -fsSL <url> -o install.sh`), review it, then run `bash install.sh install`.
+
+The installer uses the latest published version. If it cannot look it up (no network or GitHub API rate limit), it warns and does not install the `main` branch on its own: in interactive mode it asks first; with `--non-interactive` it stops and asks for `--version`.
+
+**Checking integrity.** Releases from v1.6.0 onward publish `install.sh`, `install.ps1` and `SHA256SUMS`. To install an exact version and check the file before running it:
+
+```bash
+V=vX.Y.Z   # the version you want
+curl -fsSLO "https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/download/${V}/install.sh"
+curl -fsSLO "https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/download/${V}/SHA256SUMS"
+shasum -a 256 --ignore-missing -c SHA256SUMS   # on Linux: sha256sum --ignore-missing -c SHA256SUMS
+bash install.sh install --version "$V"
+```
 
 ### Where files land
 
@@ -154,6 +166,7 @@ ANPD regulations covered by the framework:
 ├── scripts/
 │   ├── install.sh
 │   ├── install.ps1
+│   ├── validate-report.py
 │   └── tests/
 ├── commands/
 │   ├── lgpd-full-audit.md
@@ -194,11 +207,13 @@ The audit workflow follows 5 steps:
 
 1. **Project context**: stack, processed data, integrations, and operational setup.
 2. **Smart routing**: the orchestrator activates modules by scenario.
-3. **Evidence-based checklist**: nothing is marked compliant without proof.
-4. **Consolidation**: severity, score, and final classification.
+3. **Evidence-based checklist**: every item in the catalog of the active modules is evaluated, each with a fixed ID and a defined weight; nothing is marked compliant without proof.
+4. **Consolidation**: severity, score, and final classification. With an open critical finding, the classification is capped at `PARCIALMENTE_CONFORME`; in a targeted scenario, the report carries the **escopo direcionado** (targeted scope) mark and lists the domains that were not audited.
 5. **Standardized output**: executive/technical/compliance report + remediation plan, written as `.md`, `.html` or both.
 
 The report, in any format, describes issues that may still be open and is **confidential**: keep it out of public repositories (for example, in a folder listed in `.gitignore`).
+
+To check a generated report (catalog IDs, allowed values, the link between items and findings, and the score calculation), run `python3 scripts/validate-report.py <report.html>` from a clone of this repository.
 
 ## Usage modes
 
@@ -240,7 +255,7 @@ Core contracts are located at `.agents/lgpd-enterprise-auditor/core/`:
 - `auditor-core.md`: canonical structures (`finding`, `check_item`, `module_output`);
 - `evidence-engine.md`: evidence rules;
 - `severity-model.md`: severity classification;
-- `scoring-engine.md`: score calculation;
+- `scoring-engine.md`: score calculation, item catalog, classification cap and score scope;
 - `reporting-engine.md`: mandatory output format and generated files (`.md`, `.html` or both).
 
 ## Who this project is for

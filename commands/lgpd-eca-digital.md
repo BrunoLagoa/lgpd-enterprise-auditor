@@ -4,7 +4,7 @@ description: Executa auditoria direcionada de LGPD + ECA Digital (Lei nº 15.211
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.5.0"
+  version: "1.6.0"
 ---
 
 # LGPD + ECA Digital (público infantojuvenil)
@@ -33,6 +33,7 @@ Adicione `ai-llm` se houver recomendação algorítmica, moderação automatizad
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
+- ler só os arquivos listados em `files` nos manifestos dos módulos ativos (`.agents/lgpd-enterprise-auditor/orchestrator/manifests/`) e avaliar todos os itens do catálogo desses módulos, cada um com o seu ID;
 - aplicar `.agents/lgpd-enterprise-auditor/legal/eca-digital.md` junto de `.agents/lgpd-enterprise-auditor/legal/children-adolescents.md`;
 - usar `.agents/lgpd-enterprise-auditor/templates/age-assurance-checklist.md` para a aferição de idade;
 - usar `.agents/lgpd-enterprise-auditor/templates/eca-transparency-report-template.md` quando o provedor superar 1 milhão de usuários menores;

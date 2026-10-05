@@ -17,7 +17,7 @@ Quando o usuário escolher o formato `.md` e `.html` ou só `.html` (pergunta ob
 1. **Copiar** `.agents/lgpd-enterprise-auditor/reports/html-report-template.html` para o destino, com o nome do relatório. Copiar o arquivo (ex.: `cp`), sem ler nem reescrever o conteúdo do modelo.
 2. No arquivo copiado, **substituir a linha** `{"_modelo": true}`, que fica dentro de `<script type="application/json" id="lgpd-dados">`, pelo JSON descrito abaixo. O JSON pode ocupar várias linhas. Usar a ferramenta de edição de arquivos ou um script; evitar `sed`, que tropeça em `&`, `/` e `\` do texto.
 3. **Não alterar mais nada.** Estilo, script, marcação de confidencialidade e aviso legal são fixos.
-4. **Conferir.** Se houver shell, validar a sintaxe do JSON antes de inserir (ex.: gravar o JSON num arquivo temporário e passar por `python3 -m json.tool`). Ao abrir o arquivo, o modelo avisa se o JSON for inválido e mostra o alerta "Conferir o cálculo" quando o score, a cobertura ou o score de uma área declarados diferem do recálculo feito a partir do checklist. Havendo alerta, corrigir os dados (também no `.md`, se ele foi gerado) antes de entregar.
+4. **Conferir.** Se houver shell, validar a sintaxe do JSON antes de inserir (ex.: gravar o JSON num arquivo temporário e passar por `python3 -m json.tool`). Quem tiver o repositório do projeto pode ir além com `scripts/validate-report.py <relatorio.html>`, que confere enums, IDs do catálogo, a relação entre itens e achados e o cálculo. Ao abrir o arquivo, o modelo avisa se o JSON for inválido e mostra o alerta "Conferir o cálculo" quando o score, a cobertura ou o score de uma área declarados diferem do recálculo feito a partir do checklist. Havendo alerta, corrigir os dados (também no `.md`, se ele foi gerado) antes de entregar.
 
 ## Regras do JSON
 - JSON válido: aspas duplas, sem vírgula sobrando, sem comentários; quebra de linha dentro de texto como `\n`.
@@ -38,10 +38,11 @@ As chaves das seções são os IDs canônicos de `core/reporting-engine.md`. Os 
 | `meta` | `audited` (nome do auditado), `subtitle`, `date` (`AAAA-MM-DD`), `command`, `scenario`, `modules` (lista), `framework_version`, `method` e `notice` (aviso opcional no topo) |
 | `context` | texto: contexto inferido, escopo, módulos ativados, escopo excluído e limitações |
 | `resumo_executivo` | `overview` (nível geral de conformidade), `strengths` (pontos fortes), `accepted_risks` (frase de destaque sobre riscos aceitos; a tabela de riscos aceitos é montada pelo modelo) e `actions`: "o que fazer agora", lista de `{ action, why, effort, deadline, items }` |
-| `score_lgpd` | `score`, `classification`, `coverage`, `score_tecnico`, `score_documental`, `agent_nature`, `agent_role`, `severity_modulation`, `areas` e `pending_checks` |
+| `score_lgpd` | `score`, `classification` (já com o teto de classificação aplicado), `coverage`, `score_tecnico`, `score_documental`, `agent_nature`, `agent_role`, `severity_modulation`, `areas`, `pending_checks` e `out_of_scope` |
+| `score_lgpd.out_of_scope` | lista de textos: os domínios que o cenário não auditou (vazia ou omitida no `full_audit`) |
 | `score_lgpd.areas` | uma entrada por área: `{ id, score, weight, adjusted_weight, coverage }`; área não aplicável: `{ id, weight, applicability: "NAO_APLICAVEL", justification }`; área aplicável sem nenhum item avaliado (cobertura insuficiente): `{ id, weight, coverage: 0, justification }`, sem `score` |
 | `score_lgpd.pending_checks` | itens cujo status ou severidade dependem de verificação: `{ item, current, may_change, check }`. Os itens `NAO_VERIFICADO` não entram aqui: o modelo os lista a partir do checklist |
-| `checklist_conformidade` | todos os `check_item`: `id`, `domain`, `score_area`, `criticality`, `control_type`, `item`, `applicability`, `status`, `evidence`, `evidence_type`, `evidence_source`, `evidence_confidence`, `impact`, `recommendation`. Item `NAO_APLICAVEL` ou `NAO_VERIFICADO` não tem `status` e traz `justification` (justificativa ou acesso necessário) |
+| `checklist_conformidade` | todos os itens do catálogo dos módulos ativos, um `check_item` por item: `id` (o ID do catálogo, ex.: `SE-03`; item extra usa `EX-nn` e traz `justification`), `domain`, `score_area`, `criticality`, `control_type`, `item`, `applicability`, `status`, `evidence`, `evidence_type`, `evidence_source`, `evidence_confidence`, `impact`, `recommendation`. Item `NAO_APLICAVEL` ou `NAO_VERIFICADO` não tem `status` e traz `justification` (justificativa ou acesso necessário) |
 | `nao_conformidades` | todos os `finding`: `id`, `item_id` (ID do `check_item` que o gerou), `module`, `title`, `problem`, `severity`, `severity_note` (por que essa severidade), `lgpd_article`, `evidence`, `evidence_type`, `evidence_source`, `evidence_confidence`, `technical_impact`, `legal_impact`, `recommendation`, `owner`, `deadline_suggestion`, `effort` e, quando houver, `severity_modulation` (`original`, `applied`, `justification`) e `risk_acceptance` (`accepted_by`, `accepted_at`, `justification`, `review_at`, `accepted_deadline`) |
 | `itens_obrigatorios_ausentes` | lista de `{ requirement, norm, items }` |
 | `riscos_identificados` | `tecnicos`, `juridicos`, `operacionais` e `reputacionais`: listas de texto |
@@ -50,15 +51,15 @@ As chaves das seções são os IDs canônicos de `core/reporting-engine.md`. Os 
 | `glossary` | lista de `{ term, definition }` |
 | `notes` | opcional: texto extra ao fim de uma seção, com o ID da seção como chave (qualquer uma das 8; ex.: `notes.score_lgpd` para as regras aplicadas e a memória de cálculo) |
 
-Os campos sem enum são texto livre (`agent_nature`, `agent_role`, `severity_modulation`, `norm`, `owner`, `justification`). `domain` é o nome de um dos 17 domínios de `orchestrator/full-audit.md` e `module` é o ID do módulo (`appsec`, `legal`); os dois são opcionais. `score_tecnico` e `score_documental` usam a fórmula do score de área, aplicada a todos os itens de cada `control_type`.
+Os campos sem enum são texto livre (`agent_nature`, `agent_role`, `severity_modulation`, `norm`, `owner`, `justification`). `domain` é o código do domínio no catálogo (`BL` ou `1` a `17`) e `module` é o ID do módulo (`appsec`, `legal`); os dois são opcionais. `item`, `score_area`, `criticality` e `control_type` vêm da linha do item no catálogo; a `criticality` só difere do padrão pelo agravante ou atenuante da linha ou pela modulação por porte, e a evidência diz qual foi aplicado. `score_tecnico` e `score_documental` usam a fórmula do score de área, aplicada a todos os itens de cada `control_type`.
 
 `evidence` é um texto ou uma lista de textos (uma por evidência). `items` é uma lista de IDs do checklist. `effort` é `P`, `M` ou `G`; `deadline` e `deadline_suggestion` são `IMEDIATO`, `30_DIAS`, `90_DIAS` ou `180_DIAS`.
 
-Exemplo reduzido (uma única área com itens avaliados: 2 de 5 pontos, score 40):
+Exemplo reduzido, só para mostrar a forma (dois itens de uma única área: 2 de 5 pontos, score 40; um relatório real traz todos os itens do catálogo dos módulos ativos):
 
 ```json
 {
-  "meta": { "audited": "Exemplo Ltda.", "date": "2026-10-03", "command": "/lgpd-web", "scenario": "web_site", "framework_version": "1.5.0" },
+  "meta": { "audited": "Exemplo Ltda.", "date": "2026-10-03", "command": "/lgpd-web", "scenario": "web_site", "framework_version": "1.6.0" },
   "resumo_executivo": {
     "overview": "Score 40/100, `CRITICO`. O principal risco é o rastreamento sem consentimento (CK-02).",
     "actions": [
@@ -67,15 +68,16 @@ Exemplo reduzido (uma única área com itens avaliados: 2 de 5 pontos, score 40)
   },
   "score_lgpd": {
     "score": 40, "classification": "CRITICO", "coverage": 100,
-    "areas": [ { "id": "bases_legais", "score": 40.0, "weight": 15, "adjusted_weight": 100, "coverage": 100 } ]
+    "areas": [ { "id": "bases_legais", "score": 40.0, "weight": 12, "adjusted_weight": 100, "coverage": 100 } ],
+    "out_of_scope": ["8. Mobile security", "10. DevSecOps", "12. IA/LLM"]
   },
   "checklist_conformidade": [
     { "id": "CK-01", "score_area": "bases_legais", "criticality": "MEDIO", "control_type": "TECNICO",
-      "item": "\"Rejeitar\" com o mesmo destaque de \"Aceitar\"", "applicability": "APLICAVEL", "status": "CONFORME",
+      "item": "Rejeitar está disponível na primeira camada do banner, com o mesmo destaque de aceitar?", "applicability": "APLICAVEL", "status": "CONFORME",
       "evidence_type": "ENCONTRADA", "evidence_source": "TECNICA", "evidence_confidence": "ALTA",
       "evidence": "Botões lado a lado, com o mesmo estilo (`public/index.html:41-45`)", "recommendation": "Manter" },
     { "id": "CK-02", "score_area": "bases_legais", "criticality": "ALTO", "control_type": "TECNICO",
-      "item": "Scripts de publicidade bloqueados até o aceite", "applicability": "APLICAVEL", "status": "NAO_CONFORME",
+      "item": "Cookies e scripts não essenciais ficam bloqueados até o aceite?", "applicability": "APLICAVEL", "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE", "evidence_source": "TECNICA", "evidence_confidence": "ALTA",
       "evidence": "`public/index.html:8-15` carrega o pixel no `\u003chead>`, antes do banner",
       "impact": "Rastreamento sem consentimento válido", "recommendation": "Carregar rastreadores só após o aceite" }
@@ -93,9 +95,10 @@ Exemplo reduzido (uma única área com itens avaliados: 2 de 5 pontos, score 40)
 ## O que o modelo monta sozinho
 Não repetir no JSON o que o modelo deriva dos dados:
 - contagem de não conformidades por severidade e de itens por status;
+- a marca **classificação limitada por achado crítico** (quando há `finding` `CRITICO` e o score cairia numa faixa acima de `PARCIALMENTE_CONFORME`) e a marca **escopo direcionado** (quando `meta.scenario` não é `full_audit`);
 - itens fora do cálculo e lista de itens `NAO_VERIFICADO` entre as verificações pendentes;
 - riscos aceitos (a partir de `risk_acceptance` de cada achado);
 - plano separado em curto, médio e longo prazo (a partir de `deadline`);
-- conferência do score global, do score por área, da cobertura e dos subtotais técnico e documental, pela fórmula de `core/scoring-engine.md`.
+- conferência do score global, do score por área, da cobertura, da classificação e dos subtotais técnico e documental, pela fórmula de `core/scoring-engine.md`.
 
 Um exemplo completo está em `examples/saas-demo/relatorio-auditoria-lgpd.html`, no repositório do projeto.

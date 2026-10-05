@@ -23,7 +23,8 @@ Definir formato obrigatório e ordem de construção do relatório final.
 
 ### `score_lgpd`
 - score 0-100;
-- classificação final canônica;
+- classificação final canônica, com as marcas que couberem: **classificação limitada por achado crítico** (teto de `core/scoring-engine.md`, citando os achados que o causam) e **escopo direcionado** (cenário diferente de `full_audit`, com o ID do cenário);
+- domínios fora do escopo do cenário, quando houver;
 - score por área;
 - áreas `NAO_APLICAVEL`, com justificativa, e pesos ajustados (regra de `core/scoring-engine.md`);
 - `score_tecnico` e `score_documental` (informativos);
@@ -35,7 +36,9 @@ Definir formato obrigatório e ordem de construção do relatório final.
 Tabela obrigatória:
 `Item | Área | Status | Evidência | Impacto | Recomendação`
 
-A coluna `Área` traz a `score_area` do item (mapa de `core/scoring-engine.md`).
+A coluna `Item` começa pelo ID do item no catálogo (ex.: `SE-03`), seguido do texto do item; item extra (`EX-nn`) vem identificado como tal. A coluna `Área` traz a `score_area` do item (mapa de `core/scoring-engine.md`).
+
+O checklist traz todos os itens do catálogo dos módulos ativos: os `APLICAVEL` na tabela principal e os demais na tabela de itens fora do cálculo.
 
 Status permitidos:
 - `CONFORME`
@@ -98,7 +101,7 @@ Regras:
 - o `.html` é gerado a partir do modelo `reports/html-report-template.html`, preenchendo só o bloco de dados, conforme `reports/html-report.md`; é um arquivo único, sem recursos externos, e não redefine formato, severidade nem score;
 - em `.md` e `.html`, os dois arquivos trazem os mesmos dados; havendo divergência, vale o `.md`;
 - sem resposta do usuário (execução sem interação), gravar o `.md`;
-- com arquivo gravado, a resposta em tela traz só o resumo (score, classificação, cobertura, não conformidades por severidade, "o que fazer agora" e o caminho dos arquivos), sem repetir o relatório inteiro, salvo pedido do usuário;
+- com arquivo gravado, a resposta em tela traz só o resumo (score, classificação com suas marcas, cobertura, não conformidades por severidade, "o que fazer agora" e o caminho dos arquivos), sem repetir o relatório inteiro, salvo pedido do usuário;
 - sem acesso de escrita a arquivos, entregar o relatório completo em texto.
 
 ## Classificação e armazenamento

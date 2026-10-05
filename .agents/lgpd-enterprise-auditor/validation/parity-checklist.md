@@ -4,7 +4,9 @@
 Validar que o framework modular (`.agents/lgpd-enterprise-auditor/`) e a skill (`SKILL.md`) mantêm a mesma cobertura e consistência funcional.
 
 ## Checklist de validação
-Última verificação completa: **2026-10-03**, item a item, contra `SKILL.md` e os módulos do framework. Ao alterar um item coberto aqui, desmarcar e reverificar antes de marcar de novo.
+Última verificação completa: **2026-10-05**, item a item, contra `SKILL.md` e os módulos do framework. Ao alterar um item coberto aqui, desmarcar e reverificar antes de marcar de novo.
+
+Parte da paridade é conferida por máquina em `scripts/tests/test-framework.sh` (CI): catálogo de itens da skill igual ao dos módulos, pesos das áreas, mapa de domínios, faixas de classificação, cenários e módulos entre router, matriz, README e comandos. Os itens abaixo continuam valendo para o que depende de leitura.
 
 - [x] Todos os 17 domínios de auditoria estão mapeados em módulos do framework (`validation/traceability-matrix.md`).
 - [x] Nenhum módulo redefine severidade fora do `core/severity-model.md`.
@@ -15,7 +17,7 @@ Validar que o framework modular (`.agents/lgpd-enterprise-auditor/`) e a skill (
 - [x] Toda não conformidade possui evidência associada.
 - [x] Evidência usa os dois eixos canônicos na skill e no framework: `evidence_type` (`ENCONTRADA | PARCIAL | AUSENTE`) e `evidence_source` (`TECNICA | DOCUMENTAL`).
 - [x] Rótulos de classificação final seguem o padrão canônico na skill e no framework: `CRITICO | BAIXO_NIVEL | PARCIALMENTE_CONFORME | ALTA_CONFORMIDADE | EXCELENTE`.
-- [x] Regra de área `NAO_APLICAVEL` e redistribuição proporcional de pesos idêntica na skill (`SKILL.md`) e no framework (`core/scoring-engine.md`).
+- [x] Regra de área `NAO_APLICAVEL` e redistribuição proporcional de pesos idêntica na skill (`SKILL.md`) e no framework (`core/scoring-engine.md`): só com evidência de que o objeto não existe, nunca só porque o módulo ou o domínio ficou fora da auditoria.
 - [x] Modo `full_audit` ativa todos os módulos.
 - [x] Matriz de ativação por cenário está coerente com o router.
 - [x] Bases legais distinguem art. 7º (dados pessoais) de art. 11 (sensíveis) na skill e no framework.
@@ -26,6 +28,7 @@ Validar que o framework modular (`.agents/lgpd-enterprise-auditor/`) e a skill (
 - [x] Prazo de atendimento ao titular (art. 19: imediato em formato simplificado ou declaração completa em até 15 dias) presente na skill e no framework.
 - [x] Registro das operações de tratamento (art. 37), com forma simplificada para pequeno porte (Res. CD/ANPD nº 2/2022), presente na skill e no framework (`governance/dpo-framework.md`).
 - [x] Dados pessoais em logs de aplicação e de observabilidade cobertos no framework (`appsec/owasp-api.md` e `cloud/cloud-audit.md`), equivalente ao domínio 11 da skill.
+- [x] IA/LLM com os mesmos itens na skill e no framework, inclusive envenenamento de dados (`IA-07`), vazamento de memória entre sessões (`IA-08`), dado pessoal na saída do modelo (`IA-09`) e permissões de agentes (`IA-10`); governança com política de segurança (`GV-16`) e treinamento (`GV-17`).
 - [x] Dados de crianças/adolescentes (art. 14) cobertos na skill (`SKILL.md`) e no framework (`legal/children-adolescents.md`).
 - [x] Transferência internacional (arts. 33-36) coberta na skill e no framework (`legal/international-transfer.md`).
 - [x] Prazo de comunicação de incidente (Res. CD/ANPD nº 15/2024, 3 dias úteis) presente em governança e template de incidente.
@@ -45,7 +48,11 @@ Validar que o framework modular (`.agents/lgpd-enterprise-auditor/`) e a skill (
 - [x] Prazos do Decreto nº 12.976/2026 preservados sem unificação: conteúdo íntimo em até 2 horas (art. 7º, §1º); prazos transitórios de 6 horas e 24 horas e 24 horas após contestação (art. 12).
 - [x] Guarda de registros de acesso por 6 meses com porta lógica (MCI art. 15 e art. 15-A) presente na skill, em `cloud/cloud-audit.md` e em `legal/plataformas-digitais.md`.
 - [x] Normas não vigentes (ex.: PL nº 2338/2023) aparecem apenas em seções "Em monitoramento" e nunca originam `NAO_CONFORME`.
-- [x] Cálculo do score fechado e idêntico na skill e no framework (`core/scoring-engine.md`): valor por status (`CONFORME` 1, `PARCIAL` 0,5, `NAO_CONFORME` 0) e peso por criticidade (4/3/2/1).
+- [x] Cálculo do score fechado e idêntico na skill e no framework (`core/scoring-engine.md`): valor por status (`CONFORME` 1, `PARCIAL` 0,5, `NAO_CONFORME` 0), peso por criticidade (4/3/2/1) e arredondamento do score global para o inteiro mais próximo, com 0,5 para cima.
+- [x] Catálogo de itens idêntico na skill e no framework: IDs, texto, criticidade, agravante ou atenuante, tipo de controle e fundamento. O bloco de catálogo da `SKILL.md` é gerado das tabelas dos módulos por `scripts/update-skill-catalog.sh`.
+- [x] Regras do catálogo iguais nas duas formas: todos os itens dos módulos ou domínios auditados são avaliados; a criticidade só muda pelo agravante da linha do item ou pela modulação por porte; problema sem item entra como item extra `EX-nn`.
+- [x] Nove áreas de score com os mesmos pesos na skill e no framework (`bases_legais` 12, `seguranca` 20, `direitos_titular` 12, `governanca` 12, `infraestrutura` 8, `apis_integracoes` 8, `ai_llm` 8, `eca_digital` 10, `plataformas_digitais` 10); os domínios 16 e 17 pontuam em `eca_digital` e `plataformas_digitais`.
+- [x] Teto de classificação por achado `CRITICO` (`PARCIALMENTE_CONFORME`) e marca de escopo direcionado, na skill e no framework (`core/scoring-engine.md`).
 - [x] Mapa de áreas por domínio idêntico na skill e no framework; cada item pontua em uma única área e nenhum módulo escolhe área caso a caso.
 - [x] Score técnico e score documental informativos, sem efeito na classificação, na skill e no framework.
 - [x] Modulação de severidade por porte (Res. CD/ANPD nº 2/2022) com as mesmas condições e vedações na skill e no framework (`core/severity-model.md`).
@@ -53,7 +60,7 @@ Validar que o framework modular (`.agents/lgpd-enterprise-auditor/`) e a skill (
 - [x] Leitura da documentação do projeto antes de perguntar e natureza do agente de tratamento como entrada inicial, na skill (fase 1 e modo de operação), em `orchestrator/router.md` e em todos os `commands/*.md`.
 - [x] Dados de acesso público e manifestamente públicos (art. 7º, §§ 3º, 4º e 7º), inclusive dado sensível divulgado por órgão oficial, na skill e no framework (`legal/legal-bases-engine.md`).
 - [x] Cloud cobre IaaS, PaaS e hospedagem compartilhada, com validação das respostas de produção, na skill (domínio 7) e no framework (`cloud/cloud-audit.md`).
-- [x] Itens `PARCIAL` também geram achado, com severidade da lacuna restante limitada à criticidade do item; contagem única de uma mesma falha; precedência da regra de severidade mais específica — na skill e no framework.
+- [x] Itens `PARCIAL` também geram achado, com severidade da lacuna restante limitada à criticidade do item; contagem única (o item pontua pelo que resta do seu requisito, fica `NAO_APLICAVEL` quando depende de controle inexistente e é reprovado quando o requisito inteiro falha); precedência da regra de severidade mais específica — na skill e no framework.
 - [x] Transferência internacional distingue mecanismo comprovadamente ausente (`CRITICO`) de não evidenciado (`ALTO`), e dispensa de encarregado e registro simplificado não valem para pequeno porte com tratamento de alto risco — na skill e no framework.
 - [x] Aplicabilidade por item (`APLICAVEL | NAO_APLICAVEL | NAO_VERIFICADO`), com os mesmos limites, cobertura e marca de score parcial abaixo de 80%, na skill e no framework (`core/scoring-engine.md`).
 - [x] Mais de uma evidência por item, origem `TECNICA + DOCUMENTAL` e confiança `ALTA | MEDIA | BAIXA` sem efeito no score, na skill e no framework (`core/evidence-engine.md`).

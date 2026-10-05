@@ -365,7 +365,8 @@ footer p{max-width:90ch}
     cls: { CRITICO: 'Crítico', BAIXO_NIVEL: 'Baixo nível', PARCIALMENTE_CONFORME: 'Parcialmente conforme',
       ALTA_CONFORMIDADE: 'Alta conformidade', EXCELENTE: 'Excelente' },
     area: { bases_legais: 'Bases legais', seguranca: 'Segurança', direitos_titular: 'Direitos do titular',
-      governanca: 'Governança', infraestrutura: 'Infraestrutura', apis_integracoes: 'APIs e integrações', ai_llm: 'IA e LLM' },
+      governanca: 'Governança', infraestrutura: 'Infraestrutura', apis_integracoes: 'APIs e integrações', ai_llm: 'IA e LLM',
+      eca_digital: 'ECA Digital', plataformas_digitais: 'Plataformas digitais' },
     appl: { NAO_APLICAVEL: 'Não aplicável', NAO_VERIFICADO: 'Não verificado' },
     prazo: { IMEDIATO: 'Imediato (até 7 dias)', '30_DIAS': '30 dias', '90_DIAS': '90 dias', '180_DIAS': '180 dias' },
     esforco: { P: 'Esforço P · até 1 dia', M: 'Esforço M · até 1 semana', G: 'Esforço G · mais de 1 semana' },
@@ -375,12 +376,16 @@ footer p{max-width:90ch}
   var CST = { CONFORME: 'baixo', PARCIAL: 'medio', NAO_CONFORME: 'crit' };
   var CCLS = { CRITICO: 'crit', BAIXO_NIVEL: 'alto', PARCIALMENTE_CONFORME: 'medio', ALTA_CONFORMIDADE: 'baixo', EXCELENTE: 'exc' };
   var SEVS = ['CRITICO', 'ALTO', 'MEDIO', 'BAIXO'];
-  var AREAS = ['bases_legais', 'seguranca', 'direitos_titular', 'governanca', 'infraestrutura', 'apis_integracoes', 'ai_llm'];
+  var AREAS = ['bases_legais', 'seguranca', 'direitos_titular', 'governanca', 'infraestrutura', 'apis_integracoes', 'ai_llm',
+    'eca_digital', 'plataformas_digitais'];
 
   /* regras de core/scoring-engine.md, usadas para conferir os números declarados */
   var VALOR = { CONFORME: 1, PARCIAL: 0.5, NAO_CONFORME: 0 };
   var PESO_ITEM = { CRITICO: 4, ALTO: 3, MEDIO: 2, BAIXO: 1 };
-  var PESO_AREA = { bases_legais: 15, seguranca: 25, direitos_titular: 15, governanca: 15, infraestrutura: 10, apis_integracoes: 10, ai_llm: 10 };
+  var PESO_AREA = { bases_legais: 12, seguranca: 20, direitos_titular: 12, governanca: 12, infraestrutura: 8, apis_integracoes: 8, ai_llm: 8,
+    eca_digital: 10, plataformas_digitais: 10 };
+  /* teto de classificação: com achado CRITICO aberto, a classificação não passa deste rótulo */
+  var ORDEM_CLS = ['CRITICO', 'BAIXO_NIVEL', 'PARCIALMENTE_CONFORME', 'ALTA_CONFORMIDADE', 'EXCELENTE'], TETO = 'PARCIALMENTE_CONFORME';
   function classe(score) {
     return score < 50 ? 'CRITICO' : score < 70 ? 'BAIXO_NIVEL' : score < 85 ? 'PARCIALMENTE_CONFORME' : score < 95 ? 'ALTA_CONFORMIDADE' : 'EXCELENTE';
   }
@@ -433,11 +438,20 @@ footer p{max-width:90ch}
   })();
   function decl(v, c) { return isNum(v) ? Number(v) : c; }
   var SCORE = decl(SC.score, calc.score == null ? null : Math.round(calc.score));
-  var CLS = up(SC.classification) || (SCORE == null ? '' : classe(SCORE));
   var COB = decl(SC.coverage, calc.cob);
   var PARCIAL = SC.partial === true || (COB != null && COB < 80);
   var sevN = { CRITICO: 0, ALTO: 0, MEDIO: 0, BAIXO: 0 };
   NCS.forEach(function (f) { var s = up(f.severity); if (s in sevN) sevN[s]++; });
+  var CRITICOS = NCS.filter(function (f) { return up(f.severity) === 'CRITICO'; });
+  function classeFinal(score) {
+    var c = classe(score);
+    return CRITICOS.length && ORDEM_CLS.indexOf(c) > ORDEM_CLS.indexOf(TETO) ? TETO : c;
+  }
+  var CLS_CALC = SCORE == null ? '' : classeFinal(SCORE);
+  var CLS = up(SC.classification) || CLS_CALC;
+  var LIMITADA = SCORE != null && classe(SCORE) !== classeFinal(SCORE);
+  var CENARIO = String(META.scenario == null ? '' : META.scenario).trim();
+  var DIRECIONADO = CENARIO !== '' && CENARIO !== 'full_audit';
 
   /* ── texto: marcação leve (negrito, `código`, listas, tabelas, blocos) ── */
   var RE_ID = /\b[A-Z]{2,5}-\d{1,3}\b/g;
@@ -609,7 +623,9 @@ footer p{max-width:90ch}
       h('p', { class: 'lbl', text: 'Score LGPD' }),
       h('div', { class: 'score-n' }, h('b', { class: c ? 'c-' + c : '', text: SCORE == null ? '—' : String(SCORE) }), h('span', { text: '/ 100' })),
       h('div', { class: 'chips' }, CLS ? chip(L.cls[CLS] || CLS, c, 'classificação ' + CLS) : null, CLS ? h('code', { text: CLS }) : null,
-        PARCIAL ? chip('score parcial', 'medio', 'cobertura global abaixo de 80%') : null));
+        PARCIAL ? chip('score parcial', 'medio', 'cobertura global abaixo de 80%') : null,
+        LIMITADA ? chip('classificação limitada por achado crítico', 'crit', 'teto de classificação: há não conformidade CRITICO aberta') : null,
+        DIRECIONADO ? chip('escopo direcionado', 'line', 'cenário ' + CENARIO + ': a classificação vale para o escopo auditado') : null));
     if (SCORE != null) {
       var bandas = [[50, 'crit'], [20, 'alto'], [15, 'medio'], [10, 'baixo'], [5, 'exc']];
       card.appendChild(h('div', { class: 'gauge', role: 'img', 'aria-label': 'Score ' + SCORE + ' de 100' },
@@ -700,6 +716,8 @@ footer p{max-width:90ch}
       difs.unshift('Score global: declarado ' + SC.score + ', recalculado ' + Math.round(calc.score) + ' (' + num(calc.score, 3) + ')');
     if (calc.ok && isNum(SC.coverage) && calc.cob != null && Math.abs(Number(SC.coverage) - calc.cob) > 0.06)
       difs.push('Cobertura: declarada ' + pct(SC.coverage) + ', recalculada ' + pct(calc.cob));
+    if (calc.ok && has(SC.classification) && CLS_CALC && up(SC.classification) !== CLS_CALC)
+      difs.push('Classificação: declarada ' + up(SC.classification) + ', esperada ' + CLS_CALC + (LIMITADA ? ' (teto por achado crítico)' : ''));
     if (difs.length) {
       add(s, h('div', { class: 'note warn' }, h('p', null, h('b', { text: 'Conferir o cálculo. ' }),
         'Os números declarados diferem do recálculo feito a partir do checklist deste arquivo:'),
@@ -708,6 +726,17 @@ footer p{max-width:90ch}
     add(s, h('div', { class: 'card' }, h('p', { class: 'lbl', text: 'Score por área' }), lista));
     if (calc.ok && !difs.length) add(s, h('p', { class: 'muted small', style: 'margin:8px 2px 0',
       text: 'Conferência automática: os números batem com o recálculo feito a partir do checklist (fórmula de core/scoring-engine.md).' }));
+
+    if (LIMITADA) add(s, h('div', { class: 'note warn' }, h('p', null, h('b', { text: 'Classificação limitada por achado crítico. ' }),
+      'Pelo score, a faixa seria "' + (L.cls[classe(SCORE)] || classe(SCORE)) + '"; com não conformidade de severidade crítica aberta, a classificação não passa de "' +
+      L.cls[TETO] + '". Achados: ', refs(CRITICOS.map(function (f) { return f.item_id || f.id; })))));
+    if (DIRECIONADO || arr(SC.out_of_scope).length) {
+      add(s, [h('h3', { text: 'Escopo do score' }), h('div', { class: 'card' },
+        h('p', { text: DIRECIONADO ? 'Escopo direcionado (cenário ' + CENARIO + '): o score e a classificação valem para o que este cenário auditou, não para a organização inteira.'
+          : 'Auditoria completa: o cenário cobre os 17 domínios.' }),
+        arr(SC.out_of_scope).length ? [h('p', { class: 'lbl', style: 'margin-top:12px', text: 'Domínios fora do escopo' }),
+          h('ul', { style: 'margin:0;padding-left:20px' }, arr(SC.out_of_scope).map(function (d) { return inline(d, h('li')); }))] : null)]);
+    }
 
     var kv = h('dl', { class: 'kv' });
     [['Natureza do agente', SC.agent_nature], ['Papel do agente', SC.agent_role], ['Modulação de severidade', SC.severity_modulation]].forEach(function (p) {
@@ -789,7 +818,7 @@ footer p{max-width:90ch}
         var d = h('details', { class: 'it s-' + (CST[st] || ''), id: 'ci-' + slug(it.id), 'data-status': st, 'data-area': a,
           'data-q': (txt(it.id) + ' ' + txt(it.item) + ' ' + txt(it.evidence) + ' ' + txt(it.domain)).toLowerCase() },
           h('summary', null, h('span', { class: 'id', text: it.id || '' }), inline(it.item, h('span', { class: 'tt' })),
-            h('span', { class: 'chips' }, chipStatus(st),
+            h('span', { class: 'chips' }, chipStatus(st), /^EX-/.test(txt(it.id)) ? chip('item extra', 'line', 'item fora do catálogo') : null,
               has(it.criticality) ? chip('peso ' + (PESO_ITEM[up(it.criticality)] || '?') + ' · ' + (L.sev[up(it.criticality)] || it.criticality), 'line',
                 'criticality ' + up(it.criticality)) : null)),
           h('div', { class: 'body' }, h('div', { class: 'fields' },

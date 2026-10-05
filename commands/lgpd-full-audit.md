@@ -4,7 +4,7 @@ description: Executa auditoria LGPD completa (full_audit), com todos os módulos
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.5.0"
+  version: "1.6.0"
 ---
 
 # LGPD Full Audit
@@ -27,6 +27,7 @@ Execute no modo `full_audit` com cobertura total:
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
+- ler só os arquivos listados em `files` nos manifestos dos módulos ativos (`.agents/lgpd-enterprise-auditor/orchestrator/manifests/`) e avaliar todos os itens do catálogo desses módulos, cada um com o seu ID;
 - não assumir conformidade sem evidência;
 - aplicar severidade e score conforme `.agents/lgpd-enterprise-auditor/core/`;
 - gerar saída no formato de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`;

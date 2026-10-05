@@ -20,16 +20,21 @@ Desde **17/03/2026** o art. 14 da LGPD convive com o **Estatuto Digital da Crian
 - Atenção ao limiar etário: a LGPD distingue criança (até 12 anos incompletos) de adolescente; o ECA Digital usa o corte de **até 16 anos** para a vinculação obrigatória de conta a responsável legal (art. 24) e de **menores de 18 anos** para conteúdo impróprio. Não unificar os três cortes.
 
 ## Checklist atômico
-- Há público infantojuvenil entre os titulares (ou o serviço é direcionado/atrativo a menores)?
-- Existe mecanismo de verificação de idade confiável (não apenas autodeclaração)?
-- O consentimento parental é coletado, específico e em destaque?
-- A coleta respeita a minimização (não exige dados além do necessário)?
-- As informações sobre tratamento estão públicas e acessíveis?
+Pergunta de enquadramento (não pontua): há público infantojuvenil entre os titulares, ou o serviço é direcionado ou atrativo a menores? Se sim, ativar também [[eca-digital]]. Sem crianças nem adolescentes entre os titulares, os itens abaixo ficam `NAO_APLICAVEL`, com a evidência.
+
+Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`.
+
+| ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
+|---|---|---|---|---|---|---|
+| `CA-01` | O tratamento de dados de crianças tem consentimento específico e em destaque de pelo menos um dos pais ou do responsável legal? | BL | `CRITICO` | — | `TECNICO` | art. 14, §1º |
+| `CA-02` | Há verificação de idade confiável, que não dependa só de autodeclaração, e esforço razoável para confirmar que o consentimento veio do responsável? | BL | `ALTO` | `CRITICO` quando o serviço estiver no escopo do ECA Digital | `TECNICO` | art. 14, §5º |
+| `CA-03` | A coleta respeita a minimização, sem condicionar jogo, aplicação ou atividade ao fornecimento de dados além do necessário? | BL | `ALTO` | — | `TECNICO` | art. 14, §4º |
+| `CA-04` | As informações sobre os dados coletados, o uso e o exercício de direitos estão públicas e acessíveis? | BL | `MEDIO` | — | `DOCUMENTAL` | art. 14, §2º |
 
 ## Mapeamento para severidade e score
 - Tratamento de dado de criança sem consentimento parental: `CRITICO`.
 - Ausência de verificação de idade em serviço com público infantil: `ALTO` pela LGPD e `CRITICO` quando o serviço estiver no escopo do ECA Digital.
-- Área de score (mapa por domínio de `core/scoring-engine.md`): `bases_legais` (dados de crianças, art. 14) para todos os itens deste módulo.
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `bases_legais` (domínio `BL`: dados de crianças, art. 14) para todos os itens deste módulo.
 
 ## Relação com outros módulos
 - Obrigações do ECA Digital (aferição de idade, supervisão parental, transparência): ver [[eca-digital]].

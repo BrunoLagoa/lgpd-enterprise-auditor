@@ -31,20 +31,24 @@ A transferência só é permitida quando houver pelo menos um:
 - Estados Unidos, Reino Unido e demais destinos **não** possuem reconhecimento de adequação pela ANPD: continuam exigindo CPC ou outro mecanismo do art. 33.
 
 ## Checklist atômico
-- O fluxo de dados para o exterior está mapeado (destino, provedor, finalidade)?
-- Há mecanismo legal do art. 33 documentado para cada transferência?
-- Para destinos fora da UE, as CPC da Res. 19/2024 foram incorporadas aos contratos (prazo vencido em 23/08/2025)?
-- Para destinos na UE, a adequação da Res. 32/2026 está documentada como mecanismo aplicável?
-- Existem CPC/DPA com os operadores e subprocessadores internacionais, incluindo subprocessadores de segundo nível?
-- O titular é informado sobre a transferência internacional na política de privacidade?
-- Dados sensíveis transferidos têm proteção e base legal reforçadas?
+Sem dado pessoal saindo do País, os itens ficam `NAO_APLICAVEL`, com a evidência (região dos serviços e dos provedores).
+
+Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`.
+
+| ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
+|---|---|---|---|---|---|---|
+| `TI-01` | O fluxo de dados para o exterior está mapeado (destino, provedor, finalidade)? | 14 | `MEDIO` | — | `DOCUMENTAL` | arts. 33 e 37 |
+| `TI-02` | Há mecanismo do art. 33 documentado para cada transferência: adequação reconhecida (União Europeia, Res. CD/ANPD nº 32/2026) ou, nos demais destinos, as CPC da Res. CD/ANPD nº 19/2024 incorporadas ao contrato, ou outro mecanismo aprovado? | 14 | `ALTO` | `CRITICO` com mecanismo comprovadamente ausente (contrato ou termos examinados) em destino sem adequação | `DOCUMENTAL` | art. 33; Res. CD/ANPD nº 19/2024 |
+| `TI-03` | As CPC ou o mecanismo adotado cobrem os operadores e subprocessadores internacionais, inclusive os de segundo nível? | 14 | `MEDIO` | — | `DOCUMENTAL` | art. 33; Res. CD/ANPD nº 19/2024 |
+| `TI-04` | O titular é informado sobre a transferência internacional na política de privacidade? | 14 | `ALTO` | — | `DOCUMENTAL` | arts. 9º e 33 |
+| `TI-05` | Dados sensíveis transferidos têm hipótese do art. 11 e proteção reforçada (criptografia, restrição de acesso)? | 14 | `ALTO` | — | `TECNICO` | arts. 11, 33 e 46 |
 
 ## Mapeamento para severidade e score
 - Destino sem adequação e mecanismo do art. 33 **comprovadamente ausente** (contrato ou termos examinados, sem as CPC da Res. CD/ANPD nº 19/2024 nem outro mecanismo): `CRITICO`.
 - Mecanismo **não evidenciado** (contrato ou termos do provedor não localizados ou não examinados; termos padrão podem conter as cláusulas): `ALTO`, com evidência `AUSENTE`, até a verificação.
 - Transferência sem informação ao titular: `ALTO`.
 - Contrato com CPC incorporadas, mas sem cobertura dos subprocessadores: `MEDIO`.
-- Área de score (mapa por domínio de `core/scoring-engine.md`): `governanca` (domínio 14) para todos os itens deste módulo.
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `governanca` (domínio 14) para todos os itens deste módulo. As três primeiras regras acima são a criticidade e o agravante de `TI-02`, `TI-04` e `TI-03`.
 
 ## Relação com outros módulos
 - Postura cloud e exposição: ver [[cloud-audit]].

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Garante que o modelo do relatório em HTML continua preenchível e offline, e que o exemplo
-# público usa o modelo atual com dados válidos.
+# público usa o modelo atual com dados válidos e coerentes com o catálogo e com o cálculo do score.
 # Uso: scripts/tests/test-html-report.sh
 
 set -euo pipefail
@@ -95,8 +95,16 @@ if data["meta"].get("framework_version") != sys.argv[1]:
     else
       fail "dados do exemplo são JSON válido, com as 8 seções e a versão ${VERSION}"
     fi
+
+    # Catálogo, enums, relação entre itens e achados, cálculo e o .md com os mesmos dados.
+    if REPORT_CHECK="$(python3 "${REPO_ROOT}/scripts/validate-report.py" "$EXAMPLE" --md "${EXAMPLE%.html}.md" 2>&1)"; then
+      ok "exemplo consistente com o framework (scripts/validate-report.py), no .html e no .md"
+    else
+      fail "exemplo consistente com o framework (scripts/validate-report.py), no .html e no .md"
+      printf "%s\n" "$REPORT_CHECK" | sed 's/^/         /'
+    fi
   else
-    echo "  --   python3 ausente: validação do JSON do exemplo não executada"
+    echo "  --   python3 ausente: validação dos dados do exemplo não executada"
   fi
 fi
 

@@ -20,6 +20,7 @@ Obrigado por querer melhorar o LGPD Enterprise Auditor. Este guia resume o fluxo
 O repositório distribui o mesmo auditor em duas formas, ambas atuais: a **skill** (`SKILL.md`) e o **framework modular** (`.agents/lgpd-enterprise-auditor/`). Não use as designações "V1", "V2", "legado" ou "monolito" para elas.
 
 - **Paridade.** Toda mudança de lógica de auditoria (item de checklist, regra de severidade, peso de score, campo de relatório) deve ser avaliada nas duas formas. Se a cobertura mudar, atualize `validation/parity-checklist.md` (e `validation/traceability-matrix.md` se um domínio mudar de módulo).
+- **Catálogo de itens.** Os itens do checklist ficam nas tabelas "Checklist atômico" dos módulos, com ID fixo, domínio, criticidade, agravante ou atenuante, tipo de controle e fundamento. Item novo ganha o próximo número do prefixo do arquivo; ID nunca é renumerado nem reaproveitado. O catálogo da `SKILL.md` é gerado a partir dos módulos: depois de mexer numa tabela, rode `scripts/update-skill-catalog.sh` e nunca edite o bloco entre os marcadores `CATALOGO` à mão.
 - **Só norma vigente gera achado.** Apenas normas em vigor produzem `finding` ou status `NAO_CONFORME`. Projetos de lei, consultas públicas e minutas ficam em seções "Em monitoramento" e só podem alimentar `recomendacoes_tecnicas`.
 - **Evidência e fundamento.** Todo `finding` cita o artigo aplicável da LGPD (ou da norma correlata) e classifica a evidência nos dois eixos independentes: `evidence_type` (`ENCONTRADA | PARCIAL | AUSENTE`) e `evidence_source` (`TECNICA | DOCUMENTAL`). Nada é `CONFORME` sem evidência `ENCONTRADA`.
 - **Contratos só no `core/`.** Severidade, score e formato de relatório são definidos apenas em `.agents/lgpd-enterprise-auditor/core/`. Nenhum módulo os redefine localmente.
@@ -44,9 +45,13 @@ O repositório distribui o mesmo auditor em duas formas, ambas atuais: a **skill
 Rode a partir da raiz do clone:
 
 ```bash
+scripts/tests/test-framework.sh     # catálogo, paridade skill/framework, cenários, manifestos
+scripts/tests/test-html-report.sh   # modelo HTML e relatório de exemplo (usa python3 para validar os dados)
 scripts/tests/test-install.sh
 scripts/tests/test-versions.sh
 ```
+
+Se a mudança altera o cálculo do score, o formato do relatório ou o catálogo, atualize o relatório de exemplo (`examples/saas-demo/`, `.md` e `.html`) no mesmo PR; `scripts/validate-report.py` confere os dados.
 
 Se tiver o PowerShell disponível:
 
@@ -54,7 +59,7 @@ Se tiver o PowerShell disponível:
 pwsh ./scripts/tests/test-install.ps1
 ```
 
-O CI também roda ShellCheck nos scripts bash e os testes no Ubuntu, no macOS (`/bin/bash` 3.2) e no Windows (PowerShell 7 e 5.1).
+O CI também roda ShellCheck nos scripts bash, os testes no Ubuntu, no macOS (`/bin/bash` 3.2) e no Windows (PowerShell 7 e 5.1), e confere que nenhum commit traz assinatura de agente de IA.
 
 ## Mensagens de commit
 

@@ -148,28 +148,37 @@ Regime **cumulativo e independente** das sanções do art. 52 da LGPD — a mesm
 A lei **é exigível desde 17/03/2026**; o cronograma descreve a postura fiscalizatória, não suspensão de vigência. Nunca classificar requisito como dispensado por estar em etapa de adaptação.
 
 ## Checklist atômico
+Perguntas de enquadramento (não pontuam):
 - O serviço é direcionado a menores ou de **acesso provável** pelos critérios do art. 1º, parágrafo único?
-- O fornecedor se enquadra na dispensa do art. 39, §1º (controle editorial/conteúdo licenciado)? Se sim, cumpre as quatro condições?
-- Há medidas de prevenção contra as seis categorias de conteúdo do art. 6º?
-- As configurações padrão são as mais protetivas disponíveis (art. 7º)?
-- Há gestão de risco, classificação indicativa e defaults contra uso compulsivo (art. 8º)?
-- Serviço com conteúdo adulto: há verificação de idade **a cada acesso**, sem autodeclaração (art. 9º, §1º)?
-- Loja de apps ou SO: aferição auditável, supervisão parental e API de sinal de idade com minimização (art. 12)?
-- Os dados de verificação de idade são usados **exclusivamente** para essa finalidade (arts. 13 e 26)?
-- O fornecedor consome o sinal de idade e mantém mecanismo próprio de bloqueio (art. 14)?
-- Tratamento além do necessário: há mapeamento de riscos e relatório de impacto (art. 16, parágrafo único)?
-- As ferramentas de supervisão parental cumprem os nove defaults do art. 17, §4º e as seis capacidades do art. 18?
-- Há dark patterns que enfraqueçam salvaguardas (art. 18, §2º)?
-- Jogos: há loot boxes (art. 20)? A interação entre usuários é limitada por padrão (art. 21)?
-- Há perfilamento, análise emocional ou RA/RV para publicidade a menores (arts. 22 e 26)?
-- Há monetização ou impulsionamento de conteúdo erotizado com menores (art. 23)?
-- Contas de até 16 anos estão vinculadas à conta de responsável legal (art. 24)?
-- Há procedimento para indícios de conta infantil, com suspensão e apelação (art. 24, §§3º e 4º)?
-- Há fluxo de remoção e comunicação às autoridades, com retenção pelo prazo do art. 15 do MCI (art. 27)?
-- Há canal de notificação público, com identificação do notificante e direito de contestação (arts. 28 a 30)?
-- Acima de 1 milhão de usuários menores: o relatório semestral com os sete incisos do art. 31 foi publicado no prazo?
-- Há mecanismo contra uso abusivo de denúncias, com registros (arts. 32 e 33)?
-- Provedor estrangeiro mantém representante legal no País (art. 40)?
+- O fornecedor se enquadra na dispensa do art. 39, §1º (controle editorial ou conteúdo licenciado)? Se sim, cumpre as quatro condições?
+
+Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`. Itens que dependem do tipo de serviço (conteúdo adulto, loja de aplicativos ou sistema operacional, jogos, monitoramento infantil, equipamentos, limiar de 1 milhão de usuários, provedor estrangeiro) ficam `NAO_APLICAVEL` quando o objeto não existe. O consentimento parental e o tratamento de dados de crianças pela LGPD são os itens `CA` de [[children-adolescents]].
+
+| ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
+|---|---|---|---|---|---|---|
+| `ECA-01` | Há medidas de prevenção, desde a concepção, contra as seis categorias de conteúdo do art. 6º? | 16 | `CRITICO` | `ALTO` se a lacuna estiver só nas categorias dos incisos IV a VI | `TECNICO` | Lei nº 15.211/2025, art. 6º; LGPD arts. 6º, VIII e 14 |
+| `ECA-02` | As configurações padrão são as mais protetivas disponíveis? | 16 | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 7º; LGPD arts. 14 e 46 |
+| `ECA-03` | Há gestão de risco, classificação indicativa, bloqueio de conteúdo inadequado, padrões contra uso compulsivo e informação da faixa etária no acesso? | 16 | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 8º; LGPD arts. 6º, VIII e 14 |
+| `ECA-04` | Serviço com conteúdo impróprio a menores de 18 anos: há verificação de idade confiável **a cada acesso**, sem autodeclaração, e bloqueio de criação de conta em serviço pornográfico? | 16 | `CRITICO` | — | `TECNICO` | Lei nº 15.211/2025, art. 9º, §§1º e 3º; LGPD art. 14 |
+| `ECA-05` | Loja de aplicativos ou sistema operacional: há aferição de idade auditável, supervisão parental, API de sinal de idade com minimização e consentimento do responsável para download? | 16 | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 12; LGPD arts. 6º, III e 14 |
+| `ECA-06` | Os dados de verificação de idade são usados **exclusivamente** para essa finalidade? | 16 | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 13 e 24, §3º; LGPD art. 6º, I |
+| `ECA-07` | O fornecedor recebe o sinal de idade da loja ou do sistema e mantém mecanismo próprio de bloqueio, sem depender só de autodeclaração? | 16 | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 10 e 14; LGPD art. 14, §5º |
+| `ECA-08` | Em tratamento além do estritamente necessário: há mapeamento de riscos e relatório de impacto? | 16 | `MEDIO` | — | `DOCUMENTAL` | Lei nº 15.211/2025, art. 16, parágrafo único; LGPD art. 38 |
+| `ECA-09` | As ferramentas de supervisão parental cumprem os nove padrões do art. 17, §4º e as seis capacidades do art. 18, em língua portuguesa? | 16 | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 17 e 18; LGPD art. 14 |
+| `ECA-10` | O produto está livre de design manipulativo (dark patterns) que enfraqueça as salvaguardas? | 16 | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 18, §2º; LGPD arts. 6º, VI e 14 |
+| `ECA-11` | Jogos: o produto está livre de caixas de recompensa (loot boxes)? | 16 | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 20; LGPD art. 14 |
+| `ECA-12` | Jogos: a interação entre usuários é limitada por padrão, dependendo do consentimento dos responsáveis? | 16 | `MEDIO` | — | `TECNICO` | Lei nº 15.211/2025, art. 21; LGPD art. 14 |
+| `ECA-13` | O serviço está livre de perfilamento, análise emocional e realidade aumentada, estendida ou virtual para publicidade a menores, inclusive com dados da verificação de idade? | 16 | `CRITICO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 22 e 26; LGPD arts. 6º, I e 14 |
+| `ECA-14` | O serviço impede a monetização e o impulsionamento de conteúdo que retrate menores de forma erotizada ou em contexto adulto? | 16 | `CRITICO` | — | `TECNICO` | Lei nº 15.211/2025, art. 23; LGPD art. 14 |
+| `ECA-15` | As contas de usuários de até 16 anos estão vinculadas à conta de um responsável legal? | 16 | `CRITICO` | — | `TECNICO` | Lei nº 15.211/2025, art. 24; LGPD art. 14, §1º |
+| `ECA-16` | Há procedimento para indícios de conta operada por menor, com suspensão e apelação célere do responsável? | 16 | `MEDIO` | — | `TECNICO` | Lei nº 15.211/2025, art. 24, §§3º e 4º; LGPD art. 14 |
+| `ECA-17` | Há fluxo de remoção e comunicação às autoridades de conteúdo de exploração, abuso sexual, sequestro e aliciamento, com retenção dos dados pelo prazo do art. 15 do MCI (6 meses)? | 16 | `CRITICO` | — | `TECNICO` | Lei nº 15.211/2025, art. 27; LGPD arts. 7º, II e 16, I |
+| `ECA-18` | Há canal de notificação público e de fácil acesso, com identificação do notificante, retirada sem ordem judicial e direito de contestação? | 16 | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 28 a 30; LGPD arts. 6º, VI e 20 |
+| `ECA-19` | Acima de 1.000.000 de usuários menores registrados no País: o relatório semestral com os sete incisos do art. 31 foi publicado no prazo, no site e em português? | 16 | `ALTO` | — | `DOCUMENTAL` | Lei nº 15.211/2025, art. 31; LGPD art. 6º, X |
+| `ECA-20` | Há mecanismo contra o uso abusivo dos instrumentos de denúncia, com sanções graduadas e registros? | 16 | `MEDIO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 32 e 33; LGPD art. 6º, X |
+| `ECA-21` | Provedor estrangeiro: há representante legal no País com poderes para receber citações e notificações? | 16 | `MEDIO` | — | `DOCUMENTAL` | Lei nº 15.211/2025, art. 40; LGPD art. 6º, X |
+| `ECA-22` | Equipamentos eletrônicos com acesso à internet: a embalagem traz o adesivo de alerta aos responsáveis? | 16 | `BAIXO` | — | `DOCUMENTAL` | Lei nº 15.211/2025, art. 38; LGPD art. 6º, VI |
+| `ECA-23` | Produtos de monitoramento infantil: as informações captadas são invioláveis e o menor é avisado do monitoramento em linguagem apropriada? | 16 | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 19; LGPD arts. 14 e 46 |
 
 ## Mapeamento para severidade e score
 - Conteúdo adulto sem verificação de idade a cada acesso, ou com autodeclaração (art. 9º, §1º): `CRITICO`.
@@ -186,7 +195,7 @@ A lei **é exigível desde 17/03/2026**; o cronograma descreve a postura fiscali
 - Ausência de mecanismo contra uso abusivo de denúncias (art. 32): `MEDIO`.
 - Provedor estrangeiro sem representante legal no País (art. 40): `MEDIO`.
 - Ausência do adesivo do art. 38 em embalagens: `BAIXO`.
-- Área de score (mapa por domínio de `core/scoring-engine.md`): `governanca` (domínio 16); itens de consentimento parental e de tratamento de dados de crianças pela LGPD (art. 14) pontuam em `bases_legais`.
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `eca_digital` (domínio 16) para todos os itens deste módulo; o consentimento parental e o tratamento de dados de crianças pela LGPD (art. 14) são os itens `CA`, que pontuam em `bases_legais`. A criticidade de cada item está na tabela do checklist; os artigos sem regra acima (8º, 12, 14, 19, 21, 23, 24, §§3º e 4º, e 28 a 30) seguem a criticidade da tabela.
 
 ## Regra de fundamentação
 Todo `finding` deste módulo deve citar **o artigo do ECA Digital** e o **correlato na LGPD** (art. 14 e/ou princípios do art. 6º; art. 46 quando for falha de segurança). Achado sem correlato LGPD explícito quebra o contrato de `finding` em [[auditor-core]].

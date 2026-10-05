@@ -369,10 +369,14 @@ skill_version() {
   sed -n 's/^[[:space:]]*version:[[:space:]]*"\{0,1\}\([^"]*\)"\{0,1\}[[:space:]]*$/\1/p' "$1" | head -n 1
 }
 
+# Imprime a última tag publicada. Retorno: 0 com a tag; 1 se o repositório não tem tag v*;
+# 2 se a consulta falhou (sem rede, limite da API do GitHub ou modo offline).
 fetch_latest_tag() {
-  [[ "${LGPD_AUDITOR_OFFLINE:-0}" != "1" ]] || return 1
-  command -v curl >/dev/null 2>&1 || return 1
-  curl -fsSL --max-time 10 "https://api.github.com/repos/${REPO}/tags?per_page=100" 2>/dev/null \
+  local response
+  [[ "${LGPD_AUDITOR_OFFLINE:-0}" != "1" ]] || return 2
+  command -v curl >/dev/null 2>&1 || return 2
+  response="$(curl -fsSL --max-time 10 "https://api.github.com/repos/${REPO}/tags?per_page=100" 2>/dev/null)" || return 2
+  printf "%s" "$response" \
     | grep -o '"name": *"v[0-9][^"]*"' \
     | sed 's/.*"\(v[^"]*\)"/\1/' \
     | sort -V \
@@ -385,9 +389,20 @@ resolve_ref() {
     if local_source_root >/dev/null; then
       VERSION="local"
     else
-      VERSION="$(fetch_latest_tag || true)"
+      local tag_status=0
+      VERSION="$(fetch_latest_tag)" || tag_status=$?
       if [[ -z "$VERSION" ]]; then
-        log_warn "Nenhuma tag publicada encontrada; usando a branch main."
+        if [[ "$tag_status" -eq 2 ]]; then
+          # Falha de consulta não é "sem versão publicada": a branch main pode ter mudanças não lançadas.
+          log_warn "Não foi possível consultar a última versão publicada (sem rede ou limite da API do GitHub)."
+          if [[ "$NON_INTERACTIVE" -eq 1 ]]; then
+            die "Informe a versão com --version (ex.: --version vX.Y.Z) ou tente de novo mais tarde."
+          fi
+          confirm "Instalar a partir da branch main, que pode conter mudanças ainda não publicadas?" "n" \
+            || die "Instalação cancelada. Informe a versão com --version (ex.: --version vX.Y.Z)."
+        else
+          log_warn "Nenhuma tag publicada encontrada; usando a branch main."
+        fi
         VERSION="main"
       fi
     fi

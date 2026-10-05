@@ -2,6 +2,7 @@
 
 - `module`: legal
 - `required`: true
+- `files`: `legal/lgpd-legal-framework.md`, `legal/anpd-guidelines.md`, `legal/legal-bases-engine.md`, `legal/rights-of-data-subject.md`, `legal/children-adolescents.md`, `legal/international-transfer.md`
 - `inputs`: finalidade de tratamento, operações de dados, contratos/políticas
 - `prerequisites`: core
 - `activates_when`: sempre

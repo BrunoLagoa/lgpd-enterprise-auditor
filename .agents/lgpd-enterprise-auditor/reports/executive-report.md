@@ -6,7 +6,7 @@
 ## 1. Resumo executivo
 - nível geral de conformidade:
 - score global:
-- classificação final (com a marca **score parcial** e a cobertura, quando for o caso):
+- classificação final (com as marcas que couberem: **score parcial** e a cobertura, **classificação limitada por achado crítico** e **escopo direcionado**):
 - principais riscos por severidade:
 - o que fazer agora (3 a 5 ações, em linguagem simples, com esforço `P | M | G` e prazo):
 

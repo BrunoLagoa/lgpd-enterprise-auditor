@@ -2,6 +2,7 @@
 
 - `module`: eca-digital
 - `required`: false
+- `files`: `legal/eca-digital.md`
 - `inputs`: faixa etária da base de usuários, fluxo de cadastro, mecanismo de aferição de idade, configurações padrão de perfil, regras de publicidade e recomendação, mecânicas de jogo e monetização, fluxo de moderação/denúncia, volume de usuários menores registrados
 - `prerequisites`: core, legal
 - `activates_when`: cenário `eca_digital_platform`, cenário `full_audit`, ou gatilho normativo de público infantojuvenil — serviço direcionado ou **de acesso provável** por menores nos termos do art. 1º, parágrafo único (probabilidade de uso e atratividade, facilidade de acesso, grau de risco), cadastro sem bloqueio etário, jogos eletrônicos, loja de aplicativos, sistema operacional de terminal, app classificado abaixo de 18 anos

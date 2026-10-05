@@ -4,7 +4,7 @@ description: Executa auditoria LGPD + deveres de plataformas digitais (Decretos 
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.5.0"
+  version: "1.6.0"
 ---
 
 # LGPD + Plataformas Digitais (conteúdo de terceiros)
@@ -32,6 +32,7 @@ Adicione `ai-llm` se houver IA generativa ou moderação automatizada, e `eca-di
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
+- ler só os arquivos listados em `files` nos manifestos dos módulos ativos (`.agents/lgpd-enterprise-auditor/orchestrator/manifests/`) e avaliar todos os itens do catálogo desses módulos, cada um com o seu ID;
 - aplicar `.agents/lgpd-enterprise-auditor/legal/plataformas-digitais.md`;
 - verificar as exclusões do art. 16-O (e-mail, mensageria interpessoal, videoconferência restrita) e o regime de ordem judicial para crimes contra a honra (art. 16-J) antes de emitir achado;
 - nunca tratar conteúdo ilícito isolado como falha sistêmica: o achado aponta processos ausentes ou insuficientes (art. 16-B, §3º);

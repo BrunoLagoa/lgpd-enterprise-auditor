@@ -6,6 +6,9 @@ Ativar apenas módulos relevantes ao contexto do projeto, preservando cobertura 
 ## Levantamento de contexto
 Antes de perguntar, ler o que o projeto já documenta: `CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependência (`package.json`, `requirements.txt`, `pubspec.yaml` etc.) e arquivos de infraestrutura e CI. Apresentar o contexto inferido, pedir confirmação e perguntar só o que faltar. As entradas abaixo são obrigatórias; as que não puderem ser inferidas com segurança devem ser perguntadas logo no início. Na mesma rodada, perguntar sempre o formato de saída do relatório (`.md`, `.md` e `.html`, ou só `.html`), conforme a seção "Arquivos gerados" de `core/reporting-engine.md`, salvo se o pedido já disser.
 
+## Arquivos de cada módulo
+Cada manifesto em `orchestrator/manifests/` lista em `files` os arquivos do módulo. Ler os arquivos dos módulos ativos e só eles: a pasta `legal/` guarda três módulos (`legal`, `eca-digital` e `plataformas-digitais`), e ler a pasta inteira traz para a auditoria regras de módulos que não foram ativados. Modelos de `templates/` são lidos quando um item os cita.
+
 ## Entradas mínimas
 - natureza do agente de tratamento: pessoa natural ou jurídica, com ou sem fins econômicos, porte (agente de pequeno porte, Res. CD/ANPD nº 2/2022) e existência de tratamento de alto risco — define se há modulação de severidade (`core/severity-model.md`), se valem a forma simplificada do registro e a dispensa de indicação do encarregado, se o serviço é provedor de aplicações sujeito ao MCI art. 15 e se a LGPD se aplica (art. 4º, I);
 - papel do auditado em cada fluxo de dados: **controlador**, **operador** ou ambos (ex.: um SaaS B2B costuma ser operador dos dados que seus clientes inserem e controlador dos dados das contas e de cobrança) — define quais obrigações são dele e quais ficam `NAO_APLICAVEL` (`legal/legal-bases-engine.md`);
@@ -33,7 +36,8 @@ Antes de perguntar, ler o que o projeto já documenta: `CLAUDE.md`, `AGENTS.md`,
 ### Gatilhos técnicos adicionais
 - Se usar `Firebase` ou storage cloud, adicionar `cloud`.
 - Se houver API pública, adicionar `appsec`.
-- Se houver uso de embeddings/RAG/fine-tuning, adicionar `ai-llm`.
+- Se houver chamada a provedor ou SDK de LLM ou de IA generativa (ex.: OpenAI, Anthropic, Google), modelo próprio, embeddings, RAG, banco vetorial ou fine-tuning, adicionar `ai-llm`.
+- Se houver app iOS/Android (nativo, Flutter, React Native), adicionar `mobile`.
 - Se houver Kubernetes ou CI/CD ativo, adicionar `devsecops`.
 
 ### Gatilho normativo — público infantojuvenil
@@ -63,7 +67,8 @@ Serviços exclusivamente de e-mail, mensageria interpessoal ou videoconferência
 ## Saída do roteador
 - lista de módulos ativos;
 - justificativa de ativação por módulo;
-- escopo excluído explicitamente (módulos não acionados).
+- escopo excluído explicitamente: cada módulo não acionado, com a evidência de que o objeto dele não existe (o que permite marcar a área como `NAO_APLICAVEL`) ou a indicação de que ficou fora do escopo mesmo existindo (a área fica com cobertura insuficiente, sem virar não aplicável — `core/scoring-engine.md`);
+- domínios fora do escopo do cenário, para a marca **escopo direcionado** do relatório.
 
 ## Convenção de nomes
 - O roteador ativa módulos por ID de módulo (kebab-case), ex.: `ai-llm`.

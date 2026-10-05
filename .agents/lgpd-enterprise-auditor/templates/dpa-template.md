@@ -6,13 +6,15 @@
 - escopo do tratamento:
 
 ## 2. Obrigações de proteção de dados
+- tratamento só conforme as instruções documentadas do controlador, vedado o uso dos dados para finalidade própria (art. 39);
 - confidencialidade;
-- segurança da informação;
-- subcontratação;
-- cooperação com direitos do titular.
+- segurança da informação (art. 46);
+- subcontratação: lista de suboperadores, aviso prévio de mudança e mesmas obrigações estendidas a eles;
+- cooperação com direitos do titular;
+- registro das operações realizadas (art. 37).
 
 ## 3. Incidentes
-- prazo de notificação;
+- prazo de notificação ao controlador, compatível com a comunicação à ANPD em até 3 dias úteis (Res. CD/ANPD nº 15/2024);
 - conteúdo mínimo da notificação;
 - responsabilidades de mitigação.
 

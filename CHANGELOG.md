@@ -6,6 +6,40 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.6.0] - 2026-10-05
+
+### Adicionado
+- Catálogo de itens: os checklists dos módulos viram tabelas com ID fixo (ex.: `SE-03`), domínio, criticidade, agravante ou atenuante, tipo de controle e fundamento. A auditoria avalia todos os itens dos módulos ativos, e a criticidade deixa de ser escolhida caso a caso, o que torna o score reproduzível e permite comparar auditorias. Problema sem item correspondente entra como item extra (`EX-nn`).
+- Catálogo da skill gerado a partir dos módulos (`scripts/update-skill-catalog.sh`), com conferência no CI: as duas formas passam a ter os mesmos itens e os mesmos pesos.
+- Teto de classificação: com achado `CRITICO` aberto, a classificação não passa de `PARCIALMENTE_CONFORME`, qualquer que seja o score.
+- Áreas de score `eca_digital` e `plataformas_digitais` (10% cada), aplicáveis só com os respectivos módulos ativos. As sete áreas anteriores mantêm a proporção entre si, então auditorias sem esses módulos chegam ao mesmo score de antes.
+- Marca **escopo direcionado** nos relatórios de cenário diferente de `full_audit`, com a lista dos domínios não auditados.
+- Campo `files` nos manifestos: cada módulo lista os arquivos que o compõem, e a auditoria lê só os dos módulos ativos.
+- Novos itens de auditoria: segredos no histórico do git, permissões do pipeline, proteção de branch e dados reais em ambientes de teste (DevSecOps); TLS, declarações de privacidade nas lojas, eliminação de conta e backup do sistema (mobile); envenenamento de dados, isolamento de memória entre sessões, dado pessoal na saída do modelo, permissões de agentes, contrato com o provedor e transparência (IA/LLM); política de segurança e treinamento (governança).
+- Modelos: registro das operações de tratamento (art. 37), teste de balanceamento do legítimo interesse, ato de indicação do encarregado e política de retenção.
+- `scripts/validate-report.py`: confere um relatório contra o framework (seções, valores permitidos, IDs do catálogo, relação entre itens e achados e cálculo do score).
+- `scripts/tests/test-framework.sh` e workflow `framework.yml`: catálogo, paridade mecânica entre a skill e o framework, cenários e módulos entre router, matriz, README e comandos, manifestos e data de sincronização.
+- Workflow `release.yml`: ao publicar uma tag, envia `install.sh`, `install.ps1` e `SHA256SUMS` para a release. Workflow `attribution.yml`: reprova commit com assinatura de agente de IA.
+
+### Alterado
+- Pesos das áreas: `bases_legais` 12, `seguranca` 20, `direitos_titular` 12, `governanca` 12, `infraestrutura` 8, `apis_integracoes` 8, `ai_llm` 8, `eca_digital` 10 e `plataformas_digitais` 10. Os domínios 16 (ECA Digital) e 17 (plataformas digitais) saem de `governanca` para as áreas próprias.
+- Área `NAO_APLICAVEL` passa a exigir evidência de que o objeto não existe; o cenário não ter ativado o módulo deixa de bastar.
+- Gatilho do módulo `ai-llm`: qualquer chamada a provedor ou SDK de LLM ou de IA generativa, e não só embeddings, RAG ou fine-tuning. Os comandos `/lgpd-saas`, `/lgpd-web`, `/lgpd-mobile` e `/lgpd-devsecops` passam a citar o gatilho.
+- Contagem única reescrita: o item pontua pelo que resta do seu requisito, fica `NAO_APLICAVEL` quando depende de um controle inexistente e é reprovado quando o requisito inteiro falha.
+- Deveres gerais de provedor de aplicações (art. 16-A, I e II) avaliados só em `governance` (`GV-06` e `GV-07`), com o módulo `plataformas-digitais` ativo ou não.
+- Arredondamento do score global definido: inteiro mais próximo, com 0,5 para cima.
+- Modelos de política de privacidade, RIPD e DPA completados com o que o próprio checklist exige (forma e duração do tratamento, responsabilidades dos agentes, os direitos do art. 18, conteúdo mínimo do art. 38, instruções do controlador).
+- Relatório de exemplo (`examples/saas-demo`) refeito com o catálogo completo: 108 itens, score 33.
+- Workflows com `permissions: contents: read` e actions fixadas pelo hash do commit.
+
+### Corrigido
+- Instalador: falha ao consultar a última versão (sem rede ou limite da API do GitHub) não instala mais a branch `main` em silêncio. No modo interativo o instalador pergunta; com `--non-interactive`, para e pede `--version`.
+- Skill: o "Modo de operação" passa a cobrir os 17 domínios; antes citava o domínio 17 e omitia ECA Digital, mobile, cookies, logs, governança, compartilhamento e retenção.
+
+### Removido
+- Regra "dados sensíveis elevam a cobertura para `full_audit`", que só existia na matriz de ativação e não era seguida pelo router, pelos comandos nem pela skill.
+- Campo `score_partial` do `module_output`: o score é sempre por área, calculado pelo núcleo.
+
 ## [1.5.0] - 2026-10-03
 
 ### Adicionado
@@ -119,7 +153,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.5.0...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.2...v1.4.0
 [1.3.2]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.3.1...v1.3.2

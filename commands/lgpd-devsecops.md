@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para pipelines DevSecOps.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.5.0"
+  version: "1.6.0"
 ---
 
 # LGPD DevSecOps Pipeline
@@ -22,9 +22,12 @@ Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se 
 Ative o cenário `devsecops_pipeline`:
 - `core`, `legal`, `devsecops`, `cloud`, `appsec`.
 
+Adicione `ai-llm` se houver chamada a provedor ou SDK de LLM ou de IA generativa, modelo próprio, embeddings, RAG ou fine-tuning (gatilho técnico do router).
+
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
+- ler só os arquivos listados em `files` nos manifestos dos módulos ativos (`.agents/lgpd-enterprise-auditor/orchestrator/manifests/`) e avaliar todos os itens do catálogo desses módulos, cada um com o seu ID;
 - validar segredos, supply chain e hardening de deploy;
 - exigir evidência para todos os achados;
 - gerar score e relatório técnico/compliance;

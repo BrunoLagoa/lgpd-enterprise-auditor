@@ -5,7 +5,8 @@
 
 ## 1. Score LGPD
 - score (0-100):
-- classificação:
+- classificação (com as marcas **classificação limitada por achado crítico** e **escopo direcionado**, quando couberem):
+- domínios fora do escopo do cenário:
 - score por área (indicar áreas `NAO_APLICAVEL`, justificativa e pesos ajustados):
 - score técnico e score documental (informativos):
 - cobertura global e por área (marcar **score parcial** se a global for menor que 80%):

@@ -2,6 +2,7 @@
 
 - `module`: appsec
 - `required`: false
+- `files`: `appsec/owasp-api.md`
 - `inputs`: endpoints, autenticação, autorização, controles OWASP, cookies/pixels/SDKs de terceiros no front-end, logging da aplicação
 - `prerequisites`: core, legal
 - `activates_when`: aplicação web/API pública ou interna crítica

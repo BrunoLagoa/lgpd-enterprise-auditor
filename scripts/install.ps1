@@ -306,8 +306,10 @@ function Enable-Tls12 {
   } catch { }
 }
 
+# Devolve a última tag publicada; "" se o repositório não tem tag v*;
+# $null se a consulta falhou (sem rede, limite da API do GitHub ou modo offline).
 function Get-LatestTag {
-  if ($env:LGPD_AUDITOR_OFFLINE -eq "1") { return "" }
+  if ($env:LGPD_AUDITOR_OFFLINE -eq "1") { return $null }
   try {
     Enable-Tls12
     $tags = Invoke-RestMethod -Uri "https://api.github.com/repos/$Repo/tags?per_page=100" -TimeoutSec 10 -UseBasicParsing
@@ -321,7 +323,7 @@ function Get-LatestTag {
     }
     return $bestTag
   } catch {
-    return ""
+    return $null
   }
 }
 
@@ -330,9 +332,20 @@ function Resolve-Ref {
     if (Get-LocalSourceRoot) {
       $script:Version = "local"
     } else {
-      $script:Version = Get-LatestTag
-      if (-not $script:Version) {
-        Write-WarnLog "Nenhuma tag publicada encontrada; usando a branch main."
+      $latest = Get-LatestTag
+      if ($latest) {
+        $script:Version = $latest
+      } else {
+        if ($null -eq $latest) {
+          # Falha de consulta não é "sem versão publicada": a branch main pode ter mudanças não lançadas.
+          Write-WarnLog "Não foi possível consultar a última versão publicada (sem rede ou limite da API do GitHub)."
+          if ($NonInteractive) { Stop-WithError "Informe a versão com -Version (ex.: -Version vX.Y.Z) ou tente de novo mais tarde." }
+          if (-not (Confirm-Choice "Instalar a partir da branch main, que pode conter mudanças ainda não publicadas?" "n")) {
+            Stop-WithError "Instalação cancelada. Informe a versão com -Version (ex.: -Version vX.Y.Z)."
+          }
+        } else {
+          Write-WarnLog "Nenhuma tag publicada encontrada; usando a branch main."
+        }
         $script:Version = "main"
       }
     }

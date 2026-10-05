@@ -154,6 +154,18 @@ check "instalar no próprio repositório é recusado" \
   equals "$(exit_code_of "$BASH_BIN" "$INSTALLER" install --non-interactive --version local --target claude --project-dir "$REPO_ROOT")" "1"
 check "nada foi instalado no repositório" test ! -e "${REPO_ROOT}/.claude/commands/lgpd-saas.md"
 
+echo "== última versão não consultável"
+# Fora de um clone e sem conseguir consultar a última versão, o instalador não cai na branch main sozinho.
+mkdir -p "${WORK_DIR}/solo"
+cp "$INSTALLER" "${WORK_DIR}/solo/install.sh"
+new_project "no-tag"
+check "modo não interativo sem --version retorna 1" \
+  equals "$(exit_code_of "$BASH_BIN" "${WORK_DIR}/solo/install.sh" install --non-interactive --target claude --project-dir "$CURRENT")" "1"
+check "modo não interativo sem --version: nada é instalado" missing ".agents"
+printf "n\n" | "$BASH_BIN" "${WORK_DIR}/solo/install.sh" install --target claude --no-skill --project-dir "$CURRENT" > "${WORK_DIR}/last.log" 2>&1 || true
+check "modo interativo: recusar a branch main cancela a instalação" missing ".agents"
+check "modo interativo: a pergunta sobre a branch main aparece" grep -q "branch main" "${WORK_DIR}/last.log"
+
 echo "== assistente interativo"
 new_project "wizard"
 printf "9\n2\ny\ny\nn\n" | "$BASH_BIN" "$INSTALLER" install --version local --project-dir "$CURRENT" > "${WORK_DIR}/last.log" 2>&1

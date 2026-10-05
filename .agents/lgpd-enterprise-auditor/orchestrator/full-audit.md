@@ -32,7 +32,8 @@ Definir a cobertura obrigatória do modo `full_audit` e sua equivalência com a 
   17. plataformas digitais e conteúdo de terceiros (Decretos nº 12.975/2026 e nº 12.976/2026)
 
 ## Critérios mínimos de equivalência com a skill
+- manter o mesmo catálogo de itens (o da skill é gerado a partir dos módulos);
 - manter classificação de severidade em 4 níveis;
-- manter score global 0-100 e classificação final canônica;
+- manter score global 0-100, classificação final canônica e teto de classificação por achado crítico;
 - manter formato obrigatório do relatório;
 - manter exigência de evidência para conclusões.

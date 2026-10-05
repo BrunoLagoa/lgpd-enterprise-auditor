@@ -38,6 +38,14 @@ function Install-Quiet {
   return Invoke-Installer install -NonInteractive -Version local @args
 }
 
+# Roda uma cópia do instalador fora do clone, onde não existe a origem local.
+function Invoke-InstallerCopy([string]$Path) {
+  $ErrorActionPreference = "Continue"
+  $output = & $Shell -NoProfile -ExecutionPolicy Bypass -File $Path @args -ProjectDir $script:Current 2>&1
+  $script:LastLog = ($output | Out-String)
+  return $LASTEXITCODE
+}
+
 function Get-ProjectPath([string]$Rel) { return Join-Path $script:Current $Rel }
 function Test-Exists([string]$Rel) { return Test-Path -LiteralPath (Get-ProjectPath $Rel) }
 function Get-Count([string]$Dir, [string]$Pattern) {
@@ -143,6 +151,16 @@ try {
   $script:Current = $RepoRoot
   Test-Check "instalar no próprio repositório é recusado" ((Install-Quiet -Target claude) -eq 1)
   Test-Check "nada foi instalado no repositório" (-not (Test-Path -LiteralPath (Join-Path $RepoRoot ".claude/commands/lgpd-saas.md")))
+
+  Write-Host "== última versão não consultável"
+  # Fora de um clone e sem conseguir consultar a última versão, o instalador não cai na branch main sozinho.
+  $solo = Join-Path $WorkDir "solo"
+  New-Item -ItemType Directory -Force -Path $solo | Out-Null
+  $soloInstaller = Join-Path $solo "install.ps1"
+  Copy-Item -LiteralPath $Installer -Destination $soloInstaller
+  New-Project "no-tag"
+  Test-Check "modo não interativo sem -Version retorna 1" ((Invoke-InstallerCopy $soloInstaller install -NonInteractive -Target claude) -eq 1)
+  Test-Check "modo não interativo sem -Version: nada é instalado" (-not (Test-Exists ".agents"))
 } finally {
   Remove-Item -LiteralPath $WorkDir -Recurse -Force -ErrorAction SilentlyContinue
 }

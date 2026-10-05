@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para sistemas com IA/LLM.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.5.0"
+  version: "1.6.0"
 ---
 
 # LGPD IA/LLM
@@ -29,6 +29,7 @@ Adicione `plataformas-digitais` se a IA puder gerar ou alterar imagem ou som de 
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
+- ler só os arquivos listados em `files` nos manifestos dos módulos ativos (`.agents/lgpd-enterprise-auditor/orchestrator/manifests/`) e avaliar todos os itens do catálogo desses módulos, cada um com o seu ID;
 - validar risco de prompt injection e vazamento contextual;
 - exigir base legal para tratamento de dados em IA;
 - consolidar score e relatório no padrão de `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`;

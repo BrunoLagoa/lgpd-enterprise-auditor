@@ -4,17 +4,30 @@
 Auditar uso de IA/LLM com foco em privacidade, segurança e conformidade regulatória.
 
 ## Checklist atômico
-- Prompts contêm dados pessoais/sensíveis sem anonimização?
-- Há política de retenção para prompts, logs e embeddings?
-- Existe risco de prompt injection e vazamento contextual?
-- Há transferência internacional de dados com base legal válida?
-- O uso de dados para treinamento/fine-tuning possui fundamento e consentimento quando necessário?
-- Vetor de memória/RAG expõe dados além da finalidade?
-- Há decisão automatizada que afete interesses do titular, com direito a revisão assegurado (art. 20)?
-- Existe geração ou manipulação sintética de imagem/voz de pessoas (deepfake) sem base legal?
-- A funcionalidade de IA pode gerar ou alterar imagem ou som de terceiros? Se sim, há salvaguardas que bloqueiem a geração de conteúdo íntimo (vedação do art. 9º e salvaguardas do art. 10 do Decreto nº 12.976/2026)? Ativar [[plataformas-digitais]].
+Perguntas de enquadramento (não pontuam):
+- A funcionalidade de IA pode gerar ou alterar imagem ou som de pessoas? Se sim, ativar [[plataformas-digitais]]: as salvaguardas contra conteúdo íntimo de terceiro (Decreto nº 12.976/2026, arts. 9º e 10) são avaliadas lá (`PD-15`).
 - Menores estão expostos a recomendação algorítmica ou perfilamento? Se sim, ativar [[eca-digital]].
-- Dados biométricos ou neurodados alimentam o modelo? Se sim, aplicar regime de dado sensível (art. 11).
+- Dados biométricos ou neurodados alimentam o modelo? Se sim, aplicar o regime de dado sensível (art. 11) em `BL-01`.
+
+Avaliados em outros módulos, sem item próprio aqui: transferência internacional ao provedor do modelo (itens `TI`, `legal/international-transfer.md`) e revisão de decisão automatizada (`DT-08`, `legal/rights-of-data-subject.md`).
+
+Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`.
+
+| ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
+|---|---|---|---|---|---|---|
+| `IA-01` | Os prompts e os dados enviados ao modelo são minimizados e anonimizados ou mascarados, sem dado pessoal além do necessário? | 12 | `ALTO` | `CRITICO` com dado sensível enviado a LLM externo sem proteção ou base legal | `TECNICO` | arts. 6º, III, 11 e 46 |
+| `IA-02` | Há política de retenção para prompts, respostas, logs e embeddings, aplicada no sistema e no provedor? | 12 | `ALTO` | — | `TECNICO` | arts. 15 e 16 |
+| `IA-03` | Há defesa contra prompt injection e vazamento de contexto (separação de instruções e dados, filtros de entrada e de saída, testes)? | 12 | `ALTO` | — | `TECNICO` | art. 46 |
+| `IA-04` | O uso de dados pessoais para treino ou fine-tuning tem base legal e, quando necessário, consentimento? | 12 | `ALTO` | — | `DOCUMENTAL` | arts. 6º, I, 7º e 11 |
+| `IA-05` | A memória vetorial ou o RAG entrega só os dados que a finalidade e a permissão de quem consulta autorizam? | 12 | `ALTO` | — | `TECNICO` | arts. 6º, I e 46 |
+| `IA-06` | A geração ou manipulação sintética de imagem ou voz de pessoas (deepfake) tem base legal e autorização do retratado? | 12 | `ALTO` | — | `DOCUMENTAL` | arts. 7º e 11 |
+| `IA-07` | Os dados e documentos que alimentam treino, fine-tuning ou RAG têm origem controlada e validação contra envenenamento (data poisoning)? | 12 | `MEDIO` | — | `TECNICO` | arts. 6º, V e 46 |
+| `IA-08` | A memória de conversa e o contexto são isolados por usuário e por cliente, sem vazamento entre sessões (memory leakage)? | 12 | `ALTO` | — | `TECNICO` | art. 46 |
+| `IA-09` | A saída do modelo é verificada para não expor dado pessoal de terceiros nem afirmar fato inexato sobre pessoa identificável? | 12 | `MEDIO` | — | `TECNICO` | arts. 6º, V e 46 |
+| `IA-10` | Agentes e ferramentas acionados pelo modelo têm permissões mínimas, com confirmação humana para ações sobre dados pessoais? | 12 | `ALTO` | — | `TECNICO` | arts. 6º, VIII e 46 |
+| `IA-11` | O contrato e a configuração do provedor de LLM vedam o uso dos dados para treino do provedor e limitam a retenção? | 12 | `ALTO` | — | `DOCUMENTAL` | arts. 6º, I e 39 |
+| `IA-12` | O titular é informado de que interage com IA ou de que seus dados são tratados por IA? | 12 | `MEDIO` | — | `DOCUMENTAL` | arts. 6º, VI e 9º |
+| `IA-13` | Existe política de uso de IA (casos permitidos, dados vedados, responsáveis e revisão)? | 12 | `MEDIO` | — | `DOCUMENTAL` | art. 50 |
 
 ## Referências técnicas da ANPD
 Não vinculantes, mas úteis como parâmetro de boa prática e como evidência documental:
@@ -29,14 +42,19 @@ Ver [[anpd-guidelines]] para a lista completa e para os temas prioritários de f
 - configuração de retenção no provedor de LLM;
 - evidência de anonimização/redação;
 - documentação de fluxo internacional de dados;
-- controles de segurança para RAG/vector database.
+- controles de segurança para RAG/vector database;
+- contrato e painel do provedor de LLM (uso para treino, retenção);
+- permissões das ferramentas expostas a agentes e registros de confirmação humana;
+- testes de prompt injection e de isolamento entre sessões.
 
 ## Mapeamento para severidade e score
 - Dado sensível enviado a LLM externo sem proteção/base legal: `CRITICO`.
 - Geração ou modificação de conteúdo íntimo de terceiro por IA (Decreto nº 12.976/2026, art. 9º): `CRITICO` — detalhado em [[plataformas-digitais]].
 - Retenção inadequada de prompts e embeddings: `ALTO`.
 - Ausência parcial de política de IA: `MEDIO`.
-- Área de score (mapa por domínio de `core/scoring-engine.md`): `ai_llm` (domínio 12) para todos os itens deste módulo.
+- Contexto ou memória vazando entre usuários ou clientes: `ALTO`.
+- Agente com permissão excessiva sobre dados pessoais, sem confirmação humana: `ALTO`.
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `ai_llm` (domínio 12) para todos os itens deste módulo. A criticidade de cada item está na tabela do checklist.
 
 ## Em monitoramento (não vigente — não gera não conformidade)
 - **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados, sem sanção até 2026-09 (em set/2026, aguardando parecer do relator na Comissão Especial). Prevê classificação por nível de risco, direitos de transparência/explicação/contestação, governança de IA e sanções próprias.

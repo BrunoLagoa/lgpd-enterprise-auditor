@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para SaaS web.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.5.0"
+  version: "1.6.0"
 ---
 
 # LGPD SaaS Web
@@ -26,9 +26,12 @@ Adicione `eca-digital` se houver usuários menores de 18 anos, ainda que o produ
 
 Adicione `plataformas-digitais` se houver conteúdo gerado por usuários com difusão pública, anúncios/impulsionamento pagos ou IA que gere ou altere imagem ou som de pessoas (gatilho normativo do router — Decretos nº 12.975/2026 e nº 12.976/2026).
 
+Adicione `ai-llm` se houver chamada a provedor ou SDK de LLM ou de IA generativa, modelo próprio, embeddings, RAG ou fine-tuning (gatilho técnico do router).
+
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
+- ler só os arquivos listados em `files` nos manifestos dos módulos ativos (`.agents/lgpd-enterprise-auditor/orchestrator/manifests/`) e avaliar todos os itens do catálogo desses módulos, cada um com o seu ID;
 - exigir evidência por item auditado;
 - gerar score e classificação final;
 - produzir relatório conforme `.agents/lgpd-enterprise-auditor/core/reporting-engine.md`;

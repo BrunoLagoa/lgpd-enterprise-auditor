@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para aplicações mobile.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.5.0"
+  version: "1.6.0"
 ---
 
 # LGPD Mobile App
@@ -26,9 +26,12 @@ Adicione `eca-digital` se o app for classificado para faixa etária inferior a 1
 
 Adicione `plataformas-digitais` se o app intermediar conteúdo de terceiros com difusão pública, oferecer anúncios/impulsionamento pagos ou gerar/alterar imagem ou som de pessoas (gatilho normativo do router — Decretos nº 12.975/2026 e nº 12.976/2026).
 
+Adicione `ai-llm` se houver chamada a provedor ou SDK de LLM ou de IA generativa, modelo próprio, embeddings, RAG ou fine-tuning (gatilho técnico do router).
+
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;
 - seguir `.agents/lgpd-enterprise-auditor/orchestrator/router.md`;
+- ler só os arquivos listados em `files` nos manifestos dos módulos ativos (`.agents/lgpd-enterprise-auditor/orchestrator/manifests/`) e avaliar todos os itens do catálogo desses módulos, cada um com o seu ID;
 - validar permissões, storage local e tracking;
 - exigir evidência por requisito;
 - consolidar score e relatório final padrão;

@@ -2,6 +2,7 @@
 
 - `module`: plataformas-digitais
 - `required`: false
+- `files`: `legal/plataformas-digitais.md`
 - `inputs`: tipo de serviço (intermediação de conteúdo de terceiros, anúncios/impulsionamento pagos, IA que gera ou altera imagem/som), canal de denúncia e fluxo de notificação/contestação, políticas de moderação e gestão de riscos sistêmicos, base de anúncios e anunciantes, guarda de registros de acesso (IP e porta lógica), representante legal no País, termos de uso e relatórios de transparência
 - `prerequisites`: core, legal
 - `activates_when`: cenário `digital_platform`, cenário `full_audit`, ou gatilho normativo de plataformas digitais — provedor de aplicações que intermedeie conteúdo gerado por terceiros com difusão pública, ofereça anúncio ou impulsionamento pago, ou disponibilize IA capaz de gerar ou alterar imagem ou som de pessoas

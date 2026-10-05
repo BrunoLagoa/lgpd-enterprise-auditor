@@ -314,13 +314,13 @@ footer p{max-width:90ch}
       "cloud",
       "devsecops"
     ],
-    "framework_version": "1.5.0",
+    "framework_version": "1.6.0",
     "method": "leitura estática dos arquivos do repositório; sem acesso ao ambiente de produção, aos painéis da Vercel, do banco e do GitHub, nem a contratos fora do repositório",
     "notice": "**Exemplo público com dados fictícios.** Este relatório foi produzido sobre o projeto fictício e intencionalmente falho de `examples/saas-demo/` para demonstrar o LGPD Enterprise Auditor. Empresa, pessoas, CNPJ, domínios e dados são inventados. Relatórios reais são confidenciais e não devem ser versionados em repositório público; este arquivo foge da regra só por ser um exemplo público."
   },
-  "context": "### O que foi inferido dos arquivos do projeto\n\nAntes de qualquer pergunta, foram lidos `README.md`, `docs/`, `package.json`, `vercel.json`, `.env.example`, `.github/workflows/ci.yml`, `db/schema.sql` e o código de `api/`, `src/` e `public/`.\n\n| Entrada do roteador | Contexto inferido | Fonte |\n|---|---|---|\n| Natureza do agente | Pessoa jurídica com fins econômicos; microempresa do Simples Nacional, 3 sócios | `README.md:13-14` |\n| Papel em cada fluxo | Operadora dos dados dos pacientes; controladora das contas das clínicas e do rastreamento que ela mesma instalou (detalhe abaixo) | `README.md:9` e `:16`, `db/schema.sql:11-39`, `public/index.html:7-15` |\n| Stack | Node.js 20 + Express 5, JWT; front-end estático | `README.md:20-21`, `package.json:15-22` |\n| Hospedagem e banco | Vercel (funções em `gru1`, CDN para estáticos); Postgres gerenciado em `sa-east-1` | `vercel.json:3-4`, `.env.example:5-6`, `README.md:22-23` |\n| Integrações | Meta Pixel na página pública de agendamento, para campanhas da própria AgendaFácil | `public/index.html:7-15`, `README.md:24` |\n| IA/LLM | Nenhuma: sem SDK de IA nas dependências e nenhum fluxo de IA declarado | `package.json:15-25`, `README.md:18-25` |\n| DevSecOps | GitHub Actions com lint, testes e deploy; sem varreduras de segurança | `.github/workflows/ci.yml` |\n| Faixa etária do público | Serviço B2B para clínicas que atendem só adultos; o agendamento bloqueia menores de 18 anos pela data de nascimento informada | `README.md:15`, `src/routes/agendamentos.js:23-27` |\n| Dados tratados | Nome, CPF, telefone, e-mail, data de nascimento e motivo da consulta (texto livre) dos pacientes; e-mail e hash de senha dos usuários das clínicas | `db/schema.sql:11-39`, `README.md:29` |\n\nConfirmações pedidas ao fim do levantamento (respostas simuladas para este exemplo). A fundadora:\n\n- confirmou o porte, a ausência de IA e que o Meta Pixel foi instalado por decisão da AgendaFácil, para suas próprias campanhas;\n- informou que `docs/lgpd/` reúne toda a documentação de privacidade que a empresa tem;\n- informou que não há contrato de proteção de dados assinado com clínicas nem com provedores, e que os termos padrão aceitos no cadastro da Vercel, do banco e da Meta não foram reunidos para análise.\n\n### Natureza e papel do agente de tratamento\n\n- **Pessoa jurídica com fins econômicos**, portanto sujeita à LGPD (a exclusão do art. 4º, I, não se aplica).\n- **Agente de tratamento de pequeno porte** (microempresa, Res. CD/ANPD nº 2/2022).\n- **Há tratamento de alto risco.** O motivo da consulta (`db/schema.sql:37`, `public/index.html:35`) é **dado pessoal sensível referente à saúde** (art. 5º, II). Pelos critérios da Res. CD/ANPD nº 2/2022 (art. 4º), o uso de dados sensíveis é um critério específico de alto risco. O critério geral também está presente: a exposição de dados de saúde de cerca de 25 mil pacientes pode afetar significativamente seus interesses e direitos fundamentais.\n\n**Papel em cada fluxo de dados** (`legal/legal-bases-engine.md`, seção \"Papel do auditado\"):\n\n| Fluxo | Papel da AgendaFácil | Consequência na auditoria |\n|---|---|---|\n| Dados dos pacientes inseridos no agendamento (nome, CPF, contato, data de nascimento, motivo da consulta) | **Operadora**. As clínicas são as controladoras | Base legal, consentimento, política dirigida aos pacientes e canal de direitos são obrigações das clínicas e ficam `NAO_APLICAVEL`. Valem os itens de operador (OP-01 a OP-06), a segurança própria e o registro das operações |\n| Rastreamento da página de agendamento pelo Meta Pixel, instalado pela AgendaFácil para suas campanhas | **Controladora** dessa finalidade própria | Precisa de base legal própria; os itens de cookies, transparência, direitos e transferência internacional ficam `APLICAVEL` |\n| Contas dos usuários das clínicas (e-mail e senha) e, quando existirem, cobrança e dados de uso do produto | **Controladora** | Base legal, transparência, direitos, retenção e incidentes são obrigações da AgendaFácil. O repositório não tem código de cobrança |\n\nHoje nenhum documento registra essa divisão (ver OP-01).\n\n**Consequências do porte e do alto risco:**\n\n1. **Nenhuma severidade foi modulada.** O `core/severity-model.md` só permite reduzir a severidade em um nível quando as três condições são verdadeiras ao mesmo tempo: pequeno porte, **ausência** de tratamento de alto risco e ausência de exposição explorável confirmada. A segunda condição falha, então todas as severidades e `criticality` deste relatório são as originais.\n2. **As dispensas do pequeno porte não se aplicam.** O tratamento de alto risco está entre as exclusões da Res. CD/ANPD nº 2/2022 (art. 3º). A indicação de encarregado é facultativa para o operador, mas a AgendaFácil também é controladora (contas e rastreamento) e, sem a dispensa, precisa indicá-lo. O registro das operações deve ser o completo, não o simplificado (`governance/dpo-framework.md`). Recomenda-se confirmar o enquadramento com a assessoria jurídica.\n\n### Módulos ativados (saída do roteador)\n\n| Módulo | Ativado | Justificativa |\n|---|---|---|\n| `core` | sim | obrigatório em todo cenário |\n| `legal` | sim | obrigatório em todo cenário; inclui bases legais, papel do auditado, direitos do titular e transferência internacional |\n| `governance` | sim | cenário `saas_web` |\n| `appsec` | sim | cenário `saas_web`; há API pública (`/api/agendamentos`) |\n| `cloud` | sim | cenário `saas_web`; hospedagem em PaaS e banco gerenciado |\n| `devsecops` | sim | cenário `saas_web`; CI/CD ativo |\n\n**Escopo excluído explicitamente:**\n\n- `eca-digital`: módulo não ativado. O único controle etário é a data de nascimento **autodeclarada** (`src/routes/agendamentos.js:23-27`). Pelo `orchestrator/router.md`, a autodeclaração não afasta o gatilho quando existe qualquer outro indício da lista. Aqui não existe nenhum: o serviço é B2B, contratado por clínicas que atendem só adultos (`README.md:15`); a página de agendamento não é direcionada a menores nem tem atrativo para eles; não há jogos, itens virtuais, monetização por engajamento nem aplicativo em loja. Sem outro indício, o módulo não é ativado e a decisão fica registrada aqui. Se alguma clínica passar a atender menores, ativar `eca-digital` e reavaliar o art. 14 da LGPD.\n- `plataformas-digitais`: não há conteúdo de terceiros com difusão pública, venda de anúncios ou impulsionamento, nem IA que gere ou altere imagem ou som. Como a AgendaFácil é provedora de aplicações de internet, os deveres gerais do art. 16-A do Decreto nº 8.771/2016 foram verificados por `governance` (GV-06), com o mapeamento de severidade de `legal/plataformas-digitais.md`. A guarda de registros de acesso (MCI, art. 15) é avaliada uma única vez, como item de `cloud` (IN-04).\n- `ai-llm`: não há IA no produto (ver área `ai_llm` em `score_lgpd`).\n- `mobile`: não há aplicativo móvel.\n\n### Limitações e convenções\n\n- **Aplicabilidade** (`core/scoring-engine.md`): cada item é `APLICAVEL`, `NAO_APLICAVEL` ou `NAO_VERIFICADO`. Só o item `APLICAVEL` tem status e entra no score.\n  - `NAO_APLICAVEL`: o objeto não existe no projeto, com evidência da inexistência, ou a obrigação é de outro agente (aqui, das clínicas controladoras).\n  - `NAO_VERIFICADO`: controle técnico que só pode ser conferido na produção ou no painel de um provedor. Gera uma verificação pendente.\n  - Documento que deveria existir e não foi apresentado é `AUSENTE` e reduz o score; nunca é `NAO_VERIFICADO`.\n- **Achados** (`core/auditor-core.md`): todo item `NAO_CONFORME` ou `PARCIAL` gera um achado em `nao_conformidades`.\n  - No `NAO_CONFORME`, a severidade do achado é a `criticality` do item.\n  - No `PARCIAL`, a severidade reflete a lacuna que resta e nunca passa da `criticality`.\n- **Contagem única** (`core/scoring-engine.md`): uma mesma falha (mesma causa e mesma evidência) reprova só o item mais específico. Os outros itens afetados a citam e só são reprovados se representarem uma obrigação legal distinta. Neste relatório:\n  - O Meta Pixel reprova três itens, por três obrigações distintas: OP-02 (operadora que usa dados dos pacientes para finalidade própria, art. 39), CK-02 (rastreamento antes do consentimento, arts. 7º, I e 8º) e GV-05 (transferência internacional, art. 33). CK-03 cita a mesma falha e só pontua pela lacuna própria da revogação.\n  - A CSP enfraquecida pela hospedagem reprova só IN-01; SE-02 a cita.\n  - A falta de limitação de tentativas no login reprova só AP-03; SE-04 a cita.\n  - A falta de contrato com as clínicas reprova só OP-01; BL-02 e GV-01 a citam.\n  - A falta de processo de incidentes reprova só OP-04, que reúne o aviso às clínicas e a comunicação à ANPD dos dados próprios.\n- **Evidência:** formato `GRAU (ORIGEM), confiança NIVEL: descrição`, com caminho e linha dos arquivos do projeto; várias evidências são separadas por ponto e vírgula. Confiança, pela escala de `core/evidence-engine.md`:\n  - `ALTA`: prova direta e rastreável do que o item exige;\n  - `MEDIA`: prova direta de um lado só (por exemplo, o código sem confirmação em produção, ou a ausência constatada no repositório e declarada pela fundadora);\n  - `BAIXA`: prova indireta ou incompleta.\n- **Prazos:** `IMEDIATO` significa até 7 dias. `IMEDIATO` e `30_DIAS` entram no curto prazo, `90_DIAS` no médio e `180_DIAS` no longo.\n- **IDs dos itens:** `BL` bases legais, `CK` cookies, `OP` obrigações de operador, `SE`/`DS` segurança e DevSecOps, `DT` direitos do titular, `GV` governança, `IN` infraestrutura, `AP` APIs e integrações.",
+  "context": "### O que foi inferido dos arquivos do projeto\n\nAntes de qualquer pergunta, foram lidos `README.md`, `docs/`, `package.json`, `vercel.json`, `.env.example`, `.github/workflows/ci.yml`, `db/schema.sql` e o código de `api/`, `src/` e `public/`.\n\n| Entrada do roteador | Contexto inferido | Fonte |\n|---|---|---|\n| Natureza do agente | Pessoa jurídica com fins econômicos; microempresa do Simples Nacional, 3 sócios | `README.md:13-14` |\n| Papel em cada fluxo | Operadora dos dados dos pacientes; controladora das contas das clínicas e do rastreamento que ela mesma instalou (detalhe abaixo) | `README.md:9` e `:16`, `db/schema.sql:11-39`, `public/index.html:7-15` |\n| Stack | Node.js 20 + Express 5, JWT; front-end estático | `README.md:20-21`, `package.json:15-22` |\n| Hospedagem e banco | Vercel (funções em `gru1`, CDN para estáticos); Postgres gerenciado em `sa-east-1` | `vercel.json:3-4`, `.env.example:5-6`, `README.md:22-23` |\n| Integrações | Meta Pixel na página pública de agendamento, para campanhas da própria AgendaFácil | `public/index.html:7-15`, `README.md:24` |\n| IA/LLM | Nenhuma: sem SDK de IA nas dependências e nenhum fluxo de IA declarado | `package.json:15-25`, `README.md:18-25` |\n| DevSecOps | GitHub Actions com lint, testes e deploy; sem varreduras de segurança | `.github/workflows/ci.yml` |\n| Faixa etária do público | Serviço B2B para clínicas que atendem só adultos; o agendamento bloqueia menores de 18 anos pela data de nascimento informada | `README.md:15`, `src/routes/agendamentos.js:23-27` |\n| Dados tratados | Nome, CPF, telefone, e-mail, data de nascimento e motivo da consulta (texto livre) dos pacientes; e-mail e hash de senha dos usuários das clínicas | `db/schema.sql:11-39`, `README.md:29` |\n\nConfirmações pedidas ao fim do levantamento (respostas simuladas para este exemplo). A fundadora:\n\n- confirmou o porte, a ausência de IA e que o Meta Pixel foi instalado por decisão da AgendaFácil, para suas próprias campanhas;\n- informou que `docs/lgpd/` reúne toda a documentação de privacidade que a empresa tem;\n- informou que não há contrato de proteção de dados assinado com clínicas nem com provedores, e que os termos padrão aceitos no cadastro da Vercel, do banco e da Meta não foram reunidos para análise.\n\n### Natureza e papel do agente de tratamento\n\n- **Pessoa jurídica com fins econômicos**, portanto sujeita à LGPD (a exclusão do art. 4º, I, não se aplica).\n- **Agente de tratamento de pequeno porte** (microempresa, Res. CD/ANPD nº 2/2022).\n- **Há tratamento de alto risco.** O motivo da consulta (`db/schema.sql:37`, `public/index.html:35`) é **dado pessoal sensível referente à saúde** (art. 5º, II). Pelos critérios da Res. CD/ANPD nº 2/2022 (art. 4º), o uso de dados sensíveis é um critério específico de alto risco. O critério geral também está presente: a exposição de dados de saúde de cerca de 25 mil pacientes pode afetar significativamente seus interesses e direitos fundamentais.\n\n**Papel em cada fluxo de dados** (`legal/legal-bases-engine.md`, seção \"Papel do auditado\"):\n\n| Fluxo | Papel da AgendaFácil | Consequência na auditoria |\n|---|---|---|\n| Dados dos pacientes inseridos no agendamento (nome, CPF, contato, data de nascimento, motivo da consulta) | **Operadora**. As clínicas são as controladoras | Base legal, consentimento, política dirigida aos pacientes e canal de direitos são obrigações das clínicas e ficam `NAO_APLICAVEL`. Valem os itens de operador (OP-01 a OP-06), a segurança própria e o registro das operações. Os itens `CS`, `CA` e `DP` ficam `NAO_APLICAVEL` |\n| Rastreamento da página de agendamento pelo Meta Pixel, instalado pela AgendaFácil para suas campanhas | **Controladora** dessa finalidade própria | Precisa de base legal própria; os itens de cookies, transparência, direitos e transferência internacional ficam `APLICAVEL` |\n| Contas dos usuários das clínicas (e-mail e senha) e, quando existirem, cobrança e dados de uso do produto | **Controladora** | Base legal, transparência, direitos, retenção e incidentes são obrigações da AgendaFácil. O repositório não tem código de cobrança |\n\nHoje nenhum documento registra essa divisão (ver OP-01).\n\n**Consequências do porte e do alto risco:**\n\n1. **Nenhuma severidade foi modulada.** O `core/severity-model.md` só permite reduzir a severidade em um nível quando as três condições são verdadeiras ao mesmo tempo: pequeno porte, **ausência** de tratamento de alto risco e ausência de exposição explorável confirmada. A segunda condição falha, então todas as severidades e `criticality` deste relatório são as originais.\n2. **As dispensas do pequeno porte não se aplicam.** O tratamento de alto risco está entre as exclusões da Res. CD/ANPD nº 2/2022 (art. 3º). A indicação de encarregado é facultativa para o operador, mas a AgendaFácil também é controladora (contas e rastreamento) e, sem a dispensa, precisa indicá-lo. O registro das operações deve ser o completo, não o simplificado (`governance/dpo-framework.md`). Recomenda-se confirmar o enquadramento com a assessoria jurídica.\n\n### Módulos ativados (saída do roteador)\n\n| Módulo | Ativado | Justificativa |\n|---|---|---|\n| `core` | sim | obrigatório em todo cenário |\n| `legal` | sim | obrigatório em todo cenário; inclui bases legais, papel do auditado, direitos do titular e transferência internacional |\n| `governance` | sim | cenário `saas_web` |\n| `appsec` | sim | cenário `saas_web`; há API pública (`/api/agendamentos`) |\n| `cloud` | sim | cenário `saas_web`; hospedagem em PaaS e banco gerenciado |\n| `devsecops` | sim | cenário `saas_web`; CI/CD ativo |\n\n**Escopo excluído explicitamente:**\n\n- `eca-digital`: módulo não ativado. O único controle etário é a data de nascimento **autodeclarada** (`src/routes/agendamentos.js:23-27`). Pelo `orchestrator/router.md`, a autodeclaração não afasta o gatilho quando existe qualquer outro indício da lista. Aqui não existe nenhum: o serviço é B2B, contratado por clínicas que atendem só adultos (`README.md:15`); a página de agendamento não é direcionada a menores nem tem atrativo para eles; não há jogos, itens virtuais, monetização por engajamento nem aplicativo em loja. Sem outro indício, o módulo não é ativado e a decisão fica registrada aqui. Se alguma clínica passar a atender menores, ativar `eca-digital` e reavaliar o art. 14 da LGPD.\n- `plataformas-digitais`: não há conteúdo de terceiros com difusão pública, venda de anúncios ou impulsionamento, nem IA que gere ou altere imagem ou som. Como a AgendaFácil é provedora de aplicações de internet, os deveres gerais do art. 16-A do Decreto nº 8.771/2016 foram verificados por `governance` (GV-06 e GV-07). A guarda de registros de acesso (MCI, art. 15) é avaliada uma única vez, como item de `cloud` (IN-04).\n- `ai-llm`: não há IA no produto. Evidência da inexistência: nenhuma dependência de SDK ou provedor de IA (`package.json:15-25`) e nenhuma chamada a modelo no código; o gatilho técnico do roteador não é acionado (ver área `ai_llm` em `score_lgpd`).\n- `mobile`: não há aplicativo móvel (`package.json:15-25`; só páginas web em `public/`).\n\n**Escopo do score:** o cenário `saas_web` é direcionado. O relatório traz a marca **escopo direcionado**, e os domínios 8 (mobile), 12 (IA/LLM), 16 (ECA Digital) e 17 (plataformas digitais) ficaram fora da auditoria, pelas razões acima. Como o produto trata dados de saúde, vale repetir a auditoria com `/lgpd-full-audit` quando houver acesso aos painéis.\n\n### Limitações e convenções\n\n- **Aplicabilidade** (`core/scoring-engine.md`): cada item é `APLICAVEL`, `NAO_APLICAVEL` ou `NAO_VERIFICADO`. Só o item `APLICAVEL` tem status e entra no score.\n  - `NAO_APLICAVEL`: o objeto não existe no projeto, com evidência da inexistência, ou a obrigação é de outro agente (aqui, das clínicas controladoras).\n  - `NAO_VERIFICADO`: controle técnico que só pode ser conferido na produção ou no painel de um provedor. Gera uma verificação pendente.\n  - Documento que deveria existir e não foi apresentado é `AUSENTE` e reduz o score; nunca é `NAO_VERIFICADO`.\n- **Achados** (`core/auditor-core.md`): todo item `NAO_CONFORME` ou `PARCIAL` gera um achado em `nao_conformidades`.\n  - No `NAO_CONFORME`, a severidade do achado é a `criticality` do item.\n  - No `PARCIAL`, a severidade reflete a lacuna que resta e nunca passa da `criticality`.\n- **Contagem única** (`core/scoring-engine.md`): cada item é avaliado pelo seu próprio requisito, e uma mesma falha não é contada duas vezes. Quando parte do requisito repete a falha de outro item, o item a cita e pontua pelo que resta; quando o requisito inteiro falha, o item é reprovado, mesmo com causa comum. Neste relatório:\n  - O Meta Pixel reprova quatro itens, por quatro obrigações distintas: OP-02 (operadora que usa dados dos pacientes para finalidade própria, art. 39), CK-02 (rastreamento antes do consentimento, arts. 7º, I e 8º), TI-02 (transferência internacional sem mecanismo, art. 33) e TI-05 (dado que revela informação de saúde enviado ao exterior sem proteção, art. 11). CK-03 cita a mesma falha e só pontua pela lacuna própria da revogação.\n  - A CSP enfraquecida pela hospedagem reprova só IN-01; SE-02 a cita e pontua pelo que resta do seu requisito.\n  - A falta de limitação de tentativas no login reprova só AP-03; SE-04 a cita.\n  - A falta de contrato com as clínicas reprova só OP-01; BL-02 e GV-01 a citam.\n  - A falta de processo de incidentes reprova OP-04 (aviso às clínicas) e GV-08 (comunicação à ANPD e aos titulares nos dados próprios): são dois requisitos, cada um inteiro sem atendimento.\n  - Itens que dependem de um controle inexistente ficam `NAO_APLICAVEL`, com a referência ao item que conta a falha: GV-05 e GV-10 (dependem do encarregado, GV-02) e GV-13 (depende da eliminação, GV-12).\n- **Evidência:** formato `GRAU (ORIGEM), confiança NIVEL: descrição`, com caminho e linha dos arquivos do projeto; várias evidências são separadas por ponto e vírgula. Confiança, pela escala de `core/evidence-engine.md`:\n  - `ALTA`: prova direta e rastreável do que o item exige;\n  - `MEDIA`: prova direta de um lado só (por exemplo, o código sem confirmação em produção, ou a ausência constatada no repositório e declarada pela fundadora);\n  - `BAIXA`: prova indireta ou incompleta.\n- **Prazos:** `IMEDIATO` significa até 7 dias. `IMEDIATO` e `30_DIAS` entram no curto prazo, `90_DIAS` no médio e `180_DIAS` no longo.\n- **Itens do checklist:** são os do catálogo dos módulos ativos (`core/scoring-engine.md`, \"Catálogo de itens\"), todos avaliados: 108 itens. O ID, o texto, a área, a `criticality` e o `control_type` vêm do catálogo; quando a `criticality` usa o agravante da linha do item, a evidência diz qual. Prefixos: `BL` bases legais, `OP` obrigações de operador, `DP` dados de acesso público, `CS` consentimento, `CA` crianças e adolescentes, `CK` cookies, `SE` segurança, `DS` DevSecOps, `DT` direitos do titular e transparência, `GV` governança, `TI` transferência internacional, `IN` infraestrutura, `AP` APIs e integrações.",
   "resumo_executivo": {
-    "overview": "**Score LGPD: 35/100. Classificação: `CRITICO`.** Cobertura da análise: 88,4% (38 de 43 itens verificáveis), acima do mínimo de 80%; o score não é parcial.\n\nO AgendaFácil tem uma base técnica razoável (senhas com bcrypt, HTTPS, controle de acesso por papel, consultas parametrizadas, segredos fora do código). Dois problemas puxam o resultado para baixo:\n\n1. **A AgendaFácil usa dados de pacientes para fim próprio.** Ela é operadora das clínicas, mas instalou um pixel de publicidade na página em que os pacientes marcam consulta. É o único achado `CRITICO`.\n2. **Quase nenhum documento existe.** Não há contrato com as clínicas nem com os provedores, registro das operações, encarregado, processo de incidentes ou aviso de privacidade publicado. O score documental é 10,3; o técnico, 45,6.\n\nComo o produto trata **dados de saúde**, nenhuma severidade pôde ser reduzida pelo porte da empresa. Por outro lado, o papel de operadora tira da AgendaFácil obrigações que são das clínicas: a base legal dos dados dos pacientes, o consentimento, a política dirigida a eles e o canal de direitos ficaram fora do cálculo.\n\nAs cinco ações abaixo custam pouco e atacam os riscos mais graves. Três delas se resolvem em menos de uma semana.",
+    "overview": "**Score LGPD: 33/100. Classificação: `CRITICO`, com escopo direcionado (cenário `saas_web`).** Cobertura da análise: 85,3% (64 de 75 itens verificáveis), acima do mínimo de 80%; o score não é parcial.\n\nO AgendaFácil tem uma base técnica razoável (senhas com bcrypt, HTTPS, controle de acesso por papel, consultas parametrizadas, segredos fora do código). Dois problemas puxam o resultado para baixo:\n\n1. **A AgendaFácil usa dados de pacientes para fim próprio.** Ela é operadora das clínicas, mas instalou um pixel de publicidade na página em que os pacientes marcam consulta. É o único achado `CRITICO`.\n2. **Quase nenhum documento existe.** Não há contrato com as clínicas nem com os provedores, registro das operações, encarregado, processo de incidentes ou aviso de privacidade publicado. O score documental é 8,1; o técnico, 42,0.\n\nComo o produto trata **dados de saúde**, nenhuma severidade pôde ser reduzida pelo porte da empresa. Por outro lado, o papel de operadora tira da AgendaFácil obrigações que são das clínicas: a base legal dos dados dos pacientes, o consentimento, a política dirigida a eles e o canal de direitos ficaram fora do cálculo. O teto de classificação por achado crítico não muda nada aqui, porque o score já está na faixa `CRITICO`.\n\nAs cinco ações abaixo custam pouco e atacam os riscos mais graves. Três delas se resolvem em menos de uma semana.",
     "actions": [
       {
         "action": "Tirar o Meta Pixel da página de agendamento. Se ele for necessário para marketing, usá-lo só no site institucional, e só depois do \"Aceitar\".",
@@ -331,7 +331,8 @@ footer p{max-width:90ch}
           "OP-02",
           "CK-02",
           "CK-03",
-          "GV-05"
+          "TI-02",
+          "TI-05"
         ]
       },
       {
@@ -363,7 +364,9 @@ footer p{max-width:90ch}
           "OP-01",
           "OP-03",
           "OP-04",
-          "GV-05"
+          "GV-08",
+          "GV-09",
+          "TI-02"
         ]
       },
       {
@@ -375,89 +378,115 @@ footer p{max-width:90ch}
           "DT-01",
           "DT-03",
           "DT-04",
+          "DT-07",
+          "TI-04",
           "GV-02"
         ]
       }
     ],
     "accepted_risks": "Nenhum risco `CRITICO` foi aceito. Há um risco `ALTO` aceito (GV-03, RIPD do rastreamento para fins próprios), detalhado em `nao_conformidades` e em `riscos_identificados`. O aceite não altera o score.",
-    "strengths": "Senhas com bcrypt (SE-01), HTTPS com HSTS (SE-02), controle de acesso por papel e isolamento por clínica (SE-03), consultas parametrizadas e saída escapada (SE-05), segredos do pipeline em secrets do CI (DS-01), segredos fora do repositório (IN-02), TLS com o banco (AP-04) e banner com botão \"Rejeitar\" tão visível quanto \"Aceitar\" (CK-01). Os dados em repouso ficam no Brasil (`sa-east-1`)."
+    "strengths": "Senhas com bcrypt (SE-01), HTTPS com HSTS (SE-02), controle de acesso por papel e isolamento por clínica (SE-03), consultas parametrizadas e saída escapada (SE-05), segredos do pipeline em secrets do CI (DS-01), segredos fora do repositório (IN-02), TLS com o banco (AP-04), nenhuma chave no código nem no front-end (AP-06), sede e contato no País publicados (GV-07) e banner com botão \"Rejeitar\" tão visível quanto \"Aceitar\" (CK-01). Os dados em repouso ficam no Brasil (`sa-east-1`)."
   },
   "score_lgpd": {
-    "score": 35,
+    "score": 33,
     "classification": "CRITICO",
-    "coverage": 88.4,
-    "score_tecnico": 45.6,
-    "score_documental": 10.3,
+    "coverage": 85.3,
+    "score_tecnico": 42.0,
+    "score_documental": 8.1,
     "agent_nature": "pessoa jurídica com fins econômicos, de pequeno porte, com tratamento de alto risco (dados de saúde)",
     "agent_role": "operadora dos dados dos pacientes; controladora das contas das clínicas e do rastreamento para fins próprios",
     "severity_modulation": "nenhuma: a condição \"sem tratamento de alto risco\" de `core/severity-model.md` não é atendida",
     "areas": [
       {
         "id": "bases_legais",
-        "score": 31.6,
-        "weight": 15.0,
+        "score": 36.0,
+        "weight": 12.0,
         "adjusted_weight": 16.67,
         "coverage": 100.0
       },
       {
         "id": "seguranca",
-        "score": 61.7,
-        "weight": 25.0,
+        "score": 50.0,
+        "weight": 20.0,
         "adjusted_weight": 27.78,
-        "coverage": 100.0
+        "coverage": 82.4
       },
       {
         "id": "direitos_titular",
-        "score": 10.0,
-        "weight": 15.0,
+        "score": 11.8,
+        "weight": 12.0,
         "adjusted_weight": 16.67,
         "coverage": 100.0
       },
       {
         "id": "governanca",
-        "score": 8.3,
-        "weight": 15.0,
+        "score": 7.9,
+        "weight": 12.0,
         "adjusted_weight": 16.67,
         "coverage": 100.0
       },
       {
         "id": "infraestrutura",
-        "score": 57.1,
-        "weight": 10.0,
+        "score": 50.0,
+        "weight": 8.0,
         "adjusted_weight": 11.11,
-        "coverage": 28.6
+        "coverage": 27.3
       },
       {
         "id": "apis_integracoes",
-        "score": 27.3,
-        "weight": 10.0,
+        "score": 37.5,
+        "weight": 8.0,
         "adjusted_weight": 11.11,
         "coverage": 100.0
       },
       {
         "id": "ai_llm",
+        "weight": 8.0,
+        "applicability": "NAO_APLICAVEL",
+        "justification": "Objeto inexistente, com evidência: nenhuma dependência de SDK ou provedor de IA (`package.json:15-25`), nenhuma chamada a modelo no código (`src/`, `api/`) e nenhum fluxo de IA declarado (`README.md:18-25`). O gatilho técnico de `ai-llm` em `orchestrator/router.md` não é acionado, e a exclusão está registrada no escopo excluído."
+      },
+      {
+        "id": "eca_digital",
         "weight": 10.0,
         "applicability": "NAO_APLICAVEL",
-        "justification": "O módulo `ai-llm` não é acionado pelo cenário `saas_web`, e a exclusão está registrada no escopo excluído do roteador. Também não há objeto a avaliar: nenhuma dependência de SDK ou provedor de IA (`package.json:15-25`) e nenhum fluxo de IA declarado (`README.md:18-25`). Primeiro critério de `NAO_APLICAVEL` de `core/scoring-engine.md`."
+        "justification": "Sem indício de público infantojuvenil: serviço B2B para clínicas que atendem só adultos (`README.md:15`), sem jogos, itens virtuais, monetização por engajamento nem aplicativo em loja. O gatilho normativo de `eca-digital` não é acionado, e a decisão está registrada no escopo excluído."
+      },
+      {
+        "id": "plataformas_digitais",
+        "weight": 10.0,
+        "applicability": "NAO_APLICAVEL",
+        "justification": "Objeto inexistente: não há conteúdo de terceiros com difusão pública, venda de anúncios ou impulsionamento, nem IA que gere ou altere imagem ou som (`src/routes/`, `public/`). O gatilho normativo de `plataformas-digitais` não é acionado. Os deveres gerais de provedor de aplicações são avaliados em GV-06, GV-07 e IN-04."
       }
     ],
     "pending_checks": [
       {
-        "item": "GV-05",
+        "item": "TI-02",
         "current": "`NAO_CONFORME`, `ALTO` (peso 3): mecanismo de transferência não evidenciado; confiança `BAIXA`",
-        "may_change": "Sobe para `CRITICO` (peso 4) se os termos não tiverem CPC nem outro mecanismo. Se as CPC estiverem incorporadas, resta a falta de informação ao titular",
+        "may_change": "Sobe para `CRITICO` (peso 4) se os termos não tiverem CPC nem outro mecanismo; passa a `CONFORME` se as CPC estiverem incorporadas. A mesma verificação resolve TI-03",
         "check": "Examinar os termos da Meta, da Vercel e do provedor do banco"
       },
       {
-        "item": "OP-03",
-        "current": "`NAO_CONFORME`, `ALTO`: contratos com suboperadores não evidenciados; confiança `BAIXA`",
-        "may_change": "Passa a `PARCIAL` se os termos padrão já trouxerem DPA; segue faltando informar os suboperadores às clínicas",
+        "item": "GV-09",
+        "current": "`NAO_CONFORME`, `ALTO`: contratos com os provedores não evidenciados; confiança `BAIXA`",
+        "may_change": "Passa a `PARCIAL` ou `CONFORME` se os termos padrão já trouxerem DPA",
         "check": "Reunir os DPAs e os termos aceitos no cadastro"
       },
       {
         "item": "DS-02",
         "current": "`NAO_CONFORME`, `ALTO`: sem varredura no pipeline; confiança `MEDIA`",
-        "may_change": "Passa a `PARCIAL` se alertas do Dependabot ou CodeQL estiverem ligados nas configurações do repositório",
+        "may_change": "Passa a `PARCIAL` se os alertas do Dependabot estiverem ligados nas configurações do repositório",
+        "check": "Configurações de segurança do GitHub"
+      },
+      {
+        "item": "DS-08",
+        "current": "`NAO_CONFORME`, `ALTO`: sem varredura de segredos no pipeline; confiança `MEDIA`",
+        "may_change": "Passa a `PARCIAL` ou `CONFORME` se a proteção contra segredos do GitHub estiver ligada",
+        "check": "Configurações de segurança do GitHub"
+      },
+      {
+        "item": "DS-07",
+        "current": "`NAO_CONFORME`, `MEDIO`: sem SAST no pipeline; confiança `MEDIA`",
+        "may_change": "Passa a `PARCIAL` se o CodeQL estiver ligado pela configuração padrão do GitHub",
         "check": "Configurações de segurança do GitHub"
       },
       {
@@ -490,15 +519,30 @@ footer p{max-width:90ch}
         "may_change": "Não muda a severidade; mostra a extensão do que a Meta recebe (por exemplo, campos do formulário pela correspondência avançada automática)",
         "check": "Captura de rede (HAR) antes e depois do aceite; configuração do pixel no Gerenciador de Eventos da Meta"
       }
+    ],
+    "out_of_scope": [
+      "8. Mobile security: não há aplicativo móvel",
+      "12. IA/LLM: não há IA no produto",
+      "16. ECA Digital: sem indício de público infantojuvenil",
+      "17. Plataformas digitais: sem conteúdo de terceiros, anúncios pagos nem IA que gere imagem ou voz"
     ]
   },
   "checklist_conformidade": [
     {
+      "id": "BL-01",
+      "domain": "BL",
+      "score_area": "bases_legais",
+      "item": "O dado sensível é tratado só com hipótese do art. 11, sem legítimo interesse, execução de contrato ou proteção do crédito como base?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Obrigação do controlador. Nesse fluxo a AgendaFácil é operadora, e as clínicas decidem a base legal (em regra, tutela da saúde, art. 11, II, \"f\"). O uso para finalidade própria é avaliado em OP-02"
+    },
+    {
       "id": "BL-02",
-      "item": "Base legal comprovável dos tratamentos em que a AgendaFácil é controladora (contas dos usuários das clínicas)",
+      "domain": "BL",
       "score_area": "bases_legais",
       "criticality": "ALTO",
       "control_type": "DOCUMENTAL",
+      "item": "Cada finalidade de tratamento está ligada a uma base legal do artigo aplicável (7º ou 11), comprovável por evidência técnica ou documental?",
       "applicability": "APLICAVEL",
       "status": "PARCIAL",
       "evidence_type": "PARCIAL",
@@ -509,11 +553,20 @@ footer p{max-width:90ch}
       "recommendation": "Nomear a base de cada tratamento próprio no registro e no aviso de privacidade"
     },
     {
+      "id": "BL-03",
+      "domain": "BL",
+      "score_area": "bases_legais",
+      "item": "O uso de legítimo interesse tem justificativa formal e teste de balanceamento (LIA) documentados?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: nenhum tratamento próprio é sustentado em legítimo interesse; o rascunho da política não invoca essa base (`docs/lgpd/politica-de-privacidade.md:22-26`). A falta de base legal nomeada é contada em BL-02"
+    },
+    {
       "id": "OP-02",
-      "item": "Tratamento dos dados dos pacientes limitado às instruções do controlador, sem uso para finalidade própria",
+      "domain": "BL",
       "score_area": "bases_legais",
       "criticality": "CRITICO",
       "control_type": "TECNICO",
+      "item": "O tratamento se limita às instruções documentadas do controlador, sem uso dos dados para finalidade própria?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
@@ -524,11 +577,140 @@ footer p{max-width:90ch}
       "recommendation": "Remover o pixel da página de agendamento"
     },
     {
+      "id": "DP-01",
+      "domain": "BL",
+      "score_area": "bases_legais",
+      "item": "A origem pública de cada conjunto de dados está identificada (fonte, data de coleta, finalidade original da divulgação)?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: o sistema não usa dado obtido de fonte pública; todos os dados vêm do formulário de agendamento e do cadastro das clínicas (`public/index.html:28-37`, `db/schema.sql:11-39`)"
+    },
+    {
+      "id": "DP-02",
+      "domain": "BL",
+      "score_area": "bases_legais",
+      "item": "A finalidade do tratamento é compatível com a que justificou a divulgação, ou a nova finalidade é legítima e específica, com análise documentada?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: o sistema não usa dado obtido de fonte pública; todos os dados vêm do formulário de agendamento e do cadastro das clínicas (`public/index.html:28-37`, `db/schema.sql:11-39`)"
+    },
+    {
+      "id": "DP-03",
+      "domain": "BL",
+      "score_area": "bases_legais",
+      "item": "Há base legal documentada para o dado público (a dispensa do §4º é só do consentimento) e, para dado sensível, enquadramento no art. 11?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: o sistema não usa dado obtido de fonte pública; todos os dados vêm do formulário de agendamento e do cadastro das clínicas (`public/index.html:28-37`, `db/schema.sql:11-39`)"
+    },
+    {
+      "id": "DP-04",
+      "domain": "BL",
+      "score_area": "bases_legais",
+      "item": "Os dados públicos são minimizados e os direitos do titular (correção, oposição, eliminação quando cabível) seguem atendidos?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: o sistema não usa dado obtido de fonte pública; todos os dados vêm do formulário de agendamento e do cadastro das clínicas (`public/index.html:28-37`, `db/schema.sql:11-39`)"
+    },
+    {
+      "id": "CS-01",
+      "domain": "2",
+      "score_area": "bases_legais",
+      "item": "O consentimento é fornecido por escrito ou por outro meio que demonstre a manifestação de vontade (opt-in explícito, sem checkbox pré-marcado)?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Nenhum tratamento em que a AgendaFácil é controladora usa o consentimento como base, salvo o de cookies, avaliado nos itens CK. Nos dados dos pacientes, a base legal e um eventual consentimento são das clínicas"
+    },
+    {
+      "id": "CS-02",
+      "domain": "2",
+      "score_area": "bases_legais",
+      "item": "Em contrato escrito, o consentimento consta de cláusula destacada das demais?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Nenhum tratamento em que a AgendaFácil é controladora usa o consentimento como base, salvo o de cookies, avaliado nos itens CK. Nos dados dos pacientes, a base legal e um eventual consentimento são das clínicas"
+    },
+    {
+      "id": "CS-03",
+      "domain": "2",
+      "score_area": "bases_legais",
+      "item": "Há registro que permita ao controlador provar a obtenção regular do consentimento?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Nenhum tratamento em que a AgendaFácil é controladora usa o consentimento como base, salvo o de cookies, avaliado nos itens CK. Nos dados dos pacientes, a base legal e um eventual consentimento são das clínicas"
+    },
+    {
+      "id": "CS-04",
+      "domain": "2",
+      "score_area": "bases_legais",
+      "item": "O consentimento se refere a finalidades determinadas, sem autorizações genéricas?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Nenhum tratamento em que a AgendaFácil é controladora usa o consentimento como base, salvo o de cookies, avaliado nos itens CK. Nos dados dos pacientes, a base legal e um eventual consentimento são das clínicas"
+    },
+    {
+      "id": "CS-05",
+      "domain": "2",
+      "score_area": "bases_legais",
+      "item": "A revogação é possível a qualquer momento, por procedimento gratuito e facilitado?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Nenhum tratamento em que a AgendaFácil é controladora usa o consentimento como base, salvo o de cookies, avaliado nos itens CK. Nos dados dos pacientes, a base legal e um eventual consentimento são das clínicas"
+    },
+    {
+      "id": "CS-06",
+      "domain": "2",
+      "score_area": "bases_legais",
+      "item": "Alterações de finalidade, forma, duração ou compartilhamento são informadas com destaque, permitindo revogar?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Nenhum tratamento em que a AgendaFácil é controladora usa o consentimento como base, salvo o de cookies, avaliado nos itens CK. Nos dados dos pacientes, a base legal e um eventual consentimento são das clínicas"
+    },
+    {
+      "id": "CS-07",
+      "domain": "2",
+      "score_area": "bases_legais",
+      "item": "Quando o tratamento é condição para o serviço, o titular é informado com destaque sobre isso e sobre como exercer seus direitos?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Nenhum tratamento em que a AgendaFácil é controladora usa o consentimento como base, salvo o de cookies, avaliado nos itens CK. Nos dados dos pacientes, a base legal e um eventual consentimento são das clínicas"
+    },
+    {
+      "id": "CS-08",
+      "domain": "2",
+      "score_area": "bases_legais",
+      "item": "O consentimento para dado sensível é específico e destacado, para finalidades específicas?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Nenhum tratamento em que a AgendaFácil é controladora usa o consentimento como base, salvo o de cookies, avaliado nos itens CK. Nos dados dos pacientes, a base legal e um eventual consentimento são das clínicas; para o motivo da consulta, em regra a tutela da saúde (art. 11, II, \"f\")"
+    },
+    {
+      "id": "CA-01",
+      "domain": "BL",
+      "score_area": "bases_legais",
+      "item": "O tratamento de dados de crianças tem consentimento específico e em destaque de pelo menos um dos pais ou do responsável legal?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Obrigação do controlador no fluxo dos pacientes. Além disso, o agendamento recusa menores de 18 anos (`src/routes/agendamentos.js:23-27`) e as clínicas atendem só adultos (`README.md:15`)"
+    },
+    {
+      "id": "CA-02",
+      "domain": "BL",
+      "score_area": "bases_legais",
+      "item": "Há verificação de idade confiável, que não dependa só de autodeclaração, e esforço razoável para confirmar que o consentimento veio do responsável?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Obrigação do controlador no fluxo dos pacientes. Além disso, o agendamento recusa menores de 18 anos (`src/routes/agendamentos.js:23-27`) e as clínicas atendem só adultos (`README.md:15`)"
+    },
+    {
+      "id": "CA-03",
+      "domain": "BL",
+      "score_area": "bases_legais",
+      "item": "A coleta respeita a minimização, sem condicionar jogo, aplicação ou atividade ao fornecimento de dados além do necessário?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Obrigação do controlador no fluxo dos pacientes. Além disso, o agendamento recusa menores de 18 anos (`src/routes/agendamentos.js:23-27`) e as clínicas atendem só adultos (`README.md:15`)"
+    },
+    {
+      "id": "CA-04",
+      "domain": "BL",
+      "score_area": "bases_legais",
+      "item": "As informações sobre os dados coletados, o uso e o exercício de direitos estão públicas e acessíveis?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Obrigação do controlador no fluxo dos pacientes. Além disso, o agendamento recusa menores de 18 anos (`src/routes/agendamentos.js:23-27`) e as clínicas atendem só adultos (`README.md:15`)"
+    },
+    {
       "id": "CK-01",
-      "item": "\"Rejeitar\" na primeira camada, com o mesmo destaque de \"Aceitar\"",
+      "domain": "5",
       "score_area": "bases_legais",
       "criticality": "MEDIO",
       "control_type": "TECNICO",
+      "item": "Rejeitar está disponível na primeira camada do banner, com o mesmo destaque de aceitar?",
       "applicability": "APLICAVEL",
       "status": "CONFORME",
       "evidence_type": "ENCONTRADA",
@@ -540,10 +722,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "CK-02",
-      "item": "Scripts de publicidade e analytics bloqueados até o aceite",
+      "domain": "5",
       "score_area": "bases_legais",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "Cookies e scripts não essenciais ficam bloqueados até o aceite, sem requisições a terceiros de analytics ou publicidade antes do consentimento — salvo outra base legal documentada (ex.: legítimo interesse com LIA para medição estritamente agregada)?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
@@ -555,10 +738,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "CK-03",
-      "item": "Revogação efetiva das preferências a qualquer momento",
+      "domain": "5",
       "score_area": "bases_legais",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "O usuário consegue revisar e revogar as preferências a qualquer momento, com efeito real sobre os scripts já carregados?",
       "applicability": "APLICAVEL",
       "status": "PARCIAL",
       "evidence_type": "PARCIAL",
@@ -570,10 +754,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "CK-04",
-      "item": "Registro das escolhas como prova do consentimento",
+      "domain": "5",
       "score_area": "bases_legais",
       "criticality": "MEDIO",
       "control_type": "TECNICO",
+      "item": "As escolhas ficam registradas (data, versão do banner, categorias aceitas) como prova do consentimento?",
       "applicability": "APLICAVEL",
       "status": "PARCIAL",
       "evidence_type": "PARCIAL",
@@ -585,25 +770,75 @@ footer p{max-width:90ch}
     },
     {
       "id": "CK-05",
-      "item": "Consentimento granular por finalidade, com terceiros identificados",
+      "domain": "5",
       "score_area": "bases_legais",
       "criticality": "MEDIO",
       "control_type": "TECNICO",
+      "item": "O consentimento é granular por finalidade (desempenho, funcionalidade, publicidade)?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
       "evidence_source": "TECNICA",
       "evidence_confidence": "ALTA",
-      "evidence": "O banner oferece apenas aceitar ou rejeitar tudo e o texto não cita publicidade nem a Meta (`public/index.html:42`)",
-      "impact": "Consentimento genérico, sem informação prévia adequada",
-      "recommendation": "Separar categorias (necessários, medição, publicidade) e nomear os terceiros"
+      "evidence": "O banner oferece apenas aceitar ou rejeitar tudo, sem separar finalidades (`public/index.html:41-45`); a falta de informação sobre finalidades e terceiros é contada em CK-06",
+      "impact": "Não há como aceitar medição e recusar publicidade",
+      "recommendation": "Separar categorias (necessários, medição, publicidade)"
+    },
+    {
+      "id": "CK-06",
+      "domain": "5",
+      "score_area": "bases_legais",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "Existe banner ou CMP funcional, com informação clara sobre finalidades e terceiros?",
+      "applicability": "APLICAVEL",
+      "status": "PARCIAL",
+      "evidence_type": "PARCIAL",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "O banner aparece na primeira visita e grava a escolha (`public/index.html:41-45`, `public/js/consent.js:17-25`), mas o texto diz só \"melhorar sua experiência\", sem citar publicidade nem a Meta (`public/index.html:42`)",
+      "impact": "Consentimento sem informação prévia adequada",
+      "recommendation": "Nomear finalidades e terceiros no banner, com link para a política de cookies"
+    },
+    {
+      "id": "CK-07",
+      "domain": "5",
+      "score_area": "bases_legais",
+      "criticality": "MEDIO",
+      "control_type": "DOCUMENTAL",
+      "item": "Pixels, fingerprinting e identificadores persistentes de terceiros estão inventariados e cobertos pela política de cookies?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "ALTA",
+      "evidence": "Não há política de cookies nem inventário de rastreadores; o rascunho diz só que o site usa cookies (`docs/lgpd/politica-de-privacidade.md:28-30`)",
+      "impact": "Rastreadores de terceiros sem transparência nem controle",
+      "recommendation": "Política de cookies com cada cookie ou SDK, finalidade e prazo"
+    },
+    {
+      "id": "CK-08",
+      "domain": "5",
+      "score_area": "bases_legais",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "Os cookies classificados como estritamente necessários são de fato necessários (a categoria não mascara analytics ou publicidade)?",
+      "applicability": "APLICAVEL",
+      "status": "CONFORME",
+      "evidence_type": "ENCONTRADA",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "O único armazenamento feito sem depender do aceite é a própria escolha do visitante (`public/js/consent.js:3`, `:12`), de fato necessária; o carregamento do pixel antes do aceite é contado em CK-02",
+      "impact": "",
+      "recommendation": "Manter"
     },
     {
       "id": "SE-01",
-      "item": "Senhas armazenadas com hash forte",
+      "domain": "6",
       "score_area": "seguranca",
       "criticality": "CRITICO",
       "control_type": "TECNICO",
+      "item": "Senhas e credenciais de usuários são armazenadas com hash forte e salgado (ex.: Argon2id, bcrypt), nunca em texto puro ou com cifra reversível?",
       "applicability": "APLICAVEL",
       "status": "CONFORME",
       "evidence_type": "ENCONTRADA",
@@ -615,10 +850,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "SE-02",
-      "item": "HTTPS obrigatório com HSTS",
+      "domain": "6",
       "score_area": "seguranca",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "Todo tráfego usa HTTPS, com HSTS e cabeçalhos de segurança (CSP, entre outros) configurados?",
       "applicability": "APLICAVEL",
       "status": "CONFORME",
       "evidence_type": "ENCONTRADA",
@@ -630,10 +866,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "SE-03",
-      "item": "Autorização por papel e isolamento entre clínicas",
+      "domain": "6",
       "score_area": "seguranca",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "A autorização impede acesso indevido a dados de outros usuários ou clientes (RBAC/ABAC, isolamento entre contas)?",
       "applicability": "APLICAVEL",
       "status": "CONFORME",
       "evidence_type": "ENCONTRADA",
@@ -645,10 +882,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "SE-04",
-      "item": "Autenticação robusta: segundo fator para quem acessa dados de saúde",
+      "domain": "6",
       "score_area": "seguranca",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "A autenticação é robusta (política de senha, bloqueio de tentativas e MFA quando o risco pede)?",
       "applicability": "APLICAVEL",
       "status": "PARCIAL",
       "evidence_type": "PARCIAL",
@@ -660,10 +898,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "SE-05",
-      "item": "Proteção contra injeção de SQL, XSS e CSRF",
+      "domain": "6",
       "score_area": "seguranca",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "Há proteção contra XSS, CSRF, SSRF e SQL Injection?",
       "applicability": "APLICAVEL",
       "status": "CONFORME",
       "evidence_type": "ENCONTRADA",
@@ -675,10 +914,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "SE-06",
-      "item": "Logs da aplicação sem dados pessoais ou com mascaramento",
+      "domain": "11",
       "score_area": "seguranca",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "Os logs da aplicação evitam registrar dados pessoais e sensíveis (CPF, e-mail, telefone, tokens, senhas, payloads completos) ou os mascaram antes da gravação?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
@@ -690,10 +930,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "SE-07",
-      "item": "Trilha de auditoria de acessos a dados de pacientes",
+      "domain": "6",
       "score_area": "seguranca",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "Há trilha de auditoria dos acessos a dados pessoais no backend (quem acessou, o quê e quando)?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
@@ -704,11 +945,46 @@ footer p{max-width:90ch}
       "recommendation": "Registrar usuário, rota, paciente e horário, sem dados pessoais no log"
     },
     {
+      "id": "SE-08",
+      "domain": "6",
+      "score_area": "seguranca",
+      "item": "Sessões de navegador têm proteção adequada (cookie de sessão com `HttpOnly`, `Secure` e `SameSite`, expiração e rotação)?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: a aplicação não usa cookie de sessão; a autenticação é por token JWT no cabeçalho `Authorization` (`src/auth.js:31-36`), avaliado em AP-01"
+    },
+    {
+      "id": "SE-09",
+      "domain": "6",
+      "score_area": "seguranca",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "Há segregação de ambientes (produção, homologação, desenvolvimento) e de funções de quem acessa dados pessoais?",
+      "applicability": "NAO_VERIFICADO",
+      "justification": "O código mostra a segregação de funções por papel (`api/index.js:40-41`, `db/schema.sql:16`), mas a separação entre produção, preview e desenvolvimento (variáveis e banco de cada ambiente) é configurada nos painéis. Acesso necessário: painéis da Vercel e do banco"
+    },
+    {
+      "id": "SE-10",
+      "domain": "6",
+      "score_area": "seguranca",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "Entradas e saídas são validadas e sanitizadas?",
+      "applicability": "APLICAVEL",
+      "status": "PARCIAL",
+      "evidence_type": "PARCIAL",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "O agendamento confere a presença dos campos obrigatórios (`src/routes/agendamentos.js:20-22`), o corpo é limitado a 50 kB (`api/index.js:36`) e a saída usa `textContent` (`public/js/agendar.js:28`); não há validação de formato de CPF, e-mail, telefone nem datas",
+      "impact": "Dados inválidos entram no cadastro das clínicas",
+      "recommendation": "Validar formato e tamanho de cada campo no servidor"
+    },
+    {
       "id": "DS-01",
-      "item": "Segredos do pipeline protegidos e fora dos logs",
+      "domain": "10",
       "score_area": "seguranca",
       "criticality": "CRITICO",
       "control_type": "TECNICO",
+      "item": "Os segredos do pipeline estão protegidos (cofre do CI) e não aparecem em logs nem em artefatos?",
       "applicability": "APLICAVEL",
       "status": "CONFORME",
       "evidence_type": "ENCONTRADA",
@@ -720,25 +996,27 @@ footer p{max-width:90ch}
     },
     {
       "id": "DS-02",
-      "item": "Varredura de dependências e SAST no CI",
+      "domain": "10",
       "score_area": "seguranca",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "Há varredura de dependências no pipeline e política de atualização?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
       "evidence_source": "TECNICA",
       "evidence_confidence": "MEDIA",
-      "evidence": "O pipeline roda só `install`, `lint` e `test` (`.github/workflows/ci.yml:16-18`); não há `npm audit`, configuração do Dependabot nem fluxo de CodeQL no repositório; as configurações de segurança do GitHub não foram vistas",
+      "evidence": "O pipeline roda só `install`, `lint` e `test` (`.github/workflows/ci.yml:16-18`); não há `npm audit` nem configuração do Dependabot, e o pipeline não tem nenhuma outra varredura de segurança (agravante do item: `ALTO`); as configurações de segurança do GitHub não foram vistas",
       "impact": "Biblioteca vulnerável chega à produção sem aviso",
-      "recommendation": "`npm audit` no CI, Dependabot e SAST"
+      "recommendation": "`npm audit` no CI e Dependabot"
     },
     {
       "id": "DS-03",
-      "item": "SBOM gerado e armazenado",
+      "domain": "10",
       "score_area": "seguranca",
       "criticality": "BAIXO",
       "control_type": "TECNICO",
+      "item": "O SBOM é gerado e armazenado?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
@@ -749,11 +1027,104 @@ footer p{max-width:90ch}
       "recommendation": "Gerar SBOM CycloneDX a cada build"
     },
     {
+      "id": "DS-04",
+      "domain": "10",
+      "score_area": "seguranca",
+      "item": "As imagens Docker passam por varredura de vulnerabilidades?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: não há `Dockerfile` nem arquivo de composição no repositório; o deploy é feito pela Vercel a partir do código (`.github/workflows/ci.yml:26`)"
+    },
+    {
+      "id": "DS-05",
+      "domain": "10",
+      "score_area": "seguranca",
+      "item": "A infraestrutura como código (Terraform, CloudFormation, Helm etc.) passa por varredura de configuração?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: nenhum arquivo de IaC no repositório. A única configuração de plataforma é o `vercel.json`, avaliado em IN-01"
+    },
+    {
+      "id": "DS-06",
+      "domain": "10",
+      "score_area": "seguranca",
+      "item": "O ambiente Kubernetes segue controles de RBAC e hardening?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: nenhum manifesto de orquestração; a aplicação roda em funções da Vercel (`vercel.json:1-7`)"
+    },
+    {
+      "id": "DS-07",
+      "domain": "10",
+      "score_area": "seguranca",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "SAST e DAST são executados em estágio apropriado do pipeline?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "MEDIA",
+      "evidence": "O pipeline roda só `install`, `lint` e `test` (`.github/workflows/ci.yml:16-18`); não há análise estática de segurança (SAST) nem dinâmica (DAST), nem fluxo de CodeQL no repositório; as configurações de segurança do GitHub não foram vistas",
+      "impact": "Falhas de código como a de AP-02 passam sem alerta",
+      "recommendation": "CodeQL ou equivalente no CI"
+    },
+    {
+      "id": "DS-08",
+      "domain": "10",
+      "score_area": "seguranca",
+      "criticality": "ALTO",
+      "control_type": "TECNICO",
+      "item": "Há varredura de segredos no repositório e no histórico do git, com rotação do que já foi exposto?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhuma etapa de varredura de segredos no pipeline (`.github/workflows/ci.yml:9-30`); o `.gitignore:2-4` exclui o `.env` e nenhuma credencial foi encontrada nos arquivos atuais; a proteção nativa do GitHub contra segredos não foi vista",
+      "impact": "Segredo enviado por engano fica no histórico sem alerta",
+      "recommendation": "Proteção contra segredos do GitHub e varredura do histórico no CI"
+    },
+    {
+      "id": "DS-09",
+      "domain": "10",
+      "score_area": "seguranca",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "O token do pipeline tem permissões mínimas, e as actions ou imagens de terceiros usadas nele estão fixadas por versão imutável (hash)?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "O workflow não declara `permissions`; as actions usam a tag `v4` (`.github/workflows/ci.yml:12-13`, `:25`) e o deploy baixa a CLI da Vercel sem versão (`:26`)",
+      "impact": "Action ou pacote comprometido roda com acesso aos segredos de deploy",
+      "recommendation": "Declarar permissões mínimas e fixar actions por hash"
+    },
+    {
+      "id": "DS-10",
+      "domain": "10",
+      "score_area": "seguranca",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "A branch de produção é protegida, com revisão obrigatória antes do deploy?",
+      "applicability": "NAO_VERIFICADO",
+      "justification": "A proteção da branch `main` e a revisão obrigatória são configurações do repositório no GitHub; o código só mostra que todo push na `main` vai para produção (`.github/workflows/ci.yml:20-26`). Acesso necessário: configurações do repositório no GitHub"
+    },
+    {
+      "id": "DS-11",
+      "domain": "10",
+      "score_area": "seguranca",
+      "criticality": "ALTO",
+      "control_type": "TECNICO",
+      "item": "Ambientes de teste, homologação e CI usam dados sintéticos ou mascarados, sem cópia de dados pessoais reais de produção?",
+      "applicability": "NAO_VERIFICADO",
+      "justification": "O CI não usa banco (`.github/workflows/ci.yml:9-18`) e o `README.md:33` orienta dados fictícios, mas o banco usado pelos deploys de preview é definido no painel. Acesso necessário: variáveis de ambiente por ambiente no painel da Vercel"
+    },
+    {
       "id": "DT-01",
-      "item": "Canal para exercício de direitos nos tratamentos próprios",
+      "domain": "3",
       "score_area": "direitos_titular",
       "criticality": "ALTO",
       "control_type": "DOCUMENTAL",
+      "item": "Existe canal de atendimento claro e funcional para o exercício dos direitos do art. 18?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
@@ -765,25 +1136,27 @@ footer p{max-width:90ch}
     },
     {
       "id": "DT-02",
-      "item": "Fluxo de atendimento dos pedidos nos tratamentos próprios, no prazo do art. 19",
+      "domain": "3",
       "score_area": "direitos_titular",
       "criticality": "MEDIO",
       "control_type": "DOCUMENTAL",
+      "item": "Há fluxo que responda aos pedidos sem custos e no prazo do art. 19 (confirmação ou acesso imediato em formato simplificado, ou declaração completa em até 15 dias)?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
-      "evidence_source": "TECNICA + DOCUMENTAL",
+      "evidence_source": "DOCUMENTAL",
       "evidence_confidence": "MEDIA",
-      "evidence": "Não há rota para consultar, exportar ou excluir uma conta de usuário (`src/routes/clinica.js:1-55`, `api/index.js:38-41`); nenhum procedimento escrito em `docs/lgpd/`",
-      "impact": "Pedidos sem prazo, sem registro e sem confirmação de execução",
+      "evidence": "Nenhum procedimento escrito em `docs/lgpd/` para receber, responder e confirmar pedidos, com prazo e responsável; a fundadora declarou não haver outros documentos. A falta de recurso no sistema é contada em DT-06 e a falta de registro dos pedidos, em DT-10",
+      "impact": "Pedidos sem prazo nem responsável",
       "recommendation": "Procedimento simples, com prazo e registro de cada pedido"
     },
     {
       "id": "DT-03",
-      "item": "Aviso de privacidade dos tratamentos próprios publicado e acessível",
+      "domain": "4",
       "score_area": "direitos_titular",
       "criticality": "ALTO",
       "control_type": "DOCUMENTAL",
+      "item": "Há política ou aviso de privacidade publicado, de acesso fácil e ostensivo?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "PARCIAL",
@@ -795,115 +1168,107 @@ footer p{max-width:90ch}
     },
     {
       "id": "DT-04",
-      "item": "Conteúdo do aviso conforme o art. 9º",
+      "domain": "4",
       "score_area": "direitos_titular",
       "criticality": "MEDIO",
       "control_type": "DOCUMENTAL",
+      "item": "A política traz o conteúdo do art. 9º (finalidade específica, forma e duração, controlador e contato, uso compartilhado, responsabilidades dos agentes e direitos do art. 18), além da base legal por finalidade e da retenção?",
       "applicability": "APLICAVEL",
       "status": "PARCIAL",
       "evidence_type": "PARCIAL",
       "evidence_source": "DOCUMENTAL",
       "evidence_confidence": "ALTA",
-      "evidence": "O rascunho traz identificação, contato e data (`politica-de-privacidade.md:3-9`) e uma menção genérica a cookies (`:28-30`); faltam o tratamento das contas das clínicas, a Meta como destinatária, base legal, retenção, direitos e encarregado; o texto fala aos pacientes como se a AgendaFácil fosse a controladora (`:11-26`); a falta de informação sobre transferência internacional é contada em GV-05",
+      "evidence": "O rascunho traz identificação, contato e data (`politica-de-privacidade.md:3-9`) e uma menção genérica a cookies (`:28-30`); faltam o tratamento das contas das clínicas, a Meta como destinatária, base legal, retenção, direitos e encarregado; o texto fala aos pacientes como se a AgendaFácil fosse a controladora (`:11-26`); a falta de informação sobre transferência internacional é contada em TI-04",
       "impact": "Transparência insuficiente; consentimento sem informação prévia é nulo (art. 9º, §1º)",
       "recommendation": "Reescrever com `templates/privacy-policy-template.md`, separando os papéis"
     },
     {
-      "id": "GV-01",
-      "item": "Registro das operações de tratamento que realiza, como operadora e como controladora (art. 37)",
-      "score_area": "governanca",
-      "criticality": "ALTO",
+      "id": "DT-05",
+      "domain": "4",
+      "score_area": "direitos_titular",
+      "criticality": "BAIXO",
       "control_type": "DOCUMENTAL",
+      "item": "A política usa linguagem clara e acessível e indica versão e data de atualização?",
       "applicability": "APLICAVEL",
-      "status": "NAO_CONFORME",
-      "evidence_type": "AUSENTE",
+      "status": "CONFORME",
+      "evidence_type": "ENCONTRADA",
       "evidence_source": "DOCUMENTAL",
       "evidence_confidence": "MEDIA",
-      "evidence": "`docs/lgpd/` contém só o rascunho da política; o `README.md:27-29` lista dados, sem finalidade, papel, base, retenção nem compartilhamentos; a fundadora declarou não haver outros documentos",
-      "impact": "Sem mapa do que é tratado, nada mais se sustenta; com dados sensíveis, `ALTO`",
-      "recommendation": "Elaborar o registro completo (a forma simplificada não vale com alto risco)"
+      "evidence": "O rascunho usa linguagem simples e traz a data de atualização (`docs/lgpd/politica-de-privacidade.md:3`); a falta de publicação é contada em DT-03 e as lacunas de conteúdo, em DT-04",
+      "impact": "",
+      "recommendation": "Manter a data e numerar as versões ao publicar"
     },
     {
-      "id": "GV-02",
-      "item": "Encarregado indicado por ato formal, com contato divulgado",
-      "score_area": "governanca",
-      "criticality": "ALTO",
-      "control_type": "DOCUMENTAL",
-      "applicability": "APLICAVEL",
-      "status": "NAO_CONFORME",
-      "evidence_type": "AUSENTE",
-      "evidence_source": "DOCUMENTAL",
-      "evidence_confidence": "ALTA",
-      "evidence": "Nenhum ato de indicação; o próprio rascunho registra a pendência do contato do encarregado (`politica-de-privacidade.md:36`); rodapé sem o contato (`public/index.html:47-51`)",
-      "impact": "Exigível: a AgendaFácil também é controladora, e a dispensa do pequeno porte não vale com alto risco (Res. CD/ANPD nº 2/2022, art. 3º)",
-      "recommendation": "Indicar encarregado (pode ser serviço externo) e divulgar o contato"
-    },
-    {
-      "id": "GV-03",
-      "item": "RIPD dos tratamentos de alto risco em que é controladora (uso próprio de dados da página de agendamento)",
-      "score_area": "governanca",
-      "criticality": "ALTO",
-      "control_type": "DOCUMENTAL",
-      "applicability": "APLICAVEL",
-      "status": "NAO_CONFORME",
-      "evidence_type": "AUSENTE",
-      "evidence_source": "DOCUMENTAL",
-      "evidence_confidence": "MEDIA",
-      "evidence": "Nenhum RIPD em `docs/lgpd/`; a fundadora declarou não haver outros documentos",
-      "impact": "Rastreamento que revela busca por atendimento de saúde, sem análise de impacto",
-      "recommendation": "Encerrar o tratamento (OP-02) ou elaborar o RIPD (risco aceito até 2026-12-31)"
-    },
-    {
-      "id": "GV-04",
-      "item": "Política de retenção dos dados próprios (contas, logs), com prazo por categoria e fundamento no art. 16",
-      "score_area": "governanca",
+      "id": "DT-06",
+      "domain": "3",
+      "score_area": "direitos_titular",
       "criticality": "MEDIO",
-      "control_type": "DOCUMENTAL",
+      "control_type": "TECNICO",
+      "item": "Há processo operacional para correção, anonimização, bloqueio, eliminação e portabilidade dos dados?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
-      "evidence_source": "DOCUMENTAL",
-      "evidence_confidence": "MEDIA",
-      "evidence": "Nenhuma política de retenção em `docs/lgpd/`; o rascunho da política não fala de prazos",
-      "impact": "Contas e logs guardados indefinidamente",
-      "recommendation": "Definir prazos por categoria"
-    },
-    {
-      "id": "GV-05",
-      "item": "Transferência internacional com mecanismo do art. 33 e informação ao titular",
-      "score_area": "governanca",
-      "criticality": "ALTO",
-      "control_type": "DOCUMENTAL",
-      "applicability": "APLICAVEL",
-      "status": "NAO_CONFORME",
-      "evidence_type": "AUSENTE",
-      "evidence_source": "TECNICA + DOCUMENTAL",
-      "evidence_confidence": "BAIXA",
-      "evidence": "O fluxo é comprovado no código, pois `public/index.html:13-15` e `public/js/agendar.js:23` enviam dados do navegador do paciente à Meta, nos EUA, sem adequação reconhecida (a mesma evidência de OP-02 e CK-02, reprovada aqui por obrigação distinta, o art. 33); os logs das funções ficam com a Vercel Inc., nos EUA; o mecanismo não está evidenciado, porque os termos desses provedores não foram localizados nem examinados; o rascunho da política não informa a transferência",
-      "impact": "Dados saem do País sem base demonstrada",
-      "recommendation": "Remover o pixel; examinar os termos e incorporar as CPC da Res. CD/ANPD nº 19/2024 onde faltarem"
-    },
-    {
-      "id": "GV-06",
-      "item": "Deveres gerais de provedor de aplicações: sede e contato no País e canal de denúncia (Dec. nº 8.771/2016, art. 16-A)",
-      "score_area": "governanca",
-      "criticality": "ALTO",
-      "control_type": "DOCUMENTAL",
-      "applicability": "APLICAVEL",
-      "status": "PARCIAL",
-      "evidence_type": "PARCIAL",
       "evidence_source": "TECNICA",
       "evidence_confidence": "ALTA",
-      "evidence": "Razão social, CNPJ, endereço e contato no rodapé (`public/index.html:48`); não há canal de denúncia permanente",
-      "impact": "Descumprimento de dever vigente desde 20/07/2026",
-      "recommendation": "Página simples de denúncia, que pode ser a mesma do canal de privacidade"
+      "evidence": "Não há rota nem tela para consultar, corrigir, exportar ou excluir uma conta de usuário (`src/routes/clinica.js:1-55`, `api/index.js:38-41`)",
+      "impact": "Pedidos de correção, eliminação e portabilidade dependem de alteração manual no banco",
+      "recommendation": "Rotas autenticadas para ver, corrigir, exportar e excluir a própria conta"
+    },
+    {
+      "id": "DT-07",
+      "domain": "3",
+      "score_area": "direitos_titular",
+      "criticality": "MEDIO",
+      "control_type": "DOCUMENTAL",
+      "item": "O titular consegue saber com quem os dados foram compartilhados e, quando o consentimento é a base, que pode negá-lo e com que consequências?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "ALTA",
+      "evidence": "Nenhum documento ou tela informa os destinatários dos dados; o próprio rascunho registra a pendência (`docs/lgpd/politica-de-privacidade.md:36`) e o banner não cita a Meta (`public/index.html:42`)",
+      "impact": "O titular não tem como saber que a Meta, a Vercel e o provedor do banco recebem dados",
+      "recommendation": "Listar destinatários e finalidades no aviso e responder a esse pedido pelo canal de direitos"
+    },
+    {
+      "id": "DT-08",
+      "domain": "3",
+      "score_area": "direitos_titular",
+      "item": "Há meio de pedir a revisão de decisões tomadas unicamente por tratamento automatizado, com informação sobre os critérios usados?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: o sistema não toma decisão automatizada que defina perfil ou afete interesses do titular; não há pontuação, perfilamento nem recomendação (`src/routes/`, `db/schema.sql:1-39`)"
+    },
+    {
+      "id": "DT-09",
+      "domain": "3",
+      "score_area": "direitos_titular",
+      "item": "Correções, eliminações, anonimizações e bloqueios são comunicados aos agentes com quem os dados foram compartilhados?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: os dados das contas não são compartilhados com outros controladores; hospedagem e banco tratam a mesma base, como operadores. O efeito da revogação sobre a Meta é avaliado em CK-03"
+    },
+    {
+      "id": "DT-10",
+      "domain": "3",
+      "score_area": "direitos_titular",
+      "criticality": "MEDIO",
+      "control_type": "DOCUMENTAL",
+      "item": "Há trilha auditável dos pedidos (data, tipo, resposta e confirmação da execução)?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhum registro de pedidos de titulares em `docs/lgpd/`; a fundadora declarou não haver outros documentos",
+      "impact": "Impossível provar que um pedido foi atendido e quando",
+      "recommendation": "Planilha ou sistema de chamados com data, tipo, resposta e execução"
     },
     {
       "id": "OP-01",
-      "item": "Contrato ou termo com as clínicas controladoras: objeto, instruções, segurança, suboperadores e devolução ou eliminação (art. 39)",
+      "domain": "14",
       "score_area": "governanca",
       "criticality": "ALTO",
       "control_type": "DOCUMENTAL",
+      "item": "Há contrato ou termo com o controlador que defina objeto, instruções, segurança, suboperadores e devolução ou eliminação dos dados ao fim?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
@@ -915,40 +1280,43 @@ footer p{max-width:90ch}
     },
     {
       "id": "OP-03",
-      "item": "Suboperadores (Vercel, provedor do banco) informados às clínicas e cobertos por contrato equivalente",
+      "domain": "14",
       "score_area": "governanca",
       "criticality": "ALTO",
       "control_type": "DOCUMENTAL",
-      "applicability": "APLICAVEL",
-      "status": "NAO_CONFORME",
-      "evidence_type": "AUSENTE",
-      "evidence_source": "DOCUMENTAL",
-      "evidence_confidence": "BAIXA",
-      "evidence": "Nenhum DPA em `docs/lgpd/` (`README.md:22-23` identifica os provedores); os termos padrão aceitos no cadastro não foram reunidos nem examinados; nada informa os suboperadores às clínicas, já que não há contrato (OP-01)",
-      "impact": "Suboperadores que tratam dados de saúde sem obrigações demonstradas (`ALTO`)",
-      "recommendation": "Reunir os DPAs, arquivá-los e listar os suboperadores nos termos com as clínicas"
-    },
-    {
-      "id": "OP-04",
-      "item": "Processo de incidentes: aviso sem demora às clínicas e, nos dados próprios, comunicação à ANPD e aos titulares em 3 dias úteis",
-      "score_area": "governanca",
-      "criticality": "ALTO",
-      "control_type": "DOCUMENTAL",
+      "item": "Os suboperadores (hospedagem, e-mail, analytics) são informados ao controlador?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
       "evidence_source": "DOCUMENTAL",
       "evidence_confidence": "MEDIA",
-      "evidence": "Nenhum plano, runbook ou modelo de aviso no repositório; a fundadora declarou não haver outros documentos",
+      "evidence": "Nada informa os suboperadores às clínicas, já que não há contrato (OP-01); só o `README.md:22-23` identifica a Vercel e o provedor do banco. Os contratos com esses provedores são contados em GV-09",
+      "impact": "As clínicas não sabem quem mais trata os dados de saúde dos seus pacientes (`ALTO`)",
+      "recommendation": "Listar os suboperadores nos termos com as clínicas"
+    },
+    {
+      "id": "OP-04",
+      "domain": "14",
+      "score_area": "governanca",
+      "criticality": "ALTO",
+      "control_type": "DOCUMENTAL",
+      "item": "Existe processo para avisar o controlador sem demora em caso de incidente?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhum plano, runbook ou modelo de aviso às clínicas no repositório; a fundadora declarou não haver outros documentos. A comunicação dos dados próprios à ANPD é contada em GV-08",
       "impact": "As clínicas não seriam avisadas a tempo de cumprir o prazo da Res. CD/ANPD nº 15/2024",
       "recommendation": "Adotar `templates/incident-response-template.md`, com o aviso às clínicas"
     },
     {
       "id": "OP-05",
-      "item": "Apoio às clínicas no atendimento a pedidos dos pacientes (acesso, correção, eliminação, portabilidade)",
+      "domain": "14",
       "score_area": "governanca",
       "criticality": "MEDIO",
       "control_type": "TECNICO",
+      "item": "Existe processo para apoiar o controlador no atendimento a pedidos de titulares?",
       "applicability": "APLICAVEL",
       "status": "PARCIAL",
       "evidence_type": "PARCIAL",
@@ -960,10 +1328,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "OP-06",
-      "item": "Devolução ou eliminação dos dados ao fim do contrato e nos prazos instruídos pela clínica (art. 16)",
+      "domain": "14",
       "score_area": "governanca",
       "criticality": "MEDIO",
       "control_type": "TECNICO",
+      "item": "Ao fim do contrato, os dados são devolvidos ou eliminados conforme instrução do controlador?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
@@ -974,11 +1343,340 @@ footer p{max-width:90ch}
       "recommendation": "Rotina de devolução e de expurgo, com registro da execução"
     },
     {
+      "id": "GV-01",
+      "domain": "1",
+      "score_area": "governanca",
+      "criticality": "ALTO",
+      "control_type": "DOCUMENTAL",
+      "item": "Existe registro das operações de tratamento atualizado, com inventário e classificação de dados, ciclo de vida, compartilhamentos e retenção, sem dados órfãos (sem finalidade ou responsável)? Agente de pequeno porte pode usar a forma simplificada.",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "`docs/lgpd/` contém só o rascunho da política; o `README.md:27-29` lista dados, sem finalidade, papel, base, retenção nem compartilhamentos; a fundadora declarou não haver outros documentos",
+      "impact": "Sem mapa do que é tratado, nada mais se sustenta; com dados sensíveis, `ALTO`",
+      "recommendation": "Elaborar o registro completo (a forma simplificada não vale com alto risco)"
+    },
+    {
+      "id": "GV-02",
+      "domain": "13",
+      "score_area": "governanca",
+      "criticality": "ALTO",
+      "control_type": "DOCUMENTAL",
+      "item": "Existe encarregado indicado por ato escrito, datado e assinado?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "ALTA",
+      "evidence": "Nenhum ato de indicação; o próprio rascunho registra a pendência do contato do encarregado (`politica-de-privacidade.md:36`); rodapé sem o contato (`public/index.html:47-51`)",
+      "impact": "Exigível: a AgendaFácil também é controladora, e a dispensa do pequeno porte não vale com alto risco (Res. CD/ANPD nº 2/2022, art. 3º)",
+      "recommendation": "Indicar encarregado (pode ser serviço externo) e divulgar o contato"
+    },
+    {
+      "id": "GV-03",
+      "domain": "13",
+      "score_area": "governanca",
+      "criticality": "ALTO",
+      "control_type": "DOCUMENTAL",
+      "item": "Existe RIPD para as operações de maior risco?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhum RIPD em `docs/lgpd/`; a fundadora declarou não haver outros documentos",
+      "impact": "Rastreamento que revela busca por atendimento de saúde, sem análise de impacto",
+      "recommendation": "Encerrar o tratamento (OP-02) ou elaborar o RIPD (risco aceito até 2026-12-31)"
+    },
+    {
+      "id": "GV-04",
+      "domain": "15",
+      "score_area": "governanca",
+      "criticality": "MEDIO",
+      "control_type": "DOCUMENTAL",
+      "item": "Existe política de retenção aprovada e aplicada, com prazo por categoria de dado e a hipótese do art. 16 que justifica cada conservação?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhuma política de retenção em `docs/lgpd/`; o rascunho da política não fala de prazos",
+      "impact": "Contas e logs guardados indefinidamente",
+      "recommendation": "Definir prazos por categoria"
+    },
+    {
+      "id": "GV-05",
+      "domain": "13",
+      "score_area": "governanca",
+      "item": "A identidade e o contato do encarregado são divulgados publicamente, de forma clara e objetiva, preferencialmente no site?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Não há encarregado indicado cujo contato divulgar; a falta da indicação é contada em GV-02. O rodapé traz só o contato geral (`public/index.html:48`)"
+    },
+    {
+      "id": "GV-06",
+      "domain": "13",
+      "score_area": "governanca",
+      "criticality": "ALTO",
+      "control_type": "TECNICO",
+      "item": "Provedor de aplicações: há canal de denúncia permanente e de fácil acesso, que preveja a notificação de conteúdos criminosos ou ilícitos?",
+      "applicability": "APLICAVEL",
+      "status": "PARCIAL",
+      "evidence_type": "PARCIAL",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "Há um e-mail de contato geral no rodapé (`public/index.html:48`), mas não um canal de denúncia permanente que preveja a notificação de conteúdo ilícito",
+      "impact": "Descumprimento de dever vigente desde 20/07/2026",
+      "recommendation": "Página simples de denúncia, que pode ser a mesma do canal de privacidade"
+    },
+    {
+      "id": "GV-07",
+      "domain": "13",
+      "score_area": "governanca",
+      "criticality": "MEDIO",
+      "control_type": "DOCUMENTAL",
+      "item": "Provedor de aplicações: há sede e representante legal pessoa jurídica no País, com contato acessível no site?",
+      "applicability": "APLICAVEL",
+      "status": "CONFORME",
+      "evidence_type": "ENCONTRADA",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "Razão social, CNPJ, endereço em São Paulo/SP e contato no rodapé (`public/index.html:48`); a AgendaFácil é pessoa jurídica brasileira (`README.md:13`)",
+      "impact": "",
+      "recommendation": "Manter"
+    },
+    {
+      "id": "GV-08",
+      "domain": "13",
+      "score_area": "governanca",
+      "criticality": "ALTO",
+      "control_type": "DOCUMENTAL",
+      "item": "Existe processo de resposta a incidentes com responsáveis definidos e comunicação à ANPD e aos titulares em até 3 dias úteis?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhum plano, runbook ou modelo de comunicação à ANPD e aos titulares para os dados próprios (contas das clínicas e rastreamento); a fundadora declarou não haver outros documentos. O aviso às clínicas é contado em OP-04",
+      "impact": "Sem como comunicar a ANPD e os titulares em 3 dias úteis",
+      "recommendation": "Incluir a comunicação dos dados próprios no processo de incidentes"
+    },
+    {
+      "id": "GV-09",
+      "domain": "14",
+      "score_area": "governanca",
+      "criticality": "ALTO",
+      "control_type": "DOCUMENTAL",
+      "item": "Operadores e suboperadores, inclusive o provedor de hospedagem, têm contrato com cláusulas de proteção de dados (DPA)?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "BAIXA",
+      "evidence": "Nenhum DPA com a Vercel nem com o provedor do banco em `docs/lgpd/` (`README.md:22-23` identifica os provedores); os termos padrão aceitos no cadastro não foram reunidos nem examinados",
+      "impact": "Operadores que tratam dados de saúde sem obrigações demonstradas (`ALTO`)",
+      "recommendation": "Reunir e arquivar os DPAs dos provedores"
+    },
+    {
+      "id": "GV-10",
+      "domain": "13",
+      "score_area": "governanca",
+      "item": "O encarregado tem autonomia técnica, acesso à alta direção e ausência de conflito de interesses?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Não há encarregado indicado cuja autonomia avaliar; a falta da indicação é contada em GV-02"
+    },
+    {
+      "id": "GV-11",
+      "domain": "13",
+      "score_area": "governanca",
+      "item": "Agente de pequeno porte sem encarregado indicado: existe canal de comunicação com titulares e com a ANPD, divulgado?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "O item vale para agente de pequeno porte dispensado de indicar encarregado. A dispensa não se aplica à AgendaFácil, que faz tratamento de alto risco (Res. CD/ANPD nº 2/2022, art. 3º); a falta do encarregado é contada em GV-02"
+    },
+    {
+      "id": "GV-12",
+      "domain": "15",
+      "score_area": "governanca",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "A eliminação ou anonimização ao fim do prazo é automática e alcança réplicas, backups e operadores?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "Nenhuma rotina de expurgo de contas ou de logs no código (`package.json:7-11`, `src/`), e as tabelas não têm campo de desativação nem de exclusão (`db/schema.sql:11-18`). A eliminação dos dados dos pacientes é contada em OP-06",
+      "impact": "Contas e logs acumulados sem fim",
+      "recommendation": "Agendar o expurgo depois de definir os prazos (GV-04), incluindo backups"
+    },
+    {
+      "id": "GV-13",
+      "domain": "15",
+      "score_area": "governanca",
+      "item": "O descarte de dados e mídias é seguro e registrado?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Não há eliminação em curso cujo descarte e registro avaliar: nada é eliminado hoje (falha contada em GV-12), e em PaaS não há mídia física sob controle da empresa (`vercel.json:1-7`)"
+    },
+    {
+      "id": "GV-14",
+      "domain": "15",
+      "score_area": "governanca",
+      "criticality": "MEDIO",
+      "control_type": "DOCUMENTAL",
+      "item": "As retenções legais (ex.: fiscais, trabalhistas, registros de acesso do MCI art. 15) estão identificadas e limitadas ao prazo legal?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhum documento identifica as retenções legais (registros de acesso do MCI, documentos fiscais) e seus prazos; nada em `docs/lgpd/`; a fundadora declarou não haver outros documentos",
+      "impact": "Risco de apagar o que a lei manda guardar ou de guardar além do prazo",
+      "recommendation": "Listar as retenções legais na política de retenção"
+    },
+    {
+      "id": "GV-15",
+      "domain": "13",
+      "score_area": "governanca",
+      "criticality": "MEDIO",
+      "control_type": "DOCUMENTAL",
+      "item": "Existe trilha de auditoria e evidência documental contínua das decisões de privacidade (versões de políticas, atas, revisões)?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "`docs/lgpd/` contém um único rascunho, sem versões anteriores, atas ou registro de decisões; a fundadora declarou não haver outros documentos",
+      "impact": "A empresa não consegue demonstrar as medidas que adota",
+      "recommendation": "Versionar os documentos de privacidade e registrar as decisões"
+    },
+    {
+      "id": "GV-16",
+      "domain": "13",
+      "score_area": "governanca",
+      "criticality": "MEDIO",
+      "control_type": "DOCUMENTAL",
+      "item": "Existe política de segurança da informação aprovada e conhecida por quem trata dados pessoais?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhuma política de segurança da informação em `docs/`; a fundadora declarou não haver outros documentos",
+      "impact": "Práticas de segurança dependem da memória de cada pessoa",
+      "recommendation": "Política curta, proporcional a uma equipe de três pessoas"
+    },
+    {
+      "id": "GV-17",
+      "domain": "13",
+      "score_area": "governanca",
+      "criticality": "BAIXO",
+      "control_type": "DOCUMENTAL",
+      "item": "Há treinamento periódico de quem trata dados pessoais, com registro de participação?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhum registro de treinamento ou orientação da equipe em `docs/`; a fundadora declarou não haver outros documentos",
+      "impact": "Erros como o do pixel e o dos logs tendem a se repetir",
+      "recommendation": "Sessão anual registrada sobre papel de operadora, logs e incidentes"
+    },
+    {
+      "id": "TI-01",
+      "domain": "14",
+      "score_area": "governanca",
+      "criticality": "MEDIO",
+      "control_type": "DOCUMENTAL",
+      "item": "O fluxo de dados para o exterior está mapeado (destino, provedor, finalidade)?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhum documento mapeia os envios ao exterior; os destinos só aparecem no código (`public/index.html:13-15`, Meta) e no `README.md:22` (Vercel); a fundadora declarou não haver outros documentos",
+      "impact": "Novos envios ao exterior surgem sem controle",
+      "recommendation": "Tabela de destinos, provedores, dados e mecanismo no registro das operações"
+    },
+    {
+      "id": "TI-02",
+      "domain": "14",
+      "score_area": "governanca",
+      "criticality": "ALTO",
+      "control_type": "DOCUMENTAL",
+      "item": "Há mecanismo do art. 33 documentado para cada transferência: adequação reconhecida (União Europeia, Res. CD/ANPD nº 32/2026) ou, nos demais destinos, as CPC da Res. CD/ANPD nº 19/2024 incorporadas ao contrato, ou outro mecanismo aprovado?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA + DOCUMENTAL",
+      "evidence_confidence": "BAIXA",
+      "evidence": "O fluxo é comprovado no código, pois `public/index.html:13-15` e `public/js/agendar.js:23` enviam dados do navegador do paciente à Meta, nos EUA, sem adequação reconhecida (a mesma evidência de OP-02 e CK-02, reprovada aqui por obrigação distinta, o art. 33); os logs das funções ficam com a Vercel Inc., nos EUA; o mecanismo não está evidenciado, porque os termos desses provedores não foram localizados nem examinados; a falta de informação ao titular é contada em TI-04",
+      "impact": "Dados saem do País sem base demonstrada",
+      "recommendation": "Remover o pixel; examinar os termos e incorporar as CPC da Res. CD/ANPD nº 19/2024 onde faltarem"
+    },
+    {
+      "id": "TI-03",
+      "domain": "14",
+      "score_area": "governanca",
+      "criticality": "MEDIO",
+      "control_type": "DOCUMENTAL",
+      "item": "As CPC ou o mecanismo adotado cobrem os operadores e subprocessadores internacionais, inclusive os de segundo nível?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "BAIXA",
+      "evidence": "Os termos da Meta, da Vercel e do provedor do banco não foram reunidos nem examinados; a cobertura dos subprocessadores deles não está demonstrada",
+      "impact": "Dados podem chegar a terceiros sem a garantia do regulamento",
+      "recommendation": "Ao examinar os termos (TI-02), conferir a lista de subprocessadores"
+    },
+    {
+      "id": "TI-04",
+      "domain": "14",
+      "score_area": "governanca",
+      "criticality": "ALTO",
+      "control_type": "DOCUMENTAL",
+      "item": "O titular é informado sobre a transferência internacional na política de privacidade?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "ALTA",
+      "evidence": "O rascunho da política não menciona transferência internacional nem destinatários (`docs/lgpd/politica-de-privacidade.md:22-36`)",
+      "impact": "O titular não sabe que seus dados vão para os EUA",
+      "recommendation": "Informar destinos, provedores e mecanismo no aviso de privacidade"
+    },
+    {
+      "id": "TI-05",
+      "domain": "14",
+      "score_area": "governanca",
+      "criticality": "ALTO",
+      "control_type": "TECNICO",
+      "item": "Dados sensíveis transferidos têm hipótese do art. 11 e proteção reforçada (criptografia, restrição de acesso)?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "MEDIA",
+      "evidence": "O pixel envia à Meta, nos EUA, a visita e o agendamento na página de uma clínica (`public/index.html:13-15`, `public/js/agendar.js:23`), dado que revela busca por atendimento de saúde (art. 11, §1º), sem hipótese do art. 11 nem proteção; é a mesma evidência de OP-02, reprovada aqui por obrigação distinta. O banco, com o motivo da consulta, fica no Brasil (`.env.example:5-6`)",
+      "impact": "Informação sensível fora do País, sem proteção",
+      "recommendation": "Remover o pixel da página de agendamento (OP-02)"
+    },
+    {
+      "id": "IN-13",
+      "domain": "14",
+      "score_area": "governanca",
+      "item": "A exportação de logs a ferramentas de terceiros está coberta por contrato de operador e, se os dados saírem do País, por mecanismo do art. 33?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: nenhuma integração envia logs a ferramenta de terceiros (`package.json:15-25`, `vercel.json:1-20`); os logs ficam na própria Vercel, cujo contrato e cuja transferência são contados em GV-09 e TI-02"
+    },
+    {
       "id": "IN-01",
-      "item": "A hospedagem não enfraquece os cabeçalhos de segurança do código",
+      "domain": "7",
       "score_area": "infraestrutura",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "A camada da hospedagem ou CDN preserva o que a aplicação envia (cabeçalhos de segurança e CSP, sem cache de páginas com dados pessoais, sem scripts ou analytics injetados pelo provedor)? Validar as respostas de **produção**, não só o código.",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "PARCIAL",
@@ -990,10 +1688,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "IN-02",
-      "item": "Segredos em variáveis de ambiente, fora do repositório",
+      "domain": "7",
       "score_area": "infraestrutura",
       "criticality": "CRITICO",
       "control_type": "TECNICO",
+      "item": "Variáveis de ambiente e segredos ficam no cofre do provedor, fora do repositório e de builds ou previews públicos?",
       "applicability": "APLICAVEL",
       "status": "CONFORME",
       "evidence_type": "ENCONTRADA",
@@ -1004,11 +1703,140 @@ footer p{max-width:90ch}
       "recommendation": "Manter; separar segredos de produção e de preview no painel"
     },
     {
+      "id": "IN-03",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "criticality": "ALTO",
+      "control_type": "TECNICO",
+      "item": "Bancos de dados com dados pessoais têm criptografia em repouso, controle de acesso e segregação?",
+      "applicability": "NAO_VERIFICADO",
+      "justification": "Configuração visível só no painel do provedor do Postgres. O repositório mostra apenas a região e o TLS (`.env.example:5-6`, `src/db.js:5`). Acesso necessário: painel do provedor do banco. Backups e réplicas são avaliados em IN-10"
+    },
+    {
+      "id": "IN-04",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "Provedor de aplicações de internet: os registros de acesso (IP, porta lógica de origem, data e hora) são guardados por 6 meses e eliminados após o prazo, salvo requisição cautelar?",
+      "applicability": "NAO_VERIFICADO",
+      "justification": "A retenção e a exportação dos logs são configuradas no painel da Vercel, não no `vercel.json`. O código não mantém guarda própria. Acesso necessário: painel da Vercel"
+    },
+    {
+      "id": "IN-05",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "criticality": "ALTO",
+      "control_type": "TECNICO",
+      "item": "As permissões de acesso ao provedor (IAM, membros do painel, tokens de deploy) seguem privilégio mínimo, com MFA?",
+      "applicability": "NAO_VERIFICADO",
+      "justification": "Membros, papéis e MFA só aparecem nos painéis. Acesso necessário: painéis da Vercel, do banco e do GitHub"
+    },
+    {
+      "id": "IN-06",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "Analytics, logs de acesso e métricas nativos do provedor que coletam dados pessoais têm retenção, acesso e base legal definidos?",
+      "applicability": "NAO_VERIFICADO",
+      "justification": "Configuração do painel da Vercel. O código não inclui o script de analytics da plataforma (`public/index.html:1-56`). Acesso necessário: painel da Vercel"
+    },
+    {
+      "id": "IN-07",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "Há firewall ou WAF, detecção de intrusão e monitoramento centralizado (SIEM ou equivalente) capazes de detectar acesso indevido a dados pessoais?",
+      "applicability": "NAO_VERIFICADO",
+      "justification": "Regras e alertas ficam no painel da Vercel. Acesso necessário: painel da Vercel"
+    },
+    {
+      "id": "IN-08",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "item": "O armazenamento de objetos e os demais ativos estão livres de exposição pública indevida (ex.: buckets com dados pessoais)?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: nenhuma dependência nem uso de armazenamento de objetos (`package.json:15-25`); o sistema não recebe arquivos"
+    },
+    {
+      "id": "IN-09",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "item": "A segmentação de rede e as regras de exposição externa estão adequadas?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: em PaaS sem servidores próprios não há rede gerida pelo cliente (`vercel.json:1-20`)"
+    },
+    {
+      "id": "IN-10",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "criticality": "ALTO",
+      "control_type": "TECNICO",
+      "item": "Backups e réplicas são criptografados, têm acesso restrito e seguem a política de retenção (a eliminação também os alcança)?",
+      "applicability": "NAO_VERIFICADO",
+      "justification": "Criptografia, acesso e retenção dos backups e das réplicas são configurados no painel do provedor do Postgres; o repositório não os mostra. Acesso necessário: painel do provedor do banco"
+    },
+    {
+      "id": "IN-11",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "criticality": "ALTO",
+      "control_type": "TECNICO",
+      "item": "Os logs de auditoria da conta cloud ou do painel estão ativos e protegidos contra alteração?",
+      "applicability": "NAO_VERIFICADO",
+      "justification": "Os registros de auditoria das contas (quem alterou configurações, variáveis e membros) ficam nos painéis. Acesso necessário: painéis da Vercel, do banco e do GitHub"
+    },
+    {
+      "id": "IN-12",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "item": "Logs e observabilidade (CloudWatch, Datadog, Sentry, ELK etc.) têm retenção definida, acesso por privilégio mínimo e mascaramento de dados pessoais?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Objeto inexistente: nenhuma ferramenta de observabilidade além dos logs nativos da Vercel (`package.json:15-25`), avaliados em IN-06; o mascaramento na origem é contado em SE-06"
+    },
+    {
+      "id": "IN-14",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "criticality": "MEDIO",
+      "control_type": "TECNICO",
+      "item": "Chaves e segredos de produção ficam em serviço dedicado (KMS, Secrets Manager ou equivalente), com rotação?",
+      "applicability": "NAO_VERIFICADO",
+      "justification": "Os segredos estão no cofre de variáveis da Vercel e do GitHub (IN-02, DS-01), mas a rotação e o controle de acesso a eles só aparecem nos painéis. Acesso necessário: painéis da Vercel e do GitHub"
+    },
+    {
+      "id": "IN-15",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "criticality": "BAIXO",
+      "control_type": "DOCUMENTAL",
+      "item": "A divisão de responsabilidades com o provedor está documentada (o que é do provedor e o que é do auditado: certificados, DNS, CDN, backups, atualizações)?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhum documento define o que cabe à Vercel e ao provedor do banco e o que cabe à AgendaFácil; nada em `docs/` nem em `README.md:18-25`; a fundadora declarou não haver outros documentos",
+      "impact": "Lacunas como a CSP do `vercel.json` (IN-01) passam despercebidas",
+      "recommendation": "Quadro de uma página com as responsabilidades de cada parte"
+    },
+    {
+      "id": "IN-16",
+      "domain": "7",
+      "score_area": "infraestrutura",
+      "item": "Há processo de hardening e de gestão de vulnerabilidades da infraestrutura?",
+      "applicability": "NAO_APLICAVEL",
+      "justification": "Obrigação do provedor: em PaaS, o sistema operacional e o ambiente de execução são mantidos pela Vercel (`vercel.json:1-7`); a parte da AgendaFácil, as dependências, é contada em DS-02"
+    },
+    {
       "id": "AP-01",
-      "item": "Tokens JWT com expiração, algoritmo fixo e audiência",
+      "domain": "9",
       "score_area": "apis_integracoes",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "As APIs validam tokens corretamente (JWT: assinatura, algoritmo, expiração e audiência) e usam OAuth com escopos mínimos?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "PARCIAL",
@@ -1020,10 +1848,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "AP-02",
-      "item": "Respostas expõem só os campos necessários",
+      "domain": "9",
       "score_area": "apis_integracoes",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "As respostas das APIs expõem só os campos necessários, sem exposição excessiva de dados pessoais?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
@@ -1035,10 +1864,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "AP-03",
-      "item": "Limitação de taxa nas APIs",
+      "domain": "9",
       "score_area": "apis_integracoes",
       "criticality": "MEDIO",
       "control_type": "TECNICO",
+      "item": "Há rate limiting e proteção contra abuso nas APIs e na autenticação?",
       "applicability": "APLICAVEL",
       "status": "NAO_CONFORME",
       "evidence_type": "AUSENTE",
@@ -1050,10 +1880,11 @@ footer p{max-width:90ch}
     },
     {
       "id": "AP-04",
-      "item": "Criptografia em trânsito com integrações",
+      "domain": "9",
       "score_area": "apis_integracoes",
       "criticality": "ALTO",
       "control_type": "TECNICO",
+      "item": "A comunicação com integrações e entre serviços é criptografada em trânsito?",
       "applicability": "APLICAVEL",
       "status": "CONFORME",
       "evidence_type": "ENCONTRADA",
@@ -1064,126 +1895,36 @@ footer p{max-width:90ch}
       "recommendation": "Manter"
     },
     {
-      "id": "BL-01",
-      "item": "Escolha da base legal e coleta de consentimento para os dados dos pacientes, inclusive o dado de saúde (arts. 7º, 8º e 11)",
-      "score_area": "bases_legais",
-      "applicability": "NAO_APLICAVEL",
-      "justification": "Obrigação do controlador. Nesse fluxo a AgendaFácil é operadora, e as clínicas decidem a base legal (em regra, tutela da saúde, art. 11, II, \"f\"). O uso para finalidade própria é avaliado em OP-02"
+      "id": "AP-05",
+      "domain": "9",
+      "score_area": "apis_integracoes",
+      "criticality": "MEDIO",
+      "control_type": "DOCUMENTAL",
+      "item": "As APIs públicas estão inventariadas (rotas, dados expostos, responsável)?",
+      "applicability": "APLICAVEL",
+      "status": "NAO_CONFORME",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "ALTA",
+      "evidence": "As rotas públicas (`/api/agendamentos` e `/api/login`) só aparecem no código (`api/index.js:38-41`); nenhum inventário em `README.md` nem em `docs/`",
+      "impact": "Rotas e campos expostos crescem sem revisão",
+      "recommendation": "Tabela de rotas, autenticação, dados e responsável"
     },
     {
-      "id": "BL-03",
-      "item": "Dados de crianças e adolescentes: consentimento parental e verificação de idade (art. 14)",
-      "score_area": "bases_legais",
-      "applicability": "NAO_APLICAVEL",
-      "justification": "Obrigação do controlador no fluxo dos pacientes. Além disso, o agendamento recusa menores de 18 anos (`src/routes/agendamentos.js:23-27`) e as clínicas atendem só adultos (`README.md:15`)"
-    },
-    {
-      "id": "DS-04",
-      "item": "Varredura de vulnerabilidades em imagens Docker",
-      "score_area": "seguranca",
-      "applicability": "NAO_APLICAVEL",
-      "justification": "Objeto inexistente: não há `Dockerfile` nem arquivo de composição no repositório; o deploy é feito pela Vercel a partir do código (`.github/workflows/ci.yml:26`)"
-    },
-    {
-      "id": "DS-05",
-      "item": "Varredura de infraestrutura como código (Terraform, CloudFormation, Helm)",
-      "score_area": "seguranca",
-      "applicability": "NAO_APLICAVEL",
-      "justification": "Objeto inexistente: nenhum arquivo de IaC no repositório. A única configuração de plataforma é o `vercel.json`, avaliado em IN-01"
-    },
-    {
-      "id": "DS-06",
-      "item": "RBAC e hardening de Kubernetes",
-      "score_area": "seguranca",
-      "applicability": "NAO_APLICAVEL",
-      "justification": "Objeto inexistente: nenhum manifesto de orquestração; a aplicação roda em funções da Vercel (`vercel.json:1-7`)"
-    },
-    {
-      "id": "DT-05",
-      "item": "Canal de direitos dos pacientes",
-      "score_area": "direitos_titular",
-      "applicability": "NAO_APLICAVEL",
-      "justification": "Obrigação do controlador (clínicas). A AgendaFácil responde pelo apoio a esses pedidos, avaliado em OP-05"
-    },
-    {
-      "id": "DT-06",
-      "item": "Política de privacidade e avisos de coleta dirigidos aos pacientes, inclusive o aviso sobre o motivo da consulta",
-      "score_area": "direitos_titular",
-      "applicability": "NAO_APLICAVEL",
-      "justification": "Obrigação do controlador (clínicas). Recomendação sem efeito no score: oferecer às clínicas um espaço para o aviso delas na página de agendamento"
-    },
-    {
-      "id": "GV-07",
-      "item": "RIPD do tratamento dos dados de saúde dos pacientes",
-      "score_area": "governanca",
-      "applicability": "NAO_APLICAVEL",
-      "justification": "Documento do controlador (arts. 5º, XVII e 38). A AgendaFácil deve fornecer às clínicas as informações necessárias, o que entra no contrato (OP-01). O RIPD do uso próprio é avaliado em GV-03"
-    },
-    {
-      "id": "GV-08",
-      "item": "Comunicação de incidente à ANPD e aos pacientes no fluxo de agendamento",
-      "score_area": "governanca",
-      "applicability": "NAO_APLICAVEL",
-      "justification": "Obrigação do controlador (clínicas). O aviso da operadora às clínicas é avaliado em OP-04"
-    },
-    {
-      "id": "IN-03",
-      "item": "Banco com criptografia em repouso, backups protegidos e acesso restrito",
-      "score_area": "infraestrutura",
-      "applicability": "NAO_VERIFICADO",
-      "justification": "Configuração visível só no painel do provedor do Postgres. O repositório mostra apenas a região e o TLS (`.env.example:5-6`, `src/db.js:5`). Acesso necessário: painel do provedor do banco",
+      "id": "AP-06",
+      "domain": "9",
+      "score_area": "apis_integracoes",
       "criticality": "ALTO",
-      "control_type": "TECNICO"
-    },
-    {
-      "id": "IN-04",
-      "item": "Registros de acesso guardados por 6 meses, sob sigilo (MCI, art. 15)",
-      "score_area": "infraestrutura",
-      "applicability": "NAO_VERIFICADO",
-      "justification": "A retenção e a exportação dos logs são configuradas no painel da Vercel, não no `vercel.json`. O código não mantém guarda própria. Acesso necessário: painel da Vercel",
-      "criticality": "MEDIO",
-      "control_type": "TECNICO"
-    },
-    {
-      "id": "IN-05",
-      "item": "Acesso aos painéis e tokens de deploy com privilégio mínimo e MFA",
-      "score_area": "infraestrutura",
-      "applicability": "NAO_VERIFICADO",
-      "justification": "Membros, papéis e MFA só aparecem nos painéis. Acesso necessário: painéis da Vercel, do banco e do GitHub",
-      "criticality": "ALTO",
-      "control_type": "TECNICO"
-    },
-    {
-      "id": "IN-06",
-      "item": "Logs e analytics nativos da plataforma com retenção e acesso definidos",
-      "score_area": "infraestrutura",
-      "applicability": "NAO_VERIFICADO",
-      "justification": "Configuração do painel da Vercel. O código não inclui o script de analytics da plataforma (`public/index.html:1-56`). Acesso necessário: painel da Vercel",
-      "criticality": "MEDIO",
-      "control_type": "TECNICO"
-    },
-    {
-      "id": "IN-07",
-      "item": "Firewall, WAF e monitoramento capazes de detectar acesso indevido",
-      "score_area": "infraestrutura",
-      "applicability": "NAO_VERIFICADO",
-      "justification": "Regras e alertas ficam no painel da Vercel. Acesso necessário: painel da Vercel",
-      "criticality": "MEDIO",
-      "control_type": "TECNICO"
-    },
-    {
-      "id": "IN-08",
-      "item": "Armazenamento de objetos (buckets) sem exposição pública",
-      "score_area": "infraestrutura",
-      "applicability": "NAO_APLICAVEL",
-      "justification": "Objeto inexistente: nenhuma dependência nem uso de armazenamento de objetos (`package.json:15-25`); o sistema não recebe arquivos"
-    },
-    {
-      "id": "IN-09",
-      "item": "Segmentação de rede e regras de exposição (VPC, security groups)",
-      "score_area": "infraestrutura",
-      "applicability": "NAO_APLICAVEL",
-      "justification": "Objeto inexistente: em PaaS sem servidores próprios não há rede gerida pelo cliente (`vercel.json:1-20`)"
+      "control_type": "TECNICO",
+      "item": "As API keys ficam fora do código, dos repositórios e do front-end?",
+      "applicability": "APLICAVEL",
+      "status": "CONFORME",
+      "evidence_type": "ENCONTRADA",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "Nenhuma chave no código nem no front-end: os segredos são lidos de variáveis de ambiente (`src/auth.js:26`, `src/db.js:4`); o ID do pixel em `public/index.html:14` é identificador público, não credencial",
+      "impact": "",
+      "recommendation": "Manter"
     }
   ],
   "nao_conformidades": [
@@ -1227,12 +1968,12 @@ footer p{max-width:90ch}
     },
     {
       "id": "NC-03",
-      "item_id": "GV-05",
+      "item_id": "TI-02",
       "title": "Dados enviados ao exterior sem mecanismo legal demonstrado",
-      "problem": "A página de agendamento envia à Meta, nos EUA, identificadores do navegador (cookie `_fbp`, IP, user agent), a URL da clínica e o evento de agendamento. Os logs das funções, que hoje contêm CPF e e-mail (SE-06), ficam com a Vercel Inc., também nos EUA. Os termos desses provedores não foram localizados nem examinados, e nenhum documento informa a transferência.",
+      "problem": "A página de agendamento envia à Meta, nos EUA, identificadores do navegador (cookie `_fbp`, IP, user agent), a URL da clínica e o evento de agendamento. Os logs das funções, que hoje contêm CPF e e-mail (SE-06), ficam com a Vercel Inc., também nos EUA. Os termos desses provedores não foram localizados nem examinados.",
       "severity": "ALTO",
-      "severity_note": "Os EUA não têm adequação reconhecida pela ANPD. Pelo `legal/international-transfer.md`, o mecanismo **não evidenciado** (termos não examinados) é `ALTO`, com evidência `AUSENTE`, até a verificação. A falta de informação ao titular também é `ALTO`. Se o exame dos termos comprovar que não há CPC nem outro mecanismo, o item passa a `CRITICO` (peso 4).",
-      "lgpd_article": "Arts. 33 a 36; Res. CD/ANPD nº 19/2024 (prazo das CPC encerrado em 23/08/2025); art. 9º, V.",
+      "severity_note": "Os EUA não têm adequação reconhecida pela ANPD. Pelo `legal/international-transfer.md`, o mecanismo **não evidenciado** (termos não examinados) é `ALTO`, com evidência `AUSENTE`, até a verificação. A falta de informação ao titular é contada em TI-04. Se o exame dos termos comprovar que não há CPC nem outro mecanismo, o item passa a `CRITICO` (peso 4).",
+      "lgpd_article": "Arts. 33 a 36; Res. CD/ANPD nº 19/2024 (prazo das CPC encerrado em 23/08/2025).",
       "evidence_type": "AUSENTE",
       "evidence_source": "TECNICA + DOCUMENTAL",
       "evidence_confidence": "BAIXA",
@@ -1240,7 +1981,7 @@ footer p{max-width:90ch}
       "technical_impact": "Dados ligados a agendamentos de saúde ficam sob controle de terceiros no exterior.",
       "legal_impact": "Transferência internacional sem base demonstrada, tema prioritário de fiscalização da ANPD no biênio 2026-2027 (Res. CD/ANPD nº 30/2025); sujeita às sanções do art. 52.",
       "effort": "M",
-      "recommendation": "1. Remover o pixel da página de agendamento, o que elimina o fluxo para a Meta (OP-02).\n2. Mapear as transferências que restarem (Vercel, provedor do banco, ferramentas futuras).\n3. Examinar os termos padrão aceitos; se incorporarem as CPC, arquivá-los como evidência; se não incorporarem, assiná-las.\n4. Informar a transferência no aviso de privacidade e, para os dados dos pacientes, às clínicas.",
+      "recommendation": "1. Remover o pixel da página de agendamento, o que elimina o fluxo para a Meta (OP-02).\n2. Mapear as transferências que restarem (Vercel, provedor do banco, ferramentas futuras).\n3. Examinar os termos padrão aceitos; se incorporarem as CPC, arquivá-los como evidência; se não incorporarem, assiná-las.",
       "owner": "CEO, com assessoria jurídica externa",
       "deadline_suggestion": "30_DIAS"
     },
@@ -1342,30 +2083,30 @@ footer p{max-width:90ch}
     {
       "id": "NC-09",
       "item_id": "OP-03",
-      "title": "Suboperadores sem contrato demonstrado e não informados às clínicas",
-      "problem": "A Vercel processa as requisições com o motivo da consulta, e o provedor do banco armazena esses dados. Não foram localizados contratos de proteção de dados com eles, e as clínicas não são informadas de que eles existem.",
+      "title": "Suboperadores não informados às clínicas",
+      "problem": "A Vercel processa as requisições com o motivo da consulta, e o provedor do banco armazena esses dados. As clínicas não são informadas de que esses suboperadores existem.",
       "severity": "ALTO",
-      "severity_note": "Suboperador não informado ou sem contrato é `MEDIO`, e `ALTO` quando trata dado sensível (`legal/legal-bases-engine.md`; mesma regra em `governance/dpo-framework.md` para o provedor de hospedagem).",
-      "lgpd_article": "Art. 39; art. 46.",
+      "severity_note": "Suboperador não informado é `MEDIO`, e `ALTO` quando trata dado sensível (`legal/legal-bases-engine.md`). Os contratos com os provedores são contados em GV-09.",
+      "lgpd_article": "Art. 39.",
       "evidence_type": "AUSENTE",
       "evidence_source": "DOCUMENTAL",
-      "evidence_confidence": "BAIXA",
-      "evidence": "Nenhum DPA em `docs/lgpd/`; `README.md:22-23` identifica os provedores; os termos padrão aceitos no cadastro não foram examinados. Verificação que eleva a confiança: reunir os DPAs e os termos da Vercel e do provedor do banco.",
-      "technical_impact": "Não há garantia contratual de segurança, aviso de incidentes nem eliminação ao fim do serviço.",
-      "legal_impact": "A AgendaFácil não consegue demonstrar às clínicas as garantias que deve oferecer como operadora. É uma obrigação distinta do mecanismo de transferência internacional (GV-05), embora os dois costumem estar no mesmo instrumento.",
+      "evidence_confidence": "MEDIA",
+      "evidence": "`README.md:22-23` identifica os provedores; não há contrato nem lista de suboperadores entregue às clínicas (OP-01).",
+      "technical_impact": "As clínicas não sabem por onde passam os dados dos pacientes.",
+      "legal_impact": "A AgendaFácil não consegue demonstrar às clínicas as garantias que deve oferecer como operadora.",
       "effort": "P",
-      "recommendation": "Baixar e arquivar os DPAs que os provedores oferecem, verificar a cobertura de CPC (GV-05) e listar os suboperadores nos termos com as clínicas (OP-01).",
+      "recommendation": "Listar os suboperadores nos termos com as clínicas (OP-01) e avisá-las antes de trocar de provedor.",
       "owner": "CEO",
       "deadline_suggestion": "30_DIAS"
     },
     {
       "id": "NC-10",
       "item_id": "OP-04",
-      "title": "Sem processo de incidentes",
-      "problem": "Não há procedimento, responsáveis nem modelo de aviso para incidentes de segurança. Nos dados dos pacientes, a AgendaFácil precisa avisar as clínicas sem demora, para que elas comuniquem a ANPD e os titulares. Nos dados próprios (contas das clínicas), a comunicação é dela.",
+      "title": "Sem processo de aviso de incidentes às clínicas",
+      "problem": "Não há procedimento, responsáveis nem modelo de aviso para incidentes de segurança. Nos dados dos pacientes, a AgendaFácil precisa avisar as clínicas sem demora, para que elas comuniquem a ANPD e os titulares. A comunicação dos dados próprios é contada em GV-08.",
       "severity": "ALTO",
-      "severity_note": "Ausência de processo de aviso de incidente ao controlador (`legal/legal-bases-engine.md`) e de processo capaz de comunicar em 3 dias úteis (`governance/dpo-framework.md`). O dever não é modulado por porte. As duas faces dependem do mesmo documento e são contadas uma única vez.",
-      "lgpd_article": "Art. 48; art. 39; Res. CD/ANPD nº 15/2024 (comunicação em 3 dias úteis, complementável em 20 dias úteis).",
+      "severity_note": "Ausência de processo de aviso de incidente ao controlador (`legal/legal-bases-engine.md`). O dever não é modulado por porte.",
+      "lgpd_article": "Art. 39; art. 48; Res. CD/ANPD nº 15/2024 (comunicação em 3 dias úteis, complementável em 20 dias úteis).",
       "evidence_type": "AUSENTE",
       "evidence_source": "DOCUMENTAL",
       "evidence_confidence": "MEDIA",
@@ -1399,19 +2140,19 @@ footer p{max-width:90ch}
     {
       "id": "NC-12",
       "item_id": "DS-02",
-      "title": "Nenhuma varredura de segurança no CI",
-      "problem": "O pipeline não verifica vulnerabilidades em dependências nem faz análise estática de segurança.",
+      "title": "Sem varredura de dependências e sem nenhuma outra varredura no CI",
+      "problem": "O pipeline não verifica vulnerabilidades em dependências, e não há nenhuma outra varredura de segurança.",
       "severity": "ALTO",
-      "severity_note": "Ausência total de varredura de segurança (`devsecops/ci-cd-security.md`).",
+      "severity_note": "`MEDIO` no catálogo; `ALTO` pelo agravante do item: o pipeline não tem nenhuma varredura de segurança (`devsecops/ci-cd-security.md`). A análise estática é contada em DS-07.",
       "lgpd_article": "Art. 46; art. 49.",
       "evidence_type": "AUSENTE",
       "evidence_source": "TECNICA",
       "evidence_confidence": "MEDIA",
-      "evidence": "`.github/workflows/ci.yml:16-18`; nenhum `dependabot.yml` nem fluxo de CodeQL no repositório. As configurações de segurança do GitHub não foram vistas.",
+      "evidence": "`.github/workflows/ci.yml:16-18`; nenhum `dependabot.yml` no repositório. As configurações de segurança do GitHub não foram vistas.",
       "technical_impact": "Vulnerabilidade conhecida em `express`, `jsonwebtoken` ou `pg` chega à produção sem alerta.",
       "legal_impact": "Sistemas devem atender a requisitos de segurança desde a concepção (art. 49).",
       "effort": "P",
-      "recommendation": "`npm audit --audit-level=high` no job `build`, Dependabot semanal e CodeQL.",
+      "recommendation": "`npm audit --audit-level=high` no job `build` e Dependabot semanal.",
       "owner": "CTO",
       "deadline_suggestion": "30_DIAS"
     },
@@ -1428,7 +2169,7 @@ footer p{max-width:90ch}
       "evidence_confidence": "ALTA",
       "evidence": "`docs/lgpd/politica-de-privacidade.md:36`; `public/index.html:48`.",
       "technical_impact": "Pedidos chegam por canais não monitorados e se perdem.",
-      "legal_impact": "Descumprimento dos arts. 18 e 19. O canal dos pacientes é obrigação das clínicas (DT-05), mas um pedido que chegue à AgendaFácil precisa ser encaminhado a elas (OP-05).",
+      "legal_impact": "Descumprimento dos arts. 18 e 19. O canal dos pacientes é obrigação das clínicas, mas um pedido que chegue à AgendaFácil precisa ser encaminhado a elas (OP-05).",
       "effort": "P",
       "recommendation": "Endereço ou formulário específico de privacidade no aviso e no rodapé, com prazo de resposta (imediato em formato simplificado ou até 15 dias, art. 19).",
       "owner": "CEO",
@@ -1495,7 +2236,7 @@ footer p{max-width:90ch}
       "id": "NC-17",
       "item_id": "GV-03",
       "title": "Sem RIPD para o uso próprio de dados da página de agendamento (risco aceito)",
-      "problem": "Como controladora do rastreamento para fins próprios, a AgendaFácil faz um tratamento de alto risco (revela busca por atendimento de saúde, em escala relevante) sem relatório de impacto. O RIPD dos dados de saúde inseridos no agendamento é das clínicas (GV-07).",
+      "problem": "Como controladora do rastreamento para fins próprios, a AgendaFácil faz um tratamento de alto risco (revela busca por atendimento de saúde, em escala relevante) sem relatório de impacto. O RIPD dos dados de saúde inseridos no agendamento é das clínicas.",
       "severity": "ALTO",
       "severity_note": "Ausência de RIPD em tratamento de alto risco pelos critérios da Res. CD/ANPD nº 2/2022 (`governance/dpo-framework.md`).",
       "lgpd_article": "Art. 38; art. 5º, XVII.",
@@ -1521,9 +2262,9 @@ footer p{max-width:90ch}
       "id": "NC-18",
       "item_id": "GV-06",
       "title": "Sem canal de denúncia de provedor de aplicações",
-      "problem": "Sede e contato estão no rodapé, mas não há canal permanente de denúncia, exigido de todo provedor de aplicações de internet desde 20/07/2026.",
+      "problem": "Há um e-mail de contato geral no rodapé, mas não um canal permanente de denúncia, exigido de todo provedor de aplicações de internet desde 20/07/2026.",
       "severity": "ALTO",
-      "severity_note": "O item é `PARCIAL`; a lacuna que resta é a ausência de canal de denúncia permanente, `ALTO` no mapeamento de `legal/plataformas-digitais.md`, aplicado por `governance` mesmo com aquele módulo inativo.",
+      "severity_note": "O item é `PARCIAL`; a lacuna que resta é a ausência de canal de denúncia permanente, `ALTO` no catálogo (`GV-06`, `governance/dpo-framework.md`).",
       "lgpd_article": "Decreto nº 8.771/2016, art. 16-A, II (redação do Decreto nº 12.975/2026). Correlato LGPD: art. 6º, VI (transparência).",
       "evidence_type": "PARCIAL",
       "evidence_source": "TECNICA",
@@ -1538,6 +2279,101 @@ footer p{max-width:90ch}
     },
     {
       "id": "NC-19",
+      "item_id": "TI-04",
+      "title": "Transferência internacional não informada ao titular",
+      "problem": "O rascunho do aviso de privacidade não diz que dados de navegação vão para a Meta e que os logs ficam com a Vercel, ambas nos EUA.",
+      "severity": "ALTO",
+      "severity_note": "Transferência sem informação ao titular (`legal/international-transfer.md`). É obrigação distinta da de TI-02: mesmo com mecanismo válido, o titular precisa ser informado.",
+      "lgpd_article": "Art. 9º, V; art. 33.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "ALTA",
+      "evidence": "`docs/lgpd/politica-de-privacidade.md:22-36` não menciona transferência nem destinatários.",
+      "technical_impact": "Nenhum direto.",
+      "legal_impact": "Falta de transparência sobre o envio de dados ao exterior, tema prioritário de fiscalização (Res. CD/ANPD nº 30/2025).",
+      "effort": "P",
+      "recommendation": "Informar no aviso os destinos, os provedores e o mecanismo adotado; nos dados dos pacientes, informar as clínicas.",
+      "owner": "CEO e assessoria jurídica",
+      "deadline_suggestion": "30_DIAS"
+    },
+    {
+      "id": "NC-20",
+      "item_id": "TI-05",
+      "title": "Dado que revela busca por atendimento de saúde enviado ao exterior sem proteção",
+      "problem": "O pixel envia à Meta, nos EUA, a visita e o agendamento na página de uma clínica, o que revela que a pessoa procura atendimento de saúde (art. 11, §1º). Não há hipótese do art. 11 nem medida de proteção para esse envio.",
+      "severity": "ALTO",
+      "severity_note": "Dado sensível transferido sem hipótese do art. 11 nem proteção reforçada (`TI-05`). O banco, com o motivo da consulta, fica no Brasil; o problema está no pixel.",
+      "lgpd_article": "Arts. 11, 33 e 46.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "MEDIA",
+      "evidence": "`public/index.html:13-15` e `public/js/agendar.js:23` (mesma evidência de OP-02); `.env.example:5-6` e `vercel.json:3` mostram o banco e as funções em São Paulo.",
+      "technical_impact": "Informação sensível fora do controle das clínicas e da AgendaFácil.",
+      "legal_impact": "Tratamento de dado sensível sem hipótese legal, agravado pela saída do País.",
+      "effort": "P",
+      "recommendation": "Remover o pixel da página de agendamento (OP-02); com isso o item deixa de ter objeto.",
+      "owner": "CTO",
+      "deadline_suggestion": "IMEDIATO"
+    },
+    {
+      "id": "NC-21",
+      "item_id": "GV-08",
+      "title": "Sem processo de comunicação de incidentes nos dados próprios",
+      "problem": "Nos dados em que a AgendaFácil é controladora (contas das clínicas e rastreamento), cabe a ela comunicar a ANPD e os titulares em até 3 dias úteis. Não há procedimento, responsáveis nem modelo para isso.",
+      "severity": "ALTO",
+      "severity_note": "Ausência de processo capaz de comunicar em 3 dias úteis (`governance/dpo-framework.md`). O dever não é modulado por porte. É obrigação distinta do aviso às clínicas (OP-04), embora o mesmo documento resolva as duas.",
+      "lgpd_article": "Art. 48; Res. CD/ANPD nº 15/2024.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nenhum plano ou runbook no repositório; declaração da fundadora.",
+      "technical_impact": "Reação improvisada, perda de evidências e contenção lenta.",
+      "legal_impact": "Perder o prazo de comunicação sujeita a empresa a processo sancionador (art. 52).",
+      "effort": "M",
+      "recommendation": "No mesmo documento de OP-04, definir quem avalia o risco, quem comunica a ANPD e os titulares e em que prazo.",
+      "owner": "CEO e CTO",
+      "deadline_suggestion": "30_DIAS"
+    },
+    {
+      "id": "NC-22",
+      "item_id": "GV-09",
+      "title": "Operadores sem contrato de proteção de dados demonstrado",
+      "problem": "A Vercel processa as requisições com o motivo da consulta, e o provedor do banco armazena esses dados. Não foram localizados contratos de proteção de dados (DPA) com eles.",
+      "severity": "ALTO",
+      "severity_note": "Operador sem DPA é `MEDIO`, e `ALTO` quando trata dado sensível (`governance/dpo-framework.md`).",
+      "lgpd_article": "Art. 39; art. 46.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "BAIXA",
+      "evidence": "Nenhum DPA em `docs/lgpd/`; os termos padrão aceitos no cadastro não foram examinados. Verificação que eleva a confiança: reunir os DPAs e os termos da Vercel e do provedor do banco.",
+      "technical_impact": "Não há garantia contratual de segurança, aviso de incidentes nem eliminação ao fim do serviço.",
+      "legal_impact": "A AgendaFácil não consegue demonstrar as garantias dos seus operadores. É uma obrigação distinta do mecanismo de transferência internacional (TI-02), embora os dois costumem estar no mesmo instrumento.",
+      "effort": "P",
+      "recommendation": "Baixar e arquivar os DPAs que os provedores oferecem e verificar a cobertura de CPC (TI-02).",
+      "owner": "CEO",
+      "deadline_suggestion": "30_DIAS"
+    },
+    {
+      "id": "NC-23",
+      "item_id": "DS-08",
+      "title": "Sem varredura de segredos no repositório",
+      "problem": "Nada verifica se uma senha, token ou chave foi parar no código ou no histórico do git.",
+      "severity": "ALTO",
+      "severity_note": "Ausência de varredura de segredos (`devsecops/ci-cd-security.md`). Nenhuma credencial foi encontrada nos arquivos atuais, então não vale o agravante de credencial exposta.",
+      "lgpd_article": "Art. 46.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "MEDIA",
+      "evidence": "`.github/workflows/ci.yml:9-30` não tem etapa de varredura de segredos; `.gitignore:2-4` exclui o `.env`. A proteção nativa do GitHub contra segredos não foi vista.",
+      "technical_impact": "Um segredo enviado por engano fica no histórico sem que ninguém seja avisado.",
+      "legal_impact": "Medida de segurança básica ausente num sistema com dados de saúde.",
+      "effort": "P",
+      "recommendation": "Ligar a proteção contra segredos do GitHub e rodar uma varredura do histórico (por exemplo, gitleaks) no CI.",
+      "owner": "CTO",
+      "deadline_suggestion": "30_DIAS"
+    },
+    {
+      "id": "NC-24",
       "item_id": "BL-02",
       "title": "Base legal dos tratamentos próprios não documentada",
       "problem": "A AgendaFácil é controladora dos dados das contas dos usuários das clínicas, mas nenhum documento diz qual base legal sustenta esse tratamento.",
@@ -1556,7 +2392,7 @@ footer p{max-width:90ch}
       "deadline_suggestion": "30_DIAS"
     },
     {
-      "id": "NC-20",
+      "id": "NC-25",
       "item_id": "CK-03",
       "title": "Revogação que não apaga o identificador da Meta",
       "problem": "O usuário consegue rever a escolha, e a recusa chama `fbq('consent', 'revoke')`, o que interrompe os eventos seguintes. Mas o cookie `_fbp` e o script já carregado permanecem no navegador.",
@@ -1575,7 +2411,7 @@ footer p{max-width:90ch}
       "deadline_suggestion": "90_DIAS"
     },
     {
-      "id": "NC-21",
+      "id": "NC-26",
       "item_id": "CK-04",
       "title": "Escolha de cookies sem prova",
       "problem": "A escolha fica apenas no navegador, sem versão do banner nem categorias.",
@@ -1594,26 +2430,26 @@ footer p{max-width:90ch}
       "deadline_suggestion": "90_DIAS"
     },
     {
-      "id": "NC-22",
+      "id": "NC-27",
       "item_id": "CK-05",
-      "title": "Consentimento de cookies genérico",
-      "problem": "O banner oferece só \"Aceitar\" ou \"Rejeitar\" tudo e diz apenas \"melhorar sua experiência\", sem mencionar publicidade nem a Meta.",
+      "title": "Consentimento de cookies sem categorias",
+      "problem": "O banner oferece só \"Aceitar\" ou \"Rejeitar\" tudo, sem separar finalidades.",
       "severity": "MEDIO",
       "severity_note": "Consentimento pouco granular (`appsec/owasp-api.md`).",
-      "lgpd_article": "Art. 8º, §4º; art. 9º.",
+      "lgpd_article": "Art. 8º, §4º.",
       "evidence_type": "AUSENTE",
       "evidence_source": "TECNICA",
       "evidence_confidence": "ALTA",
-      "evidence": "`public/index.html:42`.",
+      "evidence": "`public/index.html:41-45`.",
       "technical_impact": "Não há como aceitar medição e recusar publicidade.",
       "legal_impact": "Autorização genérica é nula (art. 8º, §4º).",
       "effort": "M",
-      "recommendation": "Categorias separadas, sem pré-marcação, com nome dos terceiros e link para a política de cookies (`templates/cookie-policy-template.md`).",
+      "recommendation": "Categorias separadas (necessários, medição, publicidade), sem pré-marcação.",
       "owner": "CTO",
       "deadline_suggestion": "90_DIAS"
     },
     {
-      "id": "NC-23",
+      "id": "NC-28",
       "item_id": "SE-04",
       "title": "Login sem segundo fator",
       "problem": "Usuários de clínica acessam motivos de consulta apenas com senha.",
@@ -1632,18 +2468,18 @@ footer p{max-width:90ch}
       "deadline_suggestion": "90_DIAS"
     },
     {
-      "id": "NC-24",
+      "id": "NC-29",
       "item_id": "DT-02",
       "title": "Sem fluxo para atender pedidos nos tratamentos próprios",
-      "problem": "Não há procedimento nem recurso do sistema para consultar, exportar ou excluir os dados de uma conta de usuário de clínica, com prazo e registro.",
+      "problem": "Não há procedimento escrito, com prazo, responsável e confirmação, para atender pedidos sobre os dados de uma conta de usuário de clínica. A falta de recurso no sistema é contada em DT-06.",
       "severity": "MEDIO",
-      "severity_note": "Inexistência de fluxo de exclusão e portabilidade (`legal/rights-of-data-subject.md`).",
-      "lgpd_article": "Art. 18, II, V e VI; art. 19.",
+      "severity_note": "Resposta sem prazo definido, em desacordo com o art. 19 (`legal/rights-of-data-subject.md`).",
+      "lgpd_article": "Art. 18, §§3º a 5º; art. 19.",
       "evidence_type": "AUSENTE",
-      "evidence_source": "TECNICA + DOCUMENTAL",
+      "evidence_source": "DOCUMENTAL",
       "evidence_confidence": "MEDIA",
-      "evidence": "Nenhuma rota de conta em `src/routes/clinica.js:1-55` e `api/index.js:38-41`; nenhum procedimento em `docs/lgpd/`.",
-      "technical_impact": "Pedidos exigem alterações manuais no banco, sem registro.",
+      "evidence": "Nenhum procedimento em `docs/lgpd/`; declaração da fundadora.",
+      "technical_impact": "Cada pedido é tratado de improviso.",
       "legal_impact": "Risco de descumprir o prazo do art. 19.",
       "effort": "P",
       "recommendation": "Procedimento de uma página (quem recebe, como executa, prazo, registro), suficiente para o volume atual.",
@@ -1651,7 +2487,7 @@ footer p{max-width:90ch}
       "deadline_suggestion": "90_DIAS"
     },
     {
-      "id": "NC-25",
+      "id": "NC-30",
       "item_id": "DT-04",
       "title": "Aviso de privacidade incompleto e com papéis trocados",
       "problem": "O rascunho identifica a empresa e menciona cookies de forma genérica. Faltam o tratamento das contas das clínicas, a Meta como destinatária, base legal, retenção, direitos e encarregado. Além disso, o texto fala aos pacientes como se a AgendaFácil fosse a controladora dos dados do agendamento.",
@@ -1670,7 +2506,7 @@ footer p{max-width:90ch}
       "deadline_suggestion": "30_DIAS"
     },
     {
-      "id": "NC-26",
+      "id": "NC-31",
       "item_id": "GV-04",
       "title": "Sem política de retenção dos dados próprios",
       "problem": "Não há prazo definido para manter contas de usuários das clínicas e logs, nem fundamento do art. 16 para o que é conservado. Os prazos dos dados dos pacientes são definidos pelas clínicas e entram no contrato (OP-01) e na rotina de expurgo (OP-06).",
@@ -1689,7 +2525,7 @@ footer p{max-width:90ch}
       "deadline_suggestion": "90_DIAS"
     },
     {
-      "id": "NC-27",
+      "id": "NC-32",
       "item_id": "OP-05",
       "title": "Apoio incompleto às clínicas nos pedidos dos pacientes",
       "problem": "A clínica consegue corrigir dados cadastrais, mas não há como gerar cópia, exportar ou eliminar o cadastro de um paciente.",
@@ -1708,7 +2544,7 @@ footer p{max-width:90ch}
       "deadline_suggestion": "90_DIAS"
     },
     {
-      "id": "NC-28",
+      "id": "NC-33",
       "item_id": "OP-06",
       "title": "Sem devolução ou eliminação dos dados ao fim do contrato",
       "problem": "O sistema não tem rotina para devolver ou eliminar os dados de uma clínica que encerra o contrato, nem para expurgar registros nos prazos que a clínica definir.",
@@ -1727,7 +2563,7 @@ footer p{max-width:90ch}
       "deadline_suggestion": "90_DIAS"
     },
     {
-      "id": "NC-29",
+      "id": "NC-34",
       "item_id": "AP-03",
       "title": "APIs sem limitação de taxa",
       "problem": "Login e agendamento público aceitam requisições ilimitadas, o que também deixa o login sem proteção contra força bruta.",
@@ -1746,7 +2582,273 @@ footer p{max-width:90ch}
       "deadline_suggestion": "90_DIAS"
     },
     {
-      "id": "NC-30",
+      "id": "NC-35",
+      "item_id": "TI-01",
+      "title": "Envios de dados ao exterior não mapeados",
+      "problem": "Nenhum documento lista para onde os dados saem do País, por qual provedor e para quê. Os destinos só aparecem no código e na fala da fundadora.",
+      "severity": "MEDIO",
+      "severity_note": "Fluxo internacional não mapeado (`TI-01`, `legal/international-transfer.md`).",
+      "lgpd_article": "Arts. 33 e 37.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nada em `docs/lgpd/`; `public/index.html:13-15` (Meta) e `README.md:22` (Vercel) são as únicas pistas; declaração da fundadora.",
+      "technical_impact": "Novos envios podem surgir sem que ninguém perceba.",
+      "legal_impact": "Sem o mapa, não há como escolher nem demonstrar o mecanismo de cada transferência.",
+      "effort": "P",
+      "recommendation": "Incluir no registro das operações (GV-01) uma tabela de destinos, provedores, dados e mecanismo do art. 33.",
+      "owner": "CEO, com o encarregado",
+      "deadline_suggestion": "30_DIAS"
+    },
+    {
+      "id": "NC-36",
+      "item_id": "TI-03",
+      "title": "Cobertura dos subprocessadores no exterior não demonstrada",
+      "problem": "Sem os termos dos provedores em mãos, não há como saber se o mecanismo de transferência alcança os subprocessadores deles.",
+      "severity": "MEDIO",
+      "severity_note": "Cobertura de subprocessadores não evidenciada (`legal/international-transfer.md`); documento não apresentado é `AUSENTE`.",
+      "lgpd_article": "Art. 33; Res. CD/ANPD nº 19/2024.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "BAIXA",
+      "evidence": "Termos da Meta, da Vercel e do provedor do banco não reunidos nem examinados. Verificação que eleva a confiança: a mesma de TI-02.",
+      "technical_impact": "Nenhum direto.",
+      "legal_impact": "Dados podem chegar a terceiros sem a garantia exigida pelo regulamento.",
+      "effort": "P",
+      "recommendation": "Ao examinar os termos (TI-02), conferir a lista de subprocessadores e a extensão das garantias a eles.",
+      "owner": "CEO, com assessoria jurídica externa",
+      "deadline_suggestion": "30_DIAS"
+    },
+    {
+      "id": "NC-37",
+      "item_id": "DT-06",
+      "title": "Sistema sem recurso para corrigir, exportar ou excluir contas",
+      "problem": "Não há rota nem tela para consultar, corrigir, exportar ou excluir os dados de uma conta de usuário de clínica. Qualquer pedido depende de alteração manual no banco.",
+      "severity": "MEDIO",
+      "severity_note": "Inexistência de fluxo de exclusão e portabilidade (`legal/rights-of-data-subject.md`).",
+      "lgpd_article": "Art. 18, III a VI.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "`src/routes/clinica.js:1-55` e `api/index.js:38-41` não têm rota de conta.",
+      "technical_impact": "Alterações manuais, sem registro e sujeitas a erro.",
+      "legal_impact": "Direitos de correção, eliminação e portabilidade sem meio de execução.",
+      "effort": "M",
+      "recommendation": "Rotas autenticadas para ver, corrigir, exportar e excluir a própria conta; exclusão com confirmação.",
+      "owner": "CTO",
+      "deadline_suggestion": "90_DIAS"
+    },
+    {
+      "id": "NC-38",
+      "item_id": "DT-07",
+      "title": "Titular não tem como saber com quem os dados são compartilhados",
+      "problem": "Nenhum documento ou tela informa que a Meta recebe dados de navegação nem que a Vercel e o provedor do banco tratam os dados das contas.",
+      "severity": "MEDIO",
+      "severity_note": "Informação sobre uso compartilhado ausente (`legal/rights-of-data-subject.md`).",
+      "lgpd_article": "Art. 18, VII; art. 9º, V.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "ALTA",
+      "evidence": "`docs/lgpd/politica-de-privacidade.md:36` (pendência registrada no próprio rascunho); `public/index.html:42`.",
+      "technical_impact": "Nenhum direto.",
+      "legal_impact": "Direito de informação sobre uso compartilhado não atendido.",
+      "effort": "P",
+      "recommendation": "Listar destinatários e finalidades no aviso de privacidade e responder a esse pedido pelo canal de direitos (DT-01).",
+      "owner": "CEO e assessoria jurídica",
+      "deadline_suggestion": "30_DIAS"
+    },
+    {
+      "id": "NC-39",
+      "item_id": "DT-10",
+      "title": "Pedidos de titulares sem registro",
+      "problem": "Não existe registro dos pedidos recebidos, das respostas e da confirmação de execução.",
+      "severity": "MEDIO",
+      "severity_note": "Trilha de atendimento ausente (`legal/rights-of-data-subject.md`).",
+      "lgpd_article": "Art. 6º, X; art. 18.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nada em `docs/lgpd/`; declaração da fundadora.",
+      "technical_impact": "Impossível provar que um pedido foi atendido e quando.",
+      "legal_impact": "Sem prova de atendimento numa reclamação à ANPD.",
+      "effort": "P",
+      "recommendation": "Planilha ou sistema de chamados com data, tipo de pedido, resposta e data de execução.",
+      "owner": "CEO",
+      "deadline_suggestion": "90_DIAS"
+    },
+    {
+      "id": "NC-40",
+      "item_id": "GV-12",
+      "title": "Dados próprios nunca são eliminados",
+      "problem": "Não há rotina que elimine contas inativas e logs ao fim de um prazo, nem rota de exclusão. A eliminação dos dados dos pacientes é contada em OP-06.",
+      "severity": "MEDIO",
+      "severity_note": "Eliminação não automática ao fim do prazo (`governance/dpo-framework.md`).",
+      "lgpd_article": "Arts. 15 e 16.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "Nenhuma rotina de expurgo no código (`package.json:7-11`, `src/`); `db/schema.sql:11-18` não tem campo de desativação nem de exclusão.",
+      "technical_impact": "Acúmulo indefinido de dados.",
+      "legal_impact": "Conservação além da finalidade.",
+      "effort": "M",
+      "recommendation": "Depois de definir os prazos (GV-04), agendar o expurgo e incluir backups e provedores.",
+      "owner": "CTO",
+      "deadline_suggestion": "90_DIAS"
+    },
+    {
+      "id": "NC-41",
+      "item_id": "GV-14",
+      "title": "Retenções legais não identificadas",
+      "problem": "Nenhum documento identifica o que precisa ser guardado por lei e por quanto tempo, como os registros de acesso do MCI (6 meses) e os documentos fiscais.",
+      "severity": "MEDIO",
+      "severity_note": "Retenção sem fundamento identificado no art. 16 (`governance/dpo-framework.md`).",
+      "lgpd_article": "Art. 16, I; MCI, art. 15.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nada em `docs/lgpd/`; declaração da fundadora.",
+      "technical_impact": "Risco de apagar o que a lei manda guardar ou de guardar além do prazo.",
+      "legal_impact": "Conservação sem hipótese do art. 16 demonstrada.",
+      "effort": "P",
+      "recommendation": "Listar as retenções legais na política de retenção (GV-04), com o prazo e a norma de cada uma.",
+      "owner": "CEO",
+      "deadline_suggestion": "90_DIAS"
+    },
+    {
+      "id": "NC-42",
+      "item_id": "GV-15",
+      "title": "Sem histórico das decisões de privacidade",
+      "problem": "A pasta `docs/lgpd/` tem só um rascunho de política. Não há versões anteriores, atas nem registro de quem decidiu o quê.",
+      "severity": "MEDIO",
+      "severity_note": "Falha de prestação de contas de materialidade média (`governance/dpo-framework.md`).",
+      "lgpd_article": "Art. 6º, X; art. 50.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "`docs/lgpd/` contém um único arquivo; declaração da fundadora.",
+      "technical_impact": "Nenhum direto.",
+      "legal_impact": "A empresa não consegue demonstrar as medidas que adota.",
+      "effort": "P",
+      "recommendation": "Manter os documentos de privacidade versionados no repositório e registrar as decisões (por exemplo, a remoção do pixel).",
+      "owner": "CEO, com o encarregado",
+      "deadline_suggestion": "90_DIAS"
+    },
+    {
+      "id": "NC-43",
+      "item_id": "GV-16",
+      "title": "Sem política de segurança da informação",
+      "problem": "Não há documento que defina regras de acesso, senhas, uso de dados de produção e resposta a falhas.",
+      "severity": "MEDIO",
+      "severity_note": "Política de segurança ausente (`governance/dpo-framework.md`).",
+      "lgpd_article": "Arts. 46 e 50.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nada em `docs/`; declaração da fundadora.",
+      "technical_impact": "As práticas dependem da memória de cada pessoa.",
+      "legal_impact": "Faltam as medidas administrativas que o art. 46 pede ao lado das técnicas.",
+      "effort": "M",
+      "recommendation": "Política curta, de uma ou duas páginas, proporcional a uma equipe de três pessoas.",
+      "owner": "CEO e CTO",
+      "deadline_suggestion": "90_DIAS"
+    },
+    {
+      "id": "NC-44",
+      "item_id": "CK-06",
+      "title": "Banner de cookies sem informação clara",
+      "problem": "O banner aparece e funciona, mas diz apenas que os cookies servem para \"melhorar sua experiência\". Não cita publicidade nem a Meta.",
+      "severity": "MEDIO",
+      "severity_note": "O item é `PARCIAL`; a lacuna que resta é a informação sobre finalidades e terceiros, de severidade `MEDIO` (`appsec/owasp-api.md`).",
+      "lgpd_article": "Art. 8º; art. 9º, I e V.",
+      "evidence_type": "PARCIAL",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "`public/index.html:41-45`.",
+      "technical_impact": "Nenhum direto.",
+      "legal_impact": "Consentimento sem informação prévia adequada é nulo (art. 9º, §1º).",
+      "effort": "P",
+      "recommendation": "Texto que nomeie as finalidades e os terceiros, com link para a política de cookies.",
+      "owner": "CTO",
+      "deadline_suggestion": "90_DIAS"
+    },
+    {
+      "id": "NC-45",
+      "item_id": "CK-07",
+      "title": "Pixel e identificadores sem inventário nem política de cookies",
+      "problem": "Não há política de cookies nem lista dos rastreadores usados. O rascunho da política diz só que o site usa cookies.",
+      "severity": "MEDIO",
+      "severity_note": "Inventário e política de cookies ausentes (`appsec/owasp-api.md`).",
+      "lgpd_article": "Art. 9º; art. 37.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "ALTA",
+      "evidence": "`docs/lgpd/politica-de-privacidade.md:28-30`; nenhum outro documento em `docs/lgpd/`.",
+      "technical_impact": "Novos rastreadores entram sem controle.",
+      "legal_impact": "Transparência insuficiente sobre identificadores de terceiros.",
+      "effort": "P",
+      "recommendation": "Política de cookies com `templates/cookie-policy-template.md`, listando cada cookie ou SDK, finalidade e prazo.",
+      "owner": "CEO e CTO",
+      "deadline_suggestion": "30_DIAS"
+    },
+    {
+      "id": "NC-46",
+      "item_id": "AP-05",
+      "title": "APIs públicas sem inventário",
+      "problem": "As rotas abertas à internet (`/api/agendamentos` e `/api/login`) não estão listadas em documento algum, com os dados que cada uma expõe.",
+      "severity": "MEDIO",
+      "severity_note": "Inventário de APIs públicas ausente (`appsec/owasp-api.md`).",
+      "lgpd_article": "Arts. 37 e 46.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "ALTA",
+      "evidence": "`api/index.js:38-41` é a única fonte; nada em `README.md` nem em `docs/`.",
+      "technical_impact": "Rotas e campos expostos crescem sem revisão, como ocorreu em AP-02.",
+      "legal_impact": "Dificulta demonstrar quais dados saem do sistema.",
+      "effort": "P",
+      "recommendation": "Tabela com rota, autenticação, dados recebidos e devolvidos e responsável, revisada a cada mudança.",
+      "owner": "CTO",
+      "deadline_suggestion": "90_DIAS"
+    },
+    {
+      "id": "NC-47",
+      "item_id": "DS-07",
+      "title": "Sem análise estática nem dinâmica de segurança",
+      "problem": "O pipeline roda lint e testes, mas nenhuma análise de segurança do código (SAST) nem da aplicação em execução (DAST).",
+      "severity": "MEDIO",
+      "severity_note": "Cobertura parcial de varredura (`devsecops/ci-cd-security.md`).",
+      "lgpd_article": "Art. 46; art. 49.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "MEDIA",
+      "evidence": "`.github/workflows/ci.yml:16-18`; nenhum fluxo de CodeQL no repositório. As configurações de segurança do GitHub não foram vistas.",
+      "technical_impact": "Falhas como a de AP-02 passam sem alerta.",
+      "legal_impact": "Sistemas devem atender a requisitos de segurança desde a concepção (art. 49).",
+      "effort": "P",
+      "recommendation": "CodeQL (ou equivalente) no CI; DAST básico antes de mudanças grandes.",
+      "owner": "CTO",
+      "deadline_suggestion": "90_DIAS"
+    },
+    {
+      "id": "NC-48",
+      "item_id": "DS-09",
+      "title": "Pipeline com permissões padrão e actions sem versão fixa",
+      "problem": "O workflow não declara `permissions`, então o token roda com as permissões padrão do repositório. As actions usam a tag `v4`, que pode ser movida, e o deploy baixa a CLI da Vercel sem versão.",
+      "severity": "MEDIO",
+      "severity_note": "Permissões e versões do pipeline (`devsecops/ci-cd-security.md`).",
+      "lgpd_article": "Art. 46.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "`.github/workflows/ci.yml:12-13` e `:25-26`; nenhum bloco `permissions`.",
+      "technical_impact": "Uma action ou pacote comprometido roda com acesso aos segredos de deploy.",
+      "legal_impact": "Risco de cadeia de suprimentos num sistema com dados de saúde.",
+      "effort": "P",
+      "recommendation": "Declarar `permissions: contents: read`, fixar as actions pelo hash do commit e a CLI por versão.",
+      "owner": "CTO",
+      "deadline_suggestion": "90_DIAS"
+    },
+    {
+      "id": "NC-49",
       "item_id": "DS-03",
       "title": "Sem SBOM",
       "problem": "Não há inventário das dependências gerado a cada build.",
@@ -1763,6 +2865,63 @@ footer p{max-width:90ch}
       "recommendation": "Gerar SBOM CycloneDX no CI e guardá-lo como artefato.",
       "owner": "CTO",
       "deadline_suggestion": "180_DIAS"
+    },
+    {
+      "id": "NC-50",
+      "item_id": "SE-10",
+      "title": "Validação de entrada incompleta no agendamento",
+      "problem": "O agendamento confere se os campos obrigatórios vieram e limita o tamanho do corpo, mas não valida o formato de CPF, e-mail, telefone e datas.",
+      "severity": "BAIXO",
+      "severity_note": "O item é `PARCIAL`; a lacuna que resta é a validação de formato, sem exploração direta, de severidade `BAIXO`.",
+      "lgpd_article": "Art. 46; art. 6º, V.",
+      "evidence_type": "PARCIAL",
+      "evidence_source": "TECNICA",
+      "evidence_confidence": "ALTA",
+      "evidence": "`src/routes/agendamentos.js:20-22`; `api/index.js:36`; a saída usa `textContent` (`public/js/agendar.js:28`).",
+      "technical_impact": "Dados inválidos entram no cadastro das clínicas.",
+      "legal_impact": "Afeta a qualidade dos dados (art. 6º, V).",
+      "effort": "P",
+      "recommendation": "Validar formato e tamanho de cada campo no servidor.",
+      "owner": "CTO",
+      "deadline_suggestion": "90_DIAS"
+    },
+    {
+      "id": "NC-51",
+      "item_id": "GV-17",
+      "title": "Equipe sem treinamento de privacidade",
+      "problem": "Não há registro de orientação ou treinamento dos três sócios sobre proteção de dados.",
+      "severity": "BAIXO",
+      "severity_note": "Treinamento ausente (`governance/dpo-framework.md`).",
+      "lgpd_article": "Art. 41, §2º, III; art. 50.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nada em `docs/`; declaração da fundadora.",
+      "technical_impact": "Erros como o do pixel e o dos logs tendem a se repetir.",
+      "legal_impact": "Boa prática de governança não demonstrada.",
+      "effort": "P",
+      "recommendation": "Uma sessão anual, registrada, sobre o papel de operadora, logs e incidentes.",
+      "owner": "Encarregado",
+      "deadline_suggestion": "180_DIAS"
+    },
+    {
+      "id": "NC-52",
+      "item_id": "IN-15",
+      "title": "Divisão de responsabilidades com os provedores não documentada",
+      "problem": "Nenhum documento diz o que cabe à Vercel e ao provedor do banco e o que cabe à AgendaFácil (certificados, backups, atualizações, cabeçalhos).",
+      "severity": "BAIXO",
+      "severity_note": "Falha documental de baixa materialidade (`cloud/cloud-audit.md`).",
+      "lgpd_article": "Arts. 46 e 50.",
+      "evidence_type": "AUSENTE",
+      "evidence_source": "DOCUMENTAL",
+      "evidence_confidence": "MEDIA",
+      "evidence": "Nada em `docs/` nem no `README.md:18-25`; declaração da fundadora.",
+      "technical_impact": "Lacunas como a CSP do `vercel.json` (IN-01) passam despercebidas.",
+      "legal_impact": "Dificulta demonstrar quem responde por cada medida de segurança.",
+      "effort": "P",
+      "recommendation": "Quadro de uma página com as responsabilidades de cada parte.",
+      "owner": "CTO",
+      "deadline_suggestion": "180_DIAS"
     }
   ],
   "itens_obrigatorios_ausentes": [
@@ -1777,7 +2936,8 @@ footer p{max-width:90ch}
       "requirement": "Contratos com os suboperadores e sua indicação às clínicas",
       "norm": "LGPD, art. 39",
       "items": [
-        "OP-03"
+        "OP-03",
+        "GV-09"
       ]
     },
     {
@@ -1791,7 +2951,8 @@ footer p{max-width:90ch}
       "requirement": "Processo de incidentes, com aviso às clínicas",
       "norm": "LGPD, arts. 39 e 48; Res. CD/ANPD nº 15/2024",
       "items": [
-        "OP-04"
+        "OP-04",
+        "GV-08"
       ]
     },
     {
@@ -1833,7 +2994,8 @@ footer p{max-width:90ch}
       "requirement": "Mecanismo de transferência internacional (não evidenciado) e informação ao titular",
       "norm": "LGPD, arts. 33 e 9º; Res. CD/ANPD nº 19/2024",
       "items": [
-        "GV-05"
+        "TI-02",
+        "TI-04"
       ]
     },
     {
@@ -1841,7 +3003,8 @@ footer p{max-width:90ch}
       "norm": "LGPD, arts. 18 e 19",
       "items": [
         "DT-01",
-        "DT-02"
+        "DT-02",
+        "DT-10"
       ]
     },
     {
@@ -1871,6 +3034,35 @@ footer p{max-width:90ch}
       "items": [
         "SE-06"
       ]
+    },
+    {
+      "requirement": "Mapa dos envios de dados ao exterior",
+      "norm": "LGPD, arts. 33 e 37",
+      "items": [
+        "TI-01"
+      ]
+    },
+    {
+      "requirement": "Política de cookies com inventário dos rastreadores",
+      "norm": "LGPD, arts. 9º e 37",
+      "items": [
+        "CK-07"
+      ]
+    },
+    {
+      "requirement": "Política de segurança da informação",
+      "norm": "LGPD, arts. 46 e 50",
+      "items": [
+        "GV-16"
+      ]
+    },
+    {
+      "requirement": "Retenções legais identificadas e histórico das decisões de privacidade",
+      "norm": "LGPD, arts. 6º, X e 16, I",
+      "items": [
+        "GV-14",
+        "GV-15"
+      ]
     }
   ],
   "riscos_identificados": {
@@ -1881,12 +3073,13 @@ footer p{max-width:90ch}
       "Página de coleta sem CSP efetiva, vulnerável a XSS e clickjacking (IN-01).",
       "Dependências vulneráveis sem detecção (DS-02, DS-03).",
       "Acesso indevido sem rastro (SE-07); contas protegidas só por senha e sem limite de tentativas (SE-04, AP-03).",
-      "Cinco controles de infraestrutura ainda não verificados (IN-03 a IN-07): a proteção real do banco, dos painéis e dos logs é desconhecida."
+      "Onze controles ainda não verificados (SE-09, DS-10, DS-11, IN-03, IN-04, IN-05, IN-06, IN-07, IN-10, IN-11, IN-14): a proteção real do banco, dos backups, dos painéis, dos logs e dos ambientes é desconhecida.",
+      "Pipeline sem varredura de segredos, com permissões padrão e actions sem versão fixa (DS-08, DS-09)."
     ],
     "juridicos": [
       "Uso de dados dos pacientes para publicidade própria: a AgendaFácil sai do papel de operadora, passa a responder como controladora sem base legal e responde solidariamente perante as clínicas, art. 42, §1º, I (OP-02).",
       "Operadora de dados de saúde sem contrato com os controladores nem com os suboperadores (OP-01, OP-03).",
-      "Transferência internacional sem mecanismo do art. 33 demonstrado, tema prioritário de fiscalização. Pode subir a `CRITICO` se o exame dos termos comprovar ausência de CPC (GV-05).",
+      "Transferência internacional sem mecanismo do art. 33 demonstrado, tema prioritário de fiscalização. Pode subir a `CRITICO` se o exame dos termos comprovar ausência de CPC (TI-02).",
       "Rastreamento sem consentimento válido (CK-02, CK-03, CK-05).",
       "Obrigações documentais básicas ausentes, agravadas pela perda das dispensas do pequeno porte: registro completo, encarregado, processo de incidentes, retenção, canal de direitos, aviso de privacidade e canal de denúncia (seção 5).",
       "Exposição às sanções do art. 52 da LGPD (advertência; multa de até 2% do faturamento, limitada a R$ 50 milhões por infração; publicização; bloqueio e eliminação dos dados), com dosimetria pela Res. CD/ANPD nº 4/2023. Some-se a isso o MCI (art. 12) para os deveres de provedor de aplicações."
@@ -1895,10 +3088,11 @@ footer p{max-width:90ch}
       "Equipe de 3 pessoas sem processo de incidentes: um vazamento pararia o produto e deixaria as clínicas sem aviso dentro do prazo (OP-04).",
       "Pedidos de pacientes atendidos à mão, a pedido das clínicas, sem rotina de exportação ou eliminação (OP-05, OP-06).",
       "Base de dados crescendo sem limite (OP-06, GV-04).",
-      "Clínicas mais estruturadas devem exigir contrato de operador e evidências de segurança na contratação; sem eles, vendas travam (OP-01, OP-03)."
+      "Clínicas mais estruturadas devem exigir contrato de operador e evidências de segurança na contratação; sem eles, vendas travam (OP-01, OP-03).",
+      "Contas e logs nunca eliminados, sem prazos nem retenções legais definidas (GV-12, GV-14)."
     ],
     "reputacionais": [
-      "Pixel de publicidade em página de agendamento de saúde é o tipo de caso que costuma virar notícia e afastar clínicas e pacientes (OP-02, CK-02, GV-05).",
+      "Pixel de publicidade em página de agendamento de saúde é o tipo de caso que costuma virar notícia e afastar clínicas e pacientes (OP-02, CK-02, TI-02).",
       "Um vazamento de motivos de consulta atinge a confiança das clínicas, que respondem perante seus pacientes e conselhos profissionais (AP-02, SE-06)."
     ]
   },
@@ -1909,7 +3103,8 @@ footer p{max-width:90ch}
         "OP-02",
         "CK-02",
         "CK-03",
-        "GV-05"
+        "TI-02",
+        "TI-05"
       ],
       "owner": "CTO",
       "effort": "P",
@@ -1954,8 +3149,20 @@ footer p{max-width:90ch}
     {
       "action": "Fazer as verificações pendentes nos painéis da Vercel, do banco e do GitHub e guardar as evidências",
       "items": [
-        "IN-03 a IN-07",
+        "SE-09",
+        "DS-10",
+        "DS-11",
+        "IN-03",
+        "IN-04",
+        "IN-05",
+        "IN-06",
+        "IN-07",
+        "IN-10",
+        "IN-11",
+        "IN-14",
         "DS-02",
+        "DS-07",
+        "DS-08",
         "AP-03"
       ],
       "owner": "CTO",
@@ -1975,17 +3182,19 @@ footer p{max-width:90ch}
     {
       "action": "Reunir e arquivar os DPAs da Vercel e do provedor do banco; examinar os termos e incorporar CPC onde faltarem",
       "items": [
-        "OP-03",
-        "GV-05"
+        "GV-09",
+        "TI-02",
+        "TI-03"
       ],
       "owner": "CEO + jurídico",
       "effort": "M",
       "deadline": "30_DIAS"
     },
     {
-      "action": "Processo de incidentes, com prazo de aviso às clínicas",
+      "action": "Processo de incidentes, com prazo de aviso às clínicas e comunicação à ANPD e aos titulares nos dados próprios",
       "items": [
-        "OP-04"
+        "OP-04",
+        "GV-08"
       ],
       "owner": "CEO + CTO",
       "effort": "M",
@@ -2001,11 +3210,14 @@ footer p{max-width:90ch}
       "deadline": "30_DIAS"
     },
     {
-      "action": "Reescrever e publicar o aviso de privacidade dos tratamentos próprios, com canal de direitos e canal de denúncia",
+      "action": "Reescrever e publicar o aviso de privacidade dos tratamentos próprios e a política de cookies, com destinatários, transferência internacional, canal de direitos e canal de denúncia",
       "items": [
         "DT-01",
         "DT-03",
         "DT-04",
+        "DT-07",
+        "TI-04",
+        "CK-07",
         "BL-02",
         "GV-06"
       ],
@@ -2014,9 +3226,10 @@ footer p{max-width:90ch}
       "deadline": "30_DIAS"
     },
     {
-      "action": "Registro das operações de tratamento, na forma completa, separando os papéis",
+      "action": "Registro das operações de tratamento, na forma completa, separando os papéis e com o mapa dos envios ao exterior",
       "items": [
         "GV-01",
+        "TI-01",
         "BL-02"
       ],
       "owner": "CEO + encarregado",
@@ -2024,9 +3237,11 @@ footer p{max-width:90ch}
       "deadline": "30_DIAS"
     },
     {
-      "action": "`npm audit`, Dependabot e SAST no CI",
+      "action": "`npm audit`, Dependabot, análise estática e varredura de segredos no CI",
       "items": [
-        "DS-02"
+        "DS-02",
+        "DS-07",
+        "DS-08"
       ],
       "owner": "CTO",
       "effort": "P",
@@ -2060,29 +3275,33 @@ footer p{max-width:90ch}
       "deadline": "90_DIAS"
     },
     {
-      "action": "Devolução em lote e expurgo automático conforme os prazos das clínicas",
+      "action": "Devolução em lote e expurgo automático conforme os prazos das clínicas; expurgo de contas e logs próprios",
       "items": [
-        "OP-06"
+        "OP-06",
+        "GV-12"
       ],
       "owner": "CTO",
       "effort": "M",
       "deadline": "90_DIAS"
     },
     {
-      "action": "Política de retenção dos dados próprios e procedimento de atendimento a pedidos",
+      "action": "Política de retenção dos dados próprios, com as retenções legais, e procedimento de atendimento a pedidos, com registro de cada um",
       "items": [
         "GV-04",
-        "DT-02"
+        "GV-14",
+        "DT-02",
+        "DT-10"
       ],
       "owner": "CEO",
       "effort": "P",
       "deadline": "90_DIAS"
     },
     {
-      "action": "Banner com categorias e registro das escolhas no servidor",
+      "action": "Banner com categorias, texto que nomeie finalidades e terceiros e registro das escolhas no servidor",
       "items": [
         "CK-04",
-        "CK-05"
+        "CK-05",
+        "CK-06"
       ],
       "owner": "CTO",
       "effort": "M",
@@ -2101,10 +3320,58 @@ footer p{max-width:90ch}
     {
       "action": "Corrigir o que as verificações pendentes revelarem (por exemplo, exportar os registros de acesso para guarda de 6 meses)",
       "items": [
-        "IN-03 a IN-07"
+        "SE-09",
+        "DS-10",
+        "DS-11",
+        "IN-03",
+        "IN-04",
+        "IN-05",
+        "IN-06",
+        "IN-07",
+        "IN-10",
+        "IN-11",
+        "IN-14"
       ],
       "owner": "CTO",
       "effort": "M",
+      "deadline": "90_DIAS"
+    },
+    {
+      "action": "Rotas para ver, corrigir, exportar e excluir a conta do usuário da clínica",
+      "items": [
+        "DT-06"
+      ],
+      "owner": "CTO",
+      "effort": "M",
+      "deadline": "90_DIAS"
+    },
+    {
+      "action": "Política de segurança da informação e pasta versionada com as decisões de privacidade",
+      "items": [
+        "GV-15",
+        "GV-16"
+      ],
+      "owner": "CEO + CTO",
+      "effort": "M",
+      "deadline": "90_DIAS"
+    },
+    {
+      "action": "Validar o formato dos campos do agendamento; inventário das rotas públicas",
+      "items": [
+        "SE-10",
+        "AP-05"
+      ],
+      "owner": "CTO",
+      "effort": "P",
+      "deadline": "90_DIAS"
+    },
+    {
+      "action": "Declarar `permissions` mínimas no workflow e fixar actions e CLI por versão",
+      "items": [
+        "DS-09"
+      ],
+      "owner": "CTO",
+      "effort": "P",
       "deadline": "90_DIAS"
     },
     {
@@ -2126,18 +3393,20 @@ footer p{max-width:90ch}
       "deadline": "180_DIAS"
     },
     {
-      "action": "Revisão semestral do aviso, dos contratos e do registro; treinamento básico de privacidade para a equipe; orientação às clínicas sobre o aviso delas na página de agendamento",
+      "action": "Revisão semestral do aviso, dos contratos e do registro; treinamento básico de privacidade para a equipe, com registro; quadro de responsabilidades com os provedores; orientação às clínicas sobre o aviso delas na página de agendamento",
       "items": [
         "DT-04",
         "GV-01",
-        "OP-01"
+        "OP-01",
+        "GV-17",
+        "IN-15"
       ],
       "owner": "Encarregado",
       "effort": "M",
       "deadline": "180_DIAS"
     }
   ],
-  "recomendacoes_tecnicas": "**Logs sem dados pessoais** (`src/routes/agendamentos.js:29`, `src/auth.js:20`):\n\n```js\nconsole.log(`[agendamento] criado paciente_id=${paciente.rows[0].id} clinica=${clinica}`);\nconsole.warn('[login] falha de autenticação', { usuarioEncontrado: Boolean(usuario) });\n```\n\n**JWT com validade, algoritmo e audiência** (`src/auth.js:24-27` e `:36`):\n\n```js\nconst OPCOES = { algorithm: 'HS256', expiresIn: '8h', audience: 'agendafacil-painel' };\nconst token = jwt.sign({ sub: usuario.id, clinica: usuario.clinica_id, papel: usuario.papel },\n  process.env.JWT_SECRET, OPCOES);\n\nreq.usuario = jwt.verify(token, process.env.JWT_SECRET, {\n  algorithms: ['HS256'], audience: 'agendafacil-painel',\n});\n```\n\n**Confirmação com o mínimo necessário** (`src/routes/agendamentos.js:53`):\n\n```sql\nSELECT a.data_hora, split_part(p.nome, ' ', 1) AS primeiro_nome\n  FROM agendamentos a JOIN pacientes p ON p.id = a.paciente_id\n WHERE a.codigo = $1\n```\n\n**Pixel fora da página de agendamento.** Remover o bloco `public/index.html:7-16` e a chamada de `public/js/agendar.js:23`. Em páginas institucionais, carregar o script a partir de `aplicar('aceito')` em `consent.js`, por um arquivo próprio (não inline), para manter a CSP restritiva. Na revogação, apagar o cookie `_fbp` (`document.cookie = '_fbp=; Max-Age=0; path=/'`, com o domínio usado pelo pixel).\n\n**CSP coerente entre código e hospedagem** (`vercel.json:12-15`):\n\n```json\n{ \"key\": \"Content-Security-Policy\",\n  \"value\": \"default-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'\" },\n{ \"key\": \"Strict-Transport-Security\", \"value\": \"max-age=31536000; includeSubDomains\" }\n```\n\nValidar em produção: `curl -sI https://\u003cdomínio>/ | grep -i -E 'content-security|strict-transport'` e o mesmo para `/api/agendamentos/\u003ccódigo-de-teste>`.\n\n**Varreduras no CI** (`.github/workflows/ci.yml`, job `build`):\n\n```yaml\n      - run: npm audit --audit-level=high\n      - run: npx @cyclonedx/cyclonedx-npm --output-file sbom.json\n```\n\nAcrescentar `.github/dependabot.yml` (ecossistema `npm`, frequência semanal) e, se possível, CodeQL.\n\n**Limitação de taxa:** `express-rate-limit` com janela de 15 minutos em `/api/login` (ex.: 10 tentativas) e em `POST /api/agendamentos` (ex.: 20 por IP).\n\n**Trilha de auditoria:** middleware nas rotas `/api/clinica` e `/api/admin` que registre `usuario`, `clinica`, `metodo`, `rota`, `paciente_id` e horário em tabela própria, com retenção definida na política (GV-04).\n\n**Apoio às clínicas e fim de contrato:** rotas `GET /api/clinica/pacientes/:id/exportar` e `DELETE /api/clinica/pacientes/:id`, restritas à clínica do token; rotina administrativa de exportação em lote por clínica; job agendado que execute, conforme os prazos instruídos pelas clínicas, `DELETE` ou anonimização (`nome = 'removido'`, `cpf = NULL`, `observacoes = NULL`) e grave quantos registros foram afetados.\n\n**Aviso da clínica na página de agendamento:** campo configurável por clínica para o aviso de privacidade dela, exibido junto ao formulário e ao campo \"Motivo da consulta\". A obrigação é da clínica (DT-06); oferecer o espaço é uma boa prática da operadora.\n\n**Em monitoramento (norma não vigente, não gera não conformidade):** a revisão da Res. CD/ANPD nº 1/2021 (fiscalização e processo sancionador) está em consulta pública até 26/10/2026. Até a publicação da norma final, a Res. CD/ANPD nº 1/2021 segue vigente e é a referência de risco sancionatório deste relatório.",
+  "recomendacoes_tecnicas": "**Logs sem dados pessoais** (`src/routes/agendamentos.js:29`, `src/auth.js:20`):\n\n```js\nconsole.log(`[agendamento] criado paciente_id=${paciente.rows[0].id} clinica=${clinica}`);\nconsole.warn('[login] falha de autenticação', { usuarioEncontrado: Boolean(usuario) });\n```\n\n**JWT com validade, algoritmo e audiência** (`src/auth.js:24-27` e `:36`):\n\n```js\nconst OPCOES = { algorithm: 'HS256', expiresIn: '8h', audience: 'agendafacil-painel' };\nconst token = jwt.sign({ sub: usuario.id, clinica: usuario.clinica_id, papel: usuario.papel },\n  process.env.JWT_SECRET, OPCOES);\n\nreq.usuario = jwt.verify(token, process.env.JWT_SECRET, {\n  algorithms: ['HS256'], audience: 'agendafacil-painel',\n});\n```\n\n**Confirmação com o mínimo necessário** (`src/routes/agendamentos.js:53`):\n\n```sql\nSELECT a.data_hora, split_part(p.nome, ' ', 1) AS primeiro_nome\n  FROM agendamentos a JOIN pacientes p ON p.id = a.paciente_id\n WHERE a.codigo = $1\n```\n\n**Pixel fora da página de agendamento.** Remover o bloco `public/index.html:7-16` e a chamada de `public/js/agendar.js:23`. Em páginas institucionais, carregar o script a partir de `aplicar('aceito')` em `consent.js`, por um arquivo próprio (não inline), para manter a CSP restritiva. Na revogação, apagar o cookie `_fbp` (`document.cookie = '_fbp=; Max-Age=0; path=/'`, com o domínio usado pelo pixel).\n\n**CSP coerente entre código e hospedagem** (`vercel.json:12-15`):\n\n```json\n{ \"key\": \"Content-Security-Policy\",\n  \"value\": \"default-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'\" },\n{ \"key\": \"Strict-Transport-Security\", \"value\": \"max-age=31536000; includeSubDomains\" }\n```\n\nValidar em produção: `curl -sI https://\u003cdomínio>/ | grep -i -E 'content-security|strict-transport'` e o mesmo para `/api/agendamentos/\u003ccódigo-de-teste>`.\n\n**Varreduras no CI** (`.github/workflows/ci.yml`, job `build`):\n\n```yaml\n      - run: npm audit --audit-level=high\n      - run: npx @cyclonedx/cyclonedx-npm --output-file sbom.json\n```\n\nAcrescentar `.github/dependabot.yml` (ecossistema `npm`, frequência semanal) e, se possível, CodeQL.\n\n**Limitação de taxa:** `express-rate-limit` com janela de 15 minutos em `/api/login` (ex.: 10 tentativas) e em `POST /api/agendamentos` (ex.: 20 por IP).\n\n**Trilha de auditoria:** middleware nas rotas `/api/clinica` e `/api/admin` que registre `usuario`, `clinica`, `metodo`, `rota`, `paciente_id` e horário em tabela própria, com retenção definida na política (GV-04).\n\n**Apoio às clínicas e fim de contrato:** rotas `GET /api/clinica/pacientes/:id/exportar` e `DELETE /api/clinica/pacientes/:id`, restritas à clínica do token; rotina administrativa de exportação em lote por clínica; job agendado que execute, conforme os prazos instruídos pelas clínicas, `DELETE` ou anonimização (`nome = 'removido'`, `cpf = NULL`, `observacoes = NULL`) e grave quantos registros foram afetados.\n\n**Aviso da clínica na página de agendamento:** campo configurável por clínica para o aviso de privacidade dela, exibido junto ao formulário e ao campo \"Motivo da consulta\". A obrigação é da clínica; oferecer o espaço é uma boa prática da operadora.\n\n**Em monitoramento (norma não vigente, não gera não conformidade):** a revisão da Res. CD/ANPD nº 1/2021 (fiscalização e processo sancionador) está em consulta pública até 26/10/2026. Até a publicação da norma final, a Res. CD/ANPD nº 1/2021 segue vigente e é a referência de risco sancionatório deste relatório.",
   "glossary": [
     {
       "term": "ANPD",
@@ -2306,12 +3575,24 @@ footer p{max-width:90ch}
     {
       "term": "`score_tecnico` e `score_documental`",
       "definition": "subtotais informativos do score, só com itens de código e infraestrutura ou só com itens de documentos e processos."
+    },
+    {
+      "term": "Catálogo de itens",
+      "definition": "lista fixa dos itens do checklist, com ID, criticidade e fundamento; a auditoria avalia todos os itens dos módulos ativos."
+    },
+    {
+      "term": "Escopo direcionado",
+      "definition": "marca do relatório quando o cenário não é a auditoria completa; o score vale para o que foi auditado."
+    },
+    {
+      "term": "Teto de classificação",
+      "definition": "com achado `CRITICO` aberto, a classificação não passa de `PARCIALMENTE_CONFORME`, qualquer que seja o score."
     }
   ],
   "notes": {
-    "score_lgpd": "### Regras aplicadas (`core/scoring-engine.md`)\n\n- Só itens `APLICAVEL` entram nas somas; `NAO_APLICAVEL` e `NAO_VERIFICADO` ficam fora.\n- Valor do item: `CONFORME` = 1; `PARCIAL` = 0,5; `NAO_CONFORME` = 0.\n- Peso do item pela `criticality`: `CRITICO` = 4; `ALTO` = 3; `MEDIO` = 2; `BAIXO` = 1 (sem modulação).\n- `score_area = 100 × Σ(valor × peso) / Σ(peso)`. Cada item pontua em uma única área, definida pelo domínio, e cada falha é contada uma única vez.\n- `score_global = Σ(score_area × peso_ajustado_area)`.\n- O cálculo usa valores exatos. O score de cada área aparece com uma casa decimal, e só o score global é arredondado.\n\n### Cálculo e cobertura por área\n\n| Área | Itens com status | Σ(valor × peso) | Σ(peso) | `score_area` | Peso original | Peso ajustado | `NAO_VERIFICADO` | Cobertura | `NAO_APLICAVEL` |\n|---|---|---|---|---|---|---|---|---|---|\n| `bases_legais` | 7 | 6,0 | 19 | 31,6 | 15% | 16,67% | 0 | 100% | 2 |\n| `seguranca` | 10 | 18,5 | 30 | 61,7 | 25% | 27,78% | 0 | 100% | 3 |\n| `direitos_titular` | 4 | 1,0 | 10 | 10,0 | 15% | 16,67% | 0 | 100% | 2 |\n| `governanca` | 11 | 2,5 | 30 | 8,3 | 15% | 16,67% | 0 | 100% | 2 |\n| `infraestrutura` | 2 | 4,0 | 7 | 57,1 | 10% | 11,11% | 5 | 28,6% | 2 |\n| `apis_integracoes` | 4 | 3,0 | 11 | 27,3 | 10% | 11,11% | 0 | 100% | 0 |\n| `ai_llm` | — | — | — | `NAO_APLICAVEL` | 10% | — | — | — | — |\n| **Total** | **38** | **35,0** | **107** | | **100%** | **100%** | **5** | **88,4%** | **11** |\n\n**Score global = 35** (valor exato 34,827…, arredondado para o inteiro mais próximo).\n\nCobertura = itens com status ÷ (itens com status + itens `NAO_VERIFICADO`). A área `infraestrutura` recebe a marca **cobertura baixa** (28,6%, abaixo de 50%): seu score (57,1) se apoia em só 2 dos 7 itens verificáveis e deve ser lido com cautela até as verificações pendentes serem feitas.\n\n**Memória de cálculo** (valor × peso de cada item, na ordem do checklist; frações exatas):\n\n- `bases_legais`: BL-02 0,5×3 + OP-02 0×4 + CK-01 1×2 + CK-02 0×3 + CK-03 0,5×3 + CK-04 0,5×2 + CK-05 0×2 = 1,5 + 0 + 2 + 0 + 1,5 + 1 + 0 = **6 / 19**\n- `seguranca`: SE-01 1×4 + SE-02 1×3 + SE-03 1×3 + SE-04 0,5×3 + SE-05 1×3 + SE-06 0×3 + SE-07 0×3 + DS-01 1×4 + DS-02 0×3 + DS-03 0×1 = 4 + 3 + 3 + 1,5 + 3 + 0 + 0 + 4 + 0 + 0 = **18,5 / 30**\n- `direitos_titular`: DT-01 0×3 + DT-02 0×2 + DT-03 0×3 + DT-04 0,5×2 = **1 / 10**\n- `governanca`: GV-01 0×3 + GV-02 0×3 + GV-03 0×3 + GV-04 0×2 + GV-05 0×3 + GV-06 0,5×3 + OP-01 0×3 + OP-03 0×3 + OP-04 0×3 + OP-05 0,5×2 + OP-06 0×2 = 1,5 + 1 = **2,5 / 30**\n- `infraestrutura`: IN-01 0×3 + IN-02 1×4 = **4 / 7**\n- `apis_integracoes`: AP-01 0×3 + AP-02 0×3 + AP-03 0×2 + AP-04 1×3 = **3 / 11**\n- **Global:** [15 × (600/19) + 25 × (1850/30) + 15 × (100/10) + 15 × (250/30) + 10 × (400/7) + 10 × (300/11)] / 90 = 3.134,51 / 90 = 34,827… → **35 → `CRITICO`**\n\nAs seis áreas restantes somam 90%. Cada peso foi dividido por 0,90: `peso_ajustado_area = peso_area / 0,90`.\n\n### Score técnico e score documental (informativos)\n\nMesma fórmula, aplicada a todos os itens `APLICAVEL` de cada `control_type`. Não entram na classificação final.\n\n| Subtotal | Itens | Σ(valor × peso) | Σ(peso) | Score |\n|---|---|---|---|---|\n| `score_tecnico` (`TECNICO`) | 24 | 31,0 | 68 | **45,6** |\n| `score_documental` (`DOCUMENTAL`) | 14 | 4,0 | 39 | **10,3** |\n\nItens `DOCUMENTAL`: BL-02, DT-01 a DT-04, GV-01 a GV-06, OP-01, OP-03 e OP-04. Todos os demais são `TECNICO`. Leitura: o código tem falhas pontuais e corrigíveis, mas a lacuna maior é documental. Quase nada do que a LGPD pede por escrito existe hoje.\n\n### Efeito do risco aceito\n\nO item GV-03 (RIPD) tem aceite de risco registrado e continua `NAO_CONFORME`, com valor 0 e peso 3 em `governanca`. Com ou sem o aceite, `governanca` = 2,5 / 30 = 8,3 e o score global = 35. Aceitar um risco não torna o item conforme.",
+    "score_lgpd": "### Regras aplicadas (`core/scoring-engine.md`)\n\n- Os itens são os do catálogo dos módulos ativos, todos avaliados. Só itens `APLICAVEL` entram nas somas; `NAO_APLICAVEL` e `NAO_VERIFICADO` ficam fora.\n- Valor do item: `CONFORME` = 1; `PARCIAL` = 0,5; `NAO_CONFORME` = 0.\n- Peso do item pela `criticality` do catálogo: `CRITICO` = 4; `ALTO` = 3; `MEDIO` = 2; `BAIXO` = 1 (sem modulação por porte). Agravantes da linha do item aplicados: OP-02 (`CRITICO`, dado sensível), OP-03, GV-01 e GV-09 (`ALTO`, dado sensível), GV-03 (`ALTO`, tratamento de alto risco) e DS-02 (`ALTO`, nenhuma varredura no pipeline).\n- `score_area = 100 × Σ(valor × peso) / Σ(peso)`. Cada item pontua em uma única área, definida pelo domínio, e cada falha é contada uma única vez.\n- `score_global = Σ(score_area × peso_ajustado_area)`.\n- O cálculo usa valores exatos. O score de cada área aparece com uma casa decimal, e só o score global é arredondado, para o inteiro mais próximo (fração de 0,5 sobe).\n- Teto de classificação: há 1 achado `CRITICO` (OP-02). O teto limitaria a classificação a `PARCIALMENTE_CONFORME`; como o score já está na faixa `CRITICO`, ele não altera o resultado.\n- Escopo: cenário `saas_web`, direcionado. A classificação vale para o que o cenário auditou.\n\n### Cálculo e cobertura por área\n\n| Área | Itens com status | Σ(valor × peso) | Σ(peso) | `score_area` | Peso original | Peso ajustado | `NAO_VERIFICADO` | Cobertura | `NAO_APLICAVEL` |\n|---|---|---|---|---|---|---|---|---|---|\n| `bases_legais` | 10 | 9,0 | 25 | 36,0 | 12% | 16,67% | 0 | 100% | 18 |\n| `seguranca` | 14 | 19,5 | 39 | 50,0 | 20% | 27,78% | 3 | 82,4% | 4 |\n| `direitos_titular` | 8 | 2,0 | 17 | 11,8 | 12% | 16,67% | 0 | 100% | 2 |\n| `governanca` | 23 | 4,5 | 57 | 7,9 | 12% | 16,67% | 0 | 100% | 5 |\n| `infraestrutura` | 3 | 4,0 | 8 | 50,0 | 8% | 11,11% | 8 | 27,3% | 4 |\n| `apis_integracoes` | 6 | 6,0 | 16 | 37,5 | 8% | 11,11% | 0 | 100% | 0 |\n| `ai_llm` | — | — | — | `NAO_APLICAVEL` | 8% | — | — | — | — |\n| `eca_digital` | — | — | — | `NAO_APLICAVEL` | 10% | — | — | — | — |\n| `plataformas_digitais` | — | — | — | `NAO_APLICAVEL` | 10% | — | — | — | — |\n| **Total** | **64** | **45,0** | **162** | | **100%** | **100%** | **11** | **85,3%** | **33** |\n\n**Score global = 33** (valor exato 32,887…, arredondado para o inteiro mais próximo).\n\nCobertura = itens com status ÷ (itens com status + itens `NAO_VERIFICADO`). A área `infraestrutura` recebe a marca **cobertura baixa** (27,3%, abaixo de 50%): seu score (50,0) se apoia em só 3 dos 11 itens verificáveis e deve ser lido com cautela até as verificações pendentes serem feitas.\n\n**Memória de cálculo** (valor × peso de cada item, na ordem do checklist; frações exatas):\n\n- `bases_legais`: BL-02 0,5×3 + OP-02 0×4 + CK-01 1×2 + CK-02 0×3 + CK-03 0,5×3 + CK-04 0,5×2 + CK-05 0×2 + CK-06 0,5×2 + CK-07 0×2 + CK-08 1×2 = **9 / 25**\n- `seguranca`: SE-01 1×4 + SE-02 1×3 + SE-03 1×3 + SE-04 0,5×3 + SE-05 1×3 + SE-06 0×3 + SE-07 0×3 + SE-10 0,5×2 + DS-01 1×4 + DS-02 0×3 + DS-03 0×1 + DS-07 0×2 + DS-08 0×3 + DS-09 0×2 = **19,5 / 39**\n- `direitos_titular`: DT-01 0×3 + DT-02 0×2 + DT-03 0×3 + DT-04 0,5×2 + DT-05 1×1 + DT-06 0×2 + DT-07 0×2 + DT-10 0×2 = **2 / 17**\n- `governanca`: OP-01 0×3 + OP-03 0×3 + OP-04 0×3 + OP-05 0,5×2 + OP-06 0×2 + GV-01 0×3 + GV-02 0×3 + GV-03 0×3 + GV-04 0×2 + GV-06 0,5×3 + GV-07 1×2 + GV-08 0×3 + GV-09 0×3 + GV-12 0×2 + GV-14 0×2 + GV-15 0×2 + GV-16 0×2 + GV-17 0×1 + TI-01 0×2 + TI-02 0×3 + TI-03 0×2 + TI-04 0×3 + TI-05 0×3 = **4,5 / 57**\n- `infraestrutura`: IN-01 0×3 + IN-02 1×4 + IN-15 0×1 = **4 / 8**\n- `apis_integracoes`: AP-01 0×3 + AP-02 0×3 + AP-03 0×2 + AP-04 1×3 + AP-05 0×2 + AP-06 1×3 = **6 / 16**\n- **Global:** [12 × (900/25) + 20 × (1950/39) + 12 × (200/17) + 12 × (450/57) + 8 × (400/8) + 8 × (600/16)] / 72 = 2367,91 / 72 = 32,887… → **33 → `CRITICO`**\n\nAs seis áreas aplicáveis somam 72%. Cada peso foi dividido por 0,72: `peso_ajustado_area = peso_area / 0,72`.\n\n### Score técnico e score documental (informativos)\n\nMesma fórmula, aplicada a todos os itens `APLICAVEL` de cada `control_type`. Não entram na classificação final.\n\n| Subtotal | Itens | Σ(valor × peso) | Σ(peso) | Score |\n|---|---|---|---|---|\n| `score_tecnico` (`TECNICO`) | 35 | 39,5 | 94 | **42,0** |\n| `score_documental` (`DOCUMENTAL`) | 29 | 5,5 | 68 | **8,1** |\n\nItens `DOCUMENTAL`: BL-02, CK-07, DT-01, DT-02, DT-03, DT-04, DT-05, DT-07, DT-10, OP-01, OP-03, OP-04, GV-01, GV-02, GV-03, GV-04, GV-07, GV-08, GV-09, GV-14, GV-15, GV-16, GV-17, TI-01, TI-02, TI-03, TI-04, IN-15, AP-05. Todos os demais são `TECNICO`. Leitura: o código tem falhas pontuais e corrigíveis, mas a lacuna maior é documental. Quase nada do que a LGPD pede por escrito existe hoje.\n\n### Efeito do risco aceito\n\nO item GV-03 (RIPD) tem aceite de risco registrado e continua `NAO_CONFORME`, com valor 0 e peso 3 em `governanca`. Com ou sem o aceite, `governanca` = 4,5 / 57 = 7,9 e o score global = 33. Aceitar um risco não torna o item conforme, e não afasta o teto de classificação.",
     "checklist_conformidade": "- **direitos_titular:** Valem só para os tratamentos em que a AgendaFácil é controladora: contas dos usuários das clínicas e rastreamento para fins próprios.",
-    "nao_conformidades": "Todos os 30 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados abaixo, em ordem de severidade. **Nenhum achado teve severidade modulada**, porque há tratamento de alto risco (ver \"Natureza e papel do agente de tratamento\"). Os prazos seguem `IMEDIATO` (até 7 dias), `30_DIAS`, `90_DIAS` e `180_DIAS`.",
+    "nao_conformidades": "Todos os 52 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados abaixo, em ordem de severidade. **Nenhum achado teve severidade modulada**, porque há tratamento de alto risco (ver \"Natureza e papel do agente de tratamento\"). Os prazos seguem `IMEDIATO` (até 7 dias), `30_DIAS`, `90_DIAS` e `180_DIAS`.",
     "itens_obrigatorios_ausentes": "A guarda dos registros de acesso por 6 meses (MCI, art. 15) não está nesta lista porque não pôde ser verificada (IN-04)."
   }
 }
@@ -2380,7 +3661,8 @@ footer p{max-width:90ch}
     cls: { CRITICO: 'Crítico', BAIXO_NIVEL: 'Baixo nível', PARCIALMENTE_CONFORME: 'Parcialmente conforme',
       ALTA_CONFORMIDADE: 'Alta conformidade', EXCELENTE: 'Excelente' },
     area: { bases_legais: 'Bases legais', seguranca: 'Segurança', direitos_titular: 'Direitos do titular',
-      governanca: 'Governança', infraestrutura: 'Infraestrutura', apis_integracoes: 'APIs e integrações', ai_llm: 'IA e LLM' },
+      governanca: 'Governança', infraestrutura: 'Infraestrutura', apis_integracoes: 'APIs e integrações', ai_llm: 'IA e LLM',
+      eca_digital: 'ECA Digital', plataformas_digitais: 'Plataformas digitais' },
     appl: { NAO_APLICAVEL: 'Não aplicável', NAO_VERIFICADO: 'Não verificado' },
     prazo: { IMEDIATO: 'Imediato (até 7 dias)', '30_DIAS': '30 dias', '90_DIAS': '90 dias', '180_DIAS': '180 dias' },
     esforco: { P: 'Esforço P · até 1 dia', M: 'Esforço M · até 1 semana', G: 'Esforço G · mais de 1 semana' },
@@ -2390,12 +3672,16 @@ footer p{max-width:90ch}
   var CST = { CONFORME: 'baixo', PARCIAL: 'medio', NAO_CONFORME: 'crit' };
   var CCLS = { CRITICO: 'crit', BAIXO_NIVEL: 'alto', PARCIALMENTE_CONFORME: 'medio', ALTA_CONFORMIDADE: 'baixo', EXCELENTE: 'exc' };
   var SEVS = ['CRITICO', 'ALTO', 'MEDIO', 'BAIXO'];
-  var AREAS = ['bases_legais', 'seguranca', 'direitos_titular', 'governanca', 'infraestrutura', 'apis_integracoes', 'ai_llm'];
+  var AREAS = ['bases_legais', 'seguranca', 'direitos_titular', 'governanca', 'infraestrutura', 'apis_integracoes', 'ai_llm',
+    'eca_digital', 'plataformas_digitais'];
 
   /* regras de core/scoring-engine.md, usadas para conferir os números declarados */
   var VALOR = { CONFORME: 1, PARCIAL: 0.5, NAO_CONFORME: 0 };
   var PESO_ITEM = { CRITICO: 4, ALTO: 3, MEDIO: 2, BAIXO: 1 };
-  var PESO_AREA = { bases_legais: 15, seguranca: 25, direitos_titular: 15, governanca: 15, infraestrutura: 10, apis_integracoes: 10, ai_llm: 10 };
+  var PESO_AREA = { bases_legais: 12, seguranca: 20, direitos_titular: 12, governanca: 12, infraestrutura: 8, apis_integracoes: 8, ai_llm: 8,
+    eca_digital: 10, plataformas_digitais: 10 };
+  /* teto de classificação: com achado CRITICO aberto, a classificação não passa deste rótulo */
+  var ORDEM_CLS = ['CRITICO', 'BAIXO_NIVEL', 'PARCIALMENTE_CONFORME', 'ALTA_CONFORMIDADE', 'EXCELENTE'], TETO = 'PARCIALMENTE_CONFORME';
   function classe(score) {
     return score < 50 ? 'CRITICO' : score < 70 ? 'BAIXO_NIVEL' : score < 85 ? 'PARCIALMENTE_CONFORME' : score < 95 ? 'ALTA_CONFORMIDADE' : 'EXCELENTE';
   }
@@ -2448,11 +3734,20 @@ footer p{max-width:90ch}
   })();
   function decl(v, c) { return isNum(v) ? Number(v) : c; }
   var SCORE = decl(SC.score, calc.score == null ? null : Math.round(calc.score));
-  var CLS = up(SC.classification) || (SCORE == null ? '' : classe(SCORE));
   var COB = decl(SC.coverage, calc.cob);
   var PARCIAL = SC.partial === true || (COB != null && COB < 80);
   var sevN = { CRITICO: 0, ALTO: 0, MEDIO: 0, BAIXO: 0 };
   NCS.forEach(function (f) { var s = up(f.severity); if (s in sevN) sevN[s]++; });
+  var CRITICOS = NCS.filter(function (f) { return up(f.severity) === 'CRITICO'; });
+  function classeFinal(score) {
+    var c = classe(score);
+    return CRITICOS.length && ORDEM_CLS.indexOf(c) > ORDEM_CLS.indexOf(TETO) ? TETO : c;
+  }
+  var CLS_CALC = SCORE == null ? '' : classeFinal(SCORE);
+  var CLS = up(SC.classification) || CLS_CALC;
+  var LIMITADA = SCORE != null && classe(SCORE) !== classeFinal(SCORE);
+  var CENARIO = String(META.scenario == null ? '' : META.scenario).trim();
+  var DIRECIONADO = CENARIO !== '' && CENARIO !== 'full_audit';
 
   /* ── texto: marcação leve (negrito, `código`, listas, tabelas, blocos) ── */
   var RE_ID = /\b[A-Z]{2,5}-\d{1,3}\b/g;
@@ -2624,7 +3919,9 @@ footer p{max-width:90ch}
       h('p', { class: 'lbl', text: 'Score LGPD' }),
       h('div', { class: 'score-n' }, h('b', { class: c ? 'c-' + c : '', text: SCORE == null ? '—' : String(SCORE) }), h('span', { text: '/ 100' })),
       h('div', { class: 'chips' }, CLS ? chip(L.cls[CLS] || CLS, c, 'classificação ' + CLS) : null, CLS ? h('code', { text: CLS }) : null,
-        PARCIAL ? chip('score parcial', 'medio', 'cobertura global abaixo de 80%') : null));
+        PARCIAL ? chip('score parcial', 'medio', 'cobertura global abaixo de 80%') : null,
+        LIMITADA ? chip('classificação limitada por achado crítico', 'crit', 'teto de classificação: há não conformidade CRITICO aberta') : null,
+        DIRECIONADO ? chip('escopo direcionado', 'line', 'cenário ' + CENARIO + ': a classificação vale para o escopo auditado') : null));
     if (SCORE != null) {
       var bandas = [[50, 'crit'], [20, 'alto'], [15, 'medio'], [10, 'baixo'], [5, 'exc']];
       card.appendChild(h('div', { class: 'gauge', role: 'img', 'aria-label': 'Score ' + SCORE + ' de 100' },
@@ -2715,6 +4012,8 @@ footer p{max-width:90ch}
       difs.unshift('Score global: declarado ' + SC.score + ', recalculado ' + Math.round(calc.score) + ' (' + num(calc.score, 3) + ')');
     if (calc.ok && isNum(SC.coverage) && calc.cob != null && Math.abs(Number(SC.coverage) - calc.cob) > 0.06)
       difs.push('Cobertura: declarada ' + pct(SC.coverage) + ', recalculada ' + pct(calc.cob));
+    if (calc.ok && has(SC.classification) && CLS_CALC && up(SC.classification) !== CLS_CALC)
+      difs.push('Classificação: declarada ' + up(SC.classification) + ', esperada ' + CLS_CALC + (LIMITADA ? ' (teto por achado crítico)' : ''));
     if (difs.length) {
       add(s, h('div', { class: 'note warn' }, h('p', null, h('b', { text: 'Conferir o cálculo. ' }),
         'Os números declarados diferem do recálculo feito a partir do checklist deste arquivo:'),
@@ -2723,6 +4022,17 @@ footer p{max-width:90ch}
     add(s, h('div', { class: 'card' }, h('p', { class: 'lbl', text: 'Score por área' }), lista));
     if (calc.ok && !difs.length) add(s, h('p', { class: 'muted small', style: 'margin:8px 2px 0',
       text: 'Conferência automática: os números batem com o recálculo feito a partir do checklist (fórmula de core/scoring-engine.md).' }));
+
+    if (LIMITADA) add(s, h('div', { class: 'note warn' }, h('p', null, h('b', { text: 'Classificação limitada por achado crítico. ' }),
+      'Pelo score, a faixa seria "' + (L.cls[classe(SCORE)] || classe(SCORE)) + '"; com não conformidade de severidade crítica aberta, a classificação não passa de "' +
+      L.cls[TETO] + '". Achados: ', refs(CRITICOS.map(function (f) { return f.item_id || f.id; })))));
+    if (DIRECIONADO || arr(SC.out_of_scope).length) {
+      add(s, [h('h3', { text: 'Escopo do score' }), h('div', { class: 'card' },
+        h('p', { text: DIRECIONADO ? 'Escopo direcionado (cenário ' + CENARIO + '): o score e a classificação valem para o que este cenário auditou, não para a organização inteira.'
+          : 'Auditoria completa: o cenário cobre os 17 domínios.' }),
+        arr(SC.out_of_scope).length ? [h('p', { class: 'lbl', style: 'margin-top:12px', text: 'Domínios fora do escopo' }),
+          h('ul', { style: 'margin:0;padding-left:20px' }, arr(SC.out_of_scope).map(function (d) { return inline(d, h('li')); }))] : null)]);
+    }
 
     var kv = h('dl', { class: 'kv' });
     [['Natureza do agente', SC.agent_nature], ['Papel do agente', SC.agent_role], ['Modulação de severidade', SC.severity_modulation]].forEach(function (p) {
@@ -2804,7 +4114,7 @@ footer p{max-width:90ch}
         var d = h('details', { class: 'it s-' + (CST[st] || ''), id: 'ci-' + slug(it.id), 'data-status': st, 'data-area': a,
           'data-q': (txt(it.id) + ' ' + txt(it.item) + ' ' + txt(it.evidence) + ' ' + txt(it.domain)).toLowerCase() },
           h('summary', null, h('span', { class: 'id', text: it.id || '' }), inline(it.item, h('span', { class: 'tt' })),
-            h('span', { class: 'chips' }, chipStatus(st),
+            h('span', { class: 'chips' }, chipStatus(st), /^EX-/.test(txt(it.id)) ? chip('item extra', 'line', 'item fora do catálogo') : null,
               has(it.criticality) ? chip('peso ' + (PESO_ITEM[up(it.criticality)] || '?') + ' · ' + (L.sev[up(it.criticality)] || it.criticality), 'line',
                 'criticality ' + up(it.criticality)) : null)),
           h('div', { class: 'body' }, h('div', { class: 'fields' },

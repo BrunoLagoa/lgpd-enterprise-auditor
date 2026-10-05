@@ -31,7 +31,7 @@ Veja um relatório de exemplo, gerado sobre um SaaS fictício, nos dois formatos
 - [Relatório em Markdown (`.md`)](./examples/saas-demo/relatorio-auditoria-lgpd.md): abre aqui mesmo, no GitHub.
 - [Relatório em HTML (`.html`)](./examples/saas-demo/relatorio-auditoria-lgpd.html): baixe o arquivo e abra no navegador. A imagem abaixo mostra o topo dele.
 
-[![Relatório de exemplo em HTML: score 35 de 100, classificação, não conformidades por severidade e resumo executivo](./examples/saas-demo/relatorio-auditoria-lgpd.png)](./examples/saas-demo/relatorio-auditoria-lgpd.html)
+[![Relatório de exemplo em HTML: score 33 de 100, classificação, não conformidades por severidade e resumo executivo](./examples/saas-demo/relatorio-auditoria-lgpd.png)](./examples/saas-demo/relatorio-auditoria-lgpd.html)
 
 ## O que é este projeto
 
@@ -62,6 +62,18 @@ powershell -ExecutionPolicy Bypass -Command "iwr https://raw.githubusercontent.c
 ```
 
 Prefere ler o script antes de rodar? Baixe (`curl -fsSL <url> -o install.sh`), revise e depois execute `bash install.sh install`.
+
+O instalador usa a última versão publicada. Se não conseguir consultá-la (sem rede ou limite da API do GitHub), ele avisa e não instala a branch `main` por conta própria: no modo interativo pergunta antes; com `--non-interactive`, para e pede `--version`.
+
+**Conferir a integridade.** As releases a partir da v1.6.0 publicam `install.sh`, `install.ps1` e `SHA256SUMS`. Para instalar uma versão exata e conferir o arquivo antes de rodar:
+
+```bash
+V=vX.Y.Z   # a versão desejada
+curl -fsSLO "https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/download/${V}/install.sh"
+curl -fsSLO "https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/download/${V}/SHA256SUMS"
+shasum -a 256 --ignore-missing -c SHA256SUMS   # no Linux: sha256sum --ignore-missing -c SHA256SUMS
+bash install.sh install --version "$V"
+```
 
 ### Onde os arquivos ficam
 
@@ -153,6 +165,7 @@ Regulamentos da ANPD considerados pelo framework:
 ├── scripts/
 │   ├── install.sh
 │   ├── install.ps1
+│   ├── validate-report.py
 │   └── tests/
 ├── commands/
 │   ├── lgpd-full-audit.md
@@ -193,11 +206,13 @@ O fluxo da auditoria segue 5 passos:
 
 1. **Contexto do projeto**: stack, dados tratados, integrações e operação.
 2. **Roteamento inteligente**: o orquestrador ativa módulos por cenário.
-3. **Checklist com evidência**: nada é marcado como conforme sem comprovação.
-4. **Consolidação**: severidade, score e classificação final.
+3. **Checklist com evidência**: todos os itens do catálogo dos módulos ativos são avaliados, cada um com ID fixo e peso definido; nada é marcado como conforme sem comprovação.
+4. **Consolidação**: severidade, score e classificação final. Com achado crítico aberto, a classificação não passa de `PARCIALMENTE_CONFORME`; em cenário direcionado, o relatório sai com a marca **escopo direcionado** e a lista dos domínios não auditados.
 5. **Saída padronizada**: relatório executivo/técnico/compliance + plano de adequação, gravado em `.md`, em `.html` ou nos dois.
 
 O relatório, em qualquer formato, descreve falhas que podem estar abertas e é **confidencial**: guarde-o fora de repositórios públicos (por exemplo, numa pasta listada no `.gitignore`).
+
+Para conferir um relatório gerado (IDs do catálogo, valores permitidos, relação entre itens e achados e o cálculo do score), rode `python3 scripts/validate-report.py <relatorio.html>` a partir de um clone deste repositório.
 
 ## Modos de uso
 
@@ -239,7 +254,7 @@ Os contratos centrais estão em `.agents/lgpd-enterprise-auditor/core/`:
 - `auditor-core.md`: estruturas canônicas (`finding`, `check_item`, `module_output`);
 - `evidence-engine.md`: regras de evidência;
 - `severity-model.md`: classificação de severidade;
-- `scoring-engine.md`: cálculo de score;
+- `scoring-engine.md`: cálculo de score, catálogo de itens, teto de classificação e escopo do score;
 - `reporting-engine.md`: formato obrigatório da saída e arquivos gerados (`.md`, `.html` ou os dois).
 
 ## Para quem este projeto é útil

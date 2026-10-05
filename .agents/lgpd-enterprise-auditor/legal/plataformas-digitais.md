@@ -58,7 +58,7 @@ Nas citações deste módulo, "art. 16-X" refere-se ao Decreto nº 8.771/2016 co
 - Indisponibilizar, mediante notificação do SNDC ou, quando ligada a políticas públicas, da AGU, publicidade enganosa, abusiva ou fraudulenta (art. 37 do CDC); conteúdo **não claramente identificável como publicidade** é considerado publicidade enganosa (art. 16-N, §2º).
 
 ### 5. Guarda de registros e proteção de dados (MCI arts. 10, 15 e 16; art. 15-A)
-A guarda dos registros de acesso por 6 meses é avaliada **uma única vez**, como item do módulo `cloud` (`cloud/cloud-audit.md`, área `infraestrutura`). Aqui, apenas referenciar aquele item, sem reprovar o mesmo requisito de novo.
+A guarda dos registros de acesso por 6 meses é avaliada **uma única vez**, no item `IN-04` do módulo `cloud` (`cloud/cloud-audit.md`, área `infraestrutura`). Aqui, apenas referenciar aquele item, sem reprovar o mesmo requisito de novo.
 - Registros de acesso a aplicações mantidos **por 6 meses, sob sigilo, em ambiente controlado e de segurança** (MCI art. 15), incluindo a **porta lógica de origem** associada ao IP sempre que necessária à identificação inequívoca do terminal, independentemente de requisição (art. 15-A).
 - Disponibilização de registros somente mediante ordem judicial, preservadas intimidade, vida privada, honra e imagem (MCI art. 10 e art. 15, §3º).
 - Vedada a guarda de registros de acesso a outras aplicações sem consentimento prévio e de dados pessoais excessivos em relação à finalidade (MCI art. 16).
@@ -85,24 +85,32 @@ A guarda dos registros de acesso por 6 meses é avaliada **uma única vez**, com
 - O rito de fiscalização segue a Res. CD/ANPD nº 1/2021 enquanto não concluída sua revisão — ver [[anpd-guidelines]].
 
 ## Checklist atômico
-- O serviço intermedeia conteúdo gerado por terceiro? Enquadra-se em alguma exclusão do art. 16-O?
-- Há sede e representante legal pessoa jurídica no País, com contato acessível no site (art. 16-A, I)?
-- Existe canal de denúncia permanente, de fácil acesso, que preveja expressamente conteúdos criminosos (art. 16-A, II)?
-- Há medidas contra redes artificiais de distribuição de conteúdo ilícito (art. 16-A, III)?
-- Há medidas comprováveis de prevenção e remoção dos conteúdos do art. 16-B, I a VII, conforme o estado da técnica e capazes de inibir circulação massiva?
-- Existe processo documentado de gestão de riscos sistêmicos (art. 16-C)?
-- O fluxo de notificação valida os requisitos do art. 16-D, confirma recebimento e comunica decisões fundamentadas com meios de contestação (art. 16-E)?
-- Há mecanismo contra uso abusivo das notificações (art. 16-F)?
-- Há procedimento de encaminhamento ao Poder Público de autoria e materialidade (art. 16-H; Dec. 12.976, art. 13)?
-- Anúncios e impulsionamentos: há controle prévio contra conteúdo ilícito (art. 16-K) e guarda por 1 ano das informações do anúncio e do anunciante (art. 16-M)?
-- A publicidade é claramente identificável como tal (art. 16-N, §2º)?
-- Registros de acesso são guardados por 6 meses, com porta lógica, sob sigilo e em ambiente controlado — e eliminados após o prazo, salvo requisição (MCI art. 15; art. 15-A; LGPD art. 16)?
-- Os termos de uso cobrem sistema de notificações, devido processo e relatório anual de transparência, publicados e revisados periodicamente (art. 20-A)?
-- O espaço de notificação exibe o aviso do Ligue 180 (Dec. 12.976, art. 5º, §1º)?
-- Existe espaço específico para conteúdo íntimo, com remoção em até 2 horas, remoção de toda a aplicação e acompanhamento pela vítima (Dec. 12.976, art. 7º)?
-- Os prazos transitórios de 6 h / 24 h / 24 h após contestação são cumpridos e medidos (Dec. 12.976, art. 12)?
-- Há detecção e mitigação de ofício de ataques coordenados contra mulheres (Dec. 12.976, art. 8º)?
-- Funcionalidades de IA podem gerar ou alterar imagem ou som de pessoas? Há salvaguardas que bloqueiem conteúdo íntimo de terceiro (Dec. 12.976, arts. 9º e 10)?
+Pergunta de enquadramento (não pontua): o serviço intermedeia conteúdo gerado por terceiro? Enquadra-se em alguma exclusão do art. 16-O?
+
+Avaliados em outros módulos, sem item próprio aqui, com este módulo ativo ou não:
+- sede e representante legal pessoa jurídica no País (art. 16-A, I): `GV-07`, e canal de denúncia permanente (art. 16-A, II): `GV-06` (`governance/dpo-framework.md`);
+- guarda dos registros de acesso por 6 meses, com porta lógica (MCI art. 15; art. 15-A): `IN-04` (`cloud/cloud-audit.md`).
+
+Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`. Itens de anúncios (`PD-07` a `PD-09`) só se aplicam a quem oferece anúncio ou impulsionamento pago; `PD-15`, a quem oferece IA capaz de gerar ou alterar imagem ou som de pessoas; os demais, a quem intermedeia conteúdo de terceiro com difusão pública.
+
+| ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
+|---|---|---|---|---|---|---|
+| `PD-01` | Há medidas contra redes artificiais de distribuição de conteúdo ilícito? | 17 | `MEDIO` | — | `TECNICO` | Decreto nº 8.771/2016, art. 16-A, III; LGPD art. 6º, VIII |
+| `PD-02` | Há medidas comprováveis de prevenção e remoção dos conteúdos do art. 16-B, I a VII, conforme o estado da técnica e capazes de inibir a circulação massiva? | 17 | `ALTO` | `CRITICO` se faltarem medidas contra suicídio ou automutilação (II) ou exploração sexual de crianças e adolescentes (V) | `TECNICO` | Decreto nº 8.771/2016, art. 16-B; LGPD arts. 6º, VIII e 46 |
+| `PD-03` | Existe processo documentado de gestão de riscos sistêmicos? | 17 | `ALTO` | — | `DOCUMENTAL` | Decreto nº 8.771/2016, art. 16-C; LGPD art. 6º, VIII |
+| `PD-04` | O fluxo de notificação valida os requisitos do art. 16-D, confirma o recebimento e comunica decisões fundamentadas, com meios de contestação? | 17 | `ALTO` | — | `TECNICO` | Decreto nº 8.771/2016, arts. 16-D e 16-E; Decreto nº 12.976/2026, art. 6º; LGPD arts. 6º, VI e 20 |
+| `PD-05` | Há mecanismo contra o uso abusivo das notificações? | 17 | `MEDIO` | — | `TECNICO` | Decreto nº 8.771/2016, art. 16-F; LGPD art. 6º, X |
+| `PD-06` | Há procedimento de encaminhamento ao Poder Público de autoria e materialidade dos crimes identificados? | 17 | `MEDIO` | — | `DOCUMENTAL` | Decreto nº 8.771/2016, art. 16-H; Decreto nº 12.976/2026, art. 13; LGPD art. 7º, II |
+| `PD-07` | Anúncios e impulsionamentos: há controle prévio contra a contratação de conteúdo criminoso ou ilícito? | 17 | `ALTO` | — | `TECNICO` | Decreto nº 8.771/2016, arts. 16-K e 16-L; LGPD art. 6º, VIII |
+| `PD-08` | Anúncios e impulsionamentos: as informações de cada anúncio e do anunciante são guardadas por 1 ano após o fim da veiculação? | 17 | `MEDIO` | — | `TECNICO` | Decreto nº 8.771/2016, art. 16-M; LGPD arts. 7º, II e 16, I |
+| `PD-09` | A publicidade é claramente identificável como tal? | 17 | `MEDIO` | — | `TECNICO` | Decreto nº 8.771/2016, art. 16-N, §2º; LGPD art. 6º, VI |
+| `PD-10` | Os termos de uso cobrem sistema de notificações, devido processo e relatório anual de transparência, publicados e revisados periodicamente? | 17 | `MEDIO` | — | `DOCUMENTAL` | Decreto nº 8.771/2016, art. 20-A; LGPD art. 6º, VI |
+| `PD-11` | O espaço de notificação exibe o aviso do Ligue 180? | 17 | `BAIXO` | — | `TECNICO` | Decreto nº 12.976/2026, art. 5º, §1º; LGPD art. 6º, VI |
+| `PD-12` | Existe espaço específico, permanente, gratuito e destacado para notificar conteúdo íntimo não autorizado, com remoção em até 2 horas, de toda a aplicação, e acompanhamento do caso pela vítima? | 17 | `CRITICO` | — | `TECNICO` | Decreto nº 12.976/2026, art. 7º; LGPD arts. 11 e 46 |
+| `PD-13` | Os prazos transitórios de 6 horas, 24 horas e 24 horas após contestação são cumpridos e medidos? | 17 | `ALTO` | — | `TECNICO` | Decreto nº 12.976/2026, art. 12; LGPD art. 6º, X |
+| `PD-14` | Há detecção e mitigação de ofício de ataques coordenados contra mulheres? | 17 | `ALTO` | — | `TECNICO` | Decreto nº 12.976/2026, art. 8º; LGPD art. 6º, VIII |
+| `PD-15` | IA que gera ou altera imagem ou som de pessoas: há salvaguardas técnicas e procedimentais que identifiquem e bloqueiem conteúdo íntimo de terceiro? | 17 | `ALTO` | `CRITICO` se a funcionalidade gerar ou modificar conteúdo íntimo de terceiro | `TECNICO` | Decreto nº 12.976/2026, arts. 9º e 10; LGPD arts. 11 e 46 |
+| `PD-16` | O conteúdo criminoso notificado (exceto crimes contra a honra) é indisponibilizado, com manutenção só em dúvida razoável, fundamentada e comunicada ao notificante? | 17 | `ALTO` | — | `TECNICO` | Decreto nº 8.771/2016, art. 16-G; LGPD art. 6º, VIII |
 
 ## Critérios de evidência
 - políticas de moderação, termos de uso versionados e relatórios anuais de transparência publicados;
@@ -133,7 +141,7 @@ A guarda dos registros de acesso por 6 meses é avaliada **uma única vez**, com
 - Ausência de procedimento de encaminhamento ao Poder Público (art. 16-H; Dec. 12.976, art. 13): `MEDIO`.
 - Ausência de mecanismo contra uso abusivo das notificações (art. 16-F): `MEDIO`.
 - Ausência do aviso do Ligue 180 no espaço de notificação (Dec. 12.976, art. 5º, §1º): `BAIXO`.
-- Área de score (mapa por domínio de `core/scoring-engine.md`): `governanca` (domínio 17) para todos os itens deste módulo.
+- Área de score (mapa por domínio de `core/scoring-engine.md`): `plataformas_digitais` (domínio 17) para todos os itens deste módulo. A criticidade de cada item está na tabela do checklist; as regras acima sobre canal de denúncia, representante legal e registros de acesso valem para `GV-06`, `GV-07` e `IN-04`, avaliados em `governance` e `cloud`.
 
 ## Regra de fundamentação
 Todo `finding` deste módulo deve citar o dispositivo do decreto (e o artigo do MCI, quando houver) **e** o correlato na LGPD — em regra: art. 6º, VI a VIII (transparência, segurança, prevenção); art. 11 para conteúdo íntimo; art. 20 para moderação exclusivamente automatizada; art. 46 para falhas de segurança; arts. 7º, II e 16, I para guarda de registros. Achado sem correlato LGPD explícito quebra o contrato de `finding` em [[auditor-core]].
