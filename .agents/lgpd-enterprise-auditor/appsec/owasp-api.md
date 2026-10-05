@@ -6,13 +6,15 @@ Auditar segurança de aplicação web e APIs com foco em riscos LGPD, incluindo 
 ## Checklist atômico
 Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`.
 
+Fronteira com o módulo `cloud`: `SE-02` avalia o que a aplicação define no código do servidor (redirecionamento para HTTPS, HSTS, CSP e demais cabeçalhos). Cabeçalhos definidos na configuração da hospedagem, e os das páginas que ela serve sem passar pela aplicação, são avaliados em `IN-01`.
+
 | ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
 |---|---|---|---|---|---|---|
 | `SE-01` | Senhas e credenciais de usuários são armazenadas com hash forte e salgado (ex.: Argon2id, bcrypt), nunca em texto puro ou com cifra reversível? | 6 | `CRITICO` | — | `TECNICO` | art. 46 |
 | `SE-02` | Todo tráfego usa HTTPS, com HSTS e cabeçalhos de segurança (CSP, entre outros) configurados? | 6 | `ALTO` | — | `TECNICO` | art. 46 |
-| `SE-03` | A autorização impede acesso indevido a dados de outros usuários ou clientes (RBAC/ABAC, isolamento entre contas)? | 6 | `ALTO` | `CRITICO` com falha explorável e exfiltração de dados pessoais | `TECNICO` | art. 46 |
+| `SE-03` | A autorização impede acesso indevido a dados de outros usuários ou clientes (RBAC/ABAC, isolamento entre contas)? | 6 | `ALTO` | `CRITICO` com falha explorável que permita ler ou extrair dados pessoais de terceiros | `TECNICO` | art. 46 |
 | `SE-04` | A autenticação é robusta (política de senha, bloqueio de tentativas e MFA quando o risco pede)? | 6 | `ALTO` | — | `TECNICO` | art. 46 |
-| `SE-05` | Há proteção contra XSS, CSRF, SSRF e SQL Injection? | 6 | `ALTO` | `CRITICO` com falha explorável e exfiltração de dados pessoais | `TECNICO` | art. 46 |
+| `SE-05` | Há proteção contra XSS, CSRF, SSRF e SQL Injection? | 6 | `ALTO` | `CRITICO` com falha explorável que permita ler ou extrair dados pessoais de terceiros | `TECNICO` | art. 46 |
 | `SE-06` | Os logs da aplicação evitam registrar dados pessoais e sensíveis (CPF, e-mail, telefone, tokens, senhas, payloads completos) ou os mascaram antes da gravação? | 11 | `ALTO` | `CRITICO` com senhas ou tokens em texto puro nos logs | `TECNICO` | arts. 6º, III e 46 |
 | `SE-07` | Há trilha de auditoria dos acessos a dados pessoais no backend (quem acessou, o quê e quando)? | 6 | `ALTO` | — | `TECNICO` | arts. 6º, X e 46 |
 | `SE-08` | Sessões de navegador têm proteção adequada (cookie de sessão com `HttpOnly`, `Secure` e `SameSite`, expiração e rotação)? | 6 | `ALTO` | — | `TECNICO` | art. 46 |
@@ -29,6 +31,8 @@ Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): a
 Aplicável a toda aplicação web que use cookies, pixels, tags ou SDKs de terceiros (ex.: Google Analytics, Meta Pixel, Hotjar, Google Ads).
 
 Sem cookies, pixels, tags ou SDKs de terceiros, os itens `CK` ficam `NAO_APLICAVEL`, com a evidência.
+
+Fronteira entre os itens: o disparo de rastreador antes da escolha, ou antes de a escolha salva ser reaplicada numa nova visita, é contado em `CK-02`. `CK-03` avalia o mecanismo de revisão e revogação e a limpeza do que já foi gravado. `CK-08` só se aplica quando há cookies classificados em categorias.
 
 | ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
 |---|---|---|---|---|---|---|
@@ -53,9 +57,9 @@ Fundamento: art. 7º, I e art. 8º (consentimento livre, informado, inequívoco,
 - configuração do CMP e registro de consentimentos.
 
 ## Mapeamento para severidade e score
-- Falha explorável com exfiltração de dados pessoais: `CRITICO`.
+- Falha explorável que permite ler ou extrair dados pessoais de terceiros: `CRITICO`. "Explorável" é a falha evidenciada no código ou na configuração; não exige exploração real nem incidente (`core/severity-model.md`).
 - Senhas ou tokens em texto puro nos logs: `CRITICO`.
-- Falha de autenticação/autorização sem exploração confirmada: `ALTO`.
+- Falha de autenticação ou autorização que não dá acesso a dados pessoais de terceiros: `ALTO`.
 - Ausência de HTTPS em rotas com dados pessoais, API sem autenticação adequada ou com exposição excessiva de dados pessoais: `ALTO`.
 - Logs da aplicação com dados pessoais sem mascaramento: `ALTO`.
 - Cookies/pixels de publicidade ou analytics de terceiros disparados antes do aceite, sem outra base legal documentada: `ALTO`.

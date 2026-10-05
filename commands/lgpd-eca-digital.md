@@ -4,7 +4,7 @@ description: Executa auditoria direcionada de LGPD + ECA Digital (Lei nº 15.211
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.6.1"
+  version: "1.7.0"
 ---
 
 # LGPD + ECA Digital (público infantojuvenil)

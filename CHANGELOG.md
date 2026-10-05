@@ -6,6 +6,27 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.7.0] - 2026-10-05
+
+Regras que dois testes de ponta a ponta mostraram depender de julgamento. Em cada teste, um agente sem contexto auditou o projeto de demonstração só com o que o instalador coloca nele. Com estas regras, duas auditorias sobre as mesmas evidências tendem ao mesmo status por item, e não só ao mesmo conjunto de itens.
+
+### Adicionado
+- Régua única de status, aplicada em ordem: controle inexistente; controle existente com a violação que ele deveria impedir; contagem dos elementos que o item enumera (todos, pelo menos a metade, menos da metade); cobertura incompleta. Vestígio que não cumpre a função do controle não conta, e documento em rascunho ou não publicado prova o conteúdo, não a vigência.
+- Critério de decisão do tratamento de alto risco (Res. CD/ANPD nº 2/2022, art. 4º): critério específico e critério geral, com três situações verificáveis para "impacto significativo", larga escala nunca presumida e decisão conservadora na dúvida. Definição de "exposição explorável confirmada".
+- Prazo máximo do achado pela severidade (`CRITICO` imediato, `ALTO` 30 dias, `MEDIO` 90, `BAIXO` 180); pode ser mais curto, nunca mais longo.
+- `scripts/tests/run-all.sh`: roda localmente tudo o que o CI roda, para liberar commit, push e release sem esperar o GitHub Actions.
+
+### Alterado
+- Severidade do achado de item `PARCIAL`: sempre um nível abaixo da criticidade do item, sem escolha caso a caso. `scripts/validate-report.py` passa a conferir isso e o prazo máximo.
+- Dado que revela informação sensível (art. 11, §1º) conta como sensível em todos os itens, e não só nas regras de operador; o agravante vale só quando a condição está no objeto que o item avalia.
+- Aplicabilidade pelos fatos do tratamento, não pela documentação: os itens de consentimento valem quando o sistema coleta consentimento na prática ou quando o tratamento só pode se apoiar nele, ainda que nenhuma base legal esteja registrada.
+- Limite entre `NAO_VERIFICADO` e `NAO_CONFORME`: controle sem representação em arquivo do repositório (proteção de branch, MFA do painel) é `NAO_VERIFICADO`; controle que costuma ser declarado em arquivo (varreduras no CI, cabeçalhos na configuração da hospedagem) e não está lá é `NAO_CONFORME`. Item com parte verificável e parte fora do alcance é avaliado pela parte verificável.
+- Contagem única: critério para decidir quando um item depende de outro (não poderia ser atendido enquanto o outro controle continuar ausente).
+- Fronteiras entre itens que se sobrepunham: `BL-01`, `BL-02` e `OP-02`; `CK-02`, `CK-03` e `CK-08`; `SE-02` e `IN-01`; `IN-06` e `IN-12`; e o que cabe ao cliente em `IN-09` e `IN-16` quando a hospedagem é PaaS. O texto de `IN-12` passa a dizer "além das nativas do provedor".
+- Agravante de `SE-03` e `SE-05`: "falha explorável que permita ler ou extrair dados pessoais de terceiros", sem exigir exploração real nem incidente.
+- Grau da evidência quando a análise encontra a violação: `AUSENTE` se nada do controle existe, `PARCIAL` se parte existe. Com mais de uma evidência, vale a confiança da mais fraca.
+- Relatório de exemplo (`examples/saas-demo`) refeito com essas regras: score 25, com duas falhas que o relatório anterior não trazia — a rota pública de agendamento permite, a quem souber o CPF de um paciente, obter nome e data de nascimento e trocar os contatos dele (`SE-03`, `CRITICO`), e o projeto está fixado num runtime fora de suporte (`IN-16`).
+
 ## [1.6.1] - 2026-10-05
 
 ### Corrigido
@@ -167,7 +188,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.1...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.1...v1.7.0
 [1.6.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.4.0...v1.5.0

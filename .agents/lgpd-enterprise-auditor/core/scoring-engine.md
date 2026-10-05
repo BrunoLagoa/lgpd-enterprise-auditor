@@ -33,7 +33,7 @@ Calcular com valores exatos; exibir o score de cada área com uma casa decimal e
 
 **Contagem única:** cada item é avaliado pelo seu próprio requisito, e uma mesma falha não é contada duas vezes:
 - quando parte do requisito de um item repete uma falha que é o requisito de outro, essa parte é citada na evidência e o item pontua pelo que resta (ex.: `SE-04` não é reprovado pela falta de limitação de tentativas no login, que é o requisito de `AP-03`);
-- quando o item depende de um controle que não existe (ex.: `GV-05`, divulgação do contato de um encarregado que não foi indicado), fica `NAO_APLICAVEL`, com a referência ao item que conta a falha;
+- quando o item **depende** de um controle que não existe, fica `NAO_APLICAVEL`, com a referência ao item que conta a falha. Há dependência quando o item não poderia ser atendido enquanto o outro controle continuar ausente (ex.: `GV-05`, não há contato de encarregado a divulgar sem encarregado indicado; `BL-01`, não há base incompatível a apontar sem nenhuma base indicada). Se o item poderia ser atendido sozinho, não há dependência e vale a regra seguinte;
 - quando o requisito inteiro do item falha, ele é reprovado, ainda que a causa seja a mesma de outro item: no catálogo, cada item é uma obrigação distinta (ex.: o mesmo pixel viola o consentimento de cookies, `CK-02`, e também configura transferência internacional sem mecanismo, `TI-02`).
 
 Uma área aplicável sem nenhum item avaliado indica cobertura insuficiente: avaliar ao menos um item dela; se não for possível, declarar "cobertura insuficiente" em `score_lgpd` e redistribuir seu peso como na regra de `NAO_APLICAVEL`, sem chamá-la assim.
@@ -56,6 +56,8 @@ Regras:
 - a `criticality` é a do catálogo. Só muda pelo agravante ou atenuante escrito na linha do item, quando a condição está presente no escopo, ou pela modulação por porte; a evidência registra a condição aplicada. Nunca é escolhida caso a caso;
 - problema real sem item correspondente entra como **item extra**, com ID `EX-nn`, domínio, criticidade pela regra de `core/severity-model.md` e a justificativa de não caber em nenhum item do catálogo. O item extra entra no score e aparece identificado como tal no relatório;
 - perguntas de enquadramento dos módulos (ex.: "o serviço é de acesso provável por menores?") decidem a ativação e a aplicabilidade; não são itens e não pontuam.
+- nos agravantes, **dado sensível** é o do art. 5º, II, e também o dado que revele informação sensível e possa causar dano ao titular (art. 11, §1º) — ex.: o registro de que alguém agendou consulta numa clínica. A extensão vale para todos os itens, não só para os de operador;
+- o agravante só se aplica quando a condição está no **objeto do item** (o tratamento, o fluxo, o operador ou o ativo que o item avalia), não por existir dado sensível em outra parte do sistema.
 
 ## Aplicabilidade do item e cobertura
 Cada `check_item` tem uma `applicability`:
@@ -65,8 +67,11 @@ Cada `check_item` tem uma `applicability`:
 
 Limites:
 - falta de evidência **não** é `NAO_APLICAVEL` nem `NAO_VERIFICADO`: documento, contrato, política ou registro que o auditado deveria apresentar e não apresentou é `AUSENTE` e reduz o score;
+- a aplicabilidade decorre dos **fatos do tratamento**, não do que o auditado documentou: item cujo objeto existe no sistema é `APLICAVEL`, ainda que nenhum documento o mencione (ex.: se o sistema coleta consentimento num formulário, os itens de consentimento valem, mesmo sem base legal registrada);
 - `NAO_VERIFICADO` só cabe em controle `TECNICO` fora do alcance do auditor; controle `DOCUMENTAL` nunca é `NAO_VERIFICADO`;
-- controle ausente no repositório, mas que pode legitimamente existir só no provedor (ex.: retenção de logs, backup, MFA do painel), é `NAO_VERIFICADO`; controle que deveria aparecer no repositório (ex.: varredura no CI, rate limiting da aplicação) é `NAO_CONFORME`, com a confiança que a evidência permitir e uma verificação pendente;
+- controle que **não tem representação em arquivo do repositório** e só existe na configuração de um serviço (ex.: retenção de logs, backup, MFA e membros do painel, proteção de branch) é `NAO_VERIFICADO`;
+- controle que **costuma ser declarado em arquivo do repositório** (ex.: varredura de dependências, de segredos ou de código no CI, rate limiting da aplicação, cabeçalhos em `vercel.json` ou equivalente) e não está lá é `NAO_CONFORME`, ainda que o provedor ofereça uma alternativa por painel; a confiança é a que a evidência permitir, e a alternativa vira verificação pendente;
+- item com uma parte verificável e outra fora do alcance é avaliado pela parte verificável: se ela falha, o status é o da falha; se ela atende, o item fica `CONFORME` com confiança `MEDIA` e uma verificação pendente para o resto;
 - cada item `NAO_VERIFICADO` gera uma verificação pendente no relatório.
 
 **Cobertura** = itens com `status` ÷ (itens com `status` + itens `NAO_VERIFICADO`), global e por área; itens `NAO_APLICAVEL` não entram na conta. Cobertura global abaixo de 80% obriga a marcar o resultado como **score parcial** ao lado da classificação. Área com cobertura abaixo de 50% recebe a marca **cobertura baixa** ao lado do seu score: itens não verificados saem da conta e podem elevar a nota da área. Área em que todos os itens são `NAO_VERIFICADO` cai na regra de cobertura insuficiente acima.

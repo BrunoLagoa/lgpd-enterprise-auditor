@@ -41,7 +41,7 @@ O titular tem direito ao acesso facilitado às informações sobre o tratamento,
 Quando o consentimento é requerido, ele é nulo se as informações tiverem conteúdo enganoso ou abusivo ou não tiverem sido apresentadas previamente com transparência (art. 9º, §1º).
 
 ## Checklist atômico
-Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`. A revogação do consentimento é avaliada em `CS-05` (`legal/legal-bases-engine.md`) e, para cookies, em `CK-03`; `DT-08` só se aplica quando há decisão automatizada que afete o titular.
+Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`. A revogação do consentimento é avaliada em `CS-05` (`legal/legal-bases-engine.md`) e, para cookies, em `CK-03`; `DT-08` só se aplica quando há decisão automatizada que afete o titular: a que define perfil ou decide acesso, preço, crédito ou atendimento por pontuação ou modelo. Regra fixa de validação (campo obrigatório, bloqueio por idade) não é decisão automatizada do art. 20.
 
 | ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
 |---|---|---|---|---|---|---|

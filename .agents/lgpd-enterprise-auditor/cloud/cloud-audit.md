@@ -8,6 +8,13 @@ Avaliar postura de segurança e privacidade de onde a aplicação roda:
 
 Os itens abaixo usam termos de IaaS; em PaaS e hospedagem, aplicar o equivalente do painel do provedor. O que o provedor não expõe ao cliente e o que só pode ser conferido com acesso ao painel ou à produção fica `NAO_VERIFICADO`, com o acesso necessário; o que não existe no escopo (ex.: VPC e security groups em hospedagem compartilhada) fica `NAO_APLICAVEL` (`core/scoring-engine.md`).
 
+Quando a configuração da hospedagem está no próprio repositório (`vercel.json`, `netlify.toml`, `_headers` e equivalentes), ela é evidência como qualquer outro arquivo: o item é avaliado por ela, e a coleta das respostas de produção serve para elevar a confiança, não para adiar a avaliação.
+
+Em PaaS e hospedagem gerenciada:
+- `IN-06` avalia os logs, o analytics e as métricas nativos do provedor; `IN-12`, só as ferramentas contratadas além deles (sem nenhuma, `NAO_APLICAVEL`);
+- `IN-09` avalia as regras de exposição que ficam com o cliente, como a lista de IPs e o acesso público do banco gerenciado, que só aparecem no painel (`NAO_VERIFICADO`); fica `NAO_APLICAVEL` só quando não há nenhum recurso de rede sob controle do cliente;
+- `IN-16` avalia a parte do cliente: a versão do runtime e das imagens que ele escolhe e o processo para atualizá-las. Runtime fora de suporte fixado no repositório é `NAO_CONFORME`; o sistema operacional e a plataforma são do provedor.
+
 ## Checklist atômico
 Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`.
 
@@ -24,7 +31,7 @@ Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): a
 | `IN-09` | A segmentação de rede e as regras de exposição externa estão adequadas? | 7 | `MEDIO` | — | `TECNICO` | art. 46 |
 | `IN-10` | Backups e réplicas são criptografados, têm acesso restrito e seguem a política de retenção (a eliminação também os alcança)? | 7 | `ALTO` | — | `TECNICO` | arts. 16 e 46 |
 | `IN-11` | Os logs de auditoria da conta cloud ou do painel estão ativos e protegidos contra alteração? | 7 | `ALTO` | — | `TECNICO` | art. 46 |
-| `IN-12` | Logs e observabilidade (CloudWatch, Datadog, Sentry, ELK etc.) têm retenção definida, acesso por privilégio mínimo e mascaramento de dados pessoais? | 7 | `MEDIO` | — | `TECNICO` | arts. 6º, III e 46 |
+| `IN-12` | As ferramentas de logs e observabilidade além das nativas do provedor de hospedagem (CloudWatch, Datadog, Sentry, ELK etc.) têm retenção definida, acesso por privilégio mínimo e mascaramento de dados pessoais? | 7 | `MEDIO` | — | `TECNICO` | arts. 6º, III e 46 |
 | `IN-13` | A exportação de logs a ferramentas de terceiros está coberta por contrato de operador e, se os dados saírem do País, por mecanismo do art. 33? | 14 | `ALTO` | — | `DOCUMENTAL` | arts. 33 e 39 |
 | `IN-14` | Chaves e segredos de produção ficam em serviço dedicado (KMS, Secrets Manager ou equivalente), com rotação? | 7 | `MEDIO` | — | `TECNICO` | art. 46 |
 | `IN-15` | A divisão de responsabilidades com o provedor está documentada (o que é do provedor e o que é do auditado: certificados, DNS, CDN, backups, atualizações)? | 7 | `BAIXO` | — | `DOCUMENTAL` | arts. 46 e 50 |

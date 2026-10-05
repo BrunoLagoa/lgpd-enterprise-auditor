@@ -20,6 +20,8 @@ Dados sensíveis (art. 5º, II: dado pessoal sobre origem racial ou étnica, con
 - consentimento específico e destacado, para finalidades específicas (art. 11, I);
 - sem consentimento, apenas nas hipóteses do art. 11, II: obrigação legal/regulatória; políticas públicas; estudos por órgão de pesquisa (anonimizando quando possível); exercício regular de direitos; proteção da vida/incolumidade física; tutela da saúde por profissionais de saúde; garantia da prevenção à fraude e à segurança do titular.
 
+As regras de dado sensível valem também para o dado que **revele** informação sensível e possa causar dano ao titular (art. 11, §1º) — ex.: o registro de que alguém agendou consulta numa clínica, ou a visita à página de agendamento dela. A extensão vale em todo o framework (`core/scoring-engine.md`, "Catálogo de itens").
+
 ### Regra crítica de dados sensíveis
 - **Legítimo interesse (art. 7º, IX) NÃO é base legal válida para dados sensíveis.** Seu uso para tratar dado sensível deve ser classificado como `NAO_CONFORME` com severidade `CRITICO`.
 - "Proteção ao crédito" e "execução de contrato" também não constam do rol do art. 11; tratar dado sensível com essas bases é não conformidade.
@@ -36,6 +38,11 @@ Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): a
 
 ### Bases legais
 Para o teste de balanceamento de `BL-03`, usar [[lia-template]].
+
+Como ler estes itens sem contar a mesma falha duas vezes:
+- `BL-02` avalia os tratamentos em que o auditado é controlador por decisão própria (contas, cobrança, uso do produto). O uso, para finalidade própria, de dados recebidos como operador é contado só em `OP-02`; `BL-02` o cita e pontua pelo que resta.
+- `BL-01` avalia base **indicada** que não serve para dado sensível. Sem nenhuma base indicada, a falta é de `BL-02` e `BL-01` fica `NAO_APLICAVEL` por dependência; sem dado sensível nos tratamentos próprios, também.
+- `BL-03` só se aplica quando o legítimo interesse é a base indicada.
 
 | ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
 |---|---|---|---|---|---|---|
@@ -64,7 +71,7 @@ A segurança (art. 46) e o registro das operações (art. 37) do operador são a
 
 A indicação de encarregado pelo operador é facultativa (Res. CD/ANPD nº 18/2024). O operador responde solidariamente quando descumpre a LGPD ou as instruções lícitas do controlador (art. 42, §1º, I).
 
-Severidade (já refletida na tabela): operador que usa os dados para finalidade própria sem base legal: `ALTO` (`CRITICO` com dado sensível ou de crianças e adolescentes). Ausência de contrato com o controlador ou de processo de aviso de incidente: `ALTO`. Suboperador não informado ou sem contrato: `MEDIO` (`ALTO` com dado sensível ou de crianças e adolescentes). Sem processo de apoio ao controlador nos pedidos de titulares, ou sem devolução ou eliminação definida para o fim do contrato: `MEDIO`. Para essas regras, conta como dado sensível também o dado que **revele** informação sensível e possa causar dano ao titular (art. 11, §1º) — ex.: o registro de que alguém agendou consulta numa clínica. Área de score: `governanca` (domínio 14); o uso para finalidade própria pontua em `bases_legais`.
+Severidade (já refletida na tabela): operador que usa os dados para finalidade própria sem base legal: `ALTO` (`CRITICO` com dado sensível ou de crianças e adolescentes). Ausência de contrato com o controlador ou de processo de aviso de incidente: `ALTO`. Suboperador não informado ou sem contrato: `MEDIO` (`ALTO` com dado sensível ou de crianças e adolescentes). Sem processo de apoio ao controlador nos pedidos de titulares, ou sem devolução ou eliminação definida para o fim do contrato: `MEDIO`. Conta como dado sensível também o dado que **revele** informação sensível (art. 11, §1º), como em todo o framework. Área de score: `governanca` (domínio 14); o uso para finalidade própria pontua em `bases_legais`.
 
 ## Dados de acesso público e dados manifestamente públicos (art. 7º, §§ 3º, 4º e 7º)
 Dado público não é dado livre: estar acessível muda a análise, mas não afasta a LGPD.
@@ -85,7 +92,12 @@ Itens, aplicáveis quando o auditado trata dados obtidos de fonte pública (sem 
 Severidade: reutilização compatível e minimizada **não é achado por si só**. Ausência de análise documentada da compatibilidade: `MEDIO`. Uso incompatível com a finalidade da divulgação ou sem base legal: `ALTO`. `CRITICO` apenas com perfilamento discriminatório ou exposição indevida de dado sensível.
 
 ## Consentimento (art. 8º)
-Aplicável sempre que o consentimento (art. 7º, I ou art. 11, I) for a base legal indicada; sem tratamento baseado em consentimento, os itens ficam `NAO_APLICAVEL`. O consentimento de cookies e tracking no front-end é avaliado só nos itens `CK` de [[owasp-api]], não aqui.
+A aplicabilidade decorre dos fatos, não do que foi documentado. Os itens `CS` são `APLICAVEL` quando ocorre ao menos uma destas situações, fora de cookies e tracking:
+- o auditado indica o consentimento (art. 7º, I ou art. 11, I) como base legal de algum tratamento;
+- o sistema coleta consentimento na prática (caixa de aceite, termo, opt-in de comunicação), ainda que nenhum documento nomeie a base;
+- o tratamento só pode se apoiar em consentimento: dado sensível sem hipótese do art. 11, II; dado de criança (art. 14, §1º); comunicação de marketing a quem não é cliente.
+
+Fora dessas situações, os itens ficam `NAO_APLICAVEL`, com a evidência de que o sistema não coleta consentimento; a falta de base legal documentada é contada em `BL-02`, e não tira os itens `CS` da conta por si só. O consentimento exigido por cookie ou rastreador no front-end é avaliado só nos itens `CK` de [[owasp-api]], inclusive quando o dado rastreado revela informação sensível: `CS-08` não se aplica a ele.
 
 | ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
 |---|---|---|---|---|---|---|
@@ -108,4 +120,4 @@ Aplicável sempre que o consentimento (art. 7º, I ou art. 11, I) for a base leg
 ## Resultado da validação
 - `CONFORME`: base legal válida para o tipo de dado + evidência suficiente.
 - `PARCIAL`: base legal indicada, mas sem comprovação robusta.
-- `NAO_CONFORME`: ausência de base legal, base incompatível com a finalidade, ou base do art. 7º aplicada indevidamente a dado sensível.
+- `NAO_CONFORME`: nenhuma base legal indicada, base incompatível com a finalidade, ou base do art. 7º aplicada indevidamente a dado sensível.

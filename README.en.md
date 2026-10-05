@@ -32,7 +32,7 @@ See an example report (in Portuguese), produced on a fictional SaaS, in both for
 - [Markdown report (`.md`)](./examples/saas-demo/relatorio-auditoria-lgpd.md): opens right here on GitHub.
 - [HTML report (`.html`)](./examples/saas-demo/relatorio-auditoria-lgpd.html): download the file and open it in your browser. The image below shows the top of it.
 
-[![Example HTML report: score 33 out of 100, classification, non-conformities by severity and executive summary](./examples/saas-demo/relatorio-auditoria-lgpd.png)](./examples/saas-demo/relatorio-auditoria-lgpd.html)
+[![Example HTML report: score 25 out of 100, classification, non-conformities by severity and executive summary](./examples/saas-demo/relatorio-auditoria-lgpd.png)](./examples/saas-demo/relatorio-auditoria-lgpd.html)
 
 ## What this project is
 

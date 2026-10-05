@@ -12,7 +12,7 @@ Estabelecer os contratos canônicos da auditoria LGPD Enterprise, garantindo con
 ## Contratos canônicos
 
 ### `finding`
-Estrutura mínima para cada não conformidade. Todo `check_item` com status `NAO_CONFORME` **ou** `PARCIAL` gera um `finding`: no `NAO_CONFORME`, a severidade é a `criticality` do item; no `PARCIAL`, reflete a lacuna que resta e nunca excede a `criticality`.
+Estrutura mínima para cada não conformidade. Todo `check_item` com status `NAO_CONFORME` **ou** `PARCIAL` gera um `finding`: no `NAO_CONFORME`, a severidade é a `criticality` do item; no `PARCIAL`, é **um nível abaixo** da `criticality` (`CRITICO` → `ALTO`, `ALTO` → `MEDIO`, `MEDIO` → `BAIXO`, `BAIXO` → `BAIXO`), sem escolha caso a caso.
 - `id`: identificador único.
 - `module`: módulo origem (ex.: `cloud`, `ai-llm`).
 - `title`: título objetivo.
@@ -27,7 +27,7 @@ Estrutura mínima para cada não conformidade. Todo `check_item` com status `NAO
 - `legal_impact`: impacto jurídico/regulatório.
 - `recommendation`: ação recomendada.
 - `owner`: responsável sugerido.
-- `deadline_suggestion`: `IMEDIATO | 30_DIAS | 90_DIAS | 180_DIAS` (`IMEDIATO` = até 7 dias).
+- `deadline_suggestion`: `IMEDIATO | 30_DIAS | 90_DIAS | 180_DIAS` (`IMEDIATO` = até 7 dias). Prazo máximo pela severidade: `CRITICO` → `IMEDIATO`; `ALTO` → `30_DIAS`; `MEDIO` → `90_DIAS`; `BAIXO` → `180_DIAS`. Pode ser mais curto quando a correção é a mesma de um achado mais urgente; nunca mais longo. O aceite de risco não muda este campo (o novo prazo vai em `accepted_deadline`).
 - `effort`: esforço estimado da correção - `P | M | G` (P: até 1 dia; M: até 1 semana; G: mais de 1 semana).
 - `severity_modulation` (opcional): quando a severidade foi modulada por porte e exposição (`core/severity-model.md`) - severidade original, severidade aplicada e justificativa.
 - `risk_acceptance` (opcional): quando o controlador decidiu aceitar o risco - `accepted_by` (nome e papel de quem aceitou), `accepted_at` (data), `justification`, `review_at` (data de revisão, no máximo 12 meses depois) e, se o aceite adiar a correção, `accepted_deadline` (novo prazo, mantido também o `deadline_suggestion` original). O aceite **não** altera status, severidade nem score.

@@ -31,7 +31,7 @@ Veja um relatório de exemplo, gerado sobre um SaaS fictício, nos dois formatos
 - [Relatório em Markdown (`.md`)](./examples/saas-demo/relatorio-auditoria-lgpd.md): abre aqui mesmo, no GitHub.
 - [Relatório em HTML (`.html`)](./examples/saas-demo/relatorio-auditoria-lgpd.html): baixe o arquivo e abra no navegador. A imagem abaixo mostra o topo dele.
 
-[![Relatório de exemplo em HTML: score 33 de 100, classificação, não conformidades por severidade e resumo executivo](./examples/saas-demo/relatorio-auditoria-lgpd.png)](./examples/saas-demo/relatorio-auditoria-lgpd.html)
+[![Relatório de exemplo em HTML: score 25 de 100, classificação, não conformidades por severidade e resumo executivo](./examples/saas-demo/relatorio-auditoria-lgpd.png)](./examples/saas-demo/relatorio-auditoria-lgpd.html)
 
 ## O que é este projeto
 

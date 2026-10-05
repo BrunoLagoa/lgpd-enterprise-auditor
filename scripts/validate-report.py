@@ -30,6 +30,8 @@ EVIDENCE_TYPE = {"ENCONTRADA", "PARCIAL", "AUSENTE"}
 EVIDENCE_SOURCE = {"TECNICA", "DOCUMENTAL", "TECNICA + DOCUMENTAL"}
 CONFIDENCE = {"ALTA", "MEDIA", "BAIXA"}
 DEADLINE = {"IMEDIATO", "30_DIAS", "90_DIAS", "180_DIAS"}
+DEADLINE_ORDER = ["IMEDIATO", "30_DIAS", "90_DIAS", "180_DIAS"]
+MAX_DEADLINE = {"CRITICO": "IMEDIATO", "ALTO": "30_DIAS", "MEDIO": "90_DIAS", "BAIXO": "180_DIAS"}
 EFFORT = {"P", "M", "G"}
 CLASSES = ["CRITICO", "BAIXO_NIVEL", "PARCIALMENTE_CONFORME", "ALTA_CONFORMIDADE", "EXCELENTE"]
 CAP = "PARCIALMENTE_CONFORME"
@@ -230,8 +232,10 @@ def validate(data, weights, modules, catalog, md_text=None):
         elif crit in WEIGHT:
             if status == "NAO_CONFORME" and severity != crit:
                 err("%s: severity %s difere da criticality do item %s (%s)" % (ident, severity, ref, crit))
-            if status == "PARCIAL" and WEIGHT[severity] > WEIGHT[crit]:
-                err("%s: severity %s excede a criticality do item %s (%s)" % (ident, severity, ref, crit))
+            below = LEVELS[max(LEVELS.index(crit) - 1, 0)]
+            if status == "PARCIAL" and severity != below:
+                err("%s: item %s está PARCIAL, então a severity deve ser %s (um nível abaixo da criticality %s), não %s"
+                    % (ident, ref, below, crit, severity))
         for field in ("title", "problem", "lgpd_article", "evidence", "technical_impact", "legal_impact", "recommendation", "owner"):
             if not text_of(finding.get(field)):
                 err("%s: campo obrigatório ausente (%s)" % (ident, field))
@@ -241,8 +245,11 @@ def validate(data, weights, modules, catalog, md_text=None):
             err("%s: evidence_source inválido (%s)" % (ident, finding.get("evidence_source")))
         if finding.get("evidence_confidence") not in CONFIDENCE:
             err("%s: evidence_confidence inválida (%s)" % (ident, finding.get("evidence_confidence")))
-        if finding.get("deadline_suggestion") not in DEADLINE:
-            err("%s: deadline_suggestion inválido (%s)" % (ident, finding.get("deadline_suggestion")))
+        deadline = finding.get("deadline_suggestion")
+        if deadline not in DEADLINE:
+            err("%s: deadline_suggestion inválido (%s)" % (ident, deadline))
+        elif DEADLINE_ORDER.index(deadline) > DEADLINE_ORDER.index(MAX_DEADLINE[severity]):
+            err("%s: prazo %s é mais longo que o máximo para severidade %s (%s)" % (ident, deadline, severity, MAX_DEADLINE[severity]))
         if finding.get("effort") not in EFFORT:
             err("%s: effort inválido (%s)" % (ident, finding.get("effort")))
     for ident, item in by_id.items():

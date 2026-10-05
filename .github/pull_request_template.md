@@ -15,4 +15,5 @@ Closes #
 - [ ] Entrada adicionada em `## [Não lançado]` no `CHANGELOG.md`.
 - [ ] `README.md` e `README.en.md` em sincronia; data de sincronização atualizada nos dois, se a mudança é normativa.
 - [ ] Se mexi nos instaladores: `install.sh` e `install.ps1` alterados juntos e testes rodados (`scripts/tests/test-install.sh`, `scripts/tests/test-versions.sh` e, se possível, `scripts/tests/test-install.ps1`).
+- [ ] `scripts/tests/run-all.sh` passando na minha máquina.
 - [ ] Nenhum dado pessoal, segredo ou trecho de relatório confidencial no diff.

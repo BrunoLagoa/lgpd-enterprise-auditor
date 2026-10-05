@@ -42,7 +42,13 @@ O repositório distribui o mesmo auditor em duas formas, ambas atuais: a **skill
 
 ## Testes
 
-Rode a partir da raiz do clone:
+Rode a partir da raiz do clone. Um comando roda tudo o que o CI roda:
+
+```bash
+scripts/tests/run-all.sh
+```
+
+Ou cada suíte em separado:
 
 ```bash
 scripts/tests/test-framework.sh     # catálogo, paridade skill/framework, cenários, manifestos
