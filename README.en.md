@@ -53,18 +53,18 @@ One interactive command, run from the root of the project you want to audit. It 
 **macOS / Linux / WSL / Git Bash**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.sh | bash -s -- install
+curl -fsSL https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/latest/download/install.sh | bash -s -- install
 ```
 
 **Windows (PowerShell)**
 
 ```powershell
-powershell -ExecutionPolicy Bypass -Command "iwr https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.ps1 -OutFile $env:TEMP\lgpd-install.ps1; & $env:TEMP\lgpd-install.ps1 install"
+powershell -ExecutionPolicy Bypass -Command "iwr https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/latest/download/install.ps1 -OutFile $env:TEMP\lgpd-install.ps1; & $env:TEMP\lgpd-install.ps1 install"
 ```
 
 Prefer to read the script before running it? Download it (`curl -fsSL <url> -o install.sh`), review it, then run `bash install.sh install`.
 
-The installer uses the latest published version. If it cannot look it up (no network or GitHub API rate limit), it warns and does not install the `main` branch on its own: in interactive mode it asks first; with `--non-interactive` it stops and asks for `--version`.
+The commands above download the installer from the latest release, the same version of the framework it installs. The installer uses the latest published version. If it cannot look it up (no network or GitHub API rate limit), it warns and does not install the `main` branch on its own: in interactive mode it asks first; with `--non-interactive` it stops and asks for `--version`.
 
 **Checking integrity.** Releases from v1.6.0 onward publish `install.sh`, `install.ps1` and `SHA256SUMS`. To install an exact version and check the file before running it:
 
@@ -105,7 +105,7 @@ The framework (`.agents/lgpd-enterprise-auditor/`) is the same for every tool; o
 Scripted / CI use (no questions):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.sh \
+curl -fsSL https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/latest/download/install.sh \
   | bash -s -- install --non-interactive --target cursor --with-skill
 ```
 

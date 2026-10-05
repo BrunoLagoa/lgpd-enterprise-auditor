@@ -158,7 +158,7 @@ Opções:
   -h, --help              Exibe esta ajuda
 
 Exemplos:
-  curl -fsSL https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/scripts/install.sh | bash -s -- install
+  curl -fsSL https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/latest/download/install.sh | bash -s -- install
   ./scripts/install.sh install --target cursor --with-skill --project-dir ../meu-app
   ./scripts/install.sh update --non-interactive
   ./scripts/install.sh uninstall --target claude --non-interactive

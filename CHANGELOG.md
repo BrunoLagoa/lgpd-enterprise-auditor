@@ -6,6 +6,9 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+### Alterado
+- Comandos de instalação dos READMEs passam a baixar o instalador da última release (`releases/latest/download/`), e não mais da branch `main`: o script executado é o da mesma versão do framework que ele instala, e pode ser conferido com o `SHA256SUMS` da release.
+
 ## [1.6.0] - 2026-10-05
 
 ### Adicionado
