@@ -6,6 +6,8 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.8.1] - 2026-10-05
+
 ### Alterado
 - Relatório em HTML: o botão de tema passa a mostrar um ícone e o tema para o qual a página muda (lua e "tema escuro" no tema claro, sol e "tema claro" no escuro), no lugar do texto "tema".
 
@@ -204,7 +206,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.0...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.1...HEAD
+[1.8.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.1...v1.7.0
 [1.6.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.0...v1.6.1

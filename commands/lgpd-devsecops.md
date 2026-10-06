@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para pipelines DevSecOps.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.8.0"
+  version: "1.8.1"
 ---
 
 # LGPD DevSecOps Pipeline

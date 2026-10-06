@@ -59,7 +59,7 @@ Exemplo reduzido, só para mostrar a forma (dois itens de uma única área: 2 de
 
 ```json
 {
-  "meta": { "audited": "Exemplo Ltda.", "date": "2026-10-03", "command": "/lgpd-web", "scenario": "web_site", "framework_version": "1.8.0" },
+  "meta": { "audited": "Exemplo Ltda.", "date": "2026-10-03", "command": "/lgpd-web", "scenario": "web_site", "framework_version": "1.8.1" },
   "resumo_executivo": {
     "overview": "Score 40/100, `CRITICO`. O principal risco é o rastreamento sem consentimento (CK-02).",
     "actions": [

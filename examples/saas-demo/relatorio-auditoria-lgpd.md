@@ -10,7 +10,7 @@ CONFIDENCIAL — uso interno
 | Data da análise | 2026-10-03 |
 | Comando | `/lgpd-saas` |
 | Cenário | `saas_web` (escopo direcionado) |
-| Framework | LGPD Enterprise Auditor 1.8.0, base canônica `.agents/lgpd-enterprise-auditor/` |
+| Framework | LGPD Enterprise Auditor 1.8.1, base canônica `.agents/lgpd-enterprise-auditor/` |
 | Método | leitura estática dos arquivos do repositório; sem acesso ao ambiente de produção, aos painéis da Vercel, do banco e do GitHub, nem a contratos fora do repositório |
 
 ## Contexto e escopo
