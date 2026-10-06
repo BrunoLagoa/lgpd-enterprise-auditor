@@ -15,6 +15,8 @@ Em PaaS e hospedagem gerenciada:
 - `IN-09` avalia as regras de exposição que ficam com o cliente, como a lista de IPs e o acesso público do banco gerenciado, que só aparecem no painel (`NAO_VERIFICADO`); fica `NAO_APLICAVEL` só quando não há nenhum recurso de rede sob controle do cliente;
 - `IN-16` avalia a parte do cliente: a versão do runtime e das imagens que ele escolhe e o processo para atualizá-las. Runtime fora de suporte fixado no repositório é `NAO_CONFORME`; o sistema operacional e a plataforma são do provedor.
 
+`IN-08` trata só de armazenamento de objetos e de arquivos enviados: sem nenhum dos dois, fica `NAO_APLICAVEL`. A exposição de outros ativos é avaliada em `IN-09` (rede e banco) e em `IN-05` (painéis e tokens).
+
 ## Checklist atômico
 Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): avaliar todos, cada um com sua `applicability`.
 
@@ -27,7 +29,7 @@ Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): a
 | `IN-05` | As permissões de acesso ao provedor (IAM, membros do painel, tokens de deploy) seguem privilégio mínimo, com MFA? | 7 | `ALTO` | — | `TECNICO` | art. 46 |
 | `IN-06` | Analytics, logs de acesso e métricas nativos do provedor que coletam dados pessoais têm retenção, acesso e base legal definidos? | 7 | `MEDIO` | `ALTO` se a plataforma injetar rastreamento sem base legal | `TECNICO` | arts. 6º, III, 7º e 46 |
 | `IN-07` | Há firewall ou WAF, detecção de intrusão e monitoramento centralizado (SIEM ou equivalente) capazes de detectar acesso indevido a dados pessoais? | 7 | `MEDIO` | — | `TECNICO` | art. 46 |
-| `IN-08` | O armazenamento de objetos e os demais ativos estão livres de exposição pública indevida (ex.: buckets com dados pessoais)? | 7 | `CRITICO` | — | `TECNICO` | art. 46 |
+| `IN-08` | Os serviços de armazenamento de objetos (buckets) e de arquivos enviados por usuários estão livres de exposição pública indevida? | 7 | `CRITICO` | — | `TECNICO` | art. 46 |
 | `IN-09` | A segmentação de rede e as regras de exposição externa estão adequadas? | 7 | `MEDIO` | — | `TECNICO` | art. 46 |
 | `IN-10` | Backups e réplicas são criptografados, têm acesso restrito e seguem a política de retenção (a eliminação também os alcança)? | 7 | `ALTO` | — | `TECNICO` | arts. 16 e 46 |
 | `IN-11` | Os logs de auditoria da conta cloud ou do painel estão ativos e protegidos contra alteração? | 7 | `ALTO` | — | `TECNICO` | art. 46 |

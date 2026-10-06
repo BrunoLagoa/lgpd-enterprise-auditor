@@ -56,6 +56,9 @@ Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): a
 | `DT-09` | Correções, eliminações, anonimizações e bloqueios são comunicados aos agentes com quem os dados foram compartilhados? | 3 | `MEDIO` | — | `TECNICO` | art. 18, §6º |
 | `DT-10` | Há trilha auditável dos pedidos (data, tipo, resposta e confirmação da execução)? | 3 | `MEDIO` | — | `DOCUMENTAL` | arts. 6º, X e 18 |
 
+Dependências (contagem única de `core/scoring-engine.md`): com o segundo item `NAO_CONFORME`, o primeiro fica `NAO_APLICAVEL`.
+- `DT-09` depende de `DT-06`: não há correção ou eliminação a comunicar sem processo que as execute.
+
 ## Critérios de conformidade
 - canal de atendimento claro e funcional;
 - prazo de resposta definido e compatível com o art. 19;

@@ -17,7 +17,7 @@ O relatório mostra:
 
 - as 8 seções obrigatórias na ordem canônica, o glossário e o aviso legal;
 - a natureza e o papel do agente: pequeno porte com tratamento de alto risco (sem modulação de severidade), operador dos dados dos pacientes e controlador das contas das clínicas e do rastreamento que ele mesmo instalou;
-- o checklist com todos os itens do catálogo dos módulos ativos (108 no cenário `saas_web`), cada um com seu ID, evidências por arquivo e linha e nível de confiança, mais a tabela de itens fora do cálculo (`NAO_APLICAVEL` e `NAO_VERIFICADO`);
+- o checklist com todos os itens do catálogo dos módulos ativos (109 no cenário `saas_web`), cada um com seu ID, evidências por arquivo e linha e nível de confiança, mais a tabela de itens fora do cálculo (`NAO_APLICAVEL` e `NAO_VERIFICADO`);
 - o cálculo do score passo a passo (com `ai_llm`, `eca_digital` e `plataformas_digitais` como `NAO_APLICAVEL` e pesos ajustados), a cobertura por área, as verificações pendentes e os scores técnico e documental;
 - a marca de **escopo direcionado**, com os domínios que o cenário não auditou, e a regra do teto de classificação por achado crítico;
 - um registro de aceite de risco;

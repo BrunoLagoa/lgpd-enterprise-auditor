@@ -42,6 +42,11 @@ Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): a
 | `GV-16` | Existe política de segurança da informação aprovada e conhecida por quem trata dados pessoais? | 13 | `MEDIO` | — | `DOCUMENTAL` | arts. 46 e 50 |
 | `GV-17` | Há treinamento periódico de quem trata dados pessoais, com registro de participação? | 13 | `BAIXO` | — | `DOCUMENTAL` | arts. 41, §2º, III e 50 |
 
+Dependências (contagem única de `core/scoring-engine.md`): com o segundo item `NAO_CONFORME`, o primeiro fica `NAO_APLICAVEL`.
+- `GV-05` depende de `GV-02`: não há contato de encarregado a divulgar sem encarregado indicado.
+- `GV-10` depende de `GV-02`: não há autonomia de encarregado a avaliar sem encarregado indicado.
+- `GV-13` depende de `GV-12`: não há descarte a registrar enquanto nada é eliminado.
+
 Modelos de apoio: [[ropa-template]] (registro das operações), [[dpo-appointment-template]] (ato de indicação do encarregado), [[ripd-template]], [[retention-policy-template]], [[dpa-template]] e [[incident-response-template]].
 
 ## Critérios de evidência

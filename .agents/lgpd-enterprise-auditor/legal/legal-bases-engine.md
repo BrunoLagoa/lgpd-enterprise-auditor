@@ -41,14 +41,19 @@ Para o teste de balanceamento de `BL-03`, usar [[lia-template]].
 
 Como ler estes itens sem contar a mesma falha duas vezes:
 - `BL-02` avalia os tratamentos em que o auditado é controlador por decisão própria (contas, cobrança, uso do produto). O uso, para finalidade própria, de dados recebidos como operador é contado só em `OP-02`; `BL-02` o cita e pontua pelo que resta.
-- `BL-01` avalia base **indicada** que não serve para dado sensível. Sem nenhuma base indicada, a falta é de `BL-02` e `BL-01` fica `NAO_APLICAVEL` por dependência; sem dado sensível nos tratamentos próprios, também.
+- `BL-01` avalia base **indicada** que não serve para dado sensível. Sem dado sensível nos tratamentos próprios, fica `NAO_APLICAVEL`.
 - `BL-03` só se aplica quando o legítimo interesse é a base indicada.
+- `BL-04` avalia os dados que o auditado decide coletar. Nos fluxos em que ele é só operador, a escolha dos campos é do controlador: o item é avaliado pelos tratamentos próprios, e o excesso percebido no fluxo do controlador vai para as recomendações.
+
+Dependências (contagem única de `core/scoring-engine.md`): com o segundo item `NAO_CONFORME`, o primeiro fica `NAO_APLICAVEL`.
+- `BL-01` depende de `BL-02`: não há base incompatível a apontar sem nenhuma base indicada.
 
 | ID | Item | Domínio | Criticidade | Agravante ou atenuante | Controle | Fundamento |
 |---|---|---|---|---|---|---|
 | `BL-01` | O dado sensível é tratado só com hipótese do art. 11, sem legítimo interesse, execução de contrato ou proteção do crédito como base? | BL | `CRITICO` | — | `DOCUMENTAL` | art. 11 |
 | `BL-02` | Cada finalidade de tratamento está ligada a uma base legal do artigo aplicável (7º ou 11), comprovável por evidência técnica ou documental? | BL | `ALTO` | `CRITICO` se faltar base para dado sensível ou de crianças e adolescentes | `DOCUMENTAL` | arts. 7º e 11 |
 | `BL-03` | O uso de legítimo interesse tem justificativa formal e teste de balanceamento (LIA) documentados? | BL | `MEDIO` | — | `DOCUMENTAL` | arts. 7º, IX e 10 |
+| `BL-04` | Os dados coletados em cada formulário, cadastro ou integração se limitam ao necessário para a finalidade, sem campo obrigatório que ela não exija? | BL | `MEDIO` | `ALTO` se o excesso for de dado sensível ou de crianças e adolescentes | `TECNICO` | art. 6º, III |
 
 ## Papel do auditado: controlador ou operador
 Antes de exigir base legal, identificar o papel do auditado **em cada fluxo de dados** (art. 5º, VI e VII):

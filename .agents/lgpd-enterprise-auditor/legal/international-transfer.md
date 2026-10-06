@@ -43,6 +43,9 @@ Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): a
 | `TI-04` | O titular é informado sobre a transferência internacional na política de privacidade? | 14 | `ALTO` | — | `DOCUMENTAL` | arts. 9º e 33 |
 | `TI-05` | Dados sensíveis transferidos têm hipótese do art. 11 e proteção reforçada (criptografia, restrição de acesso)? | 14 | `ALTO` | — | `TECNICO` | arts. 11, 33 e 46 |
 
+Dependências (contagem única de `core/scoring-engine.md`): com o segundo item `NAO_CONFORME`, o primeiro fica `NAO_APLICAVEL`.
+- `TI-03` depende de `TI-02`: não há mecanismo cuja cobertura avaliar enquanto ele não estiver evidenciado.
+
 ## Mapeamento para severidade e score
 - Destino sem adequação e mecanismo do art. 33 **comprovadamente ausente** (contrato ou termos examinados, sem as CPC da Res. CD/ANPD nº 19/2024 nem outro mecanismo): `CRITICO`.
 - Mecanismo **não evidenciado** (contrato ou termos do provedor não localizados ou não examinados; termos padrão podem conter as cláusulas): `ALTO`, com evidência `AUSENTE`, até a verificação.

@@ -42,6 +42,7 @@ ROW = re.compile(r"^\| `([A-Z]{2,5}-\d{2,3})` \| (.*) \| (BL|\d+) \| `(\w+)` \| 
 DOMAIN = re.compile(r"^\| `(BL|\d+)` \| (.*) \| `(\w+)` \|$")
 AREA_WEIGHT = re.compile(r"^- `(\w+)`: (\d+)%$")
 MANIFEST_FILES = re.compile(r"^- `files`: (.*)$")
+DEPENDS = re.compile(r"^- `([A-Z]{2,5}-\d{2,3})` depende de `([A-Z]{2,5}-\d{2,3})`")
 
 
 def read(path):
@@ -60,7 +61,7 @@ def load_framework(root):
         if match:
             domains[match.group(1)] = match.group(3)
 
-    modules, catalog = {}, {}
+    modules, catalog, depends = {}, {}, []
     manifests = os.path.join(root, "orchestrator", "manifests")
     for name in sorted(os.listdir(manifests)):
         if not name.endswith(".manifest.md"):
@@ -73,6 +74,9 @@ def load_framework(root):
                 continue
             for rel in re.findall(r"`([^`]+)`", match.group(1)):
                 for row in read(os.path.join(root, rel)).splitlines():
+                    pair = DEPENDS.match(row)
+                    if pair:
+                        depends.append((pair.group(1), pair.group(2)))
                     item = ROW.match(row)
                     if not item:
                         continue
@@ -80,7 +84,7 @@ def load_framework(root):
                     catalog[item.group(1)] = {"module": module, "domain": item.group(3), "area": domains.get(item.group(3)),
                                               "criticality": item.group(4), "allowed": allowed, "control": item.group(6)}
                     modules[module].add(item.group(1))
-    return weights, domains, modules, catalog
+    return weights, domains, modules, catalog, depends
 
 
 def load_data(path):
@@ -116,7 +120,7 @@ def text_of(value):
     return "; ".join(str(v) for v in value) if isinstance(value, list) else ("" if value is None else str(value))
 
 
-def validate(data, weights, modules, catalog, md_text=None):
+def validate(data, weights, modules, catalog, md_text=None, depends=()):
     errors, warnings = [], []
     err, warn = errors.append, warnings.append
 
@@ -209,6 +213,12 @@ def validate(data, weights, modules, catalog, md_text=None):
                 err("%s: item do módulo %s, que não está em meta.modules" % (ident, entry["module"]))
     else:
         warn("meta.modules ausente: a presença de todos os itens do catálogo não foi conferida")
+
+    # Dependências do catálogo: com o item de que depende reprovado, o dependente sai do cálculo.
+    for dependent, target in depends:
+        if dependent in by_id and target in by_id and by_id[target].get("status") == "NAO_CONFORME" \
+                and by_id[dependent].get("applicability", "APLICAVEL") == "APLICAVEL":
+            err("%s: depende de %s, que está NAO_CONFORME; deve ficar NAO_APLICAVEL" % (dependent, target))
 
     # ── achados ──────────────────────────────────────────────────────────
     seen = {}
@@ -362,11 +372,11 @@ def main():
     parser.add_argument("--md")
     args = parser.parse_args()
 
-    weights, _domains, modules, catalog = load_framework(args.framework)
+    weights, _domains, modules, catalog, depends = load_framework(args.framework)
     if sum(weights.values()) != 100 or not catalog:
         sys.exit("Framework inválido em %s: pesos de área não somam 100 ou catálogo vazio." % args.framework)
     data = load_data(args.report)
-    errors, warnings, summary = validate(data, weights, modules, catalog, read(args.md) if args.md else None)
+    errors, warnings, summary = validate(data, weights, modules, catalog, read(args.md) if args.md else None, depends)
 
     print("Relatório: %s" % summary)
     for message in warnings:

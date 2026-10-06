@@ -6,6 +6,19 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.8.0] - 2026-10-05
+
+Quatro pontos que o terceiro teste de ponta a ponta ainda mostrou depender de julgamento (a v1.7.0 coincidiu com o exemplo em 104 dos 108 itens).
+
+### Adicionado
+- Item `BL-04`, de minimização (art. 6º, III): os dados coletados em cada formulário, cadastro ou integração se limitam ao necessário para a finalidade. Nos fluxos em que o auditado é só operador, a escolha dos campos é do controlador.
+- Lista fechada de dependências entre itens, escrita nos módulos no formato "`GV-05` depende de `GV-02`" e gerada para a skill junto com o catálogo. Com o item de que depende reprovado, o dependente fica `NAO_APLICAVEL`; fora da lista não há dependência. `scripts/validate-report.py` passa a conferir.
+
+### Alterado
+- Item com elementos verificáveis e elementos fora do alcance: se um verificável falha, vale a falha; se todos atendem, o item fica `NAO_VERIFICADO`, com o que já foi comprovado registrado. A v1.7.0 dava `CONFORME` com confiança `MEDIA` nesse caso, o que contradizia a regra de que todo `CONFORME` exige evidência `ENCONTRADA` e dava nota cheia a controle visto pela metade.
+- `IN-08` passa a tratar só de armazenamento de objetos e de arquivos enviados por usuários; a exposição de outros ativos é avaliada em `IN-09` e `IN-05`.
+- Relatório de exemplo (`examples/saas-demo`) refeito: 109 itens, score 20. A queda vem da regra do item misto: `IN-02`, `SE-09` e `DS-11` saem do cálculo como `NAO_VERIFICADO`, e a área `infraestrutura` fica com cobertura baixa.
+
 ## [1.7.0] - 2026-10-05
 
 Regras que dois testes de ponta a ponta mostraram depender de julgamento. Em cada teste, um agente sem contexto auditou o projeto de demonstração só com o que o instalador coloca nele. Com estas regras, duas auditorias sobre as mesmas evidências tendem ao mesmo status por item, e não só ao mesmo conjunto de itens.
@@ -188,7 +201,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.7.0...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.0...HEAD
+[1.8.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.1...v1.7.0
 [1.6.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.5.0...v1.6.0

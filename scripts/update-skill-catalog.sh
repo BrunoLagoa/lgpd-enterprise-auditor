@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Regera, na skill (SKILL.md), o catálogo de itens do checklist a partir das tabelas dos módulos
+# Regera, na skill (SKILL.md), o catálogo de itens do checklist e a lista de dependências a partir dos módulos
 # do framework. Os módulos são a fonte; o bloco entre os marcadores da skill nunca é editado à mão.
 # Uso: scripts/update-skill-catalog.sh [--check]
 #   --check  não grava: sai com 1 se a skill estiver desatualizada em relação aos módulos.
@@ -62,6 +62,8 @@ LC_ALL=C awk '
     if (!(c[4] in name)) { printf "Domínio desconhecido em %s: %s\n", c[2], c[4] > "/dev/stderr"; bad = 1 }
     rows[c[4]] = rows[c[4]] "| " c[2] " | " c[3] " | " c[5] " | " c[6] " | " c[7] " | " c[8] " |\n"
   }
+  # Dependências entre itens, para a contagem única: "- `GV-05` depende de `GV-02`: motivo".
+  /^- `[A-Z][A-Z]+-[0-9]+` depende de `[A-Z][A-Z]+-[0-9]+`/ { deps = deps $0 "\n" }
   END {
     if (bad) exit 1
     for (i = 1; i <= total; i++) {
@@ -71,6 +73,11 @@ LC_ALL=C awk '
       print "| ID | Item | Criticidade | Agravante ou atenuante | Controle | Fundamento |"
       print "|---|---|---|---|---|---|"
       printf "%s\n", rows[code]
+    }
+    if (deps != "") {
+      print "## Dependências entre itens\n"
+      print "Com o segundo item `NAO_CONFORME`, o primeiro fica `NAO_APLICAVEL`. A lista é fechada: fora dela, cada item é avaliado pelo próprio requisito.\n"
+      printf "%s\n", deps
     }
   }
 ' "${sources[@]}" > "${TMP_DIR}/catalog.md"

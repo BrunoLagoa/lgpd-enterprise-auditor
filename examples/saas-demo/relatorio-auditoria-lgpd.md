@@ -10,7 +10,7 @@ CONFIDENCIAL — uso interno
 | Data da análise | 2026-10-03 |
 | Comando | `/lgpd-saas` |
 | Cenário | `saas_web` (escopo direcionado) |
-| Framework | LGPD Enterprise Auditor 1.7.0, base canônica `.agents/lgpd-enterprise-auditor/` |
+| Framework | LGPD Enterprise Auditor 1.8.0, base canônica `.agents/lgpd-enterprise-auditor/` |
 | Método | leitura estática dos arquivos do repositório; sem acesso ao ambiente de produção, aos painéis da Vercel, do banco e do GitHub, nem a contratos fora do repositório |
 
 ## Contexto e escopo
@@ -84,6 +84,7 @@ Hoje nenhum documento registra essa divisão (ver OP-01).
   - `NAO_APLICAVEL`: o objeto não existe no projeto, com evidência da inexistência, ou a obrigação é de outro agente (aqui, das clínicas controladoras).
   - `NAO_VERIFICADO`: controle técnico que só pode ser conferido na produção ou no painel de um provedor. Gera uma verificação pendente.
   - Documento que deveria existir e não foi apresentado é `AUSENTE` e reduz o score; nunca é `NAO_VERIFICADO`.
+  - Item com elementos verificáveis e elementos fora do alcance: se um verificável falha, vale a falha; se todos atendem, o item fica `NAO_VERIFICADO`, com o que já foi comprovado registrado (casos de IN-02, SE-09 e DS-11). `CONFORME` exige tudo comprovado.
 - **Achados** (`core/auditor-core.md`): todo item `NAO_CONFORME` ou `PARCIAL` gera um achado em `nao_conformidades`.
   - No `NAO_CONFORME`, a severidade do achado é a `criticality` do item.
   - No `PARCIAL`, a severidade é um nível abaixo da `criticality`.
@@ -94,13 +95,13 @@ Hoje nenhum documento registra essa divisão (ver OP-01).
   - A falta de limitação de tentativas no login reprova só AP-03; SE-04 a cita.
   - A falta de contrato com as clínicas reprova só OP-01; BL-02 e GV-01 a citam.
   - A falta de processo de incidentes reprova OP-04 (aviso às clínicas) e GV-08 (comunicação à ANPD e aos titulares nos dados próprios): são dois requisitos, cada um inteiro sem atendimento.
-  - Itens que dependem de um controle inexistente ficam `NAO_APLICAVEL`, com a referência ao item que conta a falha: GV-05 e GV-10 (dependem do encarregado, GV-02), GV-13 (depende da eliminação, GV-12) e BL-01 (depende de haver base indicada, BL-02). Há dependência quando o item não poderia ser atendido enquanto o outro controle continuar ausente.
+  - Itens que dependem de um controle inexistente ficam `NAO_APLICAVEL`, com a referência ao item que conta a falha: GV-05 e GV-10 (dependem de GV-02), GV-13 (depende de GV-12), BL-01 (depende de BL-02), DT-09 (depende de DT-06) e TI-03 (depende de TI-02). As dependências são só as que o catálogo lista.
 - **Evidência:** formato `GRAU (ORIGEM), confiança NIVEL: descrição`, com caminho e linha dos arquivos do projeto; várias evidências são separadas por ponto e vírgula. Confiança, pela escala de `core/evidence-engine.md`:
   - `ALTA`: prova direta e rastreável do que o item exige;
   - `MEDIA`: prova direta de um lado só (por exemplo, o código sem confirmação em produção, ou a ausência constatada no repositório e declarada pela fundadora);
   - `BAIXA`: prova indireta ou incompleta.
 - **Prazos:** `IMEDIATO` significa até 7 dias. `IMEDIATO` e `30_DIAS` entram no curto prazo, `90_DIAS` no médio e `180_DIAS` no longo.
-- **Itens do checklist:** são os do catálogo dos módulos ativos (`core/scoring-engine.md`, "Catálogo de itens"), todos avaliados: 108 itens. O ID, o texto, a área, a `criticality` e o `control_type` vêm do catálogo; quando a `criticality` usa o agravante da linha do item, a evidência diz qual. Prefixos: `BL` bases legais, `OP` obrigações de operador, `DP` dados de acesso público, `CS` consentimento, `CA` crianças e adolescentes, `CK` cookies, `SE` segurança, `DS` DevSecOps, `DT` direitos do titular e transparência, `GV` governança, `TI` transferência internacional, `IN` infraestrutura, `AP` APIs e integrações.
+- **Itens do checklist:** são os do catálogo dos módulos ativos (`core/scoring-engine.md`, "Catálogo de itens"), todos avaliados: 109 itens. O ID, o texto, a área, a `criticality` e o `control_type` vêm do catálogo; quando a `criticality` usa o agravante da linha do item, a evidência diz qual. Prefixos: `BL` bases legais, `OP` obrigações de operador, `DP` dados de acesso público, `CS` consentimento, `CA` crianças e adolescentes, `CK` cookies, `SE` segurança, `DS` DevSecOps, `DT` direitos do titular e transparência, `GV` governança, `TI` transferência internacional, `IN` infraestrutura, `AP` APIs e integrações.
 
 ---
 
@@ -108,13 +109,13 @@ Hoje nenhum documento registra essa divisão (ver OP-01).
 
 ### Nível geral de conformidade
 
-**Score LGPD: 25/100. Classificação: `CRITICO`, com escopo direcionado (cenário `saas_web`).** Cobertura da análise: 86,8% (66 de 76 itens verificáveis), acima do mínimo de 80%; o score não é parcial.
+**Score LGPD: 20/100. Classificação: `CRITICO`, com escopo direcionado (cenário `saas_web`).** Cobertura da análise: 82,9% (63 de 76 itens verificáveis), acima do mínimo de 80%; o score não é parcial.
 
 O AgendaFácil tem pontos técnicos bem feitos (senhas com bcrypt, HTTPS, consultas parametrizadas, segredos fora do código). Três problemas puxam o resultado para baixo:
 
 1. **A AgendaFácil usa dados de pacientes para fim próprio.** Ela é operadora das clínicas, mas instalou um pixel de publicidade na página em que os pacientes marcam consulta. É um dos dois achados `CRITICO`.
 2. **A rota pública de agendamento expõe pacientes.** Quem souber o CPF de um paciente consegue, sem login, ver o nome e a data de nascimento dele e trocar o telefone e o e-mail cadastrados. É o outro achado `CRITICO`.
-3. **Quase nenhum documento existe.** Não há contrato com as clínicas nem com os provedores, registro das operações, encarregado, processo de incidentes ou aviso de privacidade publicado. O score documental é 3,7; o técnico, 34,5.
+3. **Quase nenhum documento existe.** Não há contrato com as clínicas nem com os provedores, registro das operações, encarregado, processo de incidentes ou aviso de privacidade publicado. O score documental é 3,8; o técnico, 29,6.
 
 Como o produto trata **dados de saúde**, nenhuma severidade pôde ser reduzida pelo porte da empresa. Por outro lado, o papel de operadora tira da AgendaFácil obrigações que são das clínicas: a base legal dos dados dos pacientes, o consentimento, a política dirigida a eles e o canal de direitos ficaram fora do cálculo. O teto de classificação por achado crítico não muda nada aqui, porque o score já está na faixa `CRITICO`.
 
@@ -126,10 +127,10 @@ As cinco ações abaixo custam pouco e atacam os riscos mais graves. Três delas
 |---|---|---|
 | `CRITICO` | 2 | OP-02, SE-03 |
 | `ALTO` | 24 | BL-02, CK-02, SE-04, SE-06, SE-07, DS-02, DS-08, DT-01, DT-03, OP-01, OP-03, OP-04, GV-01, GV-02, GV-03, GV-06, GV-08, GV-09, TI-02, TI-04, TI-05, IN-01, AP-01, AP-02 |
-| `MEDIO` | 23 | CK-03, CK-04, CK-05, CK-06, CK-07, DS-07, DS-09, DT-02, DT-04, DT-06, DT-07, DT-10, OP-06, GV-04, GV-12, GV-14, GV-15, GV-16, TI-01, TI-03, IN-16, AP-03, AP-05 |
+| `MEDIO` | 22 | CK-03, CK-04, CK-05, CK-06, CK-07, DS-07, DS-09, DT-02, DT-04, DT-06, DT-07, DT-10, OP-06, GV-04, GV-12, GV-14, GV-15, GV-16, TI-01, IN-16, AP-03, AP-05 |
 | `BAIXO` | 6 | SE-10, DS-03, DT-05, OP-05, GV-17, IN-15 |
 
-Dos 108 itens do catálogo avaliados, 66 são `APLICAVEL` (11 `CONFORME`, 4 `PARCIAL` e 51 `NAO_CONFORME`), 32 são `NAO_APLICAVEL` e 10 são `NAO_VERIFICADO`.
+Dos 109 itens do catálogo avaliados, 63 são `APLICAVEL` (9 `CONFORME`, 4 `PARCIAL` e 50 `NAO_CONFORME`), 33 são `NAO_APLICAVEL` e 13 são `NAO_VERIFICADO`.
 
 ### O que fazer agora
 
@@ -147,7 +148,7 @@ Nenhum risco `CRITICO` foi aceito. Há um risco `ALTO` aceito (GV-03, RIPD do ra
 
 ### Pontos fortes
 
-Senhas com bcrypt (SE-01), HTTPS com HSTS (SE-02), consultas parametrizadas e saída escapada (SE-05), segredos do pipeline em secrets do CI (DS-01), segredos fora do repositório (IN-02), TLS com o banco (AP-04), nenhuma chave no código nem no front-end (AP-06), sede e contato no País publicados (GV-07) e banner com botão "Rejeitar" tão visível quanto "Aceitar" (CK-01). Os dados em repouso ficam no Brasil (`sa-east-1`).
+Senhas com bcrypt (SE-01), HTTPS com HSTS (SE-02), consultas parametrizadas e saída escapada (SE-05), segredos do pipeline em secrets do CI (DS-01), TLS com o banco (AP-04), nenhuma chave no código nem no front-end (AP-06), sede e contato no País publicados (GV-07) e banner com botão "Rejeitar" tão visível quanto "Aceitar" (CK-01). Os dados em repouso ficam no Brasil (`sa-east-1`).
 
 ---
 
@@ -157,13 +158,13 @@ Senhas com bcrypt (SE-01), HTTPS com HSTS (SE-02), consultas parametrizadas e sa
 
 | Indicador | Valor |
 |---|---|
-| **Score global** | **25/100** |
+| **Score global** | **20/100** |
 | **Classificação final** | **`CRITICO`** (faixa 0-49) |
 | Marcas da classificação | **escopo direcionado** (cenário `saas_web`): a classificação vale para o que o cenário auditou. O teto por achado crítico (OP-02, SE-03) não altera a classificação, que já está na faixa `CRITICO` |
 | Domínios fora do escopo | 8. Mobile security: não há aplicativo móvel; 12. IA/LLM: não há IA no produto; 16. ECA Digital: sem indício de público infantojuvenil; 17. Plataformas digitais: sem conteúdo de terceiros, anúncios pagos nem IA que gere imagem ou voz |
-| Cobertura global | 86,8% (66 itens com status ÷ 76 verificáveis); acima de 80%, o score **não** é parcial |
-| `score_tecnico` (informativo) | 34,5 |
-| `score_documental` (informativo) | 3,7 |
+| Cobertura global | 82,9% (63 itens com status ÷ 76 verificáveis); acima de 80%, o score **não** é parcial |
+| `score_tecnico` (informativo) | 29,6 |
+| `score_documental` (informativo) | 3,8 |
 | Natureza do agente | pessoa jurídica com fins econômicos, de pequeno porte, com tratamento de alto risco (dados de saúde) |
 | Papel do agente | operadora dos dados dos pacientes; controladora das contas das clínicas e do rastreamento para fins próprios |
 | Modulação de severidade | nenhuma: a condição "sem tratamento de alto risco" de `core/severity-model.md` não é atendida |
@@ -191,30 +192,30 @@ Senhas com bcrypt (SE-01), HTTPS com HSTS (SE-02), consultas parametrizadas e sa
 
 | Área | Itens com status | Σ(valor × peso) | Σ(peso) | `score_area` | Peso original | Peso ajustado | `NAO_VERIFICADO` | Cobertura | `NAO_APLICAVEL` |
 |---|---|---|---|---|---|---|---|---|---|
-| `bases_legais` | 9 | 3,5 | 23 | 15,2 | 12% | 16,67% | 0 | 100% | 19 |
-| `seguranca` | 16 | 20,0 | 45 | 44,4 | 20% | 27,78% | 1 | 94,1% | 4 |
+| `bases_legais` | 10 | 5,5 | 25 | 22,0 | 12% | 16,67% | 0 | 100% | 19 |
+| `seguranca` | 14 | 15,0 | 40 | 37,5 | 20% | 27,78% | 3 | 82,4% | 4 |
 | `direitos_titular` | 8 | 0,5 | 17 | 2,9 | 12% | 16,67% | 0 | 100% | 2 |
-| `governanca` | 23 | 3,0 | 57 | 5,3 | 12% | 16,67% | 0 | 100% | 5 |
-| `infraestrutura` | 4 | 4,0 | 10 | 40,0 | 8% | 11,11% | 9 | 30,8% | 2 |
+| `governanca` | 22 | 3,0 | 55 | 5,5 | 12% | 16,67% | 0 | 100% | 6 |
+| `infraestrutura` | 3 | 0,0 | 6 | 0,0 | 8% | 11,11% | 10 | 23,1% | 2 |
 | `apis_integracoes` | 6 | 6,0 | 16 | 37,5 | 8% | 11,11% | 0 | 100% | 0 |
 | `ai_llm` | — | — | — | `NAO_APLICAVEL` | 8% | — | — | — | — |
 | `eca_digital` | — | — | — | `NAO_APLICAVEL` | 10% | — | — | — | — |
 | `plataformas_digitais` | — | — | — | `NAO_APLICAVEL` | 10% | — | — | — | — |
-| **Total** | **66** | **37,0** | **168** | | **100%** | **100%** | **10** | **86,8%** | **32** |
+| **Total** | **63** | **30,0** | **159** | | **100%** | **100%** | **13** | **82,9%** | **33** |
 
-**Score global = 25** (valor exato 24,860…, arredondado para o inteiro mais próximo).
+**Score global = 20** (valor exato 19,649…, arredondado para o inteiro mais próximo).
 
-Cobertura = itens com status ÷ (itens com status + itens `NAO_VERIFICADO`). A área `infraestrutura` recebe a marca **cobertura baixa** (30,8%, abaixo de 50%): seu score (40,0) se apoia em só 4 dos 13 itens verificáveis e deve ser lido com cautela até as verificações pendentes serem feitas.
+Cobertura = itens com status ÷ (itens com status + itens `NAO_VERIFICADO`). A área `infraestrutura` recebe a marca **cobertura baixa** (23,1%, abaixo de 50%): seu score (0,0) se apoia em só 3 dos 13 itens verificáveis e deve ser lido com cautela até as verificações pendentes serem feitas.
 
 **Memória de cálculo** (valor × peso de cada item, na ordem do checklist; frações exatas):
 
-- `bases_legais`: BL-02 0×3 + OP-02 0×4 + CK-01 1×2 + CK-02 0×3 + CK-03 0,5×3 + CK-04 0×2 + CK-05 0×2 + CK-06 0×2 + CK-07 0×2 = **3,5 / 23**
-- `seguranca`: SE-01 1×4 + SE-02 1×3 + SE-03 0×4 + SE-04 0×3 + SE-05 1×3 + SE-06 0×3 + SE-07 0×3 + SE-09 1×2 + SE-10 0,5×2 + DS-01 1×4 + DS-02 0×3 + DS-03 0×1 + DS-07 0×2 + DS-08 0×3 + DS-09 0×2 + DS-11 1×3 = **20 / 45**
+- `bases_legais`: BL-02 0×3 + BL-04 1×2 + OP-02 0×4 + CK-01 1×2 + CK-02 0×3 + CK-03 0,5×3 + CK-04 0×2 + CK-05 0×2 + CK-06 0×2 + CK-07 0×2 = **5,5 / 25**
+- `seguranca`: SE-01 1×4 + SE-02 1×3 + SE-03 0×4 + SE-04 0×3 + SE-05 1×3 + SE-06 0×3 + SE-07 0×3 + SE-10 0,5×2 + DS-01 1×4 + DS-02 0×3 + DS-03 0×1 + DS-07 0×2 + DS-08 0×3 + DS-09 0×2 = **15 / 40**
 - `direitos_titular`: DT-01 0×3 + DT-02 0×2 + DT-03 0×3 + DT-04 0×2 + DT-05 0,5×1 + DT-06 0×2 + DT-07 0×2 + DT-10 0×2 = **0,5 / 17**
-- `governanca`: OP-01 0×3 + OP-03 0×3 + OP-04 0×3 + OP-05 0,5×2 + OP-06 0×2 + GV-01 0×3 + GV-02 0×3 + GV-03 0×3 + GV-04 0×2 + GV-06 0×3 + GV-07 1×2 + GV-08 0×3 + GV-09 0×3 + GV-12 0×2 + GV-14 0×2 + GV-15 0×2 + GV-16 0×2 + GV-17 0×1 + TI-01 0×2 + TI-02 0×3 + TI-03 0×2 + TI-04 0×3 + TI-05 0×3 = **3 / 57**
-- `infraestrutura`: IN-01 0×3 + IN-02 1×4 + IN-15 0×1 + IN-16 0×2 = **4 / 10**
+- `governanca`: OP-01 0×3 + OP-03 0×3 + OP-04 0×3 + OP-05 0,5×2 + OP-06 0×2 + GV-01 0×3 + GV-02 0×3 + GV-03 0×3 + GV-04 0×2 + GV-06 0×3 + GV-07 1×2 + GV-08 0×3 + GV-09 0×3 + GV-12 0×2 + GV-14 0×2 + GV-15 0×2 + GV-16 0×2 + GV-17 0×1 + TI-01 0×2 + TI-02 0×3 + TI-04 0×3 + TI-05 0×3 = **3 / 55**
+- `infraestrutura`: IN-01 0×3 + IN-15 0×1 + IN-16 0×2 = **0 / 6**
 - `apis_integracoes`: AP-01 0×3 + AP-02 0×3 + AP-03 0×2 + AP-04 1×3 + AP-05 0×2 + AP-06 1×3 = **6 / 16**
-- **Global:** [12 × (350/23) + 20 × (2000/45) + 12 × (50/17) + 12 × (300/57) + 8 × (400/10) + 8 × (600/16)] / 72 = 1789,95 / 72 = 24,860… → **25 → `CRITICO`**
+- **Global:** [12 × (550/25) + 20 × (1500/40) + 12 × (50/17) + 12 × (300/55) + 8 × (0/6) + 8 × (600/16)] / 72 = 1414,75 / 72 = 19,649… → **20 → `CRITICO`**
 
 As seis áreas aplicáveis somam 72%. Cada peso foi dividido por 0,72: `peso_ajustado_area = peso_area / 0,72`.
 
@@ -224,10 +225,10 @@ Mesma fórmula, aplicada a todos os itens `APLICAVEL` de cada `control_type`. N�
 
 | Subtotal | Itens | Σ(valor × peso) | Σ(peso) | Score |
 |---|---|---|---|---|
-| `score_tecnico` (`TECNICO`) | 37 | 34,5 | 100 | **34,5** |
-| `score_documental` (`DOCUMENTAL`) | 29 | 2,5 | 68 | **3,7** |
+| `score_tecnico` (`TECNICO`) | 35 | 27,5 | 93 | **29,6** |
+| `score_documental` (`DOCUMENTAL`) | 28 | 2,5 | 66 | **3,8** |
 
-Itens `DOCUMENTAL`: BL-02, CK-07, DT-01, DT-02, DT-03, DT-04, DT-05, DT-07, DT-10, OP-01, OP-03, OP-04, GV-01, GV-02, GV-03, GV-04, GV-07, GV-08, GV-09, GV-14, GV-15, GV-16, GV-17, TI-01, TI-02, TI-03, TI-04, IN-15, AP-05. Todos os demais são `TECNICO`. Leitura: o código tem falhas pontuais e corrigíveis, mas a lacuna maior é documental. Quase nada do que a LGPD pede por escrito existe hoje.
+Itens `DOCUMENTAL`: BL-02, CK-07, DT-01, DT-02, DT-03, DT-04, DT-05, DT-07, DT-10, OP-01, OP-03, OP-04, GV-01, GV-02, GV-03, GV-04, GV-07, GV-08, GV-09, GV-14, GV-15, GV-16, GV-17, TI-01, TI-02, TI-04, IN-15, AP-05. Todos os demais são `TECNICO`. Leitura: o código tem falhas pontuais e corrigíveis, mas a lacuna maior é documental. Quase nada do que a LGPD pede por escrito existe hoje.
 
 ### Verificações pendentes que podem alterar o score
 
@@ -235,7 +236,10 @@ Itens `DOCUMENTAL`: BL-02, CK-07, DT-01, DT-02, DT-03, DT-04, DT-05, DT-07, DT-1
 
 | Item | O que falta conferir | Justificativa e acesso necessário |
 |---|---|---|
+| SE-09 | Há segregação de ambientes (produção, homologação, desenvolvimento) e de funções de quem acessa dados pessoais? (`criticality` `MEDIO`) | Verificado: as funções são segregadas por papel (`api/index.js:40-41`, `db/schema.sql:16`) e as credenciais de cada ambiente vêm de variáveis (`src/db.js:4`, `.env.example:1-9`). Fora do alcance: se produção, preview e desenvolvimento têm banco e variáveis próprios, o que só aparece nos painéis. Acesso necessário: painéis da Vercel e do banco |
 | DS-10 | A branch de produção é protegida, com revisão obrigatória antes do deploy? (`criticality` `MEDIO`) | A proteção da branch `main` e a revisão obrigatória são configurações do repositório no GitHub; o código só mostra que todo push na `main` vai para produção (`.github/workflows/ci.yml:20-26`). Acesso necessário: configurações do repositório no GitHub |
+| DS-11 | Ambientes de teste, homologação e CI usam dados sintéticos ou mascarados, sem cópia de dados pessoais reais de produção? (`criticality` `ALTO`) | Verificado: o CI não usa banco de dados (`.github/workflows/ci.yml:9-18`), o repositório não traz cópia de dados de produção e o `README.md:33` orienta o uso de dados fictícios. Fora do alcance: qual banco os deploys de preview usam, definido no painel. Acesso necessário: variáveis de ambiente por ambiente no painel da Vercel |
+| IN-02 | Variáveis de ambiente e segredos ficam no cofre do provedor, fora do repositório e de builds ou previews públicos? (`criticality` `CRITICO`) | Verificado: o `.gitignore` exclui o `.env` (`.gitignore:2-4`), o código lê os segredos de variáveis de ambiente (`src/auth.js:26`, `src/db.js:4`) e nenhuma credencial aparece nos arquivos do repositório. Fora do alcance: se as variáveis estão no cofre da Vercel e fora de builds e previews públicos. Acesso necessário: painel da Vercel |
 | IN-03 | Bancos de dados com dados pessoais têm criptografia em repouso, controle de acesso e segregação? (`criticality` `ALTO`) | Configuração visível só no painel do provedor do Postgres. O repositório mostra apenas a região e o TLS (`.env.example:5-6`, `src/db.js:5`). Acesso necessário: painel do provedor do banco. Backups e réplicas são avaliados em IN-10 |
 | IN-04 | Provedor de aplicações de internet: os registros de acesso (IP, porta lógica de origem, data e hora) são guardados por 6 meses e eliminados após o prazo, salvo requisição cautelar? (`criticality` `MEDIO`) | A retenção e a exportação dos logs são configuradas no painel da Vercel, não no `vercel.json`. O código não mantém guarda própria. Acesso necessário: painel da Vercel |
 | IN-05 | As permissões de acesso ao provedor (IAM, membros do painel, tokens de deploy) seguem privilégio mínimo, com MFA? (`criticality` `ALTO`) | Membros, papéis e MFA só aparecem nos painéis. Acesso necessário: painéis da Vercel, do banco e do GitHub |
@@ -250,7 +254,7 @@ Itens `DOCUMENTAL`: BL-02, CK-07, DT-01, DT-02, DT-03, DT-04, DT-05, DT-07, DT-1
 
 | Item | Situação atual | O que pode mudar | Verificação |
 |---|---|---|---|
-| TI-02 | `NAO_CONFORME`, `ALTO` (peso 3): mecanismo de transferência não evidenciado; confiança `BAIXA` | Sobe para `CRITICO` (peso 4) se os termos não tiverem CPC nem outro mecanismo; passa a `CONFORME` se as CPC estiverem incorporadas. A mesma verificação resolve TI-03 | Examinar os termos da Meta, da Vercel e do provedor do banco |
+| TI-02 | `NAO_CONFORME`, `ALTO` (peso 3): mecanismo de transferência não evidenciado; confiança `BAIXA` | Sobe para `CRITICO` (peso 4) se os termos não tiverem CPC nem outro mecanismo; passa a `CONFORME` se as CPC estiverem incorporadas. Com o mecanismo evidenciado, TI-03 deixa de ser `NAO_APLICAVEL` e passa a ser avaliado | Examinar os termos da Meta, da Vercel e do provedor do banco |
 | GV-09 | `NAO_CONFORME`, `ALTO`: contratos com os provedores não evidenciados; confiança `BAIXA` | Passa a `PARCIAL` ou `CONFORME` se os termos padrão já trouxerem DPA | Reunir os DPAs e os termos aceitos no cadastro |
 | DS-02 | `NAO_CONFORME`, `ALTO`: sem varredura no pipeline; confiança `MEDIA` | Passa a `PARCIAL` se os alertas do Dependabot estiverem ligados nas configurações do repositório | Configurações de segurança do GitHub |
 | DS-08 | `NAO_CONFORME`, `ALTO`: sem varredura de segredos no pipeline; confiança `MEDIA` | Passa a `PARCIAL` ou `CONFORME` se a proteção contra segredos do GitHub estiver ligada | Configurações de segurança do GitHub |
@@ -260,12 +264,10 @@ Itens `DOCUMENTAL`: BL-02, CK-07, DT-01, DT-02, DT-03, DT-04, DT-05, DT-07, DT-1
 | DT-03 | `NAO_CONFORME`, `ALTO`: página da política ausente do deploy; confiança `MEDIA` | Passa a `PARCIAL` se a página existir em produção por outro meio | `curl -I https://<domínio>/privacidade` |
 | SE-02 | `CONFORME`, confiança `MEDIA`: HSTS comprovado no código da API | Passa a `PARCIAL` se as páginas estáticas não receberem HSTS | `curl -I` na página em produção |
 | OP-02 | `NAO_CONFORME`, `CRITICO`; confiança `MEDIA` | Não muda a severidade; mostra a extensão do que a Meta recebe (por exemplo, campos do formulário pela correspondência avançada automática) | Captura de rede (HAR) antes e depois do aceite; configuração do pixel no Gerenciador de Eventos da Meta |
-| SE-09 | `CONFORME`, confiança `MEDIA`: segregação de funções comprovada no código | Passa a `PARCIAL` se produção, preview e desenvolvimento compartilharem banco ou variáveis | Painéis da Vercel e do provedor do banco |
-| DS-11 | `CONFORME`, confiança `MEDIA`: CI sem banco e orientação de dados fictícios | Passa a `NAO_CONFORME` se os deploys de preview usarem o banco de produção | Variáveis de ambiente por ambiente no painel da Vercel |
 
 ### Efeito do risco aceito
 
-O item GV-03 (RIPD) tem aceite de risco registrado e continua `NAO_CONFORME`, com valor 0 e peso 3 em `governanca`. Com ou sem o aceite, `governanca` = 3 / 57 = 5,3 e o score global = 25. Aceitar um risco não torna o item conforme, e não afasta o teto de classificação.
+O item GV-03 (RIPD) tem aceite de risco registrado e continua `NAO_CONFORME`, com valor 0 e peso 3 em `governanca`. Com ou sem o aceite, `governanca` = 3 / 55 = 5,5 e o score global = 20. Aceitar um risco não torna o item conforme, e não afasta o teto de classificação.
 
 ---
 
@@ -278,6 +280,7 @@ O checklist traz todos os itens do catálogo dos módulos ativos. As tabelas por
 | Item | Área | Status | Evidência | Impacto | Recomendação |
 |---|---|---|---|---|---|
 | **BL-02** · `ALTO` · `DOCUMENTAL` — Cada finalidade de tratamento está ligada a uma base legal do artigo aplicável (7º ou 11), comprovável por evidência técnica ou documental? | `bases_legais` | `NAO_CONFORME` | `AUSENTE (DOCUMENTAL)`, confiança `ALTA`: nenhum documento indica a base legal dos tratamentos próprios (contas dos usuários das clínicas): o rascunho da política não traz base por finalidade (`docs/lgpd/politica-de-privacidade.md:22-26`), não há registro das operações e a fundadora confirmou que não existem outros documentos. A relação contratual que sustentaria o art. 7º, V, só aparece de forma indireta (`README.md:16`; `db/schema.sql:11-18`). O objeto do item são dados cadastrais, não sensíveis: a `criticality` fica em `ALTO`. A falta de termos com as clínicas é contada em OP-01 | Base legal não demonstrável numa fiscalização | Nomear a base de cada tratamento próprio no registro e no aviso de privacidade |
+| **BL-04** · `MEDIO` · `TECNICO` — Os dados coletados em cada formulário, cadastro ou integração se limitam ao necessário para a finalidade, sem campo obrigatório que ela não exija? | `bases_legais` | `CONFORME` | `ENCONTRADA (TECNICA)`, confiança `ALTA`: nos tratamentos próprios, a coleta é mínima: a conta do usuário da clínica guarda só e-mail, hash da senha e papel (`db/schema.sql:11-18`), e o login pede só e-mail e senha (`src/auth.js:11-16`). Os campos do formulário de agendamento, com CPF e data de nascimento obrigatórios (`public/index.html:29-35`), são do fluxo em que as clínicas são controladoras: a revisão deles vai para as recomendações. O rastreamento pelo pixel é contado em OP-02 e CK-02 | — | Manter; sugerir às clínicas rever a obrigatoriedade do CPF e da data de nascimento no agendamento |
 | **OP-02** · `CRITICO` · `TECNICO` — O tratamento se limita às instruções documentadas do controlador, sem uso dos dados para finalidade própria? | `bases_legais` | `NAO_CONFORME` | `AUSENTE (TECNICA + DOCUMENTAL)`, confiança `MEDIA`: o Meta Pixel da própria AgendaFácil ("campanhas de aquisição", `public/index.html:7-15`; `README.md:24`) registra a visita à página da clínica e o evento de agendamento (`public/js/agendar.js:23`); nenhuma instrução ou autorização das clínicas documentada; sem captura de rede em produção | Operadora usa dados dos pacientes para publicidade própria; a visita e o agendamento revelam busca por atendimento de saúde (art. 11, §1º) | Remover o pixel da página de agendamento |
 | **CK-01** · `MEDIO` · `TECNICO` — Rejeitar está disponível na primeira camada do banner, com o mesmo destaque de aceitar? | `bases_legais` | `CONFORME` | `ENCONTRADA (TECNICA)`, confiança `ALTA`: botões lado a lado, com o mesmo elemento e o mesmo estilo (`public/index.html:41-45` e `:22`); ambos gravam a escolha (`public/js/consent.js:24-25`) | — | Manter |
 | **CK-02** · `ALTO` · `TECNICO` — Cookies e scripts não essenciais ficam bloqueados até o aceite, sem requisições a terceiros de analytics ou publicidade antes do consentimento — salvo outra base legal documentada (ex.: legítimo interesse com LIA para medição estritamente agregada)? | `bases_legais` | `NAO_CONFORME` | `AUSENTE (TECNICA)`, confiança `ALTA`: `public/index.html:8-15` carrega `fbevents.js` e dispara `PageView` no `<head>`, antes de `consent.js` rodar (`public/index.html:53`); nenhuma outra base legal documentada | Rastreamento sem consentimento válido, inclusive de quem clica em "Rejeitar" | Carregar qualquer rastreador só após o aceite |
@@ -298,7 +301,6 @@ O checklist traz todos os itens do catálogo dos módulos ativos. As tabelas por
 | **SE-05** · `ALTO` · `TECNICO` — Há proteção contra XSS, CSRF, SSRF e SQL Injection? | `seguranca` | `CONFORME` | `ENCONTRADA (TECNICA)`, confiança `ALTA`: todas as consultas usam parâmetros (`src/routes/agendamentos.js:31-45` e `:52-58`, `src/routes/clinica.js:9-30`); a confirmação usa `textContent` (`public/js/agendar.js:28`); o token vai no cabeçalho `Authorization`, não em cookie (`src/auth.js:32`) | — | Manter; acrescentar validação de formato (CPF, datas) |
 | **SE-06** · `ALTO` · `TECNICO` — Os logs da aplicação evitam registrar dados pessoais e sensíveis (CPF, e-mail, telefone, tokens, senhas, payloads completos) ou os mascaram antes da gravação? | `seguranca` | `NAO_CONFORME` | `AUSENTE (TECNICA)`, confiança `ALTA`: `src/routes/agendamentos.js:29` grava nome, CPF e e-mail do paciente no console, que vira log da Vercel; `src/auth.js:20` grava o e-mail em logins que falham | Dados pessoais legíveis por quem acessa os logs | Registrar só IDs internos; expurgar os logs existentes |
 | **SE-07** · `ALTO` · `TECNICO` — Há trilha de auditoria dos acessos a dados pessoais no backend (quem acessou, o quê e quando)? | `seguranca` | `NAO_CONFORME` | `AUSENTE (TECNICA)`, confiança `ALTA`: nenhum registro de quem consultou ou alterou dados de pacientes (`api/index.js:38-41`, `src/routes/clinica.js:8-33`) | Impossível investigar acesso indevido ou dimensionar um incidente | Registrar usuário, rota, paciente e horário, sem dados pessoais no log |
-| **SE-09** · `MEDIO` · `TECNICO` — Há segregação de ambientes (produção, homologação, desenvolvimento) e de funções de quem acessa dados pessoais? | `seguranca` | `CONFORME` | `ENCONTRADA (TECNICA)`, confiança `MEDIA`: a parte verificável está atendida: as funções são segregadas por papel (`api/index.js:40-41`, `db/schema.sql:16`) e as credenciais de cada ambiente vêm de variáveis (`src/db.js:4`, `.env.example:1-9`). A separação efetiva entre produção, preview e desenvolvimento (banco e variáveis de cada um) só aparece nos painéis e fica como verificação pendente | — | Conferir nos painéis da Vercel e do banco se cada ambiente tem banco e variáveis próprios |
 | **SE-10** · `MEDIO` · `TECNICO` — Entradas e saídas são validadas e sanitizadas? | `seguranca` | `PARCIAL` | `PARCIAL (TECNICA)`, confiança `ALTA`: o agendamento confere a presença dos campos obrigatórios (`src/routes/agendamentos.js:20-22`), o corpo é limitado a 50 kB (`api/index.js:36`) e a saída usa `textContent` (`public/js/agendar.js:28`); não há validação de formato de CPF, e-mail, telefone nem datas | Dados inválidos entram no cadastro das clínicas | Validar formato e tamanho de cada campo no servidor |
 | **DS-01** · `CRITICO` · `TECNICO` — Os segredos do pipeline estão protegidos (cofre do CI) e não aparecem em logs nem em artefatos? | `seguranca` | `CONFORME` | `ENCONTRADA (TECNICA)`, confiança `ALTA`: token e IDs da Vercel vêm de secrets do GitHub (`.github/workflows/ci.yml:27-30`), sem eco em log | — | Manter; restringir o deploy ao ambiente protegido da `main` |
 | **DS-02** · `ALTO` · `TECNICO` — Há varredura de dependências no pipeline e política de atualização? | `seguranca` | `NAO_CONFORME` | `AUSENTE (TECNICA)`, confiança `MEDIA`: o pipeline roda só `install`, `lint` e `test` (`.github/workflows/ci.yml:16-18`); não há `npm audit` nem configuração do Dependabot, e o pipeline não tem nenhuma outra varredura de segurança (agravante do item: `ALTO`); as configurações de segurança do GitHub não foram vistas | Biblioteca vulnerável chega à produção sem aviso | `npm audit` no CI e Dependabot |
@@ -306,7 +308,6 @@ O checklist traz todos os itens do catálogo dos módulos ativos. As tabelas por
 | **DS-07** · `MEDIO` · `TECNICO` — SAST e DAST são executados em estágio apropriado do pipeline? | `seguranca` | `NAO_CONFORME` | `AUSENTE (TECNICA)`, confiança `MEDIA`: o pipeline roda só `install`, `lint` e `test` (`.github/workflows/ci.yml:16-18`); não há análise estática de segurança (SAST) nem dinâmica (DAST), nem fluxo de CodeQL no repositório; as configurações de segurança do GitHub não foram vistas | Falhas de código como a de AP-02 passam sem alerta | CodeQL ou equivalente no CI |
 | **DS-08** · `ALTO` · `TECNICO` — Há varredura de segredos no repositório e no histórico do git, com rotação do que já foi exposto? | `seguranca` | `NAO_CONFORME` | `AUSENTE (TECNICA)`, confiança `MEDIA`: nenhuma etapa de varredura de segredos no pipeline (`.github/workflows/ci.yml:9-30`); o `.gitignore:2-4` exclui o `.env` e nenhuma credencial foi encontrada nos arquivos atuais; a proteção nativa do GitHub contra segredos não foi vista | Segredo enviado por engano fica no histórico sem alerta | Proteção contra segredos do GitHub e varredura do histórico no CI |
 | **DS-09** · `MEDIO` · `TECNICO` — O token do pipeline tem permissões mínimas, e as actions ou imagens de terceiros usadas nele estão fixadas por versão imutável (hash)? | `seguranca` | `NAO_CONFORME` | `AUSENTE (TECNICA)`, confiança `ALTA`: o workflow não declara `permissions`; as actions usam a tag `v4` (`.github/workflows/ci.yml:12-13`, `:25`) e o deploy baixa a CLI da Vercel sem versão (`:26`) | Action ou pacote comprometido roda com acesso aos segredos de deploy | Declarar permissões mínimas e fixar actions por hash |
-| **DS-11** · `ALTO` · `TECNICO` — Ambientes de teste, homologação e CI usam dados sintéticos ou mascarados, sem cópia de dados pessoais reais de produção? | `seguranca` | `CONFORME` | `ENCONTRADA (TECNICA)`, confiança `MEDIA`: a parte verificável está atendida: o CI não usa banco de dados (`.github/workflows/ci.yml:9-18`), o repositório não traz cópia de dados nem carga de produção, e o `README.md:33` orienta o uso de dados fictícios. O banco usado pelos deploys de preview é definido no painel e fica como verificação pendente | — | Conferir no painel da Vercel qual banco os deploys de preview usam |
 
 ### `direitos_titular`
 
@@ -347,7 +348,6 @@ Valem só para os tratamentos em que a AgendaFácil é controladora: contas dos 
 | **GV-17** · `BAIXO` · `DOCUMENTAL` — Há treinamento periódico de quem trata dados pessoais, com registro de participação? | `governanca` | `NAO_CONFORME` | `AUSENTE (DOCUMENTAL)`, confiança `MEDIA`: nenhum registro de treinamento ou orientação da equipe em `docs/`; a fundadora declarou não haver outros documentos | Erros como o do pixel e o dos logs tendem a se repetir | Sessão anual registrada sobre papel de operadora, logs e incidentes |
 | **TI-01** · `MEDIO` · `DOCUMENTAL` — O fluxo de dados para o exterior está mapeado (destino, provedor, finalidade)? | `governanca` | `NAO_CONFORME` | `AUSENTE (DOCUMENTAL)`, confiança `MEDIA`: nenhum documento mapeia os envios ao exterior; os destinos só aparecem no código (`public/index.html:13-15`, Meta) e no `README.md:22` (Vercel); a fundadora declarou não haver outros documentos | Novos envios ao exterior surgem sem controle | Tabela de destinos, provedores, dados e mecanismo no registro das operações |
 | **TI-02** · `ALTO` · `DOCUMENTAL` — Há mecanismo do art. 33 documentado para cada transferência: adequação reconhecida (União Europeia, Res. CD/ANPD nº 32/2026) ou, nos demais destinos, as CPC da Res. CD/ANPD nº 19/2024 incorporadas ao contrato, ou outro mecanismo aprovado? | `governanca` | `NAO_CONFORME` | `AUSENTE (TECNICA + DOCUMENTAL)`, confiança `BAIXA`: o fluxo é comprovado no código, pois `public/index.html:13-15` e `public/js/agendar.js:23` enviam dados do navegador do paciente à Meta, nos EUA, sem adequação reconhecida (a mesma evidência de OP-02 e CK-02, reprovada aqui por obrigação distinta, o art. 33); os logs das funções ficam com a Vercel Inc., nos EUA; o mecanismo não está evidenciado, porque os termos desses provedores não foram localizados nem examinados; a falta de informação ao titular é contada em TI-04 | Dados saem do País sem base demonstrada | Remover o pixel; examinar os termos e incorporar as CPC da Res. CD/ANPD nº 19/2024 onde faltarem |
-| **TI-03** · `MEDIO` · `DOCUMENTAL` — As CPC ou o mecanismo adotado cobrem os operadores e subprocessadores internacionais, inclusive os de segundo nível? | `governanca` | `NAO_CONFORME` | `AUSENTE (DOCUMENTAL)`, confiança `BAIXA`: os termos da Meta, da Vercel e do provedor do banco não foram reunidos nem examinados; a cobertura dos subprocessadores deles não está demonstrada | Dados podem chegar a terceiros sem a garantia do regulamento | Ao examinar os termos (TI-02), conferir a lista de subprocessadores |
 | **TI-04** · `ALTO` · `DOCUMENTAL` — O titular é informado sobre a transferência internacional na política de privacidade? | `governanca` | `NAO_CONFORME` | `AUSENTE (DOCUMENTAL)`, confiança `ALTA`: o rascunho da política não menciona transferência internacional nem destinatários (`docs/lgpd/politica-de-privacidade.md:22-36`) | O titular não sabe que seus dados vão para os EUA | Informar destinos, provedores e mecanismo no aviso de privacidade |
 | **TI-05** · `ALTO` · `TECNICO` — Dados sensíveis transferidos têm hipótese do art. 11 e proteção reforçada (criptografia, restrição de acesso)? | `governanca` | `NAO_CONFORME` | `AUSENTE (TECNICA)`, confiança `MEDIA`: o pixel envia à Meta, nos EUA, a visita e o agendamento na página de uma clínica (`public/index.html:13-15`, `public/js/agendar.js:23`), dado que revela busca por atendimento de saúde (art. 11, §1º), sem hipótese do art. 11 nem proteção; é a mesma evidência de OP-02, reprovada aqui por obrigação distinta. O banco, com o motivo da consulta, fica no Brasil (`.env.example:5-6`) | Informação sensível fora do País, sem proteção | Remover o pixel da página de agendamento (OP-02) |
 
@@ -356,7 +356,6 @@ Valem só para os tratamentos em que a AgendaFácil é controladora: contas dos 
 | Item | Área | Status | Evidência | Impacto | Recomendação |
 |---|---|---|---|---|---|
 | **IN-01** · `ALTO` · `TECNICO` — A camada da hospedagem ou CDN preserva o que a aplicação envia (cabeçalhos de segurança e CSP, sem cache de páginas com dados pessoais, sem scripts ou analytics injetados pelo provedor)? Validar as respostas de **produção**, não só o código. | `infraestrutura` | `NAO_CONFORME` | `PARCIAL (TECNICA)`, confiança `MEDIA`: o código define CSP restritiva (`api/index.js:22-34`), mas as páginas de `public/` são servidas direto pela CDN com a CSP do `vercel.json:12-15` (`default-src * 'unsafe-inline' 'unsafe-eval'`), que libera scripts de qualquer origem e não impede o enquadramento da página por outros sites; respostas de produção não coletadas | A página que coleta CPF e dados de saúde fica sem defesa contra XSS e clickjacking | Igualar a CSP do `vercel.json` à do código e conferir com `curl -I` |
-| **IN-02** · `CRITICO` · `TECNICO` — Variáveis de ambiente e segredos ficam no cofre do provedor, fora do repositório e de builds ou previews públicos? | `infraestrutura` | `CONFORME` | `ENCONTRADA (TECNICA)`, confiança `MEDIA`: `.env` ignorado (`.gitignore:2-4`); `.env.example` só com marcadores (`.env.example:6` e `:9`); o código lê `process.env` (`src/db.js:4`, `src/auth.js:26` e `:36`); o cofre de variáveis da Vercel não foi visto | — | Manter; separar segredos de produção e de preview no painel |
 | **IN-15** · `BAIXO` · `DOCUMENTAL` — A divisão de responsabilidades com o provedor está documentada (o que é do provedor e o que é do auditado: certificados, DNS, CDN, backups, atualizações)? | `infraestrutura` | `NAO_CONFORME` | `AUSENTE (DOCUMENTAL)`, confiança `MEDIA`: nenhum documento define o que cabe à Vercel e ao provedor do banco e o que cabe à AgendaFácil; nada em `docs/` nem em `README.md:18-25`; a fundadora declarou não haver outros documentos | Lacunas como a CSP do `vercel.json` (IN-01) passam despercebidas | Quadro de uma página com as responsabilidades de cada parte |
 | **IN-16** · `MEDIO` · `TECNICO` — Há processo de hardening e de gestão de vulnerabilidades da infraestrutura? | `infraestrutura` | `NAO_CONFORME` | `AUSENTE (TECNICA)`, confiança `MEDIA`: o projeto fixa o Node.js 20 no CI (`.github/workflows/ci.yml:15`) e aceita qualquer versão a partir dela (`package.json:12-14`; `README.md:20`); essa linha deixou de receber correções de segurança em abril de 2026, e não há rotina de atualização do runtime no repositório. A versão em uso na produção depende do painel da Vercel, não conferido. A atualização de dependências é contada em DS-02 | A aplicação roda sobre um runtime sem correções de segurança | Migrar para uma linha do Node.js com suporte e rever a versão a cada ciclo |
 
@@ -395,23 +394,27 @@ Valem só para os tratamentos em que a AgendaFácil é controladora: contas dos 
 | **CA-04** — As informações sobre os dados coletados, o uso e o exercício de direitos estão públicas e acessíveis? | `bases_legais` | `NAO_APLICAVEL` | Obrigação do controlador no fluxo dos pacientes. Além disso, o agendamento recusa menores de 18 anos (`src/routes/agendamentos.js:23-27`) e as clínicas atendem só adultos (`README.md:15`) |
 | **CK-08** — Os cookies classificados como estritamente necessários são de fato necessários (a categoria não mascara analytics ou publicidade)? | `bases_legais` | `NAO_APLICAVEL` | O item só se aplica quando há cookies classificados em categorias, e o banner não tem nenhuma (`public/index.html:41-45`); a falta de categorias é contada em CK-05. O único armazenamento feito sem depender do aceite é a própria escolha do visitante (`public/js/consent.js:3`, `:12`) |
 | **SE-08** — Sessões de navegador têm proteção adequada (cookie de sessão com `HttpOnly`, `Secure` e `SameSite`, expiração e rotação)? | `seguranca` | `NAO_APLICAVEL` | Objeto inexistente: a aplicação não usa cookie de sessão; a autenticação é por token JWT no cabeçalho `Authorization` (`src/auth.js:31-36`), avaliado em AP-01 |
+| **SE-09** — Há segregação de ambientes (produção, homologação, desenvolvimento) e de funções de quem acessa dados pessoais? | `seguranca` | `NAO_VERIFICADO` | Verificado: as funções são segregadas por papel (`api/index.js:40-41`, `db/schema.sql:16`) e as credenciais de cada ambiente vêm de variáveis (`src/db.js:4`, `.env.example:1-9`). Fora do alcance: se produção, preview e desenvolvimento têm banco e variáveis próprios, o que só aparece nos painéis. Acesso necessário: painéis da Vercel e do banco |
 | **DS-04** — As imagens Docker passam por varredura de vulnerabilidades? | `seguranca` | `NAO_APLICAVEL` | Objeto inexistente: não há `Dockerfile` nem arquivo de composição no repositório; o deploy é feito pela Vercel a partir do código (`.github/workflows/ci.yml:26`) |
 | **DS-05** — A infraestrutura como código (Terraform, CloudFormation, Helm etc.) passa por varredura de configuração? | `seguranca` | `NAO_APLICAVEL` | Objeto inexistente: nenhum arquivo de IaC no repositório. A única configuração de plataforma é o `vercel.json`, avaliado em IN-01 |
 | **DS-06** — O ambiente Kubernetes segue controles de RBAC e hardening? | `seguranca` | `NAO_APLICAVEL` | Objeto inexistente: nenhum manifesto de orquestração; a aplicação roda em funções da Vercel (`vercel.json:1-7`) |
 | **DS-10** — A branch de produção é protegida, com revisão obrigatória antes do deploy? | `seguranca` | `NAO_VERIFICADO` | A proteção da branch `main` e a revisão obrigatória são configurações do repositório no GitHub; o código só mostra que todo push na `main` vai para produção (`.github/workflows/ci.yml:20-26`). Acesso necessário: configurações do repositório no GitHub |
+| **DS-11** — Ambientes de teste, homologação e CI usam dados sintéticos ou mascarados, sem cópia de dados pessoais reais de produção? | `seguranca` | `NAO_VERIFICADO` | Verificado: o CI não usa banco de dados (`.github/workflows/ci.yml:9-18`), o repositório não traz cópia de dados de produção e o `README.md:33` orienta o uso de dados fictícios. Fora do alcance: qual banco os deploys de preview usam, definido no painel. Acesso necessário: variáveis de ambiente por ambiente no painel da Vercel |
 | **DT-08** — Há meio de pedir a revisão de decisões tomadas unicamente por tratamento automatizado, com informação sobre os critérios usados? | `direitos_titular` | `NAO_APLICAVEL` | Objeto inexistente: o sistema não toma decisão automatizada que defina perfil ou afete interesses do titular; não há pontuação, perfilamento nem recomendação (`src/routes/`, `db/schema.sql:1-39`) |
 | **DT-09** — Correções, eliminações, anonimizações e bloqueios são comunicados aos agentes com quem os dados foram compartilhados? | `direitos_titular` | `NAO_APLICAVEL` | Objeto inexistente: os dados das contas não são compartilhados com outros controladores; hospedagem e banco tratam a mesma base, como operadores. O efeito da revogação sobre a Meta é avaliado em CK-03 |
 | **GV-05** — A identidade e o contato do encarregado são divulgados publicamente, de forma clara e objetiva, preferencialmente no site? | `governanca` | `NAO_APLICAVEL` | Não há encarregado indicado cujo contato divulgar; a falta da indicação é contada em GV-02. O rodapé traz só o contato geral (`public/index.html:48`) |
 | **GV-10** — O encarregado tem autonomia técnica, acesso à alta direção e ausência de conflito de interesses? | `governanca` | `NAO_APLICAVEL` | Não há encarregado indicado cuja autonomia avaliar; a falta da indicação é contada em GV-02 |
 | **GV-11** — Agente de pequeno porte sem encarregado indicado: existe canal de comunicação com titulares e com a ANPD, divulgado? | `governanca` | `NAO_APLICAVEL` | O item vale para agente de pequeno porte dispensado de indicar encarregado. A dispensa não se aplica à AgendaFácil, que faz tratamento de alto risco (Res. CD/ANPD nº 2/2022, art. 3º); a falta do encarregado é contada em GV-02 |
 | **GV-13** — O descarte de dados e mídias é seguro e registrado? | `governanca` | `NAO_APLICAVEL` | Não há eliminação em curso cujo descarte e registro avaliar: nada é eliminado hoje (falha contada em GV-12), e em PaaS não há mídia física sob controle da empresa (`vercel.json:1-7`) |
+| **TI-03** — As CPC ou o mecanismo adotado cobrem os operadores e subprocessadores internacionais, inclusive os de segundo nível? | `governanca` | `NAO_APLICAVEL` | Depende de TI-02: o mecanismo de transferência não está evidenciado (os termos da Meta, da Vercel e do provedor do banco não foram reunidos), então não há mecanismo cuja cobertura de subprocessadores avaliar. A falha é contada em TI-02 |
 | **IN-13** — A exportação de logs a ferramentas de terceiros está coberta por contrato de operador e, se os dados saírem do País, por mecanismo do art. 33? | `governanca` | `NAO_APLICAVEL` | Objeto inexistente: nenhuma integração envia logs a ferramenta de terceiros (`package.json:15-25`, `vercel.json:1-20`); os logs ficam na própria Vercel, cujo contrato e cuja transferência são contados em GV-09 e TI-02 |
+| **IN-02** — Variáveis de ambiente e segredos ficam no cofre do provedor, fora do repositório e de builds ou previews públicos? | `infraestrutura` | `NAO_VERIFICADO` | Verificado: o `.gitignore` exclui o `.env` (`.gitignore:2-4`), o código lê os segredos de variáveis de ambiente (`src/auth.js:26`, `src/db.js:4`) e nenhuma credencial aparece nos arquivos do repositório. Fora do alcance: se as variáveis estão no cofre da Vercel e fora de builds e previews públicos. Acesso necessário: painel da Vercel |
 | **IN-03** — Bancos de dados com dados pessoais têm criptografia em repouso, controle de acesso e segregação? | `infraestrutura` | `NAO_VERIFICADO` | Configuração visível só no painel do provedor do Postgres. O repositório mostra apenas a região e o TLS (`.env.example:5-6`, `src/db.js:5`). Acesso necessário: painel do provedor do banco. Backups e réplicas são avaliados em IN-10 |
 | **IN-04** — Provedor de aplicações de internet: os registros de acesso (IP, porta lógica de origem, data e hora) são guardados por 6 meses e eliminados após o prazo, salvo requisição cautelar? | `infraestrutura` | `NAO_VERIFICADO` | A retenção e a exportação dos logs são configuradas no painel da Vercel, não no `vercel.json`. O código não mantém guarda própria. Acesso necessário: painel da Vercel |
 | **IN-05** — As permissões de acesso ao provedor (IAM, membros do painel, tokens de deploy) seguem privilégio mínimo, com MFA? | `infraestrutura` | `NAO_VERIFICADO` | Membros, papéis e MFA só aparecem nos painéis. Acesso necessário: painéis da Vercel, do banco e do GitHub |
 | **IN-06** — Analytics, logs de acesso e métricas nativos do provedor que coletam dados pessoais têm retenção, acesso e base legal definidos? | `infraestrutura` | `NAO_VERIFICADO` | Configuração do painel da Vercel. O código não inclui o script de analytics da plataforma (`public/index.html:1-56`). Acesso necessário: painel da Vercel |
 | **IN-07** — Há firewall ou WAF, detecção de intrusão e monitoramento centralizado (SIEM ou equivalente) capazes de detectar acesso indevido a dados pessoais? | `infraestrutura` | `NAO_VERIFICADO` | Regras e alertas ficam no painel da Vercel. Acesso necessário: painel da Vercel |
-| **IN-08** — O armazenamento de objetos e os demais ativos estão livres de exposição pública indevida (ex.: buckets com dados pessoais)? | `infraestrutura` | `NAO_APLICAVEL` | Objeto inexistente: nenhuma dependência nem uso de armazenamento de objetos (`package.json:15-25`); o sistema não recebe arquivos |
+| **IN-08** — Os serviços de armazenamento de objetos (buckets) e de arquivos enviados por usuários estão livres de exposição pública indevida? | `infraestrutura` | `NAO_APLICAVEL` | Objeto inexistente: nenhuma dependência nem uso de armazenamento de objetos (`package.json:15-25`); o sistema não recebe arquivos |
 | **IN-09** — A segmentação de rede e as regras de exposição externa estão adequadas? | `infraestrutura` | `NAO_VERIFICADO` | Em PaaS não há rede gerida pelo cliente (`vercel.json:1-20`), mas as regras de exposição do banco gerenciado (lista de IPs, acesso público) ficam com a AgendaFácil e só aparecem no painel do provedor; o repositório mostra apenas o TLS (`src/db.js:5`). Acesso necessário: painel do provedor do banco |
 | **IN-10** — Backups e réplicas são criptografados, têm acesso restrito e seguem a política de retenção (a eliminação também os alcança)? | `infraestrutura` | `NAO_VERIFICADO` | Criptografia, acesso e retenção dos backups e das réplicas são configurados no painel do provedor do Postgres; o repositório não os mostra. Acesso necessário: painel do provedor do banco |
 | **IN-11** — Os logs de auditoria da conta cloud ou do painel estão ativos e protegidos contra alteração? | `infraestrutura` | `NAO_VERIFICADO` | Os registros de auditoria das contas (quem alterou configurações, variáveis e membros) ficam nos painéis. Acesso necessário: painéis da Vercel, do banco e do GitHub |
@@ -422,7 +425,7 @@ Valem só para os tratamentos em que a AgendaFácil é controladora: contas dos 
 
 ## 4. Não conformidades
 
-Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados abaixo, em ordem de severidade. **Nenhum achado teve severidade modulada**, porque há tratamento de alto risco (ver "Natureza e papel do agente de tratamento"). Os prazos seguem `IMEDIATO` (até 7 dias), `30_DIAS`, `90_DIAS` e `180_DIAS`.
+Todos os 54 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados abaixo, em ordem de severidade. **Nenhum achado teve severidade modulada**, porque há tratamento de alto risco (ver "Natureza e papel do agente de tratamento"). Os prazos seguem `IMEDIATO` (até 7 dias), `30_DIAS`, `90_DIAS` e `180_DIAS`.
 
 ### `CRITICO`
 
@@ -829,18 +832,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** incluir no registro das operações (GV-01) uma tabela de destinos, provedores, dados e mecanismo do art. 33.
 - **Responsável e prazo:** CEO, com o encarregado · `30_DIAS`.
 
-#### NC-36 · TI-03 — Cobertura dos subprocessadores no exterior não demonstrada
-
-- **Problema:** sem os termos dos provedores em mãos, não há como saber se o mecanismo de transferência alcança os subprocessadores deles.
-- **Severidade:** `MEDIO`. Cobertura de subprocessadores não evidenciada (`legal/international-transfer.md`); documento não apresentado é `AUSENTE`.
-- **Fundamento LGPD:** art. 33; Res. CD/ANPD nº 19/2024.
-- **Evidência:** `AUSENTE (DOCUMENTAL)`, confiança `BAIXA`: termos da Meta, da Vercel e do provedor do banco não reunidos nem examinados. Verificação que eleva a confiança: a mesma de TI-02.
-- **Impacto técnico:** nenhum direto.
-- **Impacto jurídico:** dados podem chegar a terceiros sem a garantia exigida pelo regulamento.
-- **Correção recomendada (esforço P):** ao examinar os termos (TI-02), conferir a lista de subprocessadores e a extensão das garantias a eles.
-- **Responsável e prazo:** CEO, com assessoria jurídica externa · `30_DIAS`.
-
-#### NC-37 · DT-06 — Sistema sem recurso para corrigir, exportar ou excluir contas
+#### NC-36 · DT-06 — Sistema sem recurso para corrigir, exportar ou excluir contas
 
 - **Problema:** não há rota nem tela para consultar, corrigir, exportar ou excluir os dados de uma conta de usuário de clínica. Qualquer pedido depende de alteração manual no banco.
 - **Severidade:** `MEDIO`. Inexistência de fluxo de exclusão e portabilidade (`legal/rights-of-data-subject.md`).
@@ -851,7 +843,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço M):** rotas autenticadas para ver, corrigir, exportar e excluir a própria conta; exclusão com confirmação.
 - **Responsável e prazo:** CTO · `90_DIAS`.
 
-#### NC-38 · DT-07 — Titular não tem como saber com quem os dados são compartilhados
+#### NC-37 · DT-07 — Titular não tem como saber com quem os dados são compartilhados
 
 - **Problema:** nenhum documento ou tela informa que a Meta recebe dados de navegação nem que a Vercel e o provedor do banco tratam os dados das contas.
 - **Severidade:** `MEDIO`. Informação sobre uso compartilhado ausente (`legal/rights-of-data-subject.md`).
@@ -862,7 +854,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** listar destinatários e finalidades no aviso de privacidade e responder a esse pedido pelo canal de direitos (DT-01).
 - **Responsável e prazo:** CEO e assessoria jurídica · `30_DIAS`.
 
-#### NC-39 · DT-10 — Pedidos de titulares sem registro
+#### NC-38 · DT-10 — Pedidos de titulares sem registro
 
 - **Problema:** não existe registro dos pedidos recebidos, das respostas e da confirmação de execução.
 - **Severidade:** `MEDIO`. Trilha de atendimento ausente (`legal/rights-of-data-subject.md`).
@@ -873,7 +865,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** planilha ou sistema de chamados com data, tipo de pedido, resposta e data de execução.
 - **Responsável e prazo:** CEO · `90_DIAS`.
 
-#### NC-40 · GV-12 — Dados próprios nunca são eliminados
+#### NC-39 · GV-12 — Dados próprios nunca são eliminados
 
 - **Problema:** não há rotina que elimine contas inativas e logs ao fim de um prazo, nem rota de exclusão. A eliminação dos dados dos pacientes é contada em OP-06.
 - **Severidade:** `MEDIO`. Eliminação não automática ao fim do prazo (`governance/dpo-framework.md`).
@@ -884,7 +876,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço M):** depois de definir os prazos (GV-04), agendar o expurgo e incluir backups e provedores.
 - **Responsável e prazo:** CTO · `90_DIAS`.
 
-#### NC-41 · GV-14 — Retenções legais não identificadas
+#### NC-40 · GV-14 — Retenções legais não identificadas
 
 - **Problema:** nenhum documento identifica o que precisa ser guardado por lei e por quanto tempo, como os registros de acesso do MCI (6 meses) e os documentos fiscais.
 - **Severidade:** `MEDIO`. Retenção sem fundamento identificado no art. 16 (`governance/dpo-framework.md`).
@@ -895,7 +887,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** listar as retenções legais na política de retenção (GV-04), com o prazo e a norma de cada uma.
 - **Responsável e prazo:** CEO · `90_DIAS`.
 
-#### NC-42 · GV-15 — Sem histórico das decisões de privacidade
+#### NC-41 · GV-15 — Sem histórico das decisões de privacidade
 
 - **Problema:** a pasta `docs/lgpd/` tem só um rascunho de política. Não há versões anteriores, atas nem registro de quem decidiu o quê.
 - **Severidade:** `MEDIO`. Falha de prestação de contas de materialidade média (`governance/dpo-framework.md`).
@@ -906,7 +898,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** manter os documentos de privacidade versionados no repositório e registrar as decisões (por exemplo, a remoção do pixel).
 - **Responsável e prazo:** CEO, com o encarregado · `90_DIAS`.
 
-#### NC-43 · GV-16 — Sem política de segurança da informação
+#### NC-42 · GV-16 — Sem política de segurança da informação
 
 - **Problema:** não há documento que defina regras de acesso, senhas, uso de dados de produção e resposta a falhas.
 - **Severidade:** `MEDIO`. Política de segurança ausente (`governance/dpo-framework.md`).
@@ -917,7 +909,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço M):** política curta, de uma ou duas páginas, proporcional a uma equipe de três pessoas.
 - **Responsável e prazo:** CEO e CTO · `90_DIAS`.
 
-#### NC-44 · CK-06 — Banner de cookies sem informação clara
+#### NC-43 · CK-06 — Banner de cookies sem informação clara
 
 - **Problema:** o banner aparece e funciona, mas diz apenas que os cookies servem para "melhorar sua experiência". Não informa a finalidade real (publicidade) nem o terceiro que recebe os dados (Meta).
 - **Severidade:** `MEDIO`. Dos três elementos (banner funcional, informação sobre finalidades e informação sobre terceiros), só o primeiro está atendido; com menos da metade, o item é `NAO_CONFORME` (`core/evidence-engine.md`).
@@ -928,7 +920,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** texto que nomeie as finalidades e os terceiros, com link para a política de cookies.
 - **Responsável e prazo:** CTO · `90_DIAS`.
 
-#### NC-45 · CK-07 — Pixel e identificadores sem inventário nem política de cookies
+#### NC-44 · CK-07 — Pixel e identificadores sem inventário nem política de cookies
 
 - **Problema:** não há política de cookies nem lista dos rastreadores usados. O rascunho da política diz só que o site usa cookies.
 - **Severidade:** `MEDIO`. Inventário e política de cookies ausentes (`appsec/owasp-api.md`).
@@ -939,7 +931,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** política de cookies com `templates/cookie-policy-template.md`, listando cada cookie ou SDK, finalidade e prazo.
 - **Responsável e prazo:** CEO e CTO · `30_DIAS`.
 
-#### NC-46 · AP-05 — APIs públicas sem inventário
+#### NC-45 · AP-05 — APIs públicas sem inventário
 
 - **Problema:** as rotas abertas à internet (`/api/agendamentos` e `/api/login`) não estão listadas em documento algum, com os dados que cada uma expõe.
 - **Severidade:** `MEDIO`. Inventário de APIs públicas ausente (`appsec/owasp-api.md`).
@@ -950,7 +942,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** tabela com rota, autenticação, dados recebidos e devolvidos e responsável, revisada a cada mudança.
 - **Responsável e prazo:** CTO · `90_DIAS`.
 
-#### NC-47 · DS-07 — Sem análise estática nem dinâmica de segurança
+#### NC-46 · DS-07 — Sem análise estática nem dinâmica de segurança
 
 - **Problema:** o pipeline roda lint e testes, mas nenhuma análise de segurança do código (SAST) nem da aplicação em execução (DAST).
 - **Severidade:** `MEDIO`. Cobertura parcial de varredura (`devsecops/ci-cd-security.md`).
@@ -961,7 +953,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** codeQL (ou equivalente) no CI; DAST básico antes de mudanças grandes.
 - **Responsável e prazo:** CTO · `90_DIAS`.
 
-#### NC-48 · DS-09 — Pipeline com permissões padrão e actions sem versão fixa
+#### NC-47 · DS-09 — Pipeline com permissões padrão e actions sem versão fixa
 
 - **Problema:** o workflow não declara `permissions`, então o token roda com as permissões padrão do repositório. As actions usam a tag `v4`, que pode ser movida, e o deploy baixa a CLI da Vercel sem versão.
 - **Severidade:** `MEDIO`. Permissões e versões do pipeline (`devsecops/ci-cd-security.md`).
@@ -972,7 +964,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** declarar `permissions: contents: read`, fixar as actions pelo hash do commit e a CLI por versão.
 - **Responsável e prazo:** CTO · `90_DIAS`.
 
-#### NC-49 · IN-16 — Runtime fora de suporte fixado no projeto
+#### NC-48 · IN-16 — Runtime fora de suporte fixado no projeto
 
 - **Problema:** o projeto está preso ao Node.js 20, linha que deixou de receber correções de segurança em abril de 2026, e não tem rotina para atualizar o runtime.
 - **Severidade:** `MEDIO`. Falha pontual de hardening (`cloud/cloud-audit.md`). Em PaaS, a versão do runtime é escolha do cliente, não do provedor.
@@ -985,7 +977,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 
 ### `BAIXO`
 
-#### NC-50 · OP-05 — Apoio incompleto às clínicas nos pedidos dos pacientes
+#### NC-49 · OP-05 — Apoio incompleto às clínicas nos pedidos dos pacientes
 
 - **Problema:** a clínica consegue corrigir dados cadastrais, mas não há como gerar cópia, exportar ou eliminar o cadastro de um paciente.
 - **Severidade:** `BAIXO`. O item é `PARCIAL` (`criticality` `MEDIO`), então o achado fica um nível abaixo: `BAIXO` (`core/auditor-core.md`). A correção de dados pela clínica existe, e faltam a exportação e a eliminação por paciente.
@@ -996,7 +988,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço M):** rotas autenticadas para a clínica exportar (JSON ou CSV) e eliminar ou anonimizar um paciente, com registro da execução.
 - **Responsável e prazo:** CTO · `90_DIAS`.
 
-#### NC-51 · DS-03 — Sem SBOM
+#### NC-50 · DS-03 — Sem SBOM
 
 - **Problema:** não há inventário das dependências gerado a cada build.
 - **Severidade:** `BAIXO`. Melhoria com baixo risco imediato.
@@ -1007,7 +999,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** gerar SBOM CycloneDX no CI e guardá-lo como artefato.
 - **Responsável e prazo:** CTO · `180_DIAS`.
 
-#### NC-52 · SE-10 — Validação de entrada incompleta no agendamento
+#### NC-51 · SE-10 — Validação de entrada incompleta no agendamento
 
 - **Problema:** o agendamento confere se os campos obrigatórios vieram e limita o tamanho do corpo, mas não valida o formato de CPF, e-mail, telefone e datas.
 - **Severidade:** `BAIXO`. O item é `PARCIAL` (`criticality` `MEDIO`), então o achado fica um nível abaixo: `BAIXO` (`core/auditor-core.md`). A presença dos campos e o tamanho do corpo são conferidos, e falta a validação de formato.
@@ -1018,7 +1010,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** validar formato e tamanho de cada campo no servidor.
 - **Responsável e prazo:** CTO · `90_DIAS`.
 
-#### NC-53 · GV-17 — Equipe sem treinamento de privacidade
+#### NC-52 · GV-17 — Equipe sem treinamento de privacidade
 
 - **Problema:** não há registro de orientação ou treinamento dos três sócios sobre proteção de dados.
 - **Severidade:** `BAIXO`. Treinamento ausente (`governance/dpo-framework.md`).
@@ -1029,7 +1021,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** uma sessão anual, registrada, sobre o papel de operadora, logs e incidentes.
 - **Responsável e prazo:** encarregado · `180_DIAS`.
 
-#### NC-54 · IN-15 — Divisão de responsabilidades com os provedores não documentada
+#### NC-53 · IN-15 — Divisão de responsabilidades com os provedores não documentada
 
 - **Problema:** nenhum documento diz o que cabe à Vercel e ao provedor do banco e o que cabe à AgendaFácil (certificados, backups, atualizações, cabeçalhos).
 - **Severidade:** `BAIXO`. Falha documental de baixa materialidade (`cloud/cloud-audit.md`).
@@ -1040,7 +1032,7 @@ Todos os 55 itens `NAO_CONFORME` ou `PARCIAL` do checklist estão detalhados aba
 - **Correção recomendada (esforço P):** quadro de uma página com as responsabilidades de cada parte.
 - **Responsável e prazo:** CTO · `180_DIAS`.
 
-#### NC-55 · DT-05 — Política sem indicação de versão
+#### NC-54 · DT-05 — Política sem indicação de versão
 
 - **Problema:** o rascunho da política traz a data de atualização, mas não um número de versão nem o histórico das mudanças.
 - **Severidade:** `BAIXO`. O item é `PARCIAL` (`criticality` `BAIXO`), então o achado fica um nível abaixo: `BAIXO` (`core/auditor-core.md`). Dois dos três elementos estão atendidos (linguagem simples e data); falta a versão.
@@ -1094,7 +1086,7 @@ A guarda dos registros de acesso por 6 meses (MCI, art. 15) não está nesta lis
 - Página de coleta sem CSP efetiva, vulnerável a XSS e clickjacking (IN-01).
 - Dependências vulneráveis sem detecção (DS-02, DS-03).
 - Acesso indevido sem rastro (SE-07); contas protegidas só por senha e sem limite de tentativas (SE-04, AP-03).
-- Dez controles ainda não verificados (DS-10, IN-03, IN-04, IN-05, IN-06, IN-07, IN-09, IN-10, IN-11, IN-14): a proteção real do banco, dos backups, dos painéis, dos logs e dos ambientes é desconhecida.
+- Treze controles ainda não verificados (SE-09, DS-10, DS-11, IN-02, IN-03, IN-04, IN-05, IN-06, IN-07, IN-09, IN-10, IN-11, IN-14): a proteção real do banco, dos backups, dos painéis, dos logs, dos segredos e dos ambientes é desconhecida.
 - Runtime Node.js 20 fora de suporte desde abril de 2026 (IN-16).
 - Pipeline sem varredura de segredos, com permissões padrão e actions sem versão fixa (DS-08, DS-09).
 
@@ -1143,9 +1135,9 @@ Esforço: `P` até 1 dia; `M` até 1 semana; `G` mais de 1 semana. `IMEDIATO` si
 | 3 | Parar de atualizar cadastro existente pela rota pública de agendamento e reduzir a resposta da confirmação a data e horário | SE-03, AP-02 | CTO | P | `IMEDIATO` |
 | 4 | Expiração, algoritmo e audiência no JWT | AP-01 | CTO | P | `IMEDIATO` |
 | 5 | Corrigir a CSP e acrescentar HSTS no `vercel.json`; conferir com `curl -I` | IN-01 | CTO | P | `IMEDIATO` |
-| 6 | Fazer as verificações pendentes nos painéis da Vercel, do banco e do GitHub e guardar as evidências | DS-10, IN-03, IN-04, IN-05, IN-06, IN-07, IN-09, IN-10, IN-11, IN-14, DS-02, DS-07, DS-08, AP-03 | CTO | P | `30_DIAS` |
+| 6 | Fazer as verificações pendentes nos painéis da Vercel, do banco e do GitHub e guardar as evidências | SE-09, DS-10, DS-11, IN-02, IN-03, IN-04, IN-05, IN-06, IN-07, IN-09, IN-10, IN-11, IN-14, DS-02, DS-07, DS-08, AP-03 | CTO | P | `30_DIAS` |
 | 7 | Termos de uso com cláusulas de operador para as clínicas, com a lista de suboperadores | OP-01, OP-03 | CEO + jurídico | M | `30_DIAS` |
-| 8 | Reunir e arquivar os DPAs da Vercel e do provedor do banco; examinar os termos e incorporar CPC onde faltarem | GV-09, TI-02, TI-03 | CEO + jurídico | M | `30_DIAS` |
+| 8 | Reunir e arquivar os DPAs da Vercel e do provedor do banco; examinar os termos e incorporar CPC onde faltarem | GV-09, TI-02 | CEO + jurídico | M | `30_DIAS` |
 | 9 | Processo de incidentes, com prazo de aviso às clínicas e comunicação à ANPD e aos titulares nos dados próprios | OP-04, GV-08 | CEO + CTO | M | `30_DIAS` |
 | 10 | Indicar encarregado (interno ou serviço externo) | GV-02 | CEO | P | `30_DIAS` |
 | 11 | Reescrever e publicar o aviso de privacidade dos tratamentos próprios e a política de cookies, com destinatários, transferência internacional, canal de direitos e canal de denúncia | DT-01, DT-03, DT-04, DT-07, TI-04, CK-07, BL-02, GV-06, DT-05 | CEO + jurídico; publicação pelo CTO | M | `30_DIAS` |
@@ -1163,7 +1155,7 @@ Esforço: `P` até 1 dia; `M` até 1 semana; `G` mais de 1 semana. `IMEDIATO` si
 | 18 | Devolução em lote e expurgo automático conforme os prazos das clínicas; expurgo de contas e logs próprios | OP-06, GV-12 | CTO | M | `90_DIAS` |
 | 19 | Política de retenção dos dados próprios, com as retenções legais, e procedimento de atendimento a pedidos, com registro de cada um | GV-04, GV-14, DT-02, DT-10 | CEO | P | `90_DIAS` |
 | 20 | Banner com categorias, texto que nomeie finalidades e terceiros e registro das escolhas no servidor | CK-04, CK-05, CK-06 | CTO | M | `90_DIAS` |
-| 21 | Corrigir o que as verificações pendentes revelarem (por exemplo, exportar os registros de acesso para guarda de 6 meses) | DS-10, IN-03, IN-04, IN-05, IN-06, IN-07, IN-09, IN-10, IN-11, IN-14 | CTO | M | `90_DIAS` |
+| 21 | Corrigir o que as verificações pendentes revelarem (por exemplo, exportar os registros de acesso para guarda de 6 meses) | SE-09, DS-10, DS-11, IN-02, IN-03, IN-04, IN-05, IN-06, IN-07, IN-09, IN-10, IN-11, IN-14 | CTO | M | `90_DIAS` |
 | 22 | Rotas para ver, corrigir, exportar e excluir a conta do usuário da clínica | DT-06 | CTO | M | `90_DIAS` |
 | 23 | Política de segurança da informação e pasta versionada com as decisões de privacidade | GV-15, GV-16 | CEO + CTO | M | `90_DIAS` |
 | 24 | Validar o formato dos campos do agendamento; inventário das rotas públicas | SE-10, AP-05 | CTO | P | `90_DIAS` |
@@ -1237,6 +1229,8 @@ Acrescentar `.github/dependabot.yml` (ecossistema `npm`, frequência semanal) e,
 **Apoio às clínicas e fim de contrato:** rotas `GET /api/clinica/pacientes/:id/exportar` e `DELETE /api/clinica/pacientes/:id`, restritas à clínica do token; rotina administrativa de exportação em lote por clínica; job agendado que execute, conforme os prazos instruídos pelas clínicas, `DELETE` ou anonimização (`nome = 'removido'`, `cpf = NULL`, `observacoes = NULL`) e grave quantos registros foram afetados.
 
 **Aviso da clínica na página de agendamento:** campo configurável por clínica para o aviso de privacidade dela, exibido junto ao formulário e ao campo "Motivo da consulta". A obrigação é da clínica; oferecer o espaço é uma boa prática da operadora.
+
+**Minimização no formulário de agendamento** (`public/index.html:29-35`): CPF e data de nascimento são obrigatórios para marcar uma consulta. A escolha dos campos é das clínicas, como controladoras (BL-04), mas vale oferecer a elas a opção de tornar esses campos opcionais ou de pedi-los só no atendimento (art. 6º, III).
 
 **Em monitoramento (norma não vigente, não gera não conformidade):** a revisão da Res. CD/ANPD nº 1/2021 (fiscalização e processo sancionador) está em consulta pública até 26/10/2026. Até a publicação da norma final, a Res. CD/ANPD nº 1/2021 segue vigente e é a referência de risco sancionatório deste relatório.
 
