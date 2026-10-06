@@ -89,8 +89,18 @@ button{font:inherit;color:inherit}
 .nav a:hover{color:var(--ink)}
 .nav a.on{color:var(--accent-ink);background:var(--accent-soft);border-color:var(--accent)}
 .nav .sp{flex:1}
-.tbtn{flex:none;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink-3);cursor:pointer}
+.tbtn{flex:none;display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink-3);cursor:pointer;white-space:nowrap}
 .tbtn:hover{color:var(--ink);border-color:var(--ink-3)}
+.tbtn svg{flex:none;width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* botão de tema: mostra o tema para o qual a página muda; segue as mesmas regras das cores acima */
+.tema span{display:inline-flex;align-items:center;gap:6px}
+.tema .p-claro{display:none}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .tema .p-escuro{display:none}
+  :root:not([data-theme="light"]) .tema .p-claro{display:inline-flex}
+}
+:root[data-theme="dark"] .tema .p-escuro{display:none}
+:root[data-theme="dark"] .tema .p-claro{display:inline-flex}
 
 /* estrutura */
 main{padding:26px 0 40px}
@@ -286,6 +296,9 @@ footer p{max-width:90ch}
 </header>
 
 <nav class="nav" aria-label="Seções do relatório"><div class="wrap" id="nav"></div></nav>
+<!-- ícones do botão de tema, desenhados aqui para o arquivo continuar sem nenhum endereço externo -->
+<template id="icone-lua"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></template>
+<template id="icone-sol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></template>
 
 <main><div class="wrap" id="app">
   <noscript><p class="note warn">Este relatório precisa de JavaScript para ser exibido. Abra o arquivo em um navegador com JavaScript ativo.</p></noscript>
@@ -959,7 +972,11 @@ footer p{max-width:90ch}
   /* ── comportamento ──────────────────────────────────────────────────── */
   var root = document.documentElement;
   add(nav, h('span', { class: 'sp' }));
-  var bPrint = h('button', { class: 'tbtn', type: 'button' }, 'imprimir / PDF'), bTema = h('button', { class: 'tbtn', type: 'button' }, 'tema');
+  function icone(id) { return document.getElementById(id).content.firstElementChild.cloneNode(true); }
+  var bPrint = h('button', { class: 'tbtn', type: 'button' }, 'imprimir / PDF');
+  var bTema = h('button', { class: 'tbtn tema', type: 'button' },
+    h('span', { class: 'p-escuro' }, icone('icone-lua'), 'tema escuro'),
+    h('span', { class: 'p-claro' }, icone('icone-sol'), 'tema claro'));
   add(nav, [bPrint, bTema]);
   bPrint.addEventListener('click', function () { window.print(); });
   try { var salvo = localStorage.getItem('lgpd-relatorio-tema'); if (salvo) root.setAttribute('data-theme', salvo); } catch (e) {}

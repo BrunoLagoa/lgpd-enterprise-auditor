@@ -6,6 +6,9 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+### Alterado
+- Relatório em HTML: o botão de tema passa a mostrar um ícone e o tema para o qual a página muda (lua e "tema escuro" no tema claro, sol e "tema claro" no escuro), no lugar do texto "tema".
+
 ## [1.8.0] - 2026-10-05
 
 Quatro pontos que o terceiro teste de ponta a ponta ainda mostrou depender de julgamento (a v1.7.0 coincidiu com o exemplo em 104 dos 108 itens).
