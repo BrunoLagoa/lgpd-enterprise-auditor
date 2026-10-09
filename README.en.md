@@ -215,38 +215,54 @@ The report, in any format, describes issues that may still be open and is **conf
 
 To check a generated report (catalog IDs, allowed values, the link between items and findings, and the score calculation), run `python3 scripts/validate-report.py <report.html>` from a clone of this repository.
 
-## Usage modes
-
-### 1) Full audit
-
-Use when you need full coverage:
-
-- command: `commands/lgpd-full-audit.md`
-- scenario: `full_audit`
-
-Activated modules: `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
-
-### 2) Scenario-based audit
-
-Use for focused scope:
-
-- `lgpd-saas` -> web SaaS
-- `lgpd-web` -> websites and landing pages
-- `lgpd-mobile` -> mobile app
-- `lgpd-ai-llm` -> AI/LLM systems
-- `lgpd-devsecops` -> pipelines and supply chain
-- `lgpd-eca-digital` -> platforms accessed by children and adolescents (LGPD art. 14 + Digital Statute)
-- `lgpd-plataformas-digitais` -> internet application providers with third-party content, paid ads or image/voice-generating AI (Decrees 12.975/2026 and 12.976/2026)
-
 ## Available commands
 
-Commands in `commands/` are execution shortcuts for the agent.
+After installation, each file in `commands/` becomes a slash command in your assistant. There are 8: one runs the full audit and seven run targeted audits by type of system. With the `agents` target (Codex, Gemini CLI and similar) there are no slash commands: ask for the audit in plain language, through the skill.
 
-All commands include:
+| Command | Scenario | When to use | Activated modules (besides `core` and `legal`) |
+|---|---|---|---|
+| `/lgpd-full-audit` | `full_audit` | Full audit, covering the 17 domains | `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm` |
+| `/lgpd-saas` | `saas_web` | Web SaaS | `governance`, `appsec`, `cloud`, `devsecops` |
+| `/lgpd-web` | `web_site` | Institutional websites, landing pages, blogs and portals | `governance`, `appsec`, `cloud` |
+| `/lgpd-mobile` | `mobile_app` | Mobile apps (iOS, Android, Flutter, React Native) | `governance`, `mobile`, `appsec`, `cloud` |
+| `/lgpd-ai-llm` | `ai_llm_system` | Systems that use AI/LLM | `governance`, `ai-llm`, `appsec` |
+| `/lgpd-devsecops` | `devsecops_pipeline` | CI/CD pipelines and supply chain | `devsecops`, `cloud`, `appsec` |
+| `/lgpd-eca-digital` | `eca_digital_platform` | Platforms accessed by children and adolescents (LGPD art. 14 + Digital Statute, Law No. 15.211/2025) | `eca-digital`, `governance`, `appsec`, `mobile` |
+| `/lgpd-plataformas-digitais` | `digital_platform` | Internet application providers with third-party content, paid ads or image/voice-generating AI (Decrees No. 12.975/2026 and No. 12.976/2026) | `plataformas-digitais`, `governance`, `appsec`, `cloud` |
 
-- metadata (`name`, `description`, `license`, `author`, `version`);
-- minimum context collection when not mapped yet;
-- mandatory evidence and consistency rules aligned with the modular framework.
+`core` and `legal` are activated in every scenario. Only `/lgpd-full-audit` covers everything; the report of the other seven carries the **escopo direcionado** (targeted scope) mark and lists the domains that were not audited.
+
+### What each command checks
+
+- **`/lgpd-full-audit`**: maps the full stack (frontend, backend, database, cloud), the personal and sensitive data processed, third-party integrations, the DevSecOps and AI/LLM context, the presence of users under 18 and the intermediation of third-party content.
+- **`/lgpd-saas`**: web and backend stack, database, cloud provider, integrations (analytics, payments, CRM) and the personal or sensitive data processed. It audits the application, the infrastructure and the delivery pipeline.
+- **`/lgpd-web`**: legal basis for lead capture, data minimization in forms, cookie consent and trackers fired before acceptance, sharing with marketing and CRM tools, privacy policy and cookie banner.
+- **`/lgpd-mobile`**: app permissions, local storage, tracking and analytics SDKs, use of Firebase and cloud services.
+- **`/lgpd-ai-llm`**: AI/LLM providers, personal data sent in prompts, embeddings, RAG and fine-tuning, retention and international transfer, legal basis for processing in AI, prompt injection and context leakage.
+- **`/lgpd-devsecops`**: CI/CD platform, containers and Kubernetes, secrets management, security scans, supply chain, hardening and deploy flow.
+- **`/lgpd-eca-digital`**: age assurance (plain self-declaration is a non-conformity), linking a minor's account to a guardian and parental supervision, default privacy for minors' profiles, advertising, profiling and algorithmic recommendation, loot boxes and paid virtual items, reporting and moderation, legal representative in Brazil and the transparency report (above 1 million underage users).
+- **`/lgpd-plataformas-digitais`**: reporting channel, notice, takedown and appeal with their deadlines, moderation and systemic risk management, paid ads and boosting, access-log retention, headquarters and legal representative in Brazil, terms of use, annual transparency report and AI that generates or alters people's image or voice.
+
+### What every command does
+
+1. **Reads before asking**: checks what the project already documents (`CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, dependency and infrastructure manifests), presents the inferred context and asks only for what is missing.
+2. **Confirms who is being audited**: the nature of the processing agent (natural or legal person, economic purpose, size, high-risk processing) and its role in each data flow (controller, operator or both).
+3. **Asks for the report format** in the same round: `.md`, `.md` and `.html`, or `.html` only. With no answer, it writes the `.md`.
+4. **Evaluates every catalog item** of the active modules, with evidence per item, and delivers the score, the classification and the remediation plan.
+
+### Modules added by trigger
+
+The scenario sets the starting modules. The router adds others when the audited system has the matching characteristic, in any scenario:
+
+| Module | Added when |
+|---|---|
+| `eca-digital` | there are, or plausibly are, users under 18. An age gate based only on self-declared age does not remove the trigger when another indicator exists |
+| `plataformas-digitais` | the service hosts publicly shared third-party content, sells ads or boosts, or offers AI that generates or alters people's image or voice |
+| `ai-llm` | there is any call to an LLM or generative-AI provider or SDK, an in-house model, embeddings, RAG, a vector database or fine-tuning |
+| `mobile` | there is an iOS or Android app (native, Flutter, React Native) |
+| `devsecops` | there is Kubernetes or an active CI/CD |
+| `cloud` | the system uses Firebase or cloud storage |
+| `appsec` | there is a public API |
 
 ## Audit contracts (summary)
 

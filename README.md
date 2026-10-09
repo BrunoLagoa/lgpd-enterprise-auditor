@@ -214,38 +214,54 @@ O relatório, em qualquer formato, descreve falhas que podem estar abertas e é 
 
 Para conferir um relatório gerado (IDs do catálogo, valores permitidos, relação entre itens e achados e o cálculo do score), rode `python3 scripts/validate-report.py <relatorio.html>` a partir de um clone deste repositório.
 
-## Modos de uso
-
-### 1) Auditoria completa
-
-Use quando quiser cobertura total:
-
-- comando: `commands/lgpd-full-audit.md`
-- cenário: `full_audit`
-
-Módulos acionados: `core`, `legal`, `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm`.
-
-### 2) Auditoria por cenário
-
-Use para escopo focado:
-
-- `lgpd-saas` -> SaaS web
-- `lgpd-web` -> sites e landing pages
-- `lgpd-mobile` -> app mobile
-- `lgpd-ai-llm` -> sistemas com IA/LLM
-- `lgpd-devsecops` -> pipelines e supply chain
-- `lgpd-eca-digital` -> plataformas acessadas por crianças e adolescentes (LGPD art. 14 + ECA Digital)
-- `lgpd-plataformas-digitais` -> provedores de aplicações com conteúdo de terceiros, anúncios pagos ou IA que gera imagem/voz (Decretos nº 12.975/2026 e 12.976/2026)
-
 ## Comandos disponíveis
 
-Os comandos em `commands/` são atalhos de execução para o agente.
+Depois da instalação, cada arquivo de `commands/` vira um slash command no seu assistente. São 8: um faz a auditoria completa e sete fazem auditorias direcionadas por tipo de sistema. Com o destino `agents` (Codex, Gemini CLI e similares) não há slash commands: peça a auditoria em linguagem natural, pela skill.
 
-Todos incluem:
+| Comando | Cenário | Quando usar | Módulos ativados (além de `core` e `legal`) |
+|---|---|---|---|
+| `/lgpd-full-audit` | `full_audit` | Auditoria completa, com os 17 domínios | `eca-digital`, `plataformas-digitais`, `governance`, `cloud`, `appsec`, `mobile`, `devsecops`, `ai-llm` |
+| `/lgpd-saas` | `saas_web` | SaaS web | `governance`, `appsec`, `cloud`, `devsecops` |
+| `/lgpd-web` | `web_site` | Sites institucionais, landing pages, blogs e portais | `governance`, `appsec`, `cloud` |
+| `/lgpd-mobile` | `mobile_app` | Aplicativos mobile (iOS, Android, Flutter, React Native) | `governance`, `mobile`, `appsec`, `cloud` |
+| `/lgpd-ai-llm` | `ai_llm_system` | Sistemas que usam IA/LLM | `governance`, `ai-llm`, `appsec` |
+| `/lgpd-devsecops` | `devsecops_pipeline` | Pipelines de CI/CD e supply chain | `devsecops`, `cloud`, `appsec` |
+| `/lgpd-eca-digital` | `eca_digital_platform` | Plataformas acessadas por crianças e adolescentes (LGPD art. 14 + ECA Digital, Lei nº 15.211/2025) | `eca-digital`, `governance`, `appsec`, `mobile` |
+| `/lgpd-plataformas-digitais` | `digital_platform` | Provedores de aplicações com conteúdo de terceiros, anúncios pagos ou IA que gera imagem/voz (Decretos nº 12.975/2026 e nº 12.976/2026) | `plataformas-digitais`, `governance`, `appsec`, `cloud` |
 
-- metadados (`name`, `description`, `license`, `author`, `version`);
-- coleta de contexto mínimo quando não mapeado;
-- regras obrigatórias de evidência e consistência com o framework modular.
+`core` e `legal` são ativados em todos os cenários. Só o `/lgpd-full-audit` cobre tudo; o relatório dos outros sete sai com a marca **escopo direcionado** e lista os domínios que não foram auditados.
+
+### O que cada comando verifica
+
+- **`/lgpd-full-audit`**: levanta a stack completa (frontend, backend, banco, cloud), os dados pessoais e sensíveis tratados, as integrações de terceiros, o contexto de DevSecOps e de IA/LLM, a presença de menores de 18 anos e a intermediação de conteúdo de terceiros.
+- **`/lgpd-saas`**: stack web e backend, banco de dados, provedor de cloud, integrações (analytics, pagamentos, CRM) e dados pessoais ou sensíveis tratados. Audita a aplicação, a infraestrutura e o pipeline de entrega.
+- **`/lgpd-web`**: base legal da captura de leads, minimização dos dados nos formulários, consentimento de cookies e trackers disparados antes do aceite, compartilhamento com ferramentas de marketing e CRM, política de privacidade e banner de cookies.
+- **`/lgpd-mobile`**: permissões do app, armazenamento local, SDKs de tracking e analytics, uso de Firebase e de serviços cloud.
+- **`/lgpd-ai-llm`**: provedores de IA/LLM, dados pessoais enviados em prompts, embeddings, RAG e fine-tuning, retenção e transferência internacional, base legal do tratamento em IA, prompt injection e vazamento contextual.
+- **`/lgpd-devsecops`**: plataforma de CI/CD, containers e Kubernetes, gestão de segredos, scans de segurança, supply chain, hardening e fluxo de deploy.
+- **`/lgpd-eca-digital`**: aferição de idade (autodeclaração simples é não conformidade), vinculação da conta do menor a um responsável e supervisão parental, privacidade padrão dos perfis de menores, publicidade, perfilamento e recomendação algorítmica, loot boxes e itens virtuais pagos, denúncia e moderação, representante legal no Brasil e relatório de transparência (acima de 1 milhão de usuários menores).
+- **`/lgpd-plataformas-digitais`**: canal de denúncia, notificação, remoção e contestação com os respectivos prazos, moderação e gestão de riscos sistêmicos, anúncios e impulsionamento pagos, guarda de registros de acesso, sede e representante legal no Brasil, termos de uso, relatório anual de transparência e IA que gera ou altera imagem ou som de pessoas.
+
+### O que todos os comandos fazem
+
+1. **Leem antes de perguntar**: consultam o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`, `README*`, `docs/`, manifestos de dependências e de infraestrutura), apresentam o contexto inferido e perguntam só o que faltar.
+2. **Confirmam quem é o auditado**: a natureza do agente de tratamento (pessoa natural ou jurídica, fins econômicos, porte, tratamento de alto risco) e o papel dele em cada fluxo de dados (controlador, operador ou ambos).
+3. **Perguntam o formato do relatório** na mesma rodada: `.md`, `.md` e `.html`, ou só `.html`. Sem resposta, gravam o `.md`.
+4. **Avaliam todos os itens do catálogo** dos módulos ativos, com evidência por item, e entregam score, classificação e plano de adequação.
+
+### Módulos adicionados por gatilho
+
+O cenário define os módulos de partida. O roteador acrescenta outros quando o sistema auditado tem a característica correspondente, em qualquer cenário:
+
+| Módulo | Entra quando |
+|---|---|
+| `eca-digital` | há, ou provavelmente há, usuários menores de 18 anos. Um bloqueio etário baseado só em idade autodeclarada não afasta o gatilho quando existe outro indício |
+| `plataformas-digitais` | o serviço intermedeia conteúdo de terceiros com difusão pública, vende anúncios ou impulsionamento, ou oferece IA que gera ou altera imagem ou som de pessoas |
+| `ai-llm` | há qualquer chamada a provedor ou SDK de LLM ou de IA generativa, modelo próprio, embeddings, RAG, banco vetorial ou fine-tuning |
+| `mobile` | há app iOS ou Android (nativo, Flutter, React Native) |
+| `devsecops` | há Kubernetes ou CI/CD ativo |
+| `cloud` | o sistema usa Firebase ou storage em cloud |
+| `appsec` | há API pública |
 
 ## Contratos de auditoria (resumo)
 

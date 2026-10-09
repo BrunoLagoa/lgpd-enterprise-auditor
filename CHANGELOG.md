@@ -6,6 +6,9 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+### Alterado
+- READMEs: a seção "Comandos disponíveis" passa a trazer uma tabela com os 8 comandos (cenário, quando usar e módulos ativados), o que cada um verifica, o que todos fazem e os módulos que o roteador acrescenta por gatilho. Ela substitui a seção "Modos de uso".
+
 ## [1.8.1] - 2026-10-05
 
 ### Alterado
