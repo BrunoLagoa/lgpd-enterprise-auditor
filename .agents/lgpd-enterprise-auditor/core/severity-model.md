@@ -45,7 +45,7 @@ A severidade pode ser **reduzida em um nível** (ex.: `ALTO` → `MEDIO`) quando
 - não há exposição explorável confirmada.
 
 ### Como decidir se há tratamento de alto risco
-A Res. CD/ANPD nº 2/2022 (art. 4º) exige, ao mesmo tempo, um critério **específico** e um critério **geral**. A resolução não fixa número de titulares para "larga escala", então a auditoria decide assim, sempre com evidência:
+A Res. CD/ANPD nº 2/2022 (art. 4º) exige, ao mesmo tempo, um critério **específico** e um critério **geral**. A resolução não fixa número de titulares para "larga escala" e não há guia da ANPD em vigor sobre o tema (a minuta de guia de alto risco foi rejeitada pelo Conselho Diretor em set/2026 — ver [[anpd-guidelines]]), então a auditoria decide assim, sempre com evidência:
 
 1. **Critério específico** — presente se houver ao menos um:
    - tecnologia emergente ou inovadora (ex.: IA generativa aplicada a dados pessoais);
