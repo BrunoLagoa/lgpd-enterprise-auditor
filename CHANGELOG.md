@@ -8,6 +8,7 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ### Alterado
 - READMEs: a seção "Comandos disponíveis" passa a trazer uma tabela com os 8 comandos (cenário, quando usar e módulos ativados), o que cada um verifica, o que todos fazem e os módulos que o roteador acrescenta por gatilho. Ela substitui a seção "Modos de uso".
+- Relatório em HTML: o botão de tema mostra só o ícone e o nome do tema para o qual a página muda ("escuro" no tema claro, "claro" no escuro), sem a palavra "tema"; a dica ao passar o mouse diz "Mudar o tema da página".
 
 ## [1.8.1] - 2026-10-05
 

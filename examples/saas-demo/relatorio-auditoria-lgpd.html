@@ -4329,9 +4329,9 @@ footer p{max-width:90ch}
   add(nav, h('span', { class: 'sp' }));
   function icone(id) { return document.getElementById(id).content.firstElementChild.cloneNode(true); }
   var bPrint = h('button', { class: 'tbtn', type: 'button' }, 'imprimir / PDF');
-  var bTema = h('button', { class: 'tbtn tema', type: 'button' },
-    h('span', { class: 'p-escuro' }, icone('icone-lua'), 'tema escuro'),
-    h('span', { class: 'p-claro' }, icone('icone-sol'), 'tema claro'));
+  var bTema = h('button', { class: 'tbtn tema', type: 'button', title: 'Mudar o tema da página' },
+    h('span', { class: 'p-escuro' }, icone('icone-lua'), 'escuro'),
+    h('span', { class: 'p-claro' }, icone('icone-sol'), 'claro'));
   add(nav, [bPrint, bTema]);
   bPrint.addEventListener('click', function () { window.print(); });
   try { var salvo = localStorage.getItem('lgpd-relatorio-tema'); if (salvo) root.setAttribute('data-theme', salvo); } catch (e) {}
