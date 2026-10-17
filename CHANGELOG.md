@@ -6,6 +6,8 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.10.0] - 2026-10-17
+
 ### Adicionado
 - `scripts/update-generated.py`: gerador único do que o repositório deriva de outra fonte. Além do catálogo, a skill passa a copiar do núcleo, sem paráfrase, o sistema de evidências, o modelo de severidade, o cálculo do score e a classificação final, e copia de `legal/anpd-guidelines.md` a lista de normas em monitoramento. O script também reaplica o modelo HTML ao exemplo. Substitui `scripts/update-skill-catalog.sh` e `scripts/update-example-report.sh`.
 - `scripts/tests/test-validate-report.py`: 23 casos que quebram uma regra cada (score, classificação, teto, ID fora do catálogo, severidade de item parcial, prazo, dependência, `.md` incompleto, `<` no bloco de dados) e exigem o erro correspondente do validador. Roda no `run-all.sh` e no CI.
@@ -226,7 +228,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.9.0...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.0...HEAD
+[1.10.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.9.0...v1.10.0
 [1.9.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.1...v1.9.0
 [1.8.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.7.0...v1.8.0
