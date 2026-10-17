@@ -20,7 +20,7 @@ Obrigado por querer melhorar o LGPD Enterprise Auditor. Este guia resume o fluxo
 O repositório distribui o mesmo auditor em duas formas, ambas atuais: a **skill** (`SKILL.md`) e o **framework modular** (`.agents/lgpd-enterprise-auditor/`). Não use as designações "V1", "V2", "legado" ou "monolito" para elas.
 
 - **Paridade.** Toda mudança de lógica de auditoria (item de checklist, regra de severidade, peso de score, campo de relatório) deve ser avaliada nas duas formas. Se a cobertura mudar, atualize `validation/parity-checklist.md` (e `validation/traceability-matrix.md` se um domínio mudar de módulo).
-- **Catálogo de itens.** Os itens do checklist ficam nas tabelas "Checklist atômico" dos módulos, com ID fixo, domínio, criticidade, agravante ou atenuante, tipo de controle e fundamento. Item novo ganha o próximo número do prefixo do arquivo; ID nunca é renumerado nem reaproveitado. O catálogo da `SKILL.md` é gerado a partir dos módulos: depois de mexer numa tabela, rode `scripts/update-skill-catalog.sh` e nunca edite o bloco entre os marcadores `CATALOGO` à mão.
+- **Catálogo de itens.** Os itens do checklist ficam nas tabelas "Checklist atômico" dos módulos, com ID fixo, domínio, criticidade, agravante ou atenuante, tipo de controle e fundamento. Item novo ganha o próximo número do prefixo do arquivo; ID nunca é renumerado nem reaproveitado. Partes da `SKILL.md` são geradas: o catálogo (das tabelas dos módulos), as regras de evidência, severidade, score e classificação (do `core/`) e as normas em monitoramento (de `legal/anpd-guidelines.md`). Depois de mexer em qualquer dessas fontes, ou no modelo HTML, rode `scripts/update-generated.py`; nunca edite à mão o que fica entre os marcadores `GERADO`.
 - **Só norma vigente gera achado.** Apenas normas em vigor produzem `finding` ou status `NAO_CONFORME`. Projetos de lei, consultas públicas e minutas ficam em seções "Em monitoramento" e só podem alimentar `recomendacoes_tecnicas`.
 - **Evidência e fundamento.** Todo `finding` cita o artigo aplicável da LGPD (ou da norma correlata) e classifica a evidência nos dois eixos independentes: `evidence_type` (`ENCONTRADA | PARCIAL | AUSENTE`) e `evidence_source` (`TECNICA | DOCUMENTAL`). Nada é `CONFORME` sem evidência `ENCONTRADA`.
 - **Contratos só no `core/`.** Severidade, score e formato de relatório são definidos apenas em `.agents/lgpd-enterprise-auditor/core/`. Nenhum módulo os redefine localmente.
@@ -53,6 +53,7 @@ Ou cada suíte em separado:
 ```bash
 scripts/tests/test-framework.sh     # catálogo, paridade skill/framework, cenários, manifestos
 scripts/tests/test-html-report.sh   # modelo HTML e relatório de exemplo (usa python3 para validar os dados)
+scripts/tests/test-validate-report.py  # o validador reprova relatórios quebrados
 scripts/tests/test-install.sh
 scripts/tests/test-versions.sh
 ```

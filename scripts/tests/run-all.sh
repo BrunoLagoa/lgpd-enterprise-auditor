@@ -45,6 +45,7 @@ echo "Verificações locais (as mesmas do CI)"
 
 run "framework: catálogo, paridade, cenários, manifestos" bash scripts/tests/test-framework.sh
 run "relatório em HTML e exemplo" bash scripts/tests/test-html-report.sh
+run "validador de relatório: reprova o que deve" python3 scripts/tests/test-validate-report.py
 if [[ -n "$TAG" ]]; then
   run "versões (tag ${TAG})" bash scripts/tests/test-versions.sh "$TAG"
 else
@@ -58,7 +59,7 @@ if [[ -x /bin/bash && "$(/bin/bash -c 'echo "${BASH_VERSINFO[0]}"')" == "3" ]]; 
 fi
 
 if command -v shellcheck > /dev/null 2>&1; then
-  run "ShellCheck" shellcheck scripts/install.sh scripts/update-example-report.sh scripts/update-skill-catalog.sh scripts/tests/*.sh
+  run "ShellCheck" shellcheck scripts/install.sh scripts/tests/*.sh
 else
   skip "ShellCheck não instalado (brew install shellcheck)" "ShellCheck"
 fi

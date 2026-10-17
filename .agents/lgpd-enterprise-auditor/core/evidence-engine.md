@@ -40,7 +40,7 @@ O status é decidido pela mesma régua em todo item. Aplicar as perguntas **nest
 
 Regras de apoio:
 - **Elementos** são as exigências distintas que o texto do item traz: as que vêm entre parênteses, em lista ou ligadas por "e" e "com" (ex.: em `CK-06`, banner funcional, informação sobre finalidades e informação sobre terceiros: três). A evidência diz quais foram atendidos.
-- Elemento cujo descumprimento já é contado em outro item (contagem única de `core/scoring-engine.md`) sai da conta, do numerador e do denominador.
+- Elemento cujo descumprimento já é contado em outro item (regra de contagem única do cálculo do score) sai da conta, do numerador e do denominador.
 - **Documento em rascunho, não aprovado ou não publicado** prova que o conteúdo existe, não que vale: item que exige publicação, aprovação ou assinatura fica `NAO_CONFORME`; item que avalia o conteúdo é julgado pelo que o rascunho traz.
 - Em dúvida entre `PARCIAL` e `NAO_CONFORME` depois dessas regras, usar `NAO_CONFORME` e indicar a verificação que mudaria o status.
 

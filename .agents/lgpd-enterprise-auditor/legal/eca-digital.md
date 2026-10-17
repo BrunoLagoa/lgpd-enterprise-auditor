@@ -203,10 +203,9 @@ Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): a
 Todo `finding` deste módulo deve citar **o artigo do ECA Digital** e o **correlato na LGPD** (art. 14 e/ou princípios do art. 6º; art. 46 quando for falha de segurança). Achado sem correlato LGPD explícito quebra o contrato de `finding` em [[auditor-core]].
 
 ## Em monitoramento (não vigente — não gera não conformidade)
-- Guia orientativo da ANPD sobre aferição de idade atualizado em maio/2026 (Processo nº 00261.003182/2026-47): tomada de subsídios encerrada em 09/07/2026; versão final prevista para a Etapa II e ainda não publicada até 2026-10.
-- Guia sobre "Fornecedores de produtos ou serviços de tecnologia da informação" (Processo nº 00261.002701/2026-50): tomada de subsídios encerrada em 15/06/2026; versão final ainda não publicada até 2026-10.
-- Regulamentos ainda pendentes previstos na própria lei: requisitos mínimos de aferição de idade e supervisão parental em lojas/SO (art. 12, §3º), diretrizes de supervisão parental (art. 17, §1º), prazos de notificação às autoridades (art. 27, §1º), critérios de acesso a dados para pesquisa (art. 31, parágrafo único) e critérios de modulação de obrigações (art. 39, §3º).
-- Parâmetros normativos definitivos de aferição de idade previstos para a Etapa II (a partir de agosto/2026), não publicados até 2026-10; o cronograma da ANPD prevê o período de adaptação até novembro/2026, a atualização dos regulamentos de fiscalização e sanção a partir de novembro/2026 e a fiscalização a partir de janeiro/2027.
+A situação das normas em monitoramento, com a data da última conferência, está só em [[anpd-guidelines]]: guias de aferição de idade e de fornecedores de TI, parâmetros definitivos de aferição de idade e cronograma de fiscalização. O cronograma não suspende a vigência da lei: os requisitos deste módulo são exigíveis desde 17/03/2026.
+
+Regulamentos ainda pendentes previstos na própria lei: requisitos mínimos de aferição de idade e supervisão parental em lojas/SO (art. 12, §3º), diretrizes de supervisão parental (art. 17, §1º), prazos de notificação às autoridades (art. 27, §1º), critérios de acesso a dados para pesquisa (art. 31, parágrafo único) e critérios de modulação de obrigações (art. 39, §3º).
 
 ## Relação com outros módulos
 - Art. 14 da LGPD e consentimento parental: ver [[children-adolescents]].

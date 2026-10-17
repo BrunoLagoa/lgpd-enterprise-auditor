@@ -46,8 +46,8 @@ Estrutura mínima de checklist. Os itens vêm do catálogo dos módulos (`core/s
 - `evidence_type`: `ENCONTRADA | PARCIAL | AUSENTE` (um único grau por item).
 - `evidence_source`: `TECNICA | DOCUMENTAL`; um item pode ter as duas origens (`TECNICA + DOCUMENTAL`).
 - `evidence_confidence`: `ALTA | MEDIA | BAIXA` (`core/evidence-engine.md`).
-- `impact`: impacto caso falha.
-- `recommendation`: correção sugerida.
+
+O `check_item` não traz impacto nem correção: eles ficam no `finding` do item (`technical_impact`, `legal_impact`, `recommendation`). Item `CONFORME` não tem achado e não precisa deles.
 
 ### `module_output`
 Resultado padrão por módulo:

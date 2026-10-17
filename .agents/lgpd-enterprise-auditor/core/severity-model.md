@@ -11,15 +11,16 @@ Violação grave com alto potencial de dano ao titular, infração relevante da 
 Exemplos:
 - ausência de base legal para tratamento sensível;
 - vazamento de dados sensíveis;
-- credenciais em texto puro;
-- bucket público com dados pessoais.
+- senhas sem hash ou credenciais em texto puro;
+- dados pessoais expostos publicamente (bucket, rota ou arquivo acessível sem autenticação).
 
 ### `ALTO`
 Risco jurídico/técnico elevado, com impacto relevante e alta probabilidade de incidente.
 
 Exemplos:
-- logs com dados pessoais sem mascaramento;
+- logs com dados pessoais sem mascaramento (ex.: CPF em log);
 - ausência de criptografia em repouso para dados críticos;
+- aviso de privacidade inexistente ou não publicado;
 - APIs com autenticação/autorização fraca.
 
 ### `MEDIO`
@@ -28,7 +29,8 @@ Não conformidade relevante, mas sem exposição imediata crítica.
 Exemplos:
 - retenção sem política clara;
 - gestão parcial de direitos do titular;
-- consentimento pouco granular.
+- consentimento pouco granular;
+- governança parcial (ex.: papéis definidos sem processo documentado).
 
 ### `BAIXO`
 Melhoria recomendada com baixo risco imediato.
@@ -45,13 +47,13 @@ A severidade pode ser **reduzida em um nível** (ex.: `ALTO` → `MEDIO`) quando
 - não há exposição explorável confirmada.
 
 ### Como decidir se há tratamento de alto risco
-A Res. CD/ANPD nº 2/2022 (art. 4º) exige, ao mesmo tempo, um critério **específico** e um critério **geral**. A resolução não fixa número de titulares para "larga escala" e não há guia da ANPD em vigor sobre o tema (a minuta de guia de alto risco foi rejeitada pelo Conselho Diretor em set/2026 — ver [[anpd-guidelines]]), então a auditoria decide assim, sempre com evidência:
+A Res. CD/ANPD nº 2/2022 (art. 4º) exige, ao mesmo tempo, um critério **específico** e um critério **geral**. A resolução não fixa número de titulares para "larga escala" e não há guia da ANPD em vigor sobre o tema (ver normas em monitoramento), então a auditoria decide assim, sempre com evidência:
 
 1. **Critério específico** — presente se houver ao menos um:
    - tecnologia emergente ou inovadora (ex.: IA generativa aplicada a dados pessoais);
    - vigilância ou controle de zonas acessíveis ao público;
    - decisão tomada unicamente por tratamento automatizado, inclusive perfilamento;
-   - dado pessoal sensível (com a extensão do art. 11, §1º, descrita em `core/scoring-engine.md`) ou dado de crianças, adolescentes ou idosos.
+   - dado pessoal sensível (inclusive o dado que revele informação sensível, art. 11, §1º) ou dado de crianças, adolescentes ou idosos.
 2. **Critério geral** — presente se houver ao menos um:
    - **impacto significativo**: o tratamento pode impedir o exercício de direitos ou o uso de um serviço, ou causar dano material ou moral (discriminação, dano à integridade física, à imagem ou à reputação, fraude financeira, roubo de identidade). Posição do framework, para tornar a decisão verificável — considera-se presente quando:
      - o tratamento decide o acesso do titular a serviço, crédito, emprego ou benefício; ou
@@ -75,6 +77,6 @@ Toda modulação é registrada no `finding` (`severity_modulation`: severidade o
 
 ## Regras de uso
 - Cada `finding` deve ter um único nível de severidade.
-- Quando mais de uma regra de severidade, do mesmo módulo ou de módulos diferentes, se aplicar ao mesmo achado, vale a mais específica; se forem igualmente específicas, a mais alta.
+- Quando mais de uma regra de severidade, do mesmo domínio ou de domínios diferentes, se aplicar ao mesmo achado, vale a mais específica; se forem igualmente específicas, a mais alta.
 - Em dúvida entre dois níveis, usar o mais alto quando houver impacto jurídico potencial significativo.
 - Achados `CRITICO` e `ALTO` devem ter plano de ação com prazo definido.

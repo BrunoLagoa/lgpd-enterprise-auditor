@@ -11,11 +11,13 @@
 - papel do auditado por fluxo de dados (controlador, operador ou ambos):
 
 ## 2. Checklist de conformidade
-| Item | Área | Status | Evidência | Impacto | Recomendação |
-|---|---|---|---|---|---|
-|  |  |  |  |  |  |
+Uma tabela por área de score (mapa por domínio de `core/scoring-engine.md`), com a área no título:
 
-Preencher `Item` como `ID · criticality · control_type — texto do item` (ex.: `SE-03 · ALTO · TECNICO — …`). Preencher `Área` com a área de score do item (mapa por domínio de `core/scoring-engine.md`) e `Evidência` como `GRAU (ORIGEM), confiança NIVEL: descrição`, conforme `core/evidence-engine.md`. A tabela lista só itens `APLICAVEL`.
+| Item | Status | Evidência | Achado |
+|---|---|---|---|
+|  |  |  |  |
+
+Preencher `Item` como `ID · criticality · control_type — texto do item` (ex.: `SE-03 · ALTO · TECNICO — …`), `Evidência` como `GRAU (ORIGEM), confiança NIVEL: descrição`, conforme `core/evidence-engine.md`, e `Achado` com o ID da não conformidade (`NC-nn`) ou `—`. As tabelas listam só itens `APLICAVEL`; impacto e correção ficam na seção 3.
 
 ### Itens fora do cálculo
 | Item | Área | Aplicabilidade | Justificativa ou acesso necessário |

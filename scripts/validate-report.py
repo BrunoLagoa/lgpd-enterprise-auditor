@@ -43,6 +43,10 @@ DOMAIN = re.compile(r"^\| `(BL|\d+)` \| (.*) \| `(\w+)` \|$")
 AREA_WEIGHT = re.compile(r"^- `(\w+)`: (\d+)%$")
 MANIFEST_FILES = re.compile(r"^- `files`: (.*)$")
 DEPENDS = re.compile(r"^- `([A-Z]{2,5}-\d{2,3})` depende de `([A-Z]{2,5}-\d{2,3})`")
+# Arquivo de regras do framework citado no texto do relatório: o leitor não tem o framework ao lado.
+FRAMEWORK_FILE = re.compile(r"\b(?:core|orchestrator)/[a-z-]+\.md\b|\b(?:legal|governance|appsec|cloud|mobile|devsecops|ai-llm)/"
+                            r"(?:[a-z-]+-(?:engine|framework|audit|guidelines|storage|security)|owasp-api|rights-of-data-subject|"
+                            r"children-adolescents|international-transfer|eca-digital|plataformas-digitais)\.md\b")
 
 
 def read(path):
@@ -114,6 +118,17 @@ def band(score):
 
 def half_up(value):
     return int(math.floor(value + 0.5))
+
+
+def strings(node):
+    if isinstance(node, dict):
+        for value in node.values():
+            yield from strings(value)
+    elif isinstance(node, list):
+        for value in node:
+            yield from strings(value)
+    elif isinstance(node, str):
+        yield node
 
 
 def text_of(value):
@@ -341,6 +356,11 @@ def validate(data, weights, modules, catalog, md_text=None, depends=()):
     for key, (total, weight) in (("score_tecnico", kind["TECNICO"]), ("score_documental", kind["DOCUMENTAL"])):
         if weight and score_block.get(key) is not None and abs(float(score_block[key]) - 100.0 * total / weight) > 0.06:
             err("%s: declarado %s, recalculado %.1f" % (key, score_block[key], 100.0 * total / weight))
+
+    cited = sorted({m.group(0) for text in strings(data) for m in FRAMEWORK_FILE.finditer(text)}
+                   | ({m.group(0) for m in FRAMEWORK_FILE.finditer(md_text)} if md_text else set()))
+    if cited:
+        warn("o texto cita arquivos de regras do framework, que o leitor não tem (%s): citar a regra pelo nome" % ", ".join(cited))
 
     scenario = meta.get("scenario")
     if scenario and scenario != "full_audit" and not score_block.get("out_of_scope"):

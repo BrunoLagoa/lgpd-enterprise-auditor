@@ -6,6 +6,18 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+### Adicionado
+- `scripts/update-generated.py`: gerador único do que o repositório deriva de outra fonte. Além do catálogo, a skill passa a copiar do núcleo, sem paráfrase, o sistema de evidências, o modelo de severidade, o cálculo do score e a classificação final, e copia de `legal/anpd-guidelines.md` a lista de normas em monitoramento. O script também reaplica o modelo HTML ao exemplo. Substitui `scripts/update-skill-catalog.sh` e `scripts/update-example-report.sh`.
+- `scripts/tests/test-validate-report.py`: 23 casos que quebram uma regra cada (score, classificação, teto, ID fora do catálogo, severidade de item parcial, prazo, dependência, `.md` incompleto, `<` no bloco de dados) e exigem o erro correspondente do validador. Roda no `run-all.sh` e no CI.
+- `scripts/validate-report.py` avisa quando o relatório cita arquivos de regras do framework.
+
+### Alterado
+- Normas em monitoramento com uma única lista datada, em `legal/anpd-guidelines.md`, conferida na mesma data da sincronização dos READMEs; os módulos `eca-digital`, `plataformas-digitais` e `ai-llm` só remetem a ela e listam os dispositivos pendentes de regulamentação. O teste do framework reprova carimbo de data fora dessa lista. A regra de que o cronograma de fiscalização não suspende a vigência do ECA Digital, antes só na skill, passa a estar também no módulo.
+- Relatório, `.md` e `.html`: cada informação em um só lugar. O checklist vira uma tabela por área, com as colunas `Item | Status | Evidência | Achado`; impacto e correção ficam só na não conformidade, e o `check_item` deixa de ter `impact` e `recommendation`. Os itens `NAO_VERIFICADO` aparecem só na tabela de itens fora do cálculo. O relatório não repete as regras do framework nem cita arquivos dele: traz resultados, memória de cálculo e as decisões da auditoria.
+- Relatório em HTML: o item do checklist mostra o resumo da sua não conformidade (título, severidade, prazo e esforço), com link; o cartão do score mostra a classificação uma vez só.
+- Relatório de exemplo refeito no novo formato, com os mesmos itens, achados e score: o `.md` cai de 172 KB para 155 KB.
+- Skill: exemplos de não conformidade em tabela, ligados aos itens do catálogo (o exemplo de IA dava `CRITICO` a `IA-01` sem dado sensível, contra a criticidade do catálogo); visão geral, princípios e regras de análise condensados; seções "Foco especial" e "Resultado esperado" incorporadas às regras de análise.
+
 ## [1.9.0] - 2026-10-16
 
 ### Alterado

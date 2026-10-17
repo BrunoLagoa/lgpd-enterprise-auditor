@@ -17,3 +17,5 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Modelo do relatório em HTML e exemplo público
         run: bash scripts/tests/test-html-report.sh
+      - name: Validador de relatório reprova dados quebrados
+        run: python3 scripts/tests/test-validate-report.py
