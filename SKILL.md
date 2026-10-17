@@ -4,7 +4,7 @@ description: Auditoria de conformidade LGPD (Lei nº 13.709/2018) orientada a ev
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.8.1"
+  version: "1.9.0"
 ---
 
 # 🛡️ LGPD ENTERPRISE AUDITOR FRAMEWORK
