@@ -61,7 +61,7 @@ Não são vinculantes, mas expressam o entendimento da ANPD e servem como **evid
 - Radar Tecnológico nº 2 — Biometria e reconhecimento facial;
 - Estudos técnicos sobre anonimização e sobre tratamento de dados de crianças e adolescentes;
 - Notas técnicas de fiscalização (ex.: NT nº 1/2026 sobre sistema de IA Grok; NT nº 58/2025 sobre compartilhamento WhatsApp/Grupo Meta).
-- Atenção: a minuta de **Guia Orientativo sobre Tratamento de Dados Pessoais de Alto Risco** (Participa+Brasil, "em elaboração") foi **rejeitada** por unanimidade pelo Conselho Diretor (Voto nº 11/2025/DIR-MW/CD, set/2026) e arquivada — metodologia considerada complexa e análise de alto risco remetida ao RIPD. Não citá-la como referência: a decisão de alto risco segue a Res. CD/ANPD nº 2/2022, art. 4º, e [[severity-model]].
+- A minuta de Guia Orientativo sobre Tratamento de Dados Pessoais de Alto Risco foi rejeitada e não serve de referência — ver "Em monitoramento".
 
 ## Diretrizes operacionais
 - Documentar decisões de tratamento e bases legais.
@@ -77,10 +77,25 @@ Não são vinculantes, mas expressam o entendimento da ANPD e servem como **evid
 - histórico de incidentes e tratativas.
 
 ## Em monitoramento (não vigente — não gera não conformidade)
-Itens abaixo **não podem** originar `finding` nem `check_item` com status `NAO_CONFORME`. Usar apenas na seção `recomendacoes_tecnicas` do relatório, sempre rotulados como norma não vigente:
-- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados — em out/2026, ainda aguardando parecer do relator na Comissão Especial; o relator indicou que a votação fica para depois das eleições de outubro de 2026. Prevê classificação por nível de risco, direitos dos afetados e governança de IA.
-- **Guias orientativos da ANPD no âmbito do ECA Digital** (aferição de idade e fornecedores de tecnologia): tomadas de subsídios encerradas em 2026, versões finais ainda não publicadas até 2026-10; tratar as versões em consulta como referência preliminar.
+Fonte única da situação das normas em monitoramento. Situação conferida em 2026-10.
+
+Nada nesta seção origina `finding` nem `check_item` com status `NAO_CONFORME`. Usar apenas em `recomendacoes_tecnicas`, sempre rotulado como norma não vigente.
+
+### ANPD: fiscalização, processo regulatório e agenda
 - **Revisão da Resolução CD/ANPD nº 1/2021** (Regulamento de Fiscalização e do Processo Administrativo Sancionador): consulta pública aberta em 09/09/2026, audiência pública em 24/09/2026 e contribuições até 26/10/2026. A minuta adapta a fiscalização ao ECA Digital, ao regime de agência reguladora e às novas atribuições sobre provedores de aplicações de internet. Até a publicação da norma final, a Res. CD/ANPD nº 1/2021 segue vigente e continua sendo a referência de risco sancionatório.
-- **Normas complementares do ECA Digital ainda não publicadas**: parâmetros definitivos de aferição de idade previstos para a etapa regulatória iniciada em agosto/2026 — ver [[eca-digital]].
-- **Agenda Regulatória 2027-2028 e Agenda de Avaliação de Resultado Regulatório 2027-2030**: tomadas de subsídios abertas em 01/09/2026, com contribuições até 16/10/2026 (Brasil Participativo). Eixos propostos para 2027-2028: ambiente digital seguro, sobretudo para crianças, adolescentes e mulheres (supervisão parental, padrões de design seguro, uso de IA por menores, transparência das plataformas, combate à geração de conteúdo ilícito por IA), e privacidade e proteção de dados (direitos dos titulares, reconhecimento facial, dados de saúde, decisões automatizadas). A avaliação de resultado inclui o Regulamento de Transferência Internacional e o guia de aferição de idade. Sem efeito até a resolução que aprovar as agendas.
-- **Revisão da Portaria ANPD nº 16/2021** (processo regulatório da própria ANPD): consulta pública aberta em 06/10/2026, audiência em 22/10/2026 e contribuições até 23/11/2026; propõe converter a portaria em resolução, tornar obrigatórios os debates públicos e prever a participação de crianças e adolescentes. Não cria obrigação para agentes de tratamento.
+- **Revisão da Portaria ANPD nº 16/2021** (processo regulatório da própria ANPD): consulta pública aberta em 06/10/2026, audiência em 22/10/2026 e contribuições até 23/11/2026. Propõe converter a portaria em resolução, tornar obrigatórios os debates públicos e prever a participação de crianças e adolescentes. Não cria obrigação para agentes de tratamento.
+- **Agenda Regulatória 2027-2028 e Agenda de Avaliação de Resultado Regulatório 2027-2030**: tomadas de subsídios abertas em 01/09/2026, com contribuições até 16/10/2026. Eixos propostos para 2027-2028: ambiente digital seguro, sobretudo para crianças, adolescentes e mulheres (supervisão parental, padrões de design seguro, uso de IA por menores, transparência das plataformas, combate à geração de conteúdo ilícito por IA), e privacidade e proteção de dados (direitos dos titulares, reconhecimento facial, dados de saúde, decisões automatizadas). A avaliação de resultado inclui o Regulamento de Transferência Internacional e o guia de aferição de idade. Sem efeito até a resolução que aprovar as agendas.
+- **Guia Orientativo sobre Tratamento de Dados Pessoais de Alto Risco**: a minuta foi **rejeitada** por unanimidade pelo Conselho Diretor (Voto nº 11/2025/DIR-MW/CD, set/2026) e arquivada; a ANPD indicou que a análise de alto risco deve ocorrer no RIPD. Não citar a minuta: a decisão de alto risco segue a Res. CD/ANPD nº 2/2022, art. 4º, e o critério do modelo de severidade.
+
+### Inteligência artificial
+- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024 e em tramitação na Câmara dos Deputados, aguardando parecer do relator na Comissão Especial; o relator indicou que a votação fica para depois das eleições de outubro de 2026. Prevê classificação por nível de risco, direitos de transparência, explicação e contestação, governança de IA e sanções próprias.
+- **Nota Técnica da Sedigi/MJSP sobre companheiros de IA** (22/09/2026): sistemas conversacionais que simulam vínculo afetivo, acessíveis a crianças e adolescentes; encaminhada à ANPD e à Senacon. É preliminar e não vinculante; os indícios que aponta (aferição de idade só por autodeclaração, perfilamento emocional para publicidade, coleta de dados íntimos) são auditados pelos itens vigentes do ECA Digital e do art. 14 da LGPD.
+
+### ECA Digital (domínio 16)
+- **Guia orientativo sobre aferição de idade** (Processo nº 00261.003182/2026-47): versão atualizada em maio/2026, tomada de subsídios encerrada em 09/07/2026; versão final prevista para a Etapa II e ainda não publicada.
+- **Guia sobre fornecedores de produtos ou serviços de tecnologia da informação** (Processo nº 00261.002701/2026-50): tomada de subsídios encerrada em 15/06/2026; versão final ainda não publicada.
+- **Parâmetros normativos definitivos de aferição de idade**, previstos para a Etapa II (a partir de agosto/2026) e ainda não publicados. O cronograma da ANPD prevê adaptação até novembro/2026, atualização dos regulamentos de fiscalização e sanção a partir de novembro/2026 e fiscalização a partir de janeiro/2027.
+- O cronograma de fiscalização **não suspende a vigência da lei**: os requisitos do domínio 16 são exigíveis desde 17/03/2026.
+
+### Plataformas digitais (domínio 17)
+- **Regulamentação dos Decretos nº 12.975/2026 e nº 12.976/2026 pela ANPD** (forma e prazos de notificação e contestação, marcação digital de conteúdo íntimo, parâmetros das salvaguardas de IA, critérios diferenciados por porte): tomada de subsídios encerrada em 17/08/2026, sem regulamento final. O cronograma prevê a definição das prioridades regulatórias 2027-2028 em novembro/2026 e a atualização dos regulamentos de fiscalização e dosimetria em dezembro/2026. Até lá, valem os deveres dos decretos e os prazos transitórios do art. 12 do Decreto nº 12.976/2026.

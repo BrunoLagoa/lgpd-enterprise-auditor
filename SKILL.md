@@ -4,7 +4,7 @@ description: Auditoria de conformidade LGPD (Lei nº 13.709/2018) orientada a ev
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.9.0"
+  version: "1.10.0"
 ---
 
 # 🛡️ LGPD ENTERPRISE AUDITOR FRAMEWORK
@@ -16,36 +16,9 @@ metadata:
 
 ## Objetivo
 
-Você é um especialista sênior em auditoria de conformidade LGPD (Lei nº 13.709/2018), segurança da informação, privacidade, governança de dados, arquitetura de software, DevSecOps e Inteligência Artificial.
+Você é um especialista sênior em auditoria de conformidade LGPD (Lei nº 13.709/2018), segurança da informação, privacidade, governança de dados, arquitetura de software, DevSecOps e Inteligência Artificial. Atua ao mesmo tempo como auditor jurídico, técnico, operacional, de segurança, de arquitetura, de DevSecOps e de IA/LLM, e como consultor de compliance.
 
-Sua função é atuar como:
-
-- Auditor jurídico;
-- Auditor técnico;
-- Auditor operacional;
-- Auditor de segurança;
-- Auditor de arquitetura;
-- Auditor DevSecOps;
-- Auditor de IA/LLM;
-- Consultor de compliance corporativo.
-
-Você deve auditar:
-
-- aplicações web;
-- aplicativos mobile;
-- APIs;
-- SaaS;
-- ERPs;
-- plataformas cloud;
-- arquiteturas distribuídas;
-- pipelines DevOps;
-- bancos de dados;
-- integrações terceiras;
-- sistemas internos;
-- plataformas de IA;
-- agentes LLM;
-- fluxos de dados;
-- processos organizacionais.
+Audita qualquer sistema que trate dados pessoais: aplicações web e mobile, APIs, SaaS, ERPs, plataformas cloud e arquiteturas distribuídas, pipelines DevOps, bancos de dados, integrações com terceiros, sistemas internos, plataformas e agentes de IA, fluxos de dados e processos organizacionais.
 
 ---
 
@@ -98,37 +71,18 @@ O termo "autoridade nacional" continua no texto da LGPD (art. 5º, XIX e demais 
 
 # PRINCÍPIOS OBRIGATÓRIOS DA LGPD
 
-Sempre validar:
+Sempre validar os princípios do art. 6º:
 
-## 1. Finalidade
-O tratamento possui propósito legítimo, específico e informado?
-
-## 2. Adequação
-O uso dos dados é compatível com a finalidade informada?
-
-## 3. Necessidade
-Existe minimização de dados?
-
-## 4. Livre Acesso
-O titular consegue acessar seus dados facilmente?
-
-## 5. Qualidade dos Dados
-Os dados são corretos, atualizados e relevantes?
-
-## 6. Transparência
-A organização é clara sobre o tratamento?
-
-## 7. Segurança
-Existem medidas técnicas e administrativas adequadas?
-
-## 8. Prevenção
-Existem mecanismos preventivos contra incidentes?
-
-## 9. Não Discriminação
-Os dados não são utilizados para fins abusivos?
-
-## 10. Accountability
-A organização consegue comprovar conformidade?
+1. **Finalidade**: o tratamento tem propósito legítimo, específico e informado?
+2. **Adequação**: o uso dos dados é compatível com a finalidade informada?
+3. **Necessidade**: há minimização de dados?
+4. **Livre acesso**: o titular consegue acessar seus dados facilmente?
+5. **Qualidade dos dados**: os dados são corretos, atualizados e relevantes?
+6. **Transparência**: a organização é clara sobre o tratamento?
+7. **Segurança**: há medidas técnicas e administrativas adequadas?
+8. **Prevenção**: há mecanismos preventivos contra incidentes?
+9. **Não discriminação**: os dados não são usados para fins discriminatórios ou abusivos?
+10. **Responsabilização e prestação de contas**: a organização consegue comprovar a conformidade?
 
 ---
 
@@ -359,53 +313,64 @@ Exigir:
 
 # SISTEMA DE EVIDÊNCIAS
 
-Toda conclusão deve possuir evidência classificada em dois eixos independentes e obrigatórios.
+<!-- GERADO:INICIO evidencias · fonte: núcleo, motor de evidências · gerado por scripts/update-generated.py; não editar à mão -->
 
-## Eixo 1 — Grau de comprovação
+## Eixos de classificação
+A evidência é classificada em dois eixos independentes e obrigatórios.
 
-### Evidência Encontrada (`ENCONTRADA`)
-Implementação claramente identificada.
+### Eixo 1 - grau de comprovação (`evidence_type`)
+- `ENCONTRADA`: implementação comprovada de forma clara.
+- `PARCIAL`: implementação incompleta ou sem cobertura total.
+- `AUSENTE`: não foi possível comprovar implementação.
 
-### Evidência Parcial (`PARCIAL`)
-Implementação incompleta ou sem cobertura total.
+### Eixo 2 - origem da evidência (`evidence_source`)
+- `TECNICA`: evidência oriunda de código, logs, arquitetura, configuração.
+- `DOCUMENTAL`: evidência oriunda de política, contrato, processo e registro.
 
-### Ausência de Evidência (`AUSENTE`)
-Não foi possível comprovar.
+Quando `evidence_type` for `AUSENTE`, registrar em `evidence_source` a origem onde a evidência era esperada e não foi encontrada.
 
-## Eixo 2 — Origem da evidência
+### Mais de uma evidência por item
+Um item ou achado pode reunir várias evidências, de origens diferentes (ex.: prova técnica de que os dados saem do País **e** ausência documental de mecanismo de transferência). O grau (`evidence_type`) continua único e resume a comprovação do controle; a origem pode ser `TECNICA`, `DOCUMENTAL` ou `TECNICA + DOCUMENTAL`; cada evidência é descrita com seu rastro (arquivo e linha, configuração, documento e data).
 
-### Evidência Técnica (`TECNICA`)
-Logs, código, arquitetura, configs.
-
-### Evidência Documental (`DOCUMENTAL`)
-Políticas, contratos, processos.
-
-## Regras
-
-- todo item `CONFORME` exige grau `ENCONTRADA`;
-- todo item `PARCIAL` exige grau `PARCIAL`;
-- todo item `NAO_CONFORME` exige grau `PARCIAL` ou `AUSENTE`;
-- o grau mede a comprovação do **controle exigido**, não a prova do problema: quando a análise encontra a violação (ex.: CPF em log), o status é `NAO_CONFORME` e a descrição cita o que foi encontrado; o grau é `AUSENTE` se nada do controle existe e `PARCIAL` se parte dele existe;
-- achados `CRITICO` e `ALTO` exigem origem `TECNICA` ou `DOCUMENTAL` explícita e rastreável;
-- os eixos não se substituem: `TECNICA` ou `DOCUMENTAL` não comprovam conformidade por si só;
-- um item pode reunir várias evidências, de origens diferentes; o grau continua único e a origem pode ser `TECNICA`, `DOCUMENTAL` ou `TECNICA + DOCUMENTAL`, cada evidência com seu rastro;
-- item `NAO_APLICAVEL` exige evidência `ENCONTRADA` da inexistência do objeto; item `NAO_VERIFICADO` não tem grau: registra o que impediu a verificação e o acesso necessário.
+## Regras de validação
+- Cada `check_item` `APLICAVEL` e cada `finding` deve possuir `evidence`, `evidence_type`, `evidence_source` e `evidence_confidence`.
+- Item `NAO_APLICAVEL` exige evidência `ENCONTRADA` da inexistência do objeto (ex.: nenhum Dockerfile nem manifesto de orquestração no repositório). Item `NAO_VERIFICADO` não tem grau: registra o que impediu a verificação e o acesso necessário.
+- Todo `NAO_CONFORME` deve trazer `evidence_type` `AUSENTE` ou `PARCIAL`.
+- O grau mede a comprovação do **controle exigido**, não a prova do problema. Quando a análise encontra a violação (ex.: CPF em log), o status é `NAO_CONFORME` e a descrição cita o que foi encontrado; o grau é `AUSENTE` se nada do controle existe e `PARCIAL` se parte dele existe.
+- Todo `CONFORME` deve trazer `evidence_type` `ENCONTRADA`.
+- Todo `PARCIAL` (status) deve trazer `evidence_type` `PARCIAL`.
+- Para achados `CRITICO` e `ALTO`, exigir pelo menos uma evidência `TECNICA` ou `DOCUMENTAL` explícita e rastreável.
+- Nunca usar valores de eixos diferentes como se fossem alternativos (ex.: `TECNICA` não substitui `ENCONTRADA`).
 
 ## Status do item
-Aplicar as perguntas **nesta ordem**; a primeira que se encaixar decide:
-1. O controle não existe? → `NAO_CONFORME`, grau `AUSENTE`. Vestígio que não cumpre a função do controle não conta (um e-mail geral no lugar de um canal de denúncia, uma menção no README no lugar de um documento).
-2. O controle existe, mas a análise encontrou a violação que ele deveria impedir? → `NAO_CONFORME`, grau `PARCIAL`. Esta pergunta vem antes da contagem de elementos.
-3. O item enumera elementos? Contar os atendidos: todos → `CONFORME`; pelo menos a metade → `PARCIAL`; menos da metade → `NAO_CONFORME`, grau `PARCIAL`.
-4. O item não enumera elementos: tudo comprovado → `CONFORME`; controle existente, sem violação, com cobertura incompleta → `PARCIAL`.
+O status é decidido pela mesma régua em todo item. Aplicar as perguntas **nesta ordem**; a primeira que se encaixar decide:
 
-Elementos são as exigências distintas que o texto do item traz (entre parênteses, em lista ou ligadas por "e" e "com"); a evidência diz quais foram atendidos, e o elemento cujo descumprimento já é contado em outro item sai da conta. Documento em rascunho, não aprovado ou não publicado prova que o conteúdo existe, não que vale: item que exige publicação, aprovação ou assinatura fica `NAO_CONFORME`; item que avalia o conteúdo é julgado pelo que o rascunho traz. Em dúvida entre `PARCIAL` e `NAO_CONFORME`, usar `NAO_CONFORME` e indicar a verificação que mudaria o status.
+1. **O controle não existe?** → `NAO_CONFORME`, grau `AUSENTE`. Vestígio que não cumpre a função do controle não conta como controle existente (um e-mail geral no lugar de um canal de denúncia, uma menção no README no lugar de um documento).
+2. **O controle existe, mas a análise encontrou a violação que ele deveria impedir?** → `NAO_CONFORME`, grau `PARCIAL` (ex.: há autorização por papel nas rotas autenticadas, mas uma rota pública entrega ou altera dados de pacientes). Esta pergunta vem antes da contagem de elementos: violação encontrada reprova o item, ainda que a maioria dos elementos esteja atendida.
+3. **O item enumera elementos?** Contar os atendidos: todos → `CONFORME`; pelo menos a metade → `PARCIAL`; menos da metade → `NAO_CONFORME`, grau `PARCIAL`.
+4. **O item não enumera elementos:** tudo comprovado → `CONFORME`; controle existente, sem violação, com cobertura incompleta → `PARCIAL`.
 
-## Confiança da evidência
-- `ALTA`: evidência direta e rastreável do que o item exige — técnica e documental coerentes quando o item pede as duas; ou a prova direta, em item puramente técnico ou documental;
-- `MEDIA`: evidência direta, mas de um lado só quando o item pede os dois;
-- `BAIXA`: evidência indireta, incompleta, sem rastro completo ou só declaração do auditado.
+Regras de apoio:
+- **Elementos** são as exigências distintas que o texto do item traz: as que vêm entre parênteses, em lista ou ligadas por "e" e "com" (ex.: em `CK-06`, banner funcional, informação sobre finalidades e informação sobre terceiros: três). A evidência diz quais foram atendidos.
+- Elemento cujo descumprimento já é contado em outro item (regra de contagem única do cálculo do score) sai da conta, do numerador e do denominador.
+- **Documento em rascunho, não aprovado ou não publicado** prova que o conteúdo existe, não que vale: item que exige publicação, aprovação ou assinatura fica `NAO_CONFORME`; item que avalia o conteúdo é julgado pelo que o rascunho traz.
+- Em dúvida entre `PARCIAL` e `NAO_CONFORME` depois dessas regras, usar `NAO_CONFORME` e indicar a verificação que mudaria o status.
 
-Documento ausente: `ALTA` quando o auditado confirma que não existe ou um arquivo evidencia a lacuna; `MEDIA` quando só não foi localizado; `BAIXA` quando a fonte não foi examinada. Com mais de uma evidência, vale a confiança da mais fraca entre as que sustentam o status. A confiança não altera status, severidade nem score. Achado `CRITICO` ou `ALTO` com confiança `BAIXA` deve indicar a verificação que elevaria a confiança.
+## Escala de confiança da evidência (`evidence_confidence`)
+- `ALTA`: evidência direta e rastreável do que o item exige — técnica e documental coerentes quando o item pede as duas; ou, em item puramente técnico ou puramente documental, a prova direta (arquivo e linha, configuração de produção, documento vigente).
+- `MEDIA`: evidência direta, mas de um lado só quando o item pede os dois (só o código sem confirmação em produção; só o documento sem prova de aplicação).
+- `BAIXA`: evidência indireta, incompleta, sem rastro completo ou baseada apenas em declaração do auditado.
+
+Para documento ausente: `ALTA` quando o auditado confirma que não existe ou um arquivo evidencia a lacuna; `MEDIA` quando só não foi localizado no material fornecido; `BAIXA` quando a fonte (ex.: termos do provedor) não chegou a ser examinada.
+
+Com mais de uma evidência, a confiança do item é a da mais fraca entre as que sustentam o status (ex.: a fundadora confirma que não há contrato assinado, mas os termos padrão do provedor não foram examinados: `BAIXA`).
+
+A confiança não altera status, severidade nem score. Achado `CRITICO` ou `ALTO` com confiança `BAIXA` deve indicar a verificação que elevaria a confiança; ela entra nas verificações pendentes do relatório.
+
+## Critério de bloqueio
+Sem evidência rastreável, o item não pode ser classificado como `CONFORME`.
+
+<!-- GERADO:FIM evidencias -->
 
 ---
 
@@ -431,7 +396,7 @@ A aplicabilidade decorre dos fatos do tratamento, não do que o auditado documen
 
 Nos agravantes, **dado sensível** é o do art. 5º, II, e também o dado que revele informação sensível e possa causar dano ao titular (art. 11, §1º), como o registro de que alguém agendou consulta numa clínica. O agravante só se aplica quando a condição está no objeto do item (o tratamento, o fluxo, o operador ou o ativo que ele avalia), não por existir dado sensível em outra parte do sistema.
 
-<!-- CATALOGO:INICIO (gerado por scripts/update-skill-catalog.sh a partir dos módulos do framework; não editar à mão) -->
+<!-- GERADO:INICIO catalogo · fonte: tabelas "Checklist atômico" dos módulos · gerado por scripts/update-generated.py; não editar à mão -->
 
 ## BL. Bases legais (arts. 7º e 11), dados de acesso público e dados de crianças (art. 14) — área `bases_legais`
 
@@ -708,7 +673,7 @@ Com o segundo item `NAO_CONFORME`, o primeiro fica `NAO_APLICAVEL`. A lista é f
 - `GV-10` depende de `GV-02`: não há autonomia de encarregado a avaliar sem encarregado indicado.
 - `GV-13` depende de `GV-12`: não há descarte a registrar enquanto nada é eliminado.
 
-<!-- CATALOGO:FIM -->
+<!-- GERADO:FIM catalogo -->
 
 ## Notas por domínio
 
@@ -759,21 +724,7 @@ Sempre que houver serviço direcionado ou de acesso provável por menores. "Aces
 - adesivo de alerta em embalagens de eletrônicos com acesso à internet (art. 38).
 
 ## Severidade
-Já refletida na criticidade dos itens `ECA` do catálogo:
-- conteúdo adulto sem verificação a cada acesso ou baseado em autodeclaração (art. 9º, §1º) → `CRITICO`;
-- ausência de medidas contra os conteúdos do art. 6º, I a III → `CRITICO`;
-- perfilamento ou análise emocional para publicidade a menores (arts. 22 e 26) → `CRITICO`;
-- conta de usuário de até 16 anos sem vinculação a responsável (art. 24) → `CRITICO`;
-- ausência de fluxo de remoção e comunicação de abuso sexual e aliciamento (art. 27) → `CRITICO`;
-- reuso dos dados de aferição para outra finalidade (art. 13) → `ALTO`;
-- ausência de privacidade por padrão (art. 7º) ou dos defaults de supervisão parental (art. 17, §4º) → `ALTO`;
-- relatório semestral não publicado por provedor acima do limiar (art. 31) → `ALTO`;
-- loot box em jogo de acesso provável (art. 20) → `ALTO`;
-- dark pattern que enfraquece salvaguardas (art. 18, §2º) → `ALTO`;
-- ausência de relatório de impacto no caso do art. 16, parágrafo único → `MEDIO`;
-- ausência de mecanismo contra uso abusivo de denúncias (art. 32) → `MEDIO`;
-- provedor estrangeiro sem representante legal no País (art. 40) → `MEDIO`;
-- ausência do adesivo do art. 38 → `BAIXO`.
+A criticidade de cada item, com o agravante quando houver, está no catálogo (itens `ECA`).
 
 ## Sanções (art. 35 da Lei nº 15.211/2025)
 Aplicadas pela **ANPD**: advertência com prazo de até 30 dias para medidas corretivas (I); multa simples de até 10% do faturamento do grupo econômico no Brasil no último exercício ou, ausente faturamento, de R$ 10,00 a R$ 1.000,00 por usuário cadastrado, limitada a R$ 50.000.000,00 por infração (II).
@@ -821,18 +772,7 @@ Os itens deste domínio são os `PD` do catálogo, que pontuam na área `platafo
 - prazos transitórios até a regulamentação: **6 horas** para conteúdo manifestamente ilegal contra a mulher, **24 horas** nos demais casos de violência contra a mulher e **24 horas** após contestação (Dec. 12.976, art. 12).
 
 ## Severidade
-Já refletida na criticidade dos itens `PD`, `GV-06`, `GV-07` e `IN-04` do catálogo:
-- ausência de medidas contra conteúdos de suicídio/automutilação ou exploração sexual de crianças e adolescentes (art. 16-B, II e V) → `CRITICO`;
-- ausência de espaço para notificação de conteúdo íntimo ou de remoção em até 2 horas (Dec. 12.976, art. 7º, §1º) → `CRITICO`;
-- IA que gera ou modifica conteúdo íntimo de terceiro (Dec. 12.976, art. 9º) → `CRITICO`;
-- demais falhas sistêmicas do art. 16-B ou do Dec. 12.976, art. 4º → `ALTO`;
-- ausência de canal de denúncia (art. 16-A, II) ou de gestão de riscos sistêmicos (art. 16-C) → `ALTO`;
-- notificação sem confirmação, fundamentação ou contestação (art. 16-E) ou descumprimento dos prazos do Dec. 12.976, art. 12 → `ALTO`;
-- ausência de mitigação de ataques coordenados (Dec. 12.976, art. 8º) ou de salvaguardas de IA (art. 10) → `ALTO`;
-- anúncios sem controle prévio (art. 16-K) ou registros de acesso sem sigilo e ambiente controlado (MCI art. 15; LGPD art. 46) → `ALTO`;
-- ausência de representante legal pessoa jurídica (art. 16-A, I), de guarda de anúncios por 1 ano (art. 16-M), de porta lógica (art. 15-A), dos elementos do art. 20-A, de encaminhamento ao Poder Público (art. 16-H) ou de medidas contra abuso das notificações (art. 16-F) → `MEDIO`;
-- publicidade não identificável (art. 16-N, §2º) ou retenção de registros além do prazo sem base (MCI art. 16) → `MEDIO`;
-- ausência do aviso do Ligue 180 (Dec. 12.976, art. 5º, §1º) → `BAIXO`.
+A criticidade de cada item, com o agravante quando houver, está no catálogo (itens `PD`, `GV-06`, `GV-07` e `IN-04`).
 
 ## Sanções
 Infrações aos arts. 10 e 11 do MCI sujeitam o provedor às sanções do **art. 12 do MCI**: advertência com prazo para correção; multa de até 10% do faturamento do grupo econômico no Brasil no último exercício, excluídos os tributos; suspensão temporária; e proibição das atividades do art. 11. Filial ou estabelecimento de empresa estrangeira responde solidariamente pela multa. Há ainda responsabilidade civil por falha sistêmica (art. 16-B) e presunção de responsabilidade em anúncios e impulsionamentos (art. 16-L). A exposição é cumulativa com o art. 52 da LGPD e, havendo menores, com o art. 35 do ECA Digital.
@@ -844,94 +784,127 @@ Todo achado deste domínio deve citar o dispositivo do decreto (e do MCI, quando
 
 # NORMAS EM MONITORAMENTO
 
-Normas ainda **não vigentes** nunca originam não conformidade. Registrá-las apenas na seção 8 do relatório (Recomendações Técnicas), rotuladas como norma futura:
+<!-- GERADO:INICIO monitoramento · fonte: base normativa, seção "Em monitoramento" · gerado por scripts/update-generated.py; não editar à mão -->
 
-- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados, sem sanção até 2026-10 (em out/2026, ainda aguardando parecer do relator na Comissão Especial; o relator indicou que a votação fica para depois das eleições de outubro de 2026).
-- **Guias orientativos da ANPD** no âmbito do ECA Digital (aferição de idade e fornecedores de tecnologia): tomadas de subsídios encerradas em 2026, versões finais ainda não publicadas até 2026-10.
-- **Revisão da Resolução CD/ANPD nº 1/2021** (fiscalização e processo sancionador): consulta pública de 09/09/2026 a 26/10/2026; até a norma final, a Res. nº 1/2021 segue vigente.
-- **Regulamentação dos Decretos nº 12.975/2026 e nº 12.976/2026** pela ANPD (forma e prazos de notificação e contestação, marcação digital de conteúdo íntimo, parâmetros das salvaguardas de IA, critérios diferenciados por porte — art. 16-P): tomada de subsídios encerrada em 17/08/2026, sem regulamento final até 2026-10. Até lá, valem os deveres dos decretos e os prazos transitórios do art. 12 do Decreto nº 12.976/2026.
-- **Parâmetros normativos definitivos de aferição de idade**, previstos pela ANPD para a etapa regulatória iniciada em agosto/2026 e não publicados até 2026-10.
-- **Agenda Regulatória 2027-2028 e Agenda de Avaliação de Resultado Regulatório 2027-2030**: tomadas de subsídios abertas pela ANPD em 01/09/2026, com contribuições até 16/10/2026; eixos propostos: ambiente digital seguro (supervisão parental, design seguro, uso de IA por menores, transparência das plataformas, conteúdo ilícito gerado por IA) e privacidade (direitos dos titulares, reconhecimento facial, dados de saúde, decisões automatizadas). Sem efeito até a resolução que aprovar as agendas.
-- **Guia Orientativo sobre Tratamento de Dados Pessoais de Alto Risco**: a minuta foi **rejeitada** por unanimidade pelo Conselho Diretor da ANPD (Voto nº 11/2025/DIR-MW/CD, set/2026) e arquivada; a ANPD indicou que a análise de alto risco deve ocorrer no RIPD. Não citar a minuta: a decisão de alto risco segue a Res. CD/ANPD nº 2/2022, art. 4º, e a regra deste documento.
+Fonte única da situação das normas em monitoramento. Situação conferida em 2026-10.
 
-Atenção: o cronograma de fiscalização da ANPD para o ECA Digital (adaptação até novembro/2026, fiscalização efetiva a partir de janeiro/2027) **não suspende a vigência da lei** — os requisitos do domínio 16 são exigíveis desde 17/03/2026.
+Nada nesta seção origina `finding` nem `check_item` com status `NAO_CONFORME`. Usar apenas em `recomendacoes_tecnicas`, sempre rotulado como norma não vigente.
+
+## ANPD: fiscalização, processo regulatório e agenda
+- **Revisão da Resolução CD/ANPD nº 1/2021** (Regulamento de Fiscalização e do Processo Administrativo Sancionador): consulta pública aberta em 09/09/2026, audiência pública em 24/09/2026 e contribuições até 26/10/2026. A minuta adapta a fiscalização ao ECA Digital, ao regime de agência reguladora e às novas atribuições sobre provedores de aplicações de internet. Até a publicação da norma final, a Res. CD/ANPD nº 1/2021 segue vigente e continua sendo a referência de risco sancionatório.
+- **Revisão da Portaria ANPD nº 16/2021** (processo regulatório da própria ANPD): consulta pública aberta em 06/10/2026, audiência em 22/10/2026 e contribuições até 23/11/2026. Propõe converter a portaria em resolução, tornar obrigatórios os debates públicos e prever a participação de crianças e adolescentes. Não cria obrigação para agentes de tratamento.
+- **Agenda Regulatória 2027-2028 e Agenda de Avaliação de Resultado Regulatório 2027-2030**: tomadas de subsídios abertas em 01/09/2026, com contribuições até 16/10/2026. Eixos propostos para 2027-2028: ambiente digital seguro, sobretudo para crianças, adolescentes e mulheres (supervisão parental, padrões de design seguro, uso de IA por menores, transparência das plataformas, combate à geração de conteúdo ilícito por IA), e privacidade e proteção de dados (direitos dos titulares, reconhecimento facial, dados de saúde, decisões automatizadas). A avaliação de resultado inclui o Regulamento de Transferência Internacional e o guia de aferição de idade. Sem efeito até a resolução que aprovar as agendas.
+- **Guia Orientativo sobre Tratamento de Dados Pessoais de Alto Risco**: a minuta foi **rejeitada** por unanimidade pelo Conselho Diretor (Voto nº 11/2025/DIR-MW/CD, set/2026) e arquivada; a ANPD indicou que a análise de alto risco deve ocorrer no RIPD. Não citar a minuta: a decisão de alto risco segue a Res. CD/ANPD nº 2/2022, art. 4º, e o critério do modelo de severidade.
+
+## Inteligência artificial
+- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024 e em tramitação na Câmara dos Deputados, aguardando parecer do relator na Comissão Especial; o relator indicou que a votação fica para depois das eleições de outubro de 2026. Prevê classificação por nível de risco, direitos de transparência, explicação e contestação, governança de IA e sanções próprias.
+- **Nota Técnica da Sedigi/MJSP sobre companheiros de IA** (22/09/2026): sistemas conversacionais que simulam vínculo afetivo, acessíveis a crianças e adolescentes; encaminhada à ANPD e à Senacon. É preliminar e não vinculante; os indícios que aponta (aferição de idade só por autodeclaração, perfilamento emocional para publicidade, coleta de dados íntimos) são auditados pelos itens vigentes do ECA Digital e do art. 14 da LGPD.
+
+## ECA Digital (domínio 16)
+- **Guia orientativo sobre aferição de idade** (Processo nº 00261.003182/2026-47): versão atualizada em maio/2026, tomada de subsídios encerrada em 09/07/2026; versão final prevista para a Etapa II e ainda não publicada.
+- **Guia sobre fornecedores de produtos ou serviços de tecnologia da informação** (Processo nº 00261.002701/2026-50): tomada de subsídios encerrada em 15/06/2026; versão final ainda não publicada.
+- **Parâmetros normativos definitivos de aferição de idade**, previstos para a Etapa II (a partir de agosto/2026) e ainda não publicados. O cronograma da ANPD prevê adaptação até novembro/2026, atualização dos regulamentos de fiscalização e sanção a partir de novembro/2026 e fiscalização a partir de janeiro/2027.
+- O cronograma de fiscalização **não suspende a vigência da lei**: os requisitos do domínio 16 são exigíveis desde 17/03/2026.
+
+## Plataformas digitais (domínio 17)
+- **Regulamentação dos Decretos nº 12.975/2026 e nº 12.976/2026 pela ANPD** (forma e prazos de notificação e contestação, marcação digital de conteúdo íntimo, parâmetros das salvaguardas de IA, critérios diferenciados por porte): tomada de subsídios encerrada em 17/08/2026, sem regulamento final. O cronograma prevê a definição das prioridades regulatórias 2027-2028 em novembro/2026 e a atualização dos regulamentos de fiscalização e dosimetria em dezembro/2026. Até lá, valem os deveres dos decretos e os prazos transitórios do art. 12 do Decreto nº 12.976/2026.
+
+<!-- GERADO:FIM monitoramento -->
 
 ---
 
 # REGRAS DE ANÁLISE
 
-- Nunca assumir conformidade sem evidência;
-- Sempre citar artigos relevantes da LGPD;
-- Sempre identificar riscos ocultos;
-- Priorizar Privacy by Design;
-- Priorizar minimização de dados;
-- Priorizar segurança;
-- Priorizar rastreabilidade;
-- Considerar impacto jurídico e técnico;
-- Considerar vazamentos indiretos;
-- Considerar riscos reputacionais;
-- Considerar IA e terceiros.
+- Nunca assumir conformidade sem evidência; sempre citar os artigos da LGPD aplicáveis.
+- Procurar riscos ocultos e vazamentos indiretos, inclusive por IA e por terceiros.
+- Priorizar Privacy by Design, minimização, segurança e rastreabilidade.
+- Considerar o impacto jurídico, técnico e reputacional de cada achado.
+- Atenção redobrada a: dados sensíveis e biometria; HealthTech e FinTech; IA generativa e LLMs; APIs públicas; Firebase, Supabase e buckets como o AWS S3; analytics, cookies e rastreamento; apps mobile e cloud pública.
 
 ---
 
 # CLASSIFICAÇÃO DE SEVERIDADE
 
-Valores canônicos no `finding` e no relatório: `CRITICO | ALTO | MEDIO | BAIXO`. Os títulos abaixo são apenas rótulos visuais. Quando mais de uma regra de severidade, de um ou mais domínios, se aplicar ao mesmo achado, vale a mais específica; se forem igualmente específicas, a mais alta.
+<!-- GERADO:INICIO severidade · fonte: núcleo, modelo de severidade · gerado por scripts/update-generated.py; não editar à mão -->
 
-## 🔴 CRÍTICO
-Violação grave.
+## Níveis canônicos
+### `CRITICO`
+Violação grave com alto potencial de dano ao titular, infração relevante da LGPD ou exposição sensível imediata.
 
 Exemplos:
+- ausência de base legal para tratamento sensível;
 - vazamento de dados sensíveis;
-- bucket público;
-- ausência de base legal;
-- senhas sem hash;
-- dados expostos publicamente.
+- senhas sem hash ou credenciais em texto puro;
+- dados pessoais expostos publicamente (bucket, rota ou arquivo acessível sem autenticação).
 
----
-
-## 🟠 ALTO
-Grande risco jurídico/técnico.
+### `ALTO`
+Risco jurídico/técnico elevado, com impacto relevante e alta probabilidade de incidente.
 
 Exemplos:
-- logs com CPF;
-- ausência de criptografia;
-- sem política de privacidade;
-- APIs inseguras.
+- logs com dados pessoais sem mascaramento (ex.: CPF em log);
+- ausência de criptografia em repouso para dados críticos;
+- aviso de privacidade inexistente ou não publicado;
+- APIs com autenticação/autorização fraca.
 
----
-
-## 🟡 MÉDIO
-Problema relevante.
+### `MEDIO`
+Não conformidade relevante, mas sem exposição imediata crítica.
 
 Exemplos:
-- retenção obscura;
-- consentimento pouco claro;
-- ausência parcial de governança.
+- retenção sem política clara;
+- gestão parcial de direitos do titular;
+- consentimento pouco granular;
+- governança parcial (ex.: papéis definidos sem processo documentado).
 
----
-
-## 🟢 BAIXO
-Melhorias recomendadas.
+### `BAIXO`
+Melhoria recomendada com baixo risco imediato.
 
 Exemplos:
-- ajustes documentais;
-- melhorias de UX;
-- clareza textual.
+- ajustes de clareza documental;
+- melhoria de linguagem de política;
+- pequenas melhorias de UX de consentimento.
 
 ## Modulação por porte e exposição
-A severidade pode ser reduzida em **um nível** quando, ao mesmo tempo: o agente é de pequeno porte (Res. CD/ANPD nº 2/2022); não há tratamento de alto risco nos critérios da mesma resolução; e não há exposição explorável confirmada.
+A severidade pode ser **reduzida em um nível** (ex.: `ALTO` → `MEDIO`) quando todas as condições abaixo forem verdadeiras:
+- o agente de tratamento é de **pequeno porte** nos termos da Res. CD/ANPD nº 2/2022 (microempresa, empresa de pequeno porte, startup, pessoa jurídica de direito privado, inclusive sem fins lucrativos, ou pessoa natural e ente privado despersonalizado que atue como controlador ou operador), sem as exclusões da própria resolução (como faturamento acima do limite ou grupo econômico que o ultrapasse);
+- não há **tratamento de alto risco** nos critérios da mesma resolução (larga escala ou impacto significativo, combinados com tecnologia emergente, vigilância, decisão automatizada, dados sensíveis ou de crianças, adolescentes e idosos);
+- não há exposição explorável confirmada.
 
-**Como decidir se há tratamento de alto risco** (Res. CD/ANPD nº 2/2022, art. 4º: um critério específico e um geral, ao mesmo tempo):
-1. Critério específico, se houver ao menos um: tecnologia emergente ou inovadora (ex.: IA generativa aplicada a dados pessoais); vigilância ou controle de zonas acessíveis ao público; decisão unicamente automatizada, inclusive perfilamento; dado sensível (com a extensão do art. 11, §1º) ou de crianças, adolescentes ou idosos.
-2. Critério geral, se houver ao menos um:
-   - impacto significativo — posição desta skill, para tornar a decisão verificável: o tratamento decide o acesso do titular a serviço, crédito, emprego ou benefício; ou os dados, se expostos, permitem fraude ou roubo de identidade (CPF ou RG junto com dados de contato ou financeiros, credenciais, dados bancários ou de cartão); ou o dado sensível, ou que revele informação sensível, é parte da atividade-fim do serviço, e não um registro incidental;
-   - larga escala: número significativo de titulares, considerados volume, duração, frequência e extensão geográfica. A norma não fixa limiar: vale o que o auditado declarar ou a evidência mostrar; não se presume.
-3. Sem critério específico, não há alto risco; com os dois, há; com critério específico e sem evidência para decidir o geral, tratar como alto risco e registrar a dúvida como verificação pendente.
+### Como decidir se há tratamento de alto risco
+A Res. CD/ANPD nº 2/2022 (art. 4º) exige, ao mesmo tempo, um critério **específico** e um critério **geral**. A resolução não fixa número de titulares para "larga escala" e não há guia da ANPD em vigor sobre o tema (ver normas em monitoramento), então a auditoria decide assim, sempre com evidência:
 
-Registrar no relatório os critérios encontrados, com a evidência, e recomendar a confirmação com a assessoria jurídica. **Exposição explorável confirmada** é a falha que permite acesso indevido a dado pessoal, evidenciada no código ou na configuração (rota sem autenticação que devolve dado pessoal, armazenamento público, credencial exposta); não exige exploração real.
+1. **Critério específico** — presente se houver ao menos um:
+   - tecnologia emergente ou inovadora (ex.: IA generativa aplicada a dados pessoais);
+   - vigilância ou controle de zonas acessíveis ao público;
+   - decisão tomada unicamente por tratamento automatizado, inclusive perfilamento;
+   - dado pessoal sensível (inclusive o dado que revele informação sensível, art. 11, §1º) ou dado de crianças, adolescentes ou idosos.
+2. **Critério geral** — presente se houver ao menos um:
+   - **impacto significativo**: o tratamento pode impedir o exercício de direitos ou o uso de um serviço, ou causar dano material ou moral (discriminação, dano à integridade física, à imagem ou à reputação, fraude financeira, roubo de identidade). Posição do framework, para tornar a decisão verificável — considera-se presente quando:
+     - o tratamento decide o acesso do titular a serviço, crédito, emprego ou benefício; ou
+     - os dados, se expostos, permitem fraude ou roubo de identidade: documento de identificação (CPF, RG) junto com dados de contato ou financeiros, credenciais, dados bancários ou de cartão; ou
+     - o dado sensível, ou que revele informação sensível, é parte da atividade-fim do serviço (ex.: sistema de clínica, de sindicato, de biometria), e não um registro incidental (ex.: o atestado de um funcionário);
+   - **larga escala**: número significativo de titulares, considerados volume de dados, duração, frequência e extensão geográfica. Sem limiar numérico na norma, vale o que o auditado declarar ou o que a evidência mostrar; não se presume.
+3. **Decisão:**
+   - sem critério específico: não há alto risco;
+   - com critério específico e critério geral: há alto risco;
+   - com critério específico e sem evidência suficiente para decidir o critério geral: tratar como alto risco e registrar a dúvida como verificação pendente.
 
-Nunca modular achados `CRITICO` com dados sensíveis, dados de crianças e adolescentes, vazamento confirmado ou credenciais expostas, nem deveres que a norma não modula por porte (ex.: comunicação de incidente, prazos do titular). Registrar no achado a severidade original, a aplicada e a justificativa; a modulação vale também para o peso do item no score.
+O relatório registra, na natureza do agente (`score_lgpd`), quais critérios foram encontrados e com que evidência, e recomenda confirmar o enquadramento com a assessoria jurídica.
+
+**Exposição explorável confirmada** é a falha que permite acesso indevido a dado pessoal, evidenciada no código ou na configuração: rota sem autenticação que devolve dado pessoal, armazenamento público, credencial exposta. Não exige exploração real nem incidente ocorrido.
+
+Nunca modular:
+- achados `CRITICO` que envolvam dados sensíveis, dados de crianças e adolescentes, vazamento confirmado ou credenciais expostas;
+- deveres que a própria norma não modula por porte (ex.: comunicação de incidente, prazos do titular).
+
+Toda modulação é registrada no `finding` (`severity_modulation`: severidade original, aplicada e justificativa) e vale também para a `criticality` do item no score. Pessoa natural que trata dados para fins exclusivamente particulares e não econômicos está fora da LGPD (art. 4º, I): nesse caso, registrar a inaplicabilidade em vez de emitir achados.
+
+## Regras de uso
+- Cada `finding` deve ter um único nível de severidade.
+- Quando mais de uma regra de severidade, do mesmo domínio ou de domínios diferentes, se aplicar ao mesmo achado, vale a mais específica; se forem igualmente específicas, a mais alta.
+- Em dúvida entre dois níveis, usar o mais alto quando houver impacto jurídico potencial significativo.
+- Achados `CRITICO` e `ALTO` devem ter plano de ação com prazo definido.
+
+<!-- GERADO:FIM severidade -->
 
 ---
 
@@ -951,33 +924,57 @@ Nunca modular achados `CRITICO` com dados sensíveis, dados de crianças e adole
 
 As sete primeiras áreas guardam entre si a proporção 15 : 25 : 15 : 15 : 10 : 10 : 10. Quando `eca_digital` e `plataformas_digitais` são `NAO_APLICAVEL` (o caso mais comum), a redistribuição devolve exatamente esses pesos.
 
-## Cálculo do score (obrigatório)
-1. Valor do item: `CONFORME` = 1; `PARCIAL` = 0,5; `NAO_CONFORME` = 0.
-2. Peso do item pela criticidade do catálogo (com o agravante ou atenuante da linha do item, quando couber, e a modulação por porte): `CRITICO` = 4; `ALTO` = 3; `MEDIO` = 2; `BAIXO` = 1.
-3. Score da área = 100 × soma(valor × peso) ÷ soma(peso) dos itens da área.
-4. Score global = soma(score da área × peso da área), com pesos ajustados se houver área `NAO_APLICAVEL`. Arredondar só o resultado final, para o inteiro mais próximo; fração de exatamente 0,5 sobe (84,5 vira 85).
+<!-- GERADO:INICIO score · fonte: núcleo, cálculo do score · gerado por scripts/update-generated.py; não editar à mão -->
 
-Área aplicável sem nenhum item avaliado: avaliar ao menos um item; se não for possível, declarar "cobertura insuficiente" e redistribuir o peso como em `NAO_APLICAVEL`.
+## Cálculo do score (obrigatório)
+O cálculo é fechado para que duas execuções sobre as mesmas evidências cheguem ao mesmo número.
+
+1. **Valor do item** pelo status: `CONFORME` = 1; `PARCIAL` = 0,5; `NAO_CONFORME` = 0.
+2. **Peso do item** pela `criticality` (criticidade do item no catálogo, já considerados os agravantes da linha do item e a modulação por porte do modelo de severidade): `CRITICO` = 4; `ALTO` = 3; `MEDIO` = 2; `BAIXO` = 1.
+3. **Score da área** (0-100): `score_area = 100 * SUM(valor * peso) / SUM(peso)`, somando os itens `APLICAVEL` cuja `score_area` é aquela área. Itens `NAO_APLICAVEL` e `NAO_VERIFICADO` ficam fora das somas.
+4. **Score global**: aplicar o peso de cada área (ajustado quando houver área `NAO_APLICAVEL`) e somar.
+
+Fórmula:
+`score_global = SUM(score_area * peso_area)`
+
+Calcular com valores exatos; exibir o score de cada área com uma casa decimal e arredondar só o score global, para o inteiro mais próximo. Fração de exatamente 0,5 sobe (84,5 vira 85).
+
+**Contagem única:** cada item é avaliado pelo seu próprio requisito, e uma mesma falha não é contada duas vezes:
+- quando parte do requisito de um item repete uma falha que é o requisito de outro, essa parte é citada na evidência e o item pontua pelo que resta (ex.: `SE-04` não é reprovado pela falta de limitação de tentativas no login, que é o requisito de `AP-03`);
+- quando o item **depende** de outro e esse outro está `NAO_CONFORME`, o dependente fica `NAO_APLICAVEL`, com a referência ao item que conta a falha (se o outro está `NAO_VERIFICADO`, o dependente também fica). As dependências são **só as da lista fechada do catálogo**, no formato "`GV-05` depende de `GV-02`"; fora dessa lista não há dependência, e o item é avaliado pelo próprio requisito. Critério para incluir um par na lista: o item não poderia ser atendido enquanto o outro controle continuar ausente;
+- quando o requisito inteiro do item falha, ele é reprovado, ainda que a causa seja a mesma de outro item: no catálogo, cada item é uma obrigação distinta (ex.: o mesmo pixel viola o consentimento de cookies, `CK-02`, e também configura transferência internacional sem mecanismo, `TI-02`).
+
+Uma área aplicável sem nenhum item avaliado indica cobertura insuficiente: avaliar ao menos um item dela; se não for possível, declarar "cobertura insuficiente" em `score_lgpd` e redistribuir seu peso como na regra de `NAO_APLICAVEL`, sem chamá-la assim.
 
 ## Aplicabilidade do item e cobertura
-- `APLICAVEL`: avaliado; recebe status e entra no score.
-- `NAO_APLICAVEL`: o objeto não existe no escopo, com evidência `ENCONTRADA` da inexistência, ou a obrigação é de outro agente (ex.: consentimento quando o auditado é só operador). Fora do score, com a justificativa.
-- `NAO_VERIFICADO`: o requisito vale, mas depende de acesso que o auditor não tem (produção, painel do provedor, sistema de terceiro). Fora do score, com o motivo e o acesso necessário.
+Cada `check_item` tem uma `applicability`:
+- `APLICAVEL`: o requisito vale para o escopo e foi avaliado; recebe `status` e entra no score.
+- `NAO_APLICAVEL`: o objeto do item não existe no escopo, com evidência `ENCONTRADA` da inexistência (ex.: item de Kubernetes em projeto sem containers), ou a obrigação é de outro agente (ex.: coleta de consentimento quando o auditado é só operador daquele fluxo). Fica fora do score, com a justificativa.
+- `NAO_VERIFICADO`: o requisito vale, mas a verificação depende de acesso que o auditor não tem (ambiente de produção, painel do provedor, sistema de terceiro). Fica fora do score, com o motivo e o acesso necessário.
 
-Falta de evidência não é nenhum dos dois: documento, contrato ou política que o auditado deveria apresentar e não apresentou é `AUSENTE` e reduz o score. `NAO_VERIFICADO` só cabe em controle técnico fora do alcance do auditor. Controle que não tem representação em arquivo do repositório e só existe na configuração de um serviço (retenção de logs, backup, MFA e membros do painel, proteção de branch) é `NAO_VERIFICADO`. Controle que costuma ser declarado em arquivo do repositório (varredura de dependências, de segredos ou de código no CI, rate limiting, cabeçalhos na configuração da hospedagem) e não está lá é `NAO_CONFORME`, ainda que o provedor ofereça alternativa por painel, com a alternativa como verificação pendente. Item com elementos verificáveis e elementos fora do alcance: se algum elemento verificável falha, o status segue a régua (a falha é certa); se todos os verificáveis atendem, o item fica `NAO_VERIFICADO`, registrando o que já foi comprovado e o acesso que falta. `CONFORME` exige que tudo o que o item pede esteja comprovado, sem exceção para item verificado pela metade.
+Limites:
+- falta de evidência **não** é `NAO_APLICAVEL` nem `NAO_VERIFICADO`: documento, contrato, política ou registro que o auditado deveria apresentar e não apresentou é `AUSENTE` e reduz o score;
+- a aplicabilidade decorre dos **fatos do tratamento**, não do que o auditado documentou: item cujo objeto existe no sistema é `APLICAVEL`, ainda que nenhum documento o mencione (ex.: se o sistema coleta consentimento num formulário, os itens de consentimento valem, mesmo sem base legal registrada);
+- `NAO_VERIFICADO` só cabe em controle `TECNICO` fora do alcance do auditor; controle `DOCUMENTAL` nunca é `NAO_VERIFICADO`;
+- controle que **não tem representação em arquivo do repositório** e só existe na configuração de um serviço (ex.: retenção de logs, backup, MFA e membros do painel, proteção de branch) é `NAO_VERIFICADO`;
+- controle que **costuma ser declarado em arquivo do repositório** (ex.: varredura de dependências, de segredos ou de código no CI, rate limiting da aplicação, cabeçalhos em `vercel.json` ou equivalente) e não está lá é `NAO_CONFORME`, ainda que o provedor ofereça uma alternativa por painel; a confiança é a que a evidência permitir, e a alternativa vira verificação pendente;
+- item com elementos verificáveis e elementos fora do alcance: se algum elemento verificável falha, o status segue a régua de status do item (a falha é certa); se todos os verificáveis atendem, o item fica `NAO_VERIFICADO`, registrando o que já foi comprovado e o acesso que falta. `CONFORME` exige que tudo o que o item pede esteja comprovado, sem exceção para item verificado pela metade. Está fora do alcance o elemento cuja evidência não tem representação em arquivo do repositório e só existe na configuração de um serviço ou em produção;
+- cada item `NAO_VERIFICADO` gera uma verificação pendente no relatório.
 
-Cobertura = itens com status ÷ (itens com status + itens `NAO_VERIFICADO`), global e por área. Abaixo de 80% na global, marcar o resultado como **score parcial**; área abaixo de 50% recebe a marca **cobertura baixa**. Quando o agravante de um item depende do estado da evidência (ex.: `TI-02`), vale o estado atual; se uma verificação pendente puder mudar a criticidade, listar o item entre as verificações pendentes.
+**Cobertura** = itens com `status` ÷ (itens com `status` + itens `NAO_VERIFICADO`), global e por área; itens `NAO_APLICAVEL` não entram na conta. Cobertura global abaixo de 80% obriga a marcar o resultado como **score parcial** ao lado da classificação. Área com cobertura abaixo de 50% recebe a marca **cobertura baixa** ao lado do seu score: itens não verificados saem da conta e podem elevar a nota da área. Área em que todos os itens são `NAO_VERIFICADO` cai na regra de cobertura insuficiente acima.
+
+Quando o agravante de um item depende do estado da evidência (ex.: `TI-02`, mecanismo de transferência internacional não evidenciado pesa `ALTO`; comprovadamente ausente, `CRITICO`), vale o estado atual. Se uma verificação pendente puder mudar a criticidade, o relatório lista esse item entre as verificações pendentes que podem alterar o score.
 
 ## Mapa de áreas por domínio
-Cada item pontua em **uma única** área, definida pelo domínio do checklist:
+Cada `check_item` pontua em **exatamente uma** área, definida pelo seu domínio. Módulos não escolhem a área caso a caso.
 
-| Código | Domínio | Área |
+| Código | Domínio de auditoria | Área de score |
 |---|---|---|
 | `BL` | Bases legais (arts. 7º e 11), dados de acesso público e dados de crianças (art. 14) | `bases_legais` |
 | `1` | Mapeamento de dados | `governanca` |
 | `2` | Consentimento | `bases_legais` |
 | `3` | Direitos do titular | `direitos_titular` |
-| `4` | Política de privacidade | `direitos_titular` |
+| `4` | Política de privacidade (inclui transparência, art. 9º) | `direitos_titular` |
 | `5` | Cookies e tracking | `bases_legais` |
 | `6` | Segurança da informação | `seguranca` |
 | `7` | Cloud security (inclui PaaS e hospedagem) | `infraestrutura` |
@@ -986,20 +983,23 @@ Cada item pontua em **uma única** área, definida pelo domínio do checklist:
 | `10` | DevSecOps | `seguranca` |
 | `11` | Logs e observabilidade | `seguranca` |
 | `12` | IA/LLM | `ai_llm` |
-| `13` | Governança | `governanca` |
+| `13` | Governança (encarregado, RIPD, incidentes, políticas) | `governanca` |
 | `14` | Compartilhamento de dados (inclui transferência internacional) | `governanca` |
 | `15` | Retenção e exclusão | `governanca` |
-| `16` | ECA Digital | `eca_digital` |
-| `17` | Plataformas digitais | `plataformas_digitais` |
+| `16` | Proteção de crianças e adolescentes no ambiente digital — ECA Digital (deveres de produto) | `eca_digital` |
+| `17` | Plataformas digitais e conteúdo de terceiros | `plataformas_digitais` |
 
-## Score técnico e score documental
-Mostrar também, como informação (sem afetar a classificação), o score dos itens de natureza **técnica** (código, configuração, infraestrutura) e o dos itens de natureza **documental** (políticas, contratos, registros, processos), com a mesma fórmula.
+## Score técnico e score documental (informativos)
+Além do score global, o relatório mostra dois subtotais com a mesma fórmula dos passos 1 a 3, aplicada a todos os itens de cada natureza (`control_type`):
+- `score_tecnico`: itens `TECNICO`;
+- `score_documental`: itens `DOCUMENTAL`.
 
-## Contagem única e exibição
-Cada item é avaliado pelo seu próprio requisito, e uma mesma falha não é contada duas vezes: quando parte do requisito de um item repete uma falha que é o requisito de outro, essa parte é citada na evidência e o item pontua pelo que resta; quando o item depende de outro e esse outro está `NAO_CONFORME`, o dependente fica `NAO_APLICAVEL`, com a referência ao item que conta a falha (se o outro está `NAO_VERIFICADO`, o dependente também fica) — as dependências são só as da lista "Dependências entre itens", ao fim do catálogo, e fora dela o item é avaliado pelo próprio requisito; quando o requisito inteiro do item falha, ele é reprovado, ainda que a causa seja a mesma de outro item, porque no catálogo cada item é uma obrigação distinta. Calcular com valores exatos, exibir o score de cada área com uma casa decimal e arredondar só o score global.
+Os subtotais **não** entram na classificação final; servem para mostrar, por exemplo, um núcleo técnico forte com documentação ausente.
 
 ## Riscos aceitos
-O controlador pode aceitar um risco: registrar quem aceitou (nome e papel), quando, a justificativa, a data de revisão (no máximo 12 meses) e, se o aceite adiar a correção, o novo prazo ao lado do prazo sugerido original. O aceite **não** altera status, severidade nem score.
+O controlador pode aceitar um risco. O registro (`risk_acceptance`) traz quem aceitou (nome e papel), quando, a justificativa, a data de revisão (no máximo 12 meses depois) e, se o aceite adiar a correção, o novo prazo ao lado do prazo sugerido original. Item com aceite continua pontuando pelo seu status: o aceite **não** altera status, severidade nem score, e não torna o item conforme.
+
+<!-- GERADO:FIM score -->
 
 ## Áreas não aplicáveis
 Uma área só pode ser `NAO_APLICAVEL` (status de área, não de item do checklist) quando o objeto que ela avalia não existe no escopo — nunca por falta de evidência, que é `AUSENTE` e reduz o score, e nunca só porque o domínio ficou fora da auditoria. A inexistência deve ser comprovada com evidência `ENCONTRADA` (ex.: nenhum SDK ou chamada a provedor de LLM no código).
@@ -1014,18 +1014,24 @@ Os pesos das áreas aplicáveis são redistribuídos proporcionalmente: `peso_aj
 
 # CLASSIFICAÇÃO FINAL
 
-| Score | Classificação |
-|---|---|
-| 0–49 | `CRITICO` |
-| 50–69 | `BAIXO_NIVEL` |
-| 70–84 | `PARCIALMENTE_CONFORME` |
-| 85–94 | `ALTA_CONFORMIDADE` |
-| 95–100 | `EXCELENTE` |
+<!-- GERADO:INICIO classificacao · fonte: núcleo, cálculo do score · gerado por scripts/update-generated.py; não editar à mão -->
 
-Usar exatamente esses rótulos no relatório.
+## Classificação final canônica
+- `0-49`: `CRITICO`
+- `50-69`: `BAIXO_NIVEL`
+- `70-84`: `PARCIALMENTE_CONFORME`
+- `85-94`: `ALTA_CONFORMIDADE`
+- `95-100`: `EXCELENTE`
 
 ## Teto de classificação
-Havendo ao menos uma não conformidade de severidade `CRITICO` (já considerada a modulação por porte), a classificação não passa de `PARCIALMENTE_CONFORME`, qualquer que seja o score. O número do score não muda. Quando o teto de fato reduz a classificação (o score cairia em `ALTA_CONFORMIDADE` ou `EXCELENTE`), mostrar ao lado dela a marca **classificação limitada por achado crítico** e os achados que a causam; com o score já em `PARCIALMENTE_CONFORME` ou abaixo, o teto não muda nada e a marca não aparece. O aceite de risco não afasta o teto; corrigido o achado, a classificação volta a seguir só a faixa do score.
+Havendo ao menos um `finding` de severidade `CRITICO` (já considerada a modulação por porte), a classificação final não passa de `PARCIALMENTE_CONFORME`, qualquer que seja o score. O número do score não muda. Quando o teto de fato reduz a classificação (o score cairia em `ALTA_CONFORMIDADE` ou `EXCELENTE`), o relatório mostra ao lado dela a marca **classificação limitada por achado crítico** e os achados que a causam; com o score já em `PARCIALMENTE_CONFORME` ou abaixo, o teto não muda nada e a marca não aparece.
+
+O aceite de risco não afasta o teto. Corrigido o achado, a classificação volta a seguir só a faixa do score.
+
+## Normalização de rótulos
+Para evitar ambiguidades, os relatórios devem usar exatamente os rótulos canônicos acima.
+
+<!-- GERADO:FIM classificacao -->
 
 ## Escopo do score
 O score mede o que foi auditado. Só a auditoria dos 17 domínios (`full_audit`) vale para a organização inteira. Se a auditoria for restrita a parte deles, mostrar ao lado da classificação a marca **escopo direcionado** e listar no relatório os domínios que ficaram de fora.
@@ -1038,7 +1044,12 @@ O score mede o que foi auditado. Só a auditoria dos 17 domínios (`full_audit`)
 
 `CONFIDENCIAL — uso interno`
 
-Antes da seção 1, um bloco **Contexto e escopo** (não conta como seção): o contexto levantado e sua fonte, a natureza e o papel do agente de tratamento, os domínios auditados e os que ficaram de fora, com o motivo, e as limitações da análise (o que não pôde ser acessado).
+Antes da seção 1, um bloco **Contexto e escopo** (não conta como seção): o contexto levantado e sua fonte, a natureza e o papel do agente de tratamento, os domínios auditados e os que ficaram de fora, com o motivo, as limitações da análise (o que não pôde ser acessado) e as decisões desta auditoria que o leitor precisa para refazer o resultado (aplicações da contagem única e das dependências).
+
+Regras de redação, para quem lê sem esta skill ao lado:
+- **cada informação em um só lugar**: a evidência de cada item fica no checklist; impacto, correção, responsável e prazo ficam só na não conformidade; os itens `NAO_VERIFICADO` aparecem só na tabela de itens fora do cálculo;
+- **resultados, não regras**: não repetir as regras desta skill (fórmula, régua de status, escalas, faixas); trazer os resultados, a memória de cálculo e as decisões desta auditoria (agravantes aplicados, modulações, contagem única, dependências), com os termos explicados no glossário;
+- **sem referência a esta skill**: citar a regra pelo nome (régua de status, agravante do item, modelo de severidade), nunca seções ou arquivos de instrução.
 
 ---
 
@@ -1075,7 +1086,7 @@ Incluir áreas `NAO_APLICAVEL`, justificativa e pesos ajustados.
 Informativos, sem afetar a classificação.
 
 ## Cobertura e verificações pendentes
-Cobertura global e por área; marcar **score parcial** se a global for menor que 80%. Listar as verificações pendentes que podem alterar o score: itens `NAO_VERIFICADO` (com o acesso necessário) e itens cuja severidade depende de verificação ainda não feita.
+Memória de cálculo por área (soma de valor × peso e soma dos pesos) e a conta do score global. Cobertura global e por área; marcar **score parcial** se a global for menor que 80%. Verificações pendentes que podem alterar o score: quantos itens são `NAO_VERIFICADO` (a lista, com o acesso necessário, é a da tabela de itens fora do cálculo) e os itens cujo status ou severidade dependem de verificação ainda não feita.
 
 ## Natureza e papel do agente
 Pessoa natural ou jurídica, fins econômicos, porte, modulações de severidade aplicadas e papel em cada fluxo de dados (controlador, operador ou ambos).
@@ -1084,16 +1095,18 @@ Pessoa natural ou jurídica, fins econômicos, porte, modulações de severidade
 
 # 3. CHECKLIST DE CONFORMIDADE
 
-| Item | Área | Status | Evidência | Impacto | Recomendação |
-|---|---|---|---|---|---|
+Uma tabela por área de score, na ordem dos pesos, com a área no título:
 
-Item: `ID · criticidade · controle — texto do item` (ex.: `SE-03 · ALTO · TECNICO — …`), com os valores do catálogo; sem a criticidade o score não pode ser refeito a partir do relatório. Item extra (`EX-nn`) vem identificado como tal. Área: a área de score do item, pelo mapa por domínio.
+| Item | Status | Evidência | Achado |
+|---|---|---|---|
+
+Item: `ID · criticidade · controle — texto do item` (ex.: `SE-03 · ALTO · TECNICO — …`), com os valores do catálogo; sem a criticidade o score não pode ser refeito a partir do relatório. Item extra (`EX-nn`) vem identificado como tal. Achado: o ID da não conformidade (`NC-nn`) do item `NAO_CONFORME` ou `PARCIAL`, ou `—`; impacto e correção ficam só na seção 4.
 
 Status: `CONFORME | PARCIAL | NAO_CONFORME`.
 
 Evidência no formato `GRAU (ORIGEM), confiança NIVEL: descrição`, ex.: `ENCONTRADA (TECNICA), confiança ALTA: política de retenção aplicada em job de expurgo`. A origem pode ser `TECNICA`, `DOCUMENTAL` ou `TECNICA + DOCUMENTAL`; com mais de uma evidência, separar as descrições por ponto e vírgula.
 
-A tabela lista só itens aplicáveis. Logo abaixo, uma segunda tabela com os itens fora do cálculo; juntas, as duas trazem todos os itens do catálogo dos domínios auditados:
+As tabelas por área listam só itens aplicáveis. Logo depois, uma tabela única com os itens fora do cálculo; juntas, trazem todos os itens do catálogo dos domínios auditados:
 
 | Item | Área | Aplicabilidade | Justificativa ou acesso necessário |
 |---|---|---|---|
@@ -1236,81 +1249,16 @@ O relatório, em qualquer formato, descreve falhas que podem estar abertas e é 
 
 # EXEMPLOS DE NÃO CONFORMIDADE
 
----
+Cada achado nasce de um item do catálogo e herda dele a criticidade, com o agravante da linha quando a condição está presente.
 
-## Exemplo 1 — Consentimento Inválido
+| Situação encontrada | Item | Severidade | Evidência | Fundamento | Correção |
+|---|---|---|---|---|---|
+| Checkbox de consentimento já vem marcado no cadastro | `CS-01` | `ALTO` | `AUSENTE (TECNICA)`, confiança `ALTA`: o formulário renderiza o checkbox marcado | art. 8º | opt-in explícito, desmarcado por padrão |
+| Senha guardada em texto puro | `SE-01` | `CRITICO` | `AUSENTE (TECNICA)`, confiança `ALTA`: a coluna de senha da tabela de usuários guarda valores legíveis | art. 46 | hash forte e salgado (Argon2id ou bcrypt) |
+| Log da aplicação traz o CPF completo | `SE-06` | `ALTO` | `AUSENTE (TECNICA)`, confiança `ALTA`: o log do cadastro registra o corpo da requisição com CPF | arts. 6º, III, e 46 | mascarar e minimizar o que vai para o log |
+| Prompt enviado a LLM externo leva o diagnóstico do paciente | `IA-01` | `CRITICO` (agravante: dado sensível a LLM externo sem proteção) | `AUSENTE (TECNICA)`, confiança `ALTA`: o payload da chamada ao modelo inclui nome, CPF e diagnóstico | arts. 6º, III, 11 e 46; arts. 33 a 36 se o provedor tratar fora do País | anonimizar antes do envio, política de IA e contrato que vede treino |
 
-Problema:
-Checkbox pré-marcado.
-
-Severidade:
-`ALTO`
-
-Evidência:
-`AUSENTE (TECNICA), confiança ALTA`: não há opt-in explícito — o checkbox de consentimento é renderizado já marcado no formulário de cadastro.
-
-Fundamento:
-Art. 8º LGPD
-
-Correção:
-Implementar opt-in explícito.
-
----
-
-## Exemplo 2 — Senha sem Hash
-
-Problema:
-Senha armazenada em texto puro.
-
-Severidade:
-`CRITICO`
-
-Evidência:
-`AUSENTE (TECNICA), confiança ALTA`: não há hash de senha — a coluna de senha da tabela de usuários guarda valores legíveis.
-
-Fundamento:
-Art. 46 LGPD
-
-Correção:
-Utilizar Argon2id ou bcrypt.
-
----
-
-## Exemplo 3 — Logs Vazando CPF
-
-Problema:
-Logs exibem CPF completo.
-
-Severidade:
-`ALTO`
-
-Evidência:
-`AUSENTE (TECNICA), confiança ALTA`: não há mascaramento — amostra de log da aplicação traz CPF completo em requisição de cadastro.
-
-Fundamento:
-Arts. 6º, III e 46 LGPD
-
-Correção:
-Mascaramento e minimização.
-
----
-
-## Exemplo 4 — IA Expondo Dados Sensíveis
-
-Problema:
-Prompts contendo dados pessoais enviados para LLM externo sem anonimização.
-
-Severidade:
-`CRITICO`
-
-Evidência:
-`AUSENTE (TECNICA), confiança ALTA`: não há anonimização antes do envio — o payload da chamada ao LLM leva nome e CPF do cliente no prompt.
-
-Fundamento:
-Arts. 6º, III e 46 LGPD; art. 11 quando houver dado sensível; arts. 33 a 36 quando o provedor do LLM tratar os dados fora do País.
-
-Correção:
-Anonimização + política de IA + segregação de prompts.
+Sem o dado sensível, o último caso seria `ALTO`, a criticidade padrão de `IA-01`.
 
 ---
 
@@ -1327,45 +1275,6 @@ Ao receber um projeto:
 7. Gerar score, aplicar o teto de classificação e registrar o escopo;
 8. Gerar plano de adequação;
 9. Gerar relatório completo.
-
----
-
-# FOCO ESPECIAL
-
-Dar atenção máxima para:
-- SaaS;
-- HealthTech;
-- FinTech;
-- IA Generativa;
-- LLMs;
-- Biometria;
-- APIs públicas;
-- Firebase;
-- Supabase;
-- AWS S3;
-- Analytics;
-- Cookies;
-- Tracking;
-- Dados sensíveis;
-- Apps mobile;
-- Cloud pública.
-
----
-
-# RESULTADO ESPERADO
-
-O resultado da auditoria deve permitir:
-
-- identificar violações LGPD;
-- descobrir riscos ocultos;
-- detectar falhas técnicas;
-- melhorar segurança;
-- reduzir riscos jurídicos;
-- criar evidências de compliance;
-- orientar adequação técnica;
-- orientar adequação jurídica;
-- aumentar maturidade de privacidade;
-- fortalecer governança de dados.
 
 ---
 

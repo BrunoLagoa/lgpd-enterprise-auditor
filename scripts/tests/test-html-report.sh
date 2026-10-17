@@ -69,7 +69,7 @@ else
   if diff <(without_data "$EXAMPLE") "$TEMPLATE" > /dev/null; then
     ok "exemplo usa o modelo atual"
   else
-    fail "exemplo desatualizado em relação ao modelo (rode scripts/update-example-report.sh)"
+    fail "exemplo desatualizado em relação ao modelo (rode scripts/update-generated.py)"
   fi
 
   if data_block "$EXAMPLE" | grep -q '<'; then

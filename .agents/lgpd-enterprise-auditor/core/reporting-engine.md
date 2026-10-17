@@ -14,7 +14,13 @@ Definir formato obrigatório e ordem de construção do relatório final.
 8. `recomendacoes_tecnicas`
 
 ## Antes das 8 seções
-Um bloco **Contexto e escopo**, que não conta como seção: o contexto levantado e sua fonte, a natureza e o papel do agente de tratamento, a saída do roteador (módulos ativos, com a justificativa, e escopo excluído, com a evidência) e as limitações da análise (o que não pôde ser acessado). No `.html`, é o campo `context`.
+Um bloco **Contexto e escopo**, que não conta como seção: o contexto levantado e sua fonte, a natureza e o papel do agente de tratamento, a saída do roteador (módulos ativos, com a justificativa, e escopo excluído, com a evidência), as limitações da análise (o que não pôde ser acessado) e as decisões tomadas nesta auditoria que o leitor precisa para refazer o resultado (aplicações da contagem única e das dependências, por exemplo). No `.html`, é o campo `context`.
+
+## Regras de redação
+O relatório é lido por quem decide e por quem corrige, sem o framework ao lado:
+- **cada informação em um só lugar.** A evidência de cada item fica no checklist; impacto, correção, responsável e prazo ficam só na não conformidade do item; os itens `NAO_VERIFICADO` aparecem só na tabela de itens fora do cálculo, e `score_lgpd` traz a contagem deles e remete a ela;
+- **resultados, não regras.** O relatório não repete as regras do framework (fórmula, régua de status, escalas, faixas): traz os resultados, a memória de cálculo e as decisões desta auditoria (agravantes aplicados, modulações, contagem única, dependências). Os termos que o leitor precisa entender ficam no glossário;
+- **sem arquivos do framework.** Não citar arquivos de regras (núcleo, módulos, orquestrador), que o leitor não tem: citar a regra pelo nome (régua de status, agravante do item, modelo de severidade, papel do auditado). Um modelo de `templates/` pode ser indicado como ponto de partida de uma correção, pelo caminho instalado (`.agents/lgpd-enterprise-auditor/templates/...`).
 
 ## Campos mínimos por seção
 
@@ -32,14 +38,15 @@ Um bloco **Contexto e escopo**, que não conta como seção: o contexto levantad
 - áreas `NAO_APLICAVEL`, com justificativa, e pesos ajustados (regra de `core/scoring-engine.md`);
 - `score_tecnico` e `score_documental` (informativos);
 - cobertura global e por área; se a global for menor que 80%, marcar **score parcial** ao lado da classificação; área com cobertura menor que 50% recebe a marca **cobertura baixa**;
-- verificações pendentes que podem alterar o score: itens `NAO_VERIFICADO` (com o acesso necessário) e itens cuja severidade depende de verificação ainda não feita;
+- memória de cálculo: por área, a soma de valor × peso e a soma dos pesos, e a conta do score global;
+- verificações pendentes que podem alterar o score: quantos itens são `NAO_VERIFICADO` (a lista, com o acesso necessário, é a da tabela de itens fora do cálculo) e os itens cujo status ou severidade dependem de verificação ainda não feita;
 - natureza do agente de tratamento e eventuais modulações de severidade por porte.
 
 ### `checklist_conformidade`
-Tabela obrigatória:
-`Item | Área | Status | Evidência | Impacto | Recomendação`
+Uma tabela por área de score (`score_area`, mapa de `core/scoring-engine.md`), na ordem dos pesos, com a área no título:
+`Item | Status | Evidência | Achado`
 
-A coluna `Item` segue o formato `ID · criticality · control_type — texto do item` (ex.: `SE-03 · ALTO · TECNICO — …`), com os valores do catálogo: sem a `criticality`, o score não pode ser refeito a partir do relatório. Item extra (`EX-nn`) vem identificado como tal. A coluna `Área` traz a `score_area` do item (mapa de `core/scoring-engine.md`).
+A coluna `Item` segue o formato `ID · criticality · control_type — texto do item` (ex.: `SE-03 · ALTO · TECNICO — …`), com os valores do catálogo: sem a `criticality`, o score não pode ser refeito a partir do relatório. Item extra (`EX-nn`) vem identificado como tal. A coluna `Achado` traz o ID da não conformidade do item (`NC-nn`) quando ele está `NAO_CONFORME` ou `PARCIAL`, e `—` quando está `CONFORME`; impacto e correção ficam só na não conformidade.
 
 O checklist traz todos os itens do catálogo dos módulos ativos: os `APLICAVEL` na tabela principal e os demais na tabela de itens fora do cálculo.
 
@@ -50,7 +57,7 @@ Status permitidos:
 
 A célula `Evidência` deve registrar os eixos de `core/evidence-engine.md` no formato `GRAU (ORIGEM), confiança NIVEL: descrição`, ex.: `ENCONTRADA (TECNICA), confiança ALTA: política de retenção aplicada em job de expurgo`. A origem pode ser `TECNICA`, `DOCUMENTAL` ou `TECNICA + DOCUMENTAL`; com mais de uma evidência, separar as descrições por ponto e vírgula.
 
-A tabela principal lista só itens `APLICAVEL`. Logo abaixo, uma segunda tabela traz os itens fora do cálculo:
+As tabelas por área listam só itens `APLICAVEL`. Logo depois, uma tabela única traz os itens fora do cálculo:
 `Item | Área | Aplicabilidade | Justificativa ou acesso necessário`
 
 com `NAO_APLICAVEL` (inexistência comprovada ou obrigação de outro agente) e `NAO_VERIFICADO` (o que impediu a verificação e o acesso necessário).

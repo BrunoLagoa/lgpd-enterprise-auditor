@@ -22,7 +22,7 @@ As sete primeiras áreas guardam entre si a proporção 15 : 25 : 15 : 15 : 10 :
 O cálculo é fechado para que duas execuções sobre as mesmas evidências cheguem ao mesmo número.
 
 1. **Valor do item** pelo status: `CONFORME` = 1; `PARCIAL` = 0,5; `NAO_CONFORME` = 0.
-2. **Peso do item** pela `criticality` (criticidade do item no catálogo, já considerados os agravantes da linha do item e a modulação por porte de `core/severity-model.md`): `CRITICO` = 4; `ALTO` = 3; `MEDIO` = 2; `BAIXO` = 1.
+2. **Peso do item** pela `criticality` (criticidade do item no catálogo, já considerados os agravantes da linha do item e a modulação por porte do modelo de severidade): `CRITICO` = 4; `ALTO` = 3; `MEDIO` = 2; `BAIXO` = 1.
 3. **Score da área** (0-100): `score_area = 100 * SUM(valor * peso) / SUM(peso)`, somando os itens `APLICAVEL` cuja `score_area` é aquela área. Itens `NAO_APLICAVEL` e `NAO_VERIFICADO` ficam fora das somas.
 4. **Score global**: aplicar o peso de cada área (ajustado quando houver área `NAO_APLICAVEL`) e somar.
 
@@ -33,7 +33,7 @@ Calcular com valores exatos; exibir o score de cada área com uma casa decimal e
 
 **Contagem única:** cada item é avaliado pelo seu próprio requisito, e uma mesma falha não é contada duas vezes:
 - quando parte do requisito de um item repete uma falha que é o requisito de outro, essa parte é citada na evidência e o item pontua pelo que resta (ex.: `SE-04` não é reprovado pela falta de limitação de tentativas no login, que é o requisito de `AP-03`);
-- quando o item **depende** de outro e esse outro está `NAO_CONFORME`, o dependente fica `NAO_APLICAVEL`, com a referência ao item que conta a falha (se o outro está `NAO_VERIFICADO`, o dependente também fica). As dependências são **só as que os módulos listam**, em linhas no formato "`GV-05` depende de `GV-02`", logo abaixo das tabelas; fora dessa lista não há dependência, e o item é avaliado pelo próprio requisito. Critério para incluir um par na lista: o item não poderia ser atendido enquanto o outro controle continuar ausente;
+- quando o item **depende** de outro e esse outro está `NAO_CONFORME`, o dependente fica `NAO_APLICAVEL`, com a referência ao item que conta a falha (se o outro está `NAO_VERIFICADO`, o dependente também fica). As dependências são **só as da lista fechada do catálogo**, no formato "`GV-05` depende de `GV-02`"; fora dessa lista não há dependência, e o item é avaliado pelo próprio requisito. Critério para incluir um par na lista: o item não poderia ser atendido enquanto o outro controle continuar ausente;
 - quando o requisito inteiro do item falha, ele é reprovado, ainda que a causa seja a mesma de outro item: no catálogo, cada item é uma obrigação distinta (ex.: o mesmo pixel viola o consentimento de cookies, `CK-02`, e também configura transferência internacional sem mecanismo, `TI-02`).
 
 Uma área aplicável sem nenhum item avaliado indica cobertura insuficiente: avaliar ao menos um item dela; se não for possível, declarar "cobertura insuficiente" em `score_lgpd` e redistribuir seu peso como na regra de `NAO_APLICAVEL`, sem chamá-la assim.
@@ -71,7 +71,7 @@ Limites:
 - `NAO_VERIFICADO` só cabe em controle `TECNICO` fora do alcance do auditor; controle `DOCUMENTAL` nunca é `NAO_VERIFICADO`;
 - controle que **não tem representação em arquivo do repositório** e só existe na configuração de um serviço (ex.: retenção de logs, backup, MFA e membros do painel, proteção de branch) é `NAO_VERIFICADO`;
 - controle que **costuma ser declarado em arquivo do repositório** (ex.: varredura de dependências, de segredos ou de código no CI, rate limiting da aplicação, cabeçalhos em `vercel.json` ou equivalente) e não está lá é `NAO_CONFORME`, ainda que o provedor ofereça uma alternativa por painel; a confiança é a que a evidência permitir, e a alternativa vira verificação pendente;
-- item com elementos verificáveis e elementos fora do alcance: se algum elemento verificável falha, o status segue a régua de `core/evidence-engine.md` (a falha é certa); se todos os verificáveis atendem, o item fica `NAO_VERIFICADO`, registrando o que já foi comprovado e o acesso que falta. `CONFORME` exige que tudo o que o item pede esteja comprovado, sem exceção para item verificado pela metade. Está fora do alcance o elemento cuja evidência não tem representação em arquivo do repositório e só existe na configuração de um serviço ou em produção;
+- item com elementos verificáveis e elementos fora do alcance: se algum elemento verificável falha, o status segue a régua de status do item (a falha é certa); se todos os verificáveis atendem, o item fica `NAO_VERIFICADO`, registrando o que já foi comprovado e o acesso que falta. `CONFORME` exige que tudo o que o item pede esteja comprovado, sem exceção para item verificado pela metade. Está fora do alcance o elemento cuja evidência não tem representação em arquivo do repositório e só existe na configuração de um serviço ou em produção;
 - cada item `NAO_VERIFICADO` gera uma verificação pendente no relatório.
 
 **Cobertura** = itens com `status` ÷ (itens com `status` + itens `NAO_VERIFICADO`), global e por área; itens `NAO_APLICAVEL` não entram na conta. Cobertura global abaixo de 80% obriga a marcar o resultado como **score parcial** ao lado da classificação. Área com cobertura abaixo de 50% recebe a marca **cobertura baixa** ao lado do seu score: itens não verificados saem da conta e podem elevar a nota da área. Área em que todos os itens são `NAO_VERIFICADO` cai na regra de cobertura insuficiente acima.
@@ -110,7 +110,7 @@ Além do score global, o relatório mostra dois subtotais com a mesma fórmula d
 Os subtotais **não** entram na classificação final; servem para mostrar, por exemplo, um núcleo técnico forte com documentação ausente.
 
 ## Riscos aceitos
-Item com `risk_acceptance` registrado continua pontuando pelo seu status. Aceitar um risco não torna o item conforme.
+O controlador pode aceitar um risco. O registro (`risk_acceptance`) traz quem aceitou (nome e papel), quando, a justificativa, a data de revisão (no máximo 12 meses depois) e, se o aceite adiar a correção, o novo prazo ao lado do prazo sugerido original. Item com aceite continua pontuando pelo seu status: o aceite **não** altera status, severidade nem score, e não torna o item conforme.
 
 ## Áreas não aplicáveis
 Além da aplicabilidade de cada item, uma **área de score** inteira pode ser `NAO_APLICAVEL`. O `status` do `check_item` continua restrito a `CONFORME | PARCIAL | NAO_CONFORME`; a aplicabilidade é um campo à parte.

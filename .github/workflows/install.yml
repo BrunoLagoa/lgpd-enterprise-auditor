@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: ShellCheck
-        run: shellcheck scripts/install.sh scripts/update-example-report.sh scripts/update-skill-catalog.sh scripts/tests/test-install.sh scripts/tests/test-versions.sh scripts/tests/test-html-report.sh scripts/tests/test-framework.sh scripts/tests/run-all.sh
+        run: shellcheck scripts/install.sh scripts/tests/test-install.sh scripts/tests/test-versions.sh scripts/tests/test-html-report.sh scripts/tests/test-framework.sh scripts/tests/run-all.sh
 
   bash:
     strategy:

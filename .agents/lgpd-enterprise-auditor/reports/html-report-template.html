@@ -635,7 +635,7 @@ footer p{max-width:90ch}
     var card = h('div', { class: 'card' },
       h('p', { class: 'lbl', text: 'Score LGPD' }),
       h('div', { class: 'score-n' }, h('b', { class: c ? 'c-' + c : '', text: SCORE == null ? '—' : String(SCORE) }), h('span', { text: '/ 100' })),
-      h('div', { class: 'chips' }, CLS ? chip(L.cls[CLS] || CLS, c, 'classificação ' + CLS) : null, CLS ? h('code', { text: CLS }) : null,
+      h('div', { class: 'chips' }, CLS ? chip(L.cls[CLS] || CLS, c, 'classificação ' + CLS) : null,
         PARCIAL ? chip('score parcial', 'medio', 'cobertura global abaixo de 80%') : null,
         LIMITADA ? chip('classificação limitada por achado crítico', 'crit', 'teto de classificação: há não conformidade CRITICO aberta') : null,
         DIRECIONADO ? chip('escopo direcionado', 'line', 'cenário ' + CENARIO + ': a classificação vale para o escopo auditado') : null));
@@ -836,8 +836,8 @@ footer p{max-width:90ch}
                 'criticality ' + up(it.criticality)) : null)),
           h('div', { class: 'body' }, h('div', { class: 'fields' },
             campo('Evidência', evidencia(it), true),
-            campo('Impacto', it.impact),
-            campo('Recomendação', it.recommendation),
+            f ? campo('Não conformidade', h('div', null, h('p', null, h('b', { text: (f.id ? f.id + ' · ' : '') }), inline(f.title, h('span'))),
+              h('div', { class: 'chips' }, chipSev(f.severity), chipPrazo(f.deadline_suggestion), has(f.effort) ? chip('esforço ' + up(f.effort), 'line', 'effort ' + up(f.effort)) : null)), true) : null,
             h('div', { class: 'fd full chips' }, chip('área ' + a, 'line'), has(it.control_type) ? chip('controle ' + (L.tipo[up(it.control_type)] || it.control_type).toLowerCase(), 'line', 'control_type ' + up(it.control_type)) : null,
               has(it.domain) ? chip('domínio ' + it.domain, 'line') : null,
               f ? h('a', { class: 'ref', href: '#nc-' + slug(it.id), 'data-goto': 'nc-' + slug(it.id) }, 'ver não conformidade' + (f.id ? ' ' + f.id : '')) : null))));
@@ -850,7 +850,7 @@ footer p{max-width:90ch}
     var fl = filtros(s, fichas, [['all', 'Todos', dentro.length], ['NAO_CONFORME', 'Não conformes', t.NAO_CONFORME], ['PARCIAL', 'Parciais', t.PARCIAL],
       ['CONFORME', 'Conformes', t.CONFORME]], 'data-status', 'Buscar item ou evidência', sel);
     limpar.push(fl.limpa);
-    add(s, [h('p', { class: 'muted small', text: 'Só os itens aplicáveis têm status e entram no score. Abra um item para ver evidência, impacto e recomendação.' }), fl.el, grupos]);
+    add(s, [h('p', { class: 'muted small', text: 'Só os itens aplicáveis têm status e entram no score. Abra um item para ver a evidência; impacto e correção estão na não conformidade do item.' }), fl.el, grupos]);
     if (fora.length) {
       add(s, [h('h3', { text: 'Itens fora do cálculo' }),
         tabela(['Item', 'Área', 'Aplicabilidade', 'Justificativa ou acesso necessário'], fora.map(function (it) {

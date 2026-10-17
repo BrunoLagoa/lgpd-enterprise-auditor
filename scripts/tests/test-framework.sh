@@ -84,10 +84,10 @@ check "domínio de cada item existe no mapa de core/scoring-engine.md${BAD_DOMAI
 SPLIT_PREFIXES="$(awk -F'\t' '{ split($1, p, "-"); print p[1] "\t" $6 }' "${TMP_DIR}/catalog.tsv" | sort -u | cut -f1 | uniq -d | tr '\n' ' ')"
 check "cada prefixo de ID fica em um só arquivo${SPLIT_PREFIXES:+ (${SPLIT_PREFIXES})}" test -z "$SPLIT_PREFIXES"
 
-if bash "${REPO_ROOT}/scripts/update-skill-catalog.sh" --check > "${TMP_DIR}/skill-check.txt" 2>&1; then
-  ok "catálogo da skill gerado a partir dos módulos e em dia"
+if python3 "${REPO_ROOT}/scripts/update-generated.py" --check > "${TMP_DIR}/skill-check.txt" 2>&1; then
+  ok "blocos gerados da skill (catálogo, núcleo, monitoramento) e exemplo em dia com as fontes"
 else
-  fail "catálogo da skill em dia ($(tr '\n' ' ' < "${TMP_DIR}/skill-check.txt"))"
+  fail "conteúdo gerado em dia ($(tr '\n' ' ' < "${TMP_DIR}/skill-check.txt"))"
 fi
 
 PREFIXES="$(cut -f1 "${TMP_DIR}/catalog.tsv" | cut -d- -f1 | sort -u)"
@@ -212,6 +212,13 @@ SYNC_PT="$(sed -n 's/^| Última sincronização | `\([0-9-]*\)` |$/\1/p' "${REPO
 SYNC_EN="$(sed -n 's/^| Last synchronization | `\([0-9-]*\)` |$/\1/p' "${REPO_ROOT}/README.en.md")"
 check "data de sincronização presente no README.md (${SYNC_PT:-ausente})" test -n "$SYNC_PT"
 check "data de sincronização igual nos dois READMEs (${SYNC_PT:-?} e ${SYNC_EN:-?})" test "$SYNC_PT" = "$SYNC_EN"
+
+# Normas em monitoramento: uma única lista datada, conferida na mesma data da sincronização dos READMEs.
+GUIDELINES="${FRAMEWORK}/legal/anpd-guidelines.md"
+STAMP="$(sed -n 's/^Fonte única da situação das normas em monitoramento\. Situação conferida em \([0-9-]*\)\.$/\1/p' "$GUIDELINES")"
+check "normas em monitoramento conferidas na data da sincronização (${STAMP:-sem data} e ${SYNC_PT:-?})" test -n "$STAMP" -a "$STAMP" = "$SYNC_PT"
+SCATTERED="$(grep -rlE 'até 20[0-9]{2}-[0-9]{2}|em (jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)/20[0-9]{2}, (ainda )?aguardando' "$FRAMEWORK" "$SKILL" --include='*.md' | sed "s#${REPO_ROOT}/##" | tr '\n' ' ' || true)"
+check "situação datada das normas só na fonte única${SCATTERED:+ (carimbos em: ${SCATTERED})}" test -z "$SCATTERED"
 
 echo
 if [[ "$FAILURES" -gt 0 ]]; then

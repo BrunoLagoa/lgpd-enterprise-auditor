@@ -148,12 +148,11 @@ Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): a
 Todo `finding` deste módulo deve citar o dispositivo do decreto (e o artigo do MCI, quando houver) **e** o correlato na LGPD — em regra: art. 6º, VI a VIII (transparência, segurança, prevenção); art. 11 para conteúdo íntimo; art. 20 para moderação exclusivamente automatizada; art. 46 para falhas de segurança; arts. 7º, II e 16, I para guarda de registros. Achado sem correlato LGPD explícito quebra o contrato de `finding` em [[auditor-core]].
 
 ## Em monitoramento (não vigente — não gera não conformidade)
-- Regulamentação pela ANPD da forma de notificação e contestação, prazos de remoção e resposta, legitimados e prazo de contestação (art. 16-D, parágrafo único; Dec. 12.976, art. 5º, §3º). Até lá, valem os prazos transitórios do Dec. 12.976, art. 12.
-- Regulamento da marcação digital para bloqueio automático de reenvio de conteúdo íntimo (Dec. 12.976, art. 7º, §4º) e parâmetros das salvaguardas de IA (art. 10). A remoção de toda a aplicação e a vedação do art. 9º já são exigíveis.
-- Critérios diferenciados por porte e risco (art. 16-P) e forma de acesso às informações de anúncios (art. 16-M, parágrafo único).
-- Ato do MJSP sobre a forma de encaminhamento de autoria e materialidade ao Poder Público (art. 16-H, parágrafo único; Dec. 12.976, art. 13, parágrafo único).
-- Tomada de subsídios da ANPD sobre as novas regras para plataformas, encerrada em 17/08/2026, sem regulamento final publicado até 2026-10. A tomada de subsídios da Agenda Regulatória 2027-2028 (01/09 a 16/10/2026) propõe como eixo o ambiente digital seguro, com transparência das plataformas e combate à geração de conteúdo ilícito por IA; o cronograma prevê a definição das prioridades 2027-2028 em nov/2026 e a atualização dos regulamentos de fiscalização e dosimetria em dez/2026 — ver [[anpd-guidelines]].
-- Revisão da Res. CD/ANPD nº 1/2021, em consulta pública até 26/10/2026 — ver [[anpd-guidelines]].
+A situação das normas em monitoramento, com a data da última conferência, está só em [[anpd-guidelines]] (regulamentação dos decretos pela ANPD e revisão da Res. CD/ANPD nº 1/2021). Dispositivos que ainda dependem de regulamentação:
+- forma de notificação e contestação, prazos de remoção e resposta, legitimados e prazo de contestação (art. 16-D, parágrafo único; Dec. 12.976, art. 5º, §3º). Até lá, valem os prazos transitórios do Dec. 12.976, art. 12;
+- marcação digital para bloqueio automático de reenvio de conteúdo íntimo (Dec. 12.976, art. 7º, §4º) e parâmetros das salvaguardas de IA (art. 10). A remoção de toda a aplicação e a vedação do art. 9º já são exigíveis;
+- critérios diferenciados por porte e risco (art. 16-P) e forma de acesso às informações de anúncios (art. 16-M, parágrafo único);
+- ato do MJSP sobre a forma de encaminhamento de autoria e materialidade ao Poder Público (art. 16-H, parágrafo único; Dec. 12.976, art. 13, parágrafo único).
 
 ## Relação com outros módulos
 - Notificação, remoção e retenção de conteúdo envolvendo menores (ECA Digital, arts. 27 a 33): ver [[eca-digital]].
