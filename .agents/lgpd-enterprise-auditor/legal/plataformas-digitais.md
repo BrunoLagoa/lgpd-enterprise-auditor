@@ -83,6 +83,7 @@ A guarda dos registros de acesso por 6 meses é avaliada **uma única vez**, no 
 - **Responsabilidade civil** por conteúdo de terceiro nas hipóteses de falha sistêmica (art. 16-B; Dec. 12.976, art. 4º) e presunção de responsabilidade em anúncios e impulsionamentos (art. 16-L).
 - A exposição é **cumulativa** com as sanções do art. 52 da LGPD e, quando houver menores, do art. 35 do ECA Digital.
 - O rito de fiscalização segue a Res. CD/ANPD nº 1/2021 enquanto não concluída sua revisão — ver [[anpd-guidelines]].
+- Denúncias sobre o descumprimento dos decretos chegam à ANPD pelo seu Sistema de Requerimentos; a ANPD fiscaliza a atuação sistêmica do provedor, não conteúdos isolados, cuja notificação continua nos canais da própria plataforma.
 
 ## Checklist atômico
 Pergunta de enquadramento (não pontua): o serviço intermedeia conteúdo gerado por terceiro? Enquadra-se em alguma exclusão do art. 16-O?
@@ -151,7 +152,7 @@ Todo `finding` deste módulo deve citar o dispositivo do decreto (e o artigo do 
 - Regulamento da marcação digital para bloqueio automático de reenvio de conteúdo íntimo (Dec. 12.976, art. 7º, §4º) e parâmetros das salvaguardas de IA (art. 10). A remoção de toda a aplicação e a vedação do art. 9º já são exigíveis.
 - Critérios diferenciados por porte e risco (art. 16-P) e forma de acesso às informações de anúncios (art. 16-M, parágrafo único).
 - Ato do MJSP sobre a forma de encaminhamento de autoria e materialidade ao Poder Público (art. 16-H, parágrafo único; Dec. 12.976, art. 13, parágrafo único).
-- Tomada de subsídios da ANPD sobre as novas regras para plataformas, encerrada em 17/08/2026, sem regulamento final publicado até 2026-09; cronograma prevê definição de prioridades regulatórias 2027-2028 e atualização das normas de fiscalização e sanção em nov-dez/2026.
+- Tomada de subsídios da ANPD sobre as novas regras para plataformas, encerrada em 17/08/2026, sem regulamento final publicado até 2026-10. A tomada de subsídios da Agenda Regulatória 2027-2028 (01/09 a 16/10/2026) propõe como eixo o ambiente digital seguro, com transparência das plataformas e combate à geração de conteúdo ilícito por IA; o cronograma prevê a definição das prioridades 2027-2028 em nov/2026 e a atualização dos regulamentos de fiscalização e dosimetria em dez/2026 — ver [[anpd-guidelines]].
 - Revisão da Res. CD/ANPD nº 1/2021, em consulta pública até 26/10/2026 — ver [[anpd-guidelines]].
 
 ## Relação com outros módulos

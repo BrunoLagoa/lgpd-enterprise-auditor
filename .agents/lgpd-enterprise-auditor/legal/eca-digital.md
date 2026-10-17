@@ -11,8 +11,10 @@ Referências de artigo verificadas no texto oficial (Planalto, consulta em 2026-
 - **Lei nº 15.211/2025** (17/09/2025). Vigência: **17/03/2026** (art. 41-A, com a redação da Lei nº 15.352/2026).
 - **Decreto nº 12.622/2025** — atribuiu à ANPD a competência de regulamentar, zelar e fiscalizar a Lei nº 15.211/2025.
 - **Decreto nº 12.880/2026** (18/03/2026) — regulamenta a lei e institui a Política Nacional de Promoção e Proteção dos Direitos da Criança e do Adolescente no Ambiente Digital.
+- **Despacho Decisório CD/ANPD nº 122/2026** (DOU 11/08/2026) — fixa o prazo, o período de referência, o conteúdo mínimo e as dispensas do relatório semestral de transparência do art. 31 até regulamentação específica.
 - Normas conexas citadas pela própria lei: ECA (Lei nº 8.069/1990), LGPD (Lei nº 13.709/2018), CDC (Lei nº 8.078/1990), Marco Civil da Internet (Lei nº 12.965/2014), Marco Legal dos Jogos Eletrônicos (Lei nº 14.852/2024) e Estatuto da Pessoa com Deficiência (Lei nº 13.146/2015).
 - Orientações preliminares da ANPD sobre aferição de idade (março/2026) e Radar Tecnológico nº 5 — **não vinculantes**: servem de referência técnica, mas nunca fundamentam `finding` ou `NAO_CONFORME`.
+- Nota Técnica da Sedigi/MJSP sobre companheiros de IA acessíveis a crianças e adolescentes (22/09/2026), encaminhada à ANPD e à Senacon — preliminar e **não vinculante**: referência para sistemas conversacionais que simulam vínculo afetivo (aferição de idade só por autodeclaração, perfilamento emocional para publicidade e coleta de dados íntimos foram os indícios apontados) — ver [[llm-audit]].
 
 ## Escopo de aplicação (art. 1º)
 A lei alcança **todo produto ou serviço de TI direcionado a crianças e adolescentes no País ou de acesso provável por eles**, independentemente de onde seja desenvolvido, fabricado, ofertado ou operado.
@@ -112,7 +114,7 @@ Obrigatório para provedores de aplicações com **mais de 1.000.000 de usuário
 
 Parágrafo único: acesso **gratuito** a dados para pesquisa acadêmica, científica, tecnológica, de inovação ou jornalística, vedado uso comercial.
 
-**Primeiro ciclo:** publicação até **17/09/2026**, cobrindo 01/01 a 30/06/2026 — ou 17/03 a 30/06/2026 para provedores sem dados de janeiro e fevereiro. **Prazo encerrado:** desde 18/09/2026, provedor acima do limiar sem relatório publicado está em não conformidade atual. Os ciclos seguintes são semestrais. Ver [[eca-transparency-report-template]].
+**Primeiro ciclo:** publicação até **17/09/2026**, cobrindo 01/01 a 30/06/2026 — ou 17/03 a 30/06/2026 para provedores sem dados de janeiro e fevereiro. **Prazo encerrado:** desde 18/09/2026, provedor acima do limiar sem relatório publicado está em não conformidade atual. **Ciclos seguintes** (Despacho Decisório CD/ANPD nº 122/2026): semestres civis, com publicação até **1º/02** (julho a dezembro do ano anterior) e **1º/08** (janeiro a junho); o relatório do 2º semestre de 2026 vence em 01/02/2027. Até regulamentação específica, o conteúdo mínimo é um documento único com os sete incisos do art. 31, detalhando as notificações recebidas por categoria e os dados proporcionais sobre o seu prosseguimento (Decreto nº 12.880/2026, art. 45, I e II); ficam dispensados os provedores abaixo do limiar e os serviços com controle editorial ou conteúdo licenciado que atendam ao art. 39, §1º, I a IV. O despacho recomenda enviar cópia do relatório à ANPD no ato da publicação, sem substituir a publicação no site. Ver [[eca-transparency-report-template]].
 
 ### 13. Uso abusivo dos instrumentos de denúncia (arts. 32 e 33)
 Mecanismos para identificar uso abusivo das denúncias (censura, perseguição), com informação clara aos usuários, sanções internas graduadas, notificação, direito a recurso, prazos e **registros detalhados** dos casos e sanções.
@@ -201,10 +203,10 @@ Itens do catálogo (regras em `core/scoring-engine.md`, "Catálogo de itens"): a
 Todo `finding` deste módulo deve citar **o artigo do ECA Digital** e o **correlato na LGPD** (art. 14 e/ou princípios do art. 6º; art. 46 quando for falha de segurança). Achado sem correlato LGPD explícito quebra o contrato de `finding` em [[auditor-core]].
 
 ## Em monitoramento (não vigente — não gera não conformidade)
-- Guia orientativo da ANPD sobre aferição de idade atualizado em maio/2026 (Processo nº 00261.003182/2026-47): tomada de subsídios encerrada em 09/07/2026; versão final prevista para a Etapa II e ainda não publicada até 2026-09.
-- Guia sobre "Fornecedores de produtos ou serviços de tecnologia da informação" (Processo nº 00261.002701/2026-50): tomada de subsídios encerrada em 15/06/2026; versão final ainda não publicada até 2026-09.
+- Guia orientativo da ANPD sobre aferição de idade atualizado em maio/2026 (Processo nº 00261.003182/2026-47): tomada de subsídios encerrada em 09/07/2026; versão final prevista para a Etapa II e ainda não publicada até 2026-10.
+- Guia sobre "Fornecedores de produtos ou serviços de tecnologia da informação" (Processo nº 00261.002701/2026-50): tomada de subsídios encerrada em 15/06/2026; versão final ainda não publicada até 2026-10.
 - Regulamentos ainda pendentes previstos na própria lei: requisitos mínimos de aferição de idade e supervisão parental em lojas/SO (art. 12, §3º), diretrizes de supervisão parental (art. 17, §1º), prazos de notificação às autoridades (art. 27, §1º), critérios de acesso a dados para pesquisa (art. 31, parágrafo único) e critérios de modulação de obrigações (art. 39, §3º).
-- Parâmetros normativos definitivos de aferição de idade previstos para a Etapa II (a partir de agosto/2026).
+- Parâmetros normativos definitivos de aferição de idade previstos para a Etapa II (a partir de agosto/2026), não publicados até 2026-10; o cronograma da ANPD prevê o período de adaptação até novembro/2026, a atualização dos regulamentos de fiscalização e sanção a partir de novembro/2026 e a fiscalização a partir de janeiro/2027.
 
 ## Relação com outros módulos
 - Art. 14 da LGPD e consentimento parental: ver [[children-adolescents]].

@@ -327,7 +327,7 @@ footer p{max-width:90ch}
       "cloud",
       "devsecops"
     ],
-    "framework_version": "1.8.1",
+    "framework_version": "1.9.0",
     "method": "leitura estática dos arquivos do repositório; sem acesso ao ambiente de produção, aos painéis da Vercel, do banco e do GitHub, nem a contratos fora do repositório",
     "notice": "**Exemplo público com dados fictícios.** Este relatório foi produzido sobre o projeto fictício e intencionalmente falho de `examples/saas-demo/` para demonstrar o LGPD Enterprise Auditor. Empresa, pessoas, CNPJ, domínios e dados são inventados. Relatórios reais são confidenciais e não devem ser versionados em repositório público; este arquivo foge da regra só por ser um exemplo público."
   },
@@ -4329,9 +4329,9 @@ footer p{max-width:90ch}
   add(nav, h('span', { class: 'sp' }));
   function icone(id) { return document.getElementById(id).content.firstElementChild.cloneNode(true); }
   var bPrint = h('button', { class: 'tbtn', type: 'button' }, 'imprimir / PDF');
-  var bTema = h('button', { class: 'tbtn tema', type: 'button' },
-    h('span', { class: 'p-escuro' }, icone('icone-lua'), 'tema escuro'),
-    h('span', { class: 'p-claro' }, icone('icone-sol'), 'tema claro'));
+  var bTema = h('button', { class: 'tbtn tema', type: 'button', title: 'Mudar o tema da página' },
+    h('span', { class: 'p-escuro' }, icone('icone-lua'), 'escuro'),
+    h('span', { class: 'p-claro' }, icone('icone-sol'), 'claro'));
   add(nav, [bPrint, bTema]);
   bPrint.addEventListener('click', function () { window.print(); });
   try { var salvo = localStorage.getItem('lgpd-relatorio-tema'); if (salvo) root.setAttribute('data-theme', salvo); } catch (e) {}

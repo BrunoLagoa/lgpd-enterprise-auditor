@@ -4,7 +4,7 @@ description: Auditoria de conformidade LGPD (Lei nº 13.709/2018) orientada a ev
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.8.1"
+  version: "1.9.0"
 ---
 
 # 🛡️ LGPD ENTERPRISE AUDITOR FRAMEWORK
@@ -753,7 +753,7 @@ Sempre que houver serviço direcionado ou de acesso provável por menores. "Aces
 - vinculação da conta de usuários **de até 16 anos** à conta de um responsável legal, com suspensão e direito de apelação diante de indícios (art. 24);
 - remoção e comunicação de conteúdo de exploração, abuso sexual, sequestro e aliciamento às autoridades, com retenção dos dados pelo prazo do **art. 15 do Marco Civil da Internet — 6 meses** (art. 27);
 - canal público de notificação, retirada sem ordem judicial mediante notificação identificada (vedado anonimato) e **direito de contestação** com indicação de análise humana ou automatizada (arts. 28 a 30);
-- **relatório semestral de transparência** para provedores com mais de 1.000.000 de usuários dessa faixa etária registrados com conexão no País, em português, no site do provedor, com os sete incisos do art. 31 — primeiro ciclo até 17/09/2026, cobrindo 01/01 a 30/06/2026 (prazo encerrado: desde 18/09/2026, a ausência de publicação é não conformidade atual; ciclos seguintes semestrais) — e acesso gratuito a dados para pesquisa;
+- **relatório semestral de transparência** para provedores com mais de 1.000.000 de usuários dessa faixa etária registrados com conexão no País, em português, no site do provedor, com os sete incisos do art. 31 — primeiro ciclo até 17/09/2026, cobrindo 01/01 a 30/06/2026 (prazo encerrado: desde 18/09/2026, a ausência de publicação é não conformidade atual; ciclos seguintes por semestre civil, com publicação até 1º/02 e 1º/08, conteúdo mínimo e dispensas do art. 39, §1º fixados pelo Despacho Decisório CD/ANPD nº 122/2026 — o relatório do 2º semestre de 2026 vence em 01/02/2027) — e acesso gratuito a dados para pesquisa;
 - mecanismos contra uso abusivo dos instrumentos de denúncia, com sanções internas graduadas e registros (arts. 32 e 33);
 - **representante legal no País** com poderes para receber citações e notificações (art. 40);
 - adesivo de alerta em embalagens de eletrônicos com acesso à internet (art. 38).
@@ -846,11 +846,13 @@ Todo achado deste domínio deve citar o dispositivo do decreto (e do MCI, quando
 
 Normas ainda **não vigentes** nunca originam não conformidade. Registrá-las apenas na seção 8 do relatório (Recomendações Técnicas), rotuladas como norma futura:
 
-- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados, sem sanção até 2026-09 (em set/2026, aguardando parecer do relator na Comissão Especial).
-- **Guias orientativos da ANPD** no âmbito do ECA Digital (aferição de idade e fornecedores de tecnologia): tomadas de subsídios encerradas em 2026, versões finais ainda não publicadas até 2026-09.
+- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024, em tramitação na Câmara dos Deputados, sem sanção até 2026-10 (em out/2026, ainda aguardando parecer do relator na Comissão Especial; o relator indicou que a votação fica para depois das eleições de outubro de 2026).
+- **Guias orientativos da ANPD** no âmbito do ECA Digital (aferição de idade e fornecedores de tecnologia): tomadas de subsídios encerradas em 2026, versões finais ainda não publicadas até 2026-10.
 - **Revisão da Resolução CD/ANPD nº 1/2021** (fiscalização e processo sancionador): consulta pública de 09/09/2026 a 26/10/2026; até a norma final, a Res. nº 1/2021 segue vigente.
-- **Regulamentação dos Decretos nº 12.975/2026 e nº 12.976/2026** pela ANPD (forma e prazos de notificação e contestação, marcação digital de conteúdo íntimo, parâmetros das salvaguardas de IA, critérios diferenciados por porte — art. 16-P): tomada de subsídios encerrada em 17/08/2026, sem regulamento final até 2026-09. Até lá, valem os deveres dos decretos e os prazos transitórios do art. 12 do Decreto nº 12.976/2026.
-- **Parâmetros normativos definitivos de aferição de idade**, previstos pela ANPD para a etapa regulatória iniciada em agosto/2026.
+- **Regulamentação dos Decretos nº 12.975/2026 e nº 12.976/2026** pela ANPD (forma e prazos de notificação e contestação, marcação digital de conteúdo íntimo, parâmetros das salvaguardas de IA, critérios diferenciados por porte — art. 16-P): tomada de subsídios encerrada em 17/08/2026, sem regulamento final até 2026-10. Até lá, valem os deveres dos decretos e os prazos transitórios do art. 12 do Decreto nº 12.976/2026.
+- **Parâmetros normativos definitivos de aferição de idade**, previstos pela ANPD para a etapa regulatória iniciada em agosto/2026 e não publicados até 2026-10.
+- **Agenda Regulatória 2027-2028 e Agenda de Avaliação de Resultado Regulatório 2027-2030**: tomadas de subsídios abertas pela ANPD em 01/09/2026, com contribuições até 16/10/2026; eixos propostos: ambiente digital seguro (supervisão parental, design seguro, uso de IA por menores, transparência das plataformas, conteúdo ilícito gerado por IA) e privacidade (direitos dos titulares, reconhecimento facial, dados de saúde, decisões automatizadas). Sem efeito até a resolução que aprovar as agendas.
+- **Guia Orientativo sobre Tratamento de Dados Pessoais de Alto Risco**: a minuta foi **rejeitada** por unanimidade pelo Conselho Diretor da ANPD (Voto nº 11/2025/DIR-MW/CD, set/2026) e arquivada; a ANPD indicou que a análise de alto risco deve ocorrer no RIPD. Não citar a minuta: a decisão de alto risco segue a Res. CD/ANPD nº 2/2022, art. 4º, e a regra deste documento.
 
 Atenção: o cronograma de fiscalização da ANPD para o ECA Digital (adaptação até novembro/2026, fiscalização efetiva a partir de janeiro/2027) **não suspende a vigência da lei** — os requisitos do domínio 16 são exigíveis desde 17/03/2026.
 

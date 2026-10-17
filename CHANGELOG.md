@@ -6,8 +6,13 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.9.0] - 2026-10-16
+
 ### Alterado
 - READMEs: a seção "Comandos disponíveis" passa a trazer uma tabela com os 8 comandos (cenário, quando usar e módulos ativados), o que cada um verifica, o que todos fazem e os módulos que o roteador acrescenta por gatilho. Ela substitui a seção "Modos de uso".
+- Relatório em HTML: o botão de tema mostra só o ícone e o nome do tema para o qual a página muda ("escuro" no tema claro, "claro" no escuro), sem a palavra "tema"; a dica ao passar o mouse diz "Mudar o tema da página".
+- Base normativa sincronizada em outubro/2026: o relatório semestral de transparência do ECA Digital traz os ciclos seguintes (publicação até 1º/02 e 1º/08), o conteúdo mínimo, as dispensas do art. 39, §1º e a cópia à ANPD do Despacho Decisório CD/ANPD nº 122/2026, na skill, no módulo `eca-digital`, no modelo e na paridade. As seções "Em monitoramento" registram a situação em outubro/2026: PL nº 2338/2023 sem votação antes das eleições, guias do ECA Digital ainda preliminares, tomadas de subsídios da Agenda Regulatória 2027-2028 e da avaliação de resultado regulatório, consulta sobre a Portaria ANPD nº 16/2021, rejeição da minuta de guia de alto risco pelo Conselho Diretor (a decisão de alto risco segue só a Res. CD/ANPD nº 2/2022) e a nota técnica da Sedigi/MJSP sobre companheiros de IA.
+- CI: `actions/checkout` atualizado de v5.1.0 para v7.0.1 em todos os workflows.
 
 ## [1.8.1] - 2026-10-05
 
@@ -209,7 +214,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.1...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.9.0...HEAD
+[1.9.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.1...v1.9.0
 [1.8.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.6.1...v1.7.0

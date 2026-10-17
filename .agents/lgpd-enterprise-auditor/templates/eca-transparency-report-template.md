@@ -4,7 +4,7 @@ Modelo do relatório exigido pelo **art. 31 da Lei nº 15.211/2025** dos provedo
 
 Mapeamento dos sete incisos do art. 31: I e II → seção 3.1; III → seção 4; IV → seção 3.2; V → seção 7.1; VI → seção 3.3; VII → seção 8; parágrafo único → seção 7.2. As demais seções (1, 2, corpo da 3, 5, 6, corpo da 7, 9 e 10) são apoio de auditoria e não substituem os incisos.
 
-**Primeiro ciclo:** publicação até **17/09/2026**, cobrindo 01/01 a 30/06/2026 — ou 17/03 a 30/06/2026 para provedores sem dados de janeiro e fevereiro. **Prazo encerrado:** desde 18/09/2026, provedor acima do limiar sem relatório publicado está em não conformidade atual. Os ciclos seguintes são semestrais.
+**Primeiro ciclo:** publicação até **17/09/2026**, cobrindo 01/01 a 30/06/2026 — ou 17/03 a 30/06/2026 para provedores sem dados de janeiro e fevereiro. **Prazo encerrado:** desde 18/09/2026, provedor acima do limiar sem relatório publicado está em não conformidade atual. **Ciclos seguintes** (Despacho Decisório CD/ANPD nº 122/2026): semestres civis, com publicação até **1º/02** (julho a dezembro do ano anterior) e **1º/08** (janeiro a junho); o relatório do 2º semestre de 2026 vence em 01/02/2027. O despacho fixa o conteúdo mínimo até regulamentação específica, dispensa os serviços do art. 39, §1º, I a IV, e recomenda enviar cópia à ANPD no ato da publicação.
 
 Ver [[eca-digital]] para o módulo de auditoria correspondente.
 
@@ -15,6 +15,7 @@ Ver [[eca-digital]] para o módulo de auditoria correspondente.
 - encarregado/DPO e canal de contato:
 - período de referência do relatório:
 - data de publicação e URL pública:
+- cópia enviada à ANPD no ato da publicação (data e protocolo) — recomendação do Despacho Decisório CD/ANPD nº 122/2026:
 
 ## 2. Base de usuários
 - total de usuários registrados no Brasil:
