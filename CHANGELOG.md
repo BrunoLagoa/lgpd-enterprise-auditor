@@ -6,6 +6,8 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.10.1] - 2026-10-26
+
 ### Alterado
 - Normas em monitoramento, situação de fim de outubro/2026: a consulta pública sobre a revisão da Res. CD/ANPD nº 1/2021 e as tomadas de subsídios das agendas regulatórias aparecem como encerradas, ainda sem norma final, e o PL nº 2338/2023 segue sem parecer do relator na Comissão Especial.
 
@@ -231,7 +233,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.0...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.1...HEAD
+[1.10.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.0...v1.10.1
 [1.10.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.9.0...v1.10.0
 [1.9.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.1...v1.9.0
 [1.8.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.0...v1.8.1
