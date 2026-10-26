@@ -6,6 +6,9 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+### Alterado
+- Normas em monitoramento, situação de fim de outubro/2026: a consulta pública sobre a revisão da Res. CD/ANPD nº 1/2021 e as tomadas de subsídios das agendas regulatórias aparecem como encerradas, ainda sem norma final, e o PL nº 2338/2023 segue sem parecer do relator na Comissão Especial.
+
 ## [1.10.0] - 2026-10-17
 
 ### Adicionado
