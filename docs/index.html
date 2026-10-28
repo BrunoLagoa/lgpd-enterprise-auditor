@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LGPD Enterprise Auditor — auditoria LGPD orientada a evidências para assistentes de IA</title>
 <meta name="description" content="Framework open source (MIT) que transforma seu assistente de IA em um auditor de LGPD: checklist com evidência por item, achados com o artigo da lei, score de 0 a 100 e plano de adequação com prazo e esforço. Funciona com Claude Code, Cursor, VS Code + GitHub Copilot, OpenCode, Codex e Gemini CLI.">
-<meta name="theme-color" content="#07090b">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a110f">
+<meta name="color-scheme" content="light dark">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Bruno Castro">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="canonical" href="https://brunolagoa.github.io/lgpd-enterprise-auditor/">
+<link rel="preload" href="assets/fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
@@ -25,17 +27,18 @@
 <meta name="twitter:image" content="https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/examples/saas-demo/relatorio-auditoria-lgpd.png">
 <meta name="twitter:image:alt" content="Topo do relatório de exemplo: score 20 de 100 e não conformidades por severidade, sobre um SaaS fictício">
 
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2307090b'/%3E%3Cpath d='M16 5l9 3.4v6.9c0 5.6-3.8 10-9 11.7-5.2-1.7-9-6.1-9-11.7V8.4z' fill='none' stroke='%2334e0a1' stroke-width='2.2' stroke-linejoin='round'/%3E%3Cpath d='M11.8 16.2l3 3 5.6-6' fill='none' stroke='%2334e0a1' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a110f'/%3E%3Cpath d='M16 5l9 3.4v6.9c0 5.6-3.8 10-9 11.7-5.2-1.7-9-6.1-9-11.7V8.4z' fill='none' stroke='%2334e0a1' stroke-width='2.2' stroke-linejoin='round'/%3E%3Cpath d='M11.8 16.2l3 3 5.6-6' fill='none' stroke='%2334e0a1' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "LGPD Enterprise Auditor",
-  "description": "Framework open source de auditoria LGPD orientado a evidências, executado por assistentes de IA de programação. Produz checklist com evidência por item, não conformidades com fundamento legal, score de 0 a 100 e plano de adequação.",
+  "description": "Framework open source de auditoria LGPD orientado a evidências para assistentes de IA de programação: checklist com evidência por item, severidade, score de 0 a 100 e plano de adequação.",
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "macOS, Linux, Windows",
   "inLanguage": "pt-BR",
+  "isAccessibleForFree": true,
   "license": "https://opensource.org/licenses/MIT",
   "url": "https://brunolagoa.github.io/lgpd-enterprise-auditor/",
   "sameAs": "https://github.com/BrunoLagoa/lgpd-enterprise-auditor",
@@ -45,76 +48,115 @@
 </script>
 
 <script>document.documentElement.classList.add('js');</script>
-
 <style>
 /* ==========================================================================
-   1. Tokens
+   1. Fonte e tokens
+   A página alterna três "campos": papel (claro, padrão), tinta (.dark) e
+   destaque (.field-accent). Os componentes usam só os tokens, então
+   funcionam em qualquer campo.
    ========================================================================== */
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("assets/fonts/schibsted-grotesk-latin.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
-  --bg: #07090b;
-  --bg-2: #0a0e11;
-  --surface: #0e1317;
-  --surface-2: #131a1f;
-  --line: rgba(232, 240, 244, .08);
-  --line-2: rgba(232, 240, 244, .14);
-  --line-3: rgba(232, 240, 244, .22);
-  --text: #e8eef1;
-  --text-2: #c3cdd2;
-  --muted: #98a6ad;
-  --faint: #7f8d94;
+  --paper: #f2f3ef;
+  --paper-2: #e6e9e3;
+  --ink: #0a110f;
+  --ink-2: #111b17;
+  --brand: #34e0a1;
 
-  --accent: #34e0a1;
-  --accent-2: #2cc6e8;
-  --accent-soft: rgba(52, 224, 161, .12);
-  --accent-line: rgba(52, 224, 161, .35);
-  --accent-ink: #03140d;
+  /* campo papel */
+  --bg: var(--paper);
+  --surface: #ffffff;
+  --surface-2: #f7f8f5;
+  --text: #0e1613;
+  --text-2: #2c3833;
+  --muted: #4f5c56;
+  --line: rgba(14, 22, 19, .11);
+  --line-2: rgba(14, 22, 19, .2);
+  --link: #07734c;
+  --accent: #0e1613;
+  --accent-hover: #24332d;
+  --accent-ink: #ffffff;
+  --code-bg: rgba(14, 22, 19, .06);
+  --crit: #b42318;
+  --high: #a34a00;
+  --med: #775a00;
+  --low: #1559b0;
+  --ok: #07734c;
 
-  --crit: #ff6464;
-  --high: #ff9d47;
-  --med: #f2cb55;
-  --low: #72c8f5;
-  --ok: #34e0a1;
-
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, "Liberation Mono", monospace;
 
-  --fs-xs: .75rem;
   --fs-sm: .875rem;
-  --fs-base: 1rem;
-  --fs-md: 1.125rem;
-  --fs-lg: clamp(1.15rem, .9rem + .8vw, 1.35rem);
-  --fs-h3: 1.125rem;
-  --fs-h2: clamp(1.85rem, 1.2rem + 2.6vw, 3rem);
-  --fs-h1: clamp(2.35rem, 1.3rem + 4.6vw, 4.4rem);
-
-  --sp-1: .25rem;
-  --sp-2: .5rem;
-  --sp-3: .75rem;
-  --sp-4: 1rem;
-  --sp-5: 1.5rem;
-  --sp-6: 2rem;
-  --sp-7: 3rem;
-  --sp-8: 4.5rem;
-  --sp-9: clamp(4.5rem, 3rem + 6vw, 8rem);
+  --fs-base: 1.0625rem;
+  --fs-lead: clamp(1.125rem, 1rem + .45vw, 1.3rem);
+  --fs-h3: 1.2rem;
+  --fs-h2: clamp(2rem, 1.25rem + 3vw, 3.5rem);
+  --fs-h1: clamp(2.6rem, 1rem + 5.6vw, 5.75rem);
 
   --r-sm: 6px;
   --r-md: 10px;
-  --r-lg: 16px;
-  --r-xl: 22px;
+  --r-lg: 14px;
   --r-pill: 999px;
 
-  --shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 20px 50px -24px rgba(0,0,0,.8);
-  --container: 1200px;
-  --gutter: clamp(16px, 4vw, 32px);
-  --header-h: 64px;
+  --container: 1240px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --section-y: clamp(4.5rem, 2.5rem + 7vw, 9rem);
+  --header-h: 68px;
   --ease: cubic-bezier(.2, .7, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
 }
+
+.dark {
+  --bg: var(--ink);
+  --surface: #121d19;
+  --surface-2: #17241f;
+  --text: #edf3f0;
+  --text-2: #c4d0cb;
+  --muted: #9aaba3;
+  --line: rgba(237, 243, 240, .1);
+  --line-2: rgba(237, 243, 240, .18);
+  --link: #5ee8b5;
+  --accent: var(--brand);
+  --accent-hover: #63ebba;
+  --accent-ink: #04140d;
+  --code-bg: rgba(237, 243, 240, .08);
+  --crit: #ff7b70;
+  --high: #ffa257;
+  --med: #f2cb55;
+  --low: #7fcaf8;
+  --ok: var(--brand);
+  color-scheme: dark;
+}
+.tone { --bg: var(--paper-2); --surface-2: #eef0eb; }
+.field-accent {
+  --bg: var(--brand);
+  --surface: #5ae9b4;
+  --text: #04140d;
+  --text-2: #0b2a1d;
+  --muted: #0f3d2a;
+  --line: rgba(4, 20, 13, .2);
+  --line-2: rgba(4, 20, 13, .35);
+  --link: #04140d;
+  --accent: #04140d;
+  --accent-hover: #12291f;
+  --accent-ink: #eafff5;
+  --code-bg: rgba(4, 20, 13, .1);
+}
+.dark, .tone, .field-accent { background: var(--bg); color: var(--text); }
 
 /* ==========================================================================
    2. Base
    ========================================================================== */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 16px); }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 16px); color-scheme: light; -webkit-tap-highlight-color: rgba(52, 224, 161, .2); }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body {
   margin: 0;
@@ -125,649 +167,695 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 img, svg { display: block; max-width: 100%; }
-a { color: inherit; text-decoration-color: var(--line-3); text-underline-offset: 3px; }
-a:hover { text-decoration-color: currentColor; }
-h1, h2, h3, h4 { margin: 0; line-height: 1.12; letter-spacing: -.02em; font-weight: 650; }
-p { margin: 0; }
+a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.1; letter-spacing: -.02em; font-weight: 700; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
 ul, ol { margin: 0; padding: 0; }
 code, kbd, pre { font-family: var(--font-mono); }
-code { font-size: .88em; padding: .1em .38em; border-radius: 5px; background: rgba(232,240,244,.07); border: 1px solid var(--line); color: var(--text); overflow-wrap: anywhere; }
-strong { color: var(--text); font-weight: 600; }
-::selection { background: rgba(52,224,161,.3); color: #fff; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
-button { font: inherit; color: inherit; }
+code { font-size: .86em; padding: .1em .36em; border-radius: 5px; background: var(--code-bg); color: var(--text); overflow-wrap: anywhere; }
+strong { color: var(--text); font-weight: 650; }
+::selection { background: rgba(52, 224, 161, .35); color: inherit; }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 4px; }
+.dark :focus-visible { outline-color: var(--brand); }
+.field-accent :focus-visible { outline-color: var(--ink); }
+button { font: inherit; color: inherit; touch-action: manipulation; }
+a, button, summary, input, select { touch-action: manipulation; }
 [hidden] { display: none !important; }
 
 .sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-.skip-link { position: absolute; left: 16px; top: -60px; z-index: 100; padding: .6rem 1rem; background: var(--accent); color: var(--accent-ink); border-radius: var(--r-md); font-weight: 600; text-decoration: none; }
+.skip-link { position: absolute; left: 16px; top: -60px; z-index: 100; padding: .6rem 1rem; background: var(--brand); color: #04140d; border-radius: var(--r-md); font-weight: 650; text-decoration: none; }
 .skip-link:focus { top: 12px; }
 
 .container { width: 100%; max-width: calc(var(--container) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
+.section { padding-block: var(--section-y); position: relative; }
 
 /* ==========================================================================
-   3. Componentes genéricos
+   3. Componentes
    ========================================================================== */
 .btn {
+  --btn-bg: var(--surface);
   display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
-  min-height: 44px; padding: .65rem 1.15rem;
-  border-radius: var(--r-md); border: 1px solid var(--line-2);
-  background: var(--surface-2); color: var(--text);
-  font-weight: 600; font-size: .95rem; text-decoration: none; cursor: pointer;
-  transition: transform .18s var(--ease), background-color .18s, border-color .18s, box-shadow .18s;
+  min-height: 48px; padding: .7rem 1.25rem;
+  border-radius: var(--r-pill); border: 1px solid var(--line-2);
+  background: var(--btn-bg); color: var(--text);
+  font-weight: 650; font-size: 1rem; line-height: 1.2; text-decoration: none; cursor: pointer;
+  transition: transform .2s var(--ease), background-color .2s, border-color .2s, color .2s;
 }
-.btn:hover { border-color: var(--line-3); background: #182128; }
-.btn:active { transform: translateY(1px); }
-.btn svg { width: 18px; height: 18px; flex: none; }
-.btn-primary { background: var(--accent); border-color: transparent; color: var(--accent-ink); box-shadow: 0 0 0 0 rgba(52,224,161,0), 0 10px 30px -12px rgba(52,224,161,.55); }
-.btn-primary:hover { background: #5bebb6; border-color: transparent; box-shadow: 0 0 0 4px rgba(52,224,161,.14), 0 10px 30px -10px rgba(52,224,161,.6); }
-.btn-ghost { background: transparent; }
-.btn-sm { min-height: 36px; padding: .4rem .8rem; font-size: .875rem; }
+.btn:hover { border-color: var(--text); text-decoration: none; }
+.btn:active { transform: scale(.97); }
+.btn svg { width: 18px; height: 18px; flex: none; transition: transform .25s var(--ease); }
+.btn:hover svg.go { transform: translateX(3px); }
+.btn:hover svg.down { transform: translateY(2px); }
+.btn-primary { --btn-bg: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.btn-primary:hover { --btn-bg: var(--accent-hover); border-color: transparent; }
+.btn-ghost { --btn-bg: transparent; }
+.btn-sm { min-height: 40px; padding: .45rem .95rem; font-size: .92rem; }
+.dark .btn { --btn-bg: transparent; }
+.dark .btn-primary { --btn-bg: var(--accent); }
+.dark .btn:not(.btn-primary):hover { border-color: var(--text); background: rgba(237, 243, 240, .06); }
 
-.eyebrow {
-  display: inline-flex; align-items: center; gap: .6rem;
-  font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: .08em; text-transform: uppercase;
-  color: var(--accent);
-}
-.eyebrow .num { color: var(--muted); }
-.eyebrow::before { content: ""; width: 18px; height: 1px; background: var(--accent-line); }
+.section-head { max-width: 860px; display: grid; gap: 1.1rem; margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem); }
+.section-head h2 { font-size: var(--fs-h2); letter-spacing: -.035em; line-height: 1.02; font-weight: 750; }
+.section-head p { font-size: var(--fs-lead); color: var(--text-2); line-height: 1.55; max-width: 720px; }
+.section-head.split { max-width: none; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: end; gap: 1.5rem clamp(2rem, 5vw, 5rem); }
+.section-head.split p { padding-bottom: .35rem; }
 
-.section { padding-block: var(--sp-9); position: relative; }
-.section + .section { border-top: 1px solid var(--line); }
-.section-head { max-width: 760px; display: grid; gap: var(--sp-4); margin-bottom: var(--sp-7); }
-.section-head h2 { font-size: var(--fs-h2); letter-spacing: -.03em; }
-.section-head p { font-size: var(--fs-lg); color: var(--muted); line-height: 1.55; }
+.card { background: var(--surface); border-radius: var(--r-lg); }
+.dark .card { border: 1px solid var(--line); }
 
-.card {
-  background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,0) 40%), var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow);
-}
+.note { font-size: var(--fs-sm); color: var(--muted); display: flex; gap: .55rem; align-items: flex-start; line-height: 1.5; }
+.note svg { width: 16px; height: 16px; flex: none; margin-top: .15rem; color: var(--link); }
 
-.pill {
-  display: inline-flex; align-items: center; gap: .45rem;
-  padding: .3rem .7rem; border-radius: var(--r-pill);
-  border: 1px solid var(--line-2); background: rgba(255,255,255,.03);
-  font-size: var(--fs-xs); color: var(--text-2); font-family: var(--font-mono); letter-spacing: .02em;
-}
-.pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(52,224,161,.16); }
-
-.note { font-size: var(--fs-sm); color: var(--muted); display: flex; gap: .55rem; align-items: flex-start; }
-.note svg { width: 16px; height: 16px; flex: none; margin-top: .2rem; color: var(--accent); }
-
-.ico { width: 20px; height: 20px; flex: none; }
-.ico-box {
-  width: 40px; height: 40px; border-radius: var(--r-md); display: grid; place-items: center; flex: none;
-  background: var(--accent-soft); border: 1px solid var(--accent-line); color: var(--accent);
-}
+/* Ícone + título na mesma linha, descrição embaixo */
+.it { display: grid; gap: .6rem; align-content: start; }
+.it-head { display: flex; align-items: center; gap: .75rem; }
+.it-head h3, .it-head h4 { font-size: var(--fs-h3); letter-spacing: -.015em; line-height: 1.25; }
+.it-ico { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: var(--r-md); background: var(--ink); color: var(--brand); }
+.it-ico svg { width: 20px; height: 20px; }
+.dark .it-ico { background: rgba(52, 224, 161, .12); }
+.it > p { color: var(--text-2); }
 
 /* Severidade */
 .sev {
   display: inline-flex; align-items: center; gap: .4rem;
-  font-family: var(--font-mono); font-size: .72rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
-  padding: .18rem .5rem; border-radius: var(--r-sm); border: 1px solid; white-space: nowrap;
+  font-size: .78rem; font-weight: 650; line-height: 1.2;
+  padding: .2rem .55rem; border-radius: var(--r-sm); white-space: nowrap;
+  color: var(--sev-c, var(--text)); background: color-mix(in srgb, var(--sev-c, var(--text)) 11%, transparent);
 }
-.sev::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.sev-critico { color: var(--crit); border-color: rgba(255,100,100,.4); background: rgba(255,100,100,.08); }
-.sev-alto { color: var(--high); border-color: rgba(255,157,71,.4); background: rgba(255,157,71,.08); }
-.sev-medio { color: var(--med); border-color: rgba(242,203,85,.38); background: rgba(242,203,85,.07); }
-.sev-baixo { color: var(--low); border-color: rgba(114,200,245,.38); background: rgba(114,200,245,.07); }
-.tag { font-family: var(--font-mono); font-size: .7rem; padding: .12rem .45rem; border-radius: var(--r-sm); border: 1px solid var(--line-2); color: var(--text-2); white-space: nowrap; }
-.tag-accept { border-color: rgba(114,200,245,.35); color: var(--low); }
+.sev::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.sev-critico { --sev-c: var(--crit); }
+.sev-alto { --sev-c: var(--high); }
+.sev-medio { --sev-c: var(--med); }
+.sev-baixo { --sev-c: var(--low); }
+.tag { font-size: .78rem; padding: .14rem .5rem; border-radius: var(--r-sm); background: var(--code-bg); color: var(--text-2); white-space: nowrap; }
+.tag-accept { color: var(--low); }
 
-/* Bloco de código */
-.code {
-  position: relative; border: 1px solid var(--line-2); border-radius: var(--r-md);
-  background: #05080a; overflow: hidden;
-}
-.code-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); padding: .5rem .5rem .5rem .9rem; border-bottom: 1px solid var(--line); }
-.code-bar span { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted); }
-.code pre { margin: 0; padding: 1rem 1.1rem; overflow-x: auto; font-size: .86rem; line-height: 1.7; color: #d7e3e8; tab-size: 2; }
-.code pre code { background: none; border: 0; padding: 0; font-size: inherit; overflow-wrap: anywhere; white-space: pre-wrap; }
-.tok-p { color: var(--accent); user-select: none; }
-.tok-c { color: #71818a; }
-.tok-s { color: #9fe6c8; }
+/* Bloco de código (sempre escuro) */
+.code { position: relative; border-radius: var(--r-md); background: #060b09; color: #dbe6e1; overflow: hidden; border: 1px solid rgba(237, 243, 240, .1); }
+.code-bar { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .45rem .5rem .45rem .95rem; border-bottom: 1px solid rgba(237, 243, 240, .08); }
+.code-bar > span { font-size: .82rem; color: #9aaba3; }
+.code pre { margin: 0; padding: 1rem 1.1rem; overflow-x: auto; font-size: .86rem; line-height: 1.7; tab-size: 2; }
+.code pre code { background: none; padding: 0; font-size: inherit; color: inherit; overflow-wrap: anywhere; white-space: pre-wrap; }
+.tok-p { color: var(--brand); user-select: none; }
+.tok-c { color: #7c8f87; }
 
-.copy-btn { min-height: 32px; padding: .3rem .65rem; font-size: .8rem; gap: .4rem; border-radius: var(--r-sm); background: transparent; }
+.copy-btn { min-height: 34px; padding: .3rem .75rem; font-size: .82rem; gap: .4rem; border-radius: var(--r-pill); background: transparent; color: #dbe6e1; border-color: rgba(237, 243, 240, .2); }
+.copy-btn:hover { border-color: #dbe6e1; }
 .copy-btn svg { width: 15px; height: 15px; }
-.copy-btn[data-state="ok"] { color: var(--accent); border-color: var(--accent-line); }
+.copy-btn .i-ok { display: none; }
+.copy-btn[data-state="ok"] { color: var(--brand); border-color: rgba(52, 224, 161, .5); }
+.copy-btn[data-state="ok"] .i-copy { display: none; }
+.copy-btn[data-state="ok"] .i-ok { display: block; animation: pop .35s var(--ease-out); }
+@keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
 
 /* ==========================================================================
-   4. Header
+   4. Cabeçalho
    ========================================================================== */
-.site-header {
-  position: sticky; top: 0; z-index: 50; height: var(--header-h);
-  background: rgba(7, 9, 11, .72);
-  -webkit-backdrop-filter: saturate(140%) blur(14px); backdrop-filter: saturate(140%) blur(14px);
-  border-bottom: 1px solid transparent; transition: border-color .2s, background-color .2s;
+.site-header { position: sticky; top: 0; z-index: 50; height: var(--header-h); background: var(--ink); color: #edf3f0; border-bottom: 1px solid transparent; transition: border-color .2s; }
+.site-header.is-scrolled { border-bottom-color: rgba(237, 243, 240, .1); }
+.progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--brand); transform-origin: 0 50%; transform: scaleX(0); pointer-events: none; }
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .progress { animation: grow linear both; animation-timeline: scroll(root); }
+  }
 }
-.site-header.is-scrolled { border-bottom-color: var(--line); background: rgba(7, 9, 11, .88); }
-.header-inner { height: 100%; display: flex; align-items: center; gap: var(--sp-5); }
-.brand { display: inline-flex; align-items: center; gap: .65rem; text-decoration: none; font-weight: 650; letter-spacing: -.01em; white-space: nowrap; }
-.brand svg { width: 30px; height: 30px; flex: none; }
-.nav-gh { display: none; }
-.menu-toggle { flex: none; }
-.brand small { display: block; font-family: var(--font-mono); font-size: .66rem; font-weight: 500; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; line-height: 1; margin-top: 3px; }
-.brand-text { line-height: 1.05; font-size: .98rem; }
+@keyframes grow { to { transform: scaleX(1); } }
+.header-inner { height: 100%; display: flex; align-items: center; gap: 1.5rem; }
+.brand { display: inline-flex; align-items: center; gap: .6rem; color: inherit; text-decoration: none; font-weight: 750; font-size: 1.02rem; letter-spacing: -.02em; white-space: nowrap; }
+.brand:hover { text-decoration: none; }
+.brand svg { width: 30px; height: 30px; flex: none; transition: transform .4s var(--ease-out); }
+.brand:hover svg { transform: rotate(-8deg) scale(1.06); }
 .nav { margin-left: auto; }
-.nav ul { list-style: none; display: flex; align-items: center; gap: .25rem; }
-.nav a { display: block; padding: .5rem .7rem; border-radius: var(--r-sm); color: var(--text-2); text-decoration: none; font-size: .92rem; }
-.nav a:hover { color: var(--text); background: rgba(255,255,255,.04); }
+.nav ul { list-style: none; display: flex; align-items: center; gap: .15rem; }
+.nav a { position: relative; display: block; padding: .5rem .75rem; color: #c4d0cb; text-decoration: none; font-size: .95rem; font-weight: 550; border-radius: var(--r-sm); }
+.nav a::after { content: ""; position: absolute; left: .75rem; right: .75rem; bottom: .3rem; height: 2px; background: var(--brand); transform: scaleX(0); transform-origin: 0 50%; transition: transform .25s var(--ease); }
+.nav a:hover, .nav a[aria-current="true"] { color: #fff; }
+.nav a:hover::after, .nav a[aria-current="true"]::after { transform: scaleX(1); }
+.nav .nav-extra { display: none; }
 .header-cta { display: flex; align-items: center; gap: .5rem; }
-.menu-toggle { display: none; width: 44px; height: 44px; border-radius: var(--r-md); border: 1px solid var(--line-2); background: transparent; cursor: pointer; place-items: center; }
+.header-cta .btn { color: #edf3f0; border-color: rgba(237, 243, 240, .22); background: transparent; }
+.header-cta .btn:hover { border-color: #edf3f0; }
+.header-cta .btn-primary { background: var(--brand); color: #04140d; border-color: transparent; }
+.header-cta .btn-primary:hover { background: #63ebba; }
+.icon-btn { width: 40px; padding: 0; }
+.menu-toggle { display: none; flex: none; width: 44px; height: 44px; border-radius: var(--r-pill); border: 1px solid rgba(237, 243, 240, .22); background: transparent; color: #edf3f0; cursor: pointer; place-items: center; }
 .menu-toggle svg { width: 20px; height: 20px; }
 .menu-toggle .i-close { display: none; }
 .menu-toggle[aria-expanded="true"] .i-open { display: none; }
 .menu-toggle[aria-expanded="true"] .i-close { display: block; }
 
-@media (max-width: 960px) {
-  .menu-toggle { display: grid; margin-left: auto; }
-  .header-cta .btn-gh-label { display: none; }
-  .header-cta .btn { padding-inline: .7rem; }
-  .nav { position: fixed; inset: var(--header-h) 0 auto 0; margin: 0; background: rgba(7,9,11,.98); border-bottom: 1px solid var(--line); padding: var(--sp-3) var(--gutter) var(--sp-5); }
+@media (max-width: 980px) {
+  .menu-toggle { display: grid; }
+  .header-inner { gap: .6rem; }
+  .header-cta { margin-left: auto; }
+  .nav { position: fixed; inset: var(--header-h) 0 auto 0; margin: 0; background: var(--ink); border-bottom: 1px solid rgba(237, 243, 240, .1); padding: .5rem var(--gutter) 1.25rem; max-height: calc(100dvh - var(--header-h)); overflow-y: auto; overscroll-behavior: contain; }
   .js .nav { display: none; }
-  .js .nav.is-open { display: block; }
-  .nav ul { flex-direction: column; align-items: stretch; gap: 2px; }
-  .nav a { padding: .85rem .75rem; font-size: 1rem; }
-  /* sem JS, o menu fica visível como lista abaixo do cabeçalho */
-  html:not(.js) .nav { position: static; }
+  .js .nav.is-open { display: block; animation: drop .25s var(--ease-out); }
+  .nav ul { flex-direction: column; align-items: stretch; gap: 0; }
+  .nav a { padding: .9rem .25rem; font-size: 1.1rem; border-bottom: 1px solid rgba(237, 243, 240, .08); border-radius: 0; }
+  .nav a::after { display: none; }
+  .nav .nav-extra { display: block; }
+  html:not(.js) .nav { position: static; padding: 0; border: 0; flex-basis: 100%; }
   html:not(.js) .site-header { height: auto; position: relative; }
-  html:not(.js) .header-inner { flex-wrap: wrap; padding-block: .6rem; }
+  html:not(.js) .header-inner { flex-wrap: wrap; padding-block: .7rem; }
   html:not(.js) .menu-toggle { display: none; }
 }
-@media (max-width: 960px) { .header-inner { gap: .75rem; } }
-@media (max-width: 420px) { .brand small { display: none; } .brand-text { font-size: .9rem; } .header-cta { display: none; } .nav-gh { display: block; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@media (max-width: 560px) { .header-cta .btn-primary { display: none; } }
+@media (max-width: 400px) { .header-cta { display: none; } .menu-toggle { margin-left: auto; } }
+@media (max-width: 340px) { .brand { font-size: .92rem; } .brand svg { width: 26px; height: 26px; } }
 
 /* ==========================================================================
    5. Hero
    ========================================================================== */
-.hero { position: relative; padding-block: clamp(3rem, 2rem + 5vw, 6.5rem) var(--sp-8); overflow: hidden; }
-.bg-grid {
-  position: absolute; inset: 0; pointer-events: none; z-index: -1;
-  background-image:
-    linear-gradient(to right, rgba(232,240,244,.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(232,240,244,.045) 1px, transparent 1px);
-  background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 30%, transparent 75%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 30%, transparent 75%);
-}
-.bg-glow {
-  position: absolute; z-index: -1; pointer-events: none; border-radius: 50%; filter: blur(80px); opacity: .5;
-}
-.hero .bg-glow.g1 { width: 560px; height: 420px; right: -120px; top: -80px; background: radial-gradient(circle, rgba(52,224,161,.28), transparent 65%); }
-.hero .bg-glow.g2 { width: 480px; height: 380px; left: -160px; top: 220px; background: radial-gradient(circle, rgba(44,198,232,.16), transparent 65%); }
-.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(2rem, 4vw, 4rem); align-items: center; }
-.hero-copy { display: grid; gap: var(--sp-5); }
-.hero h1 { font-size: var(--fs-h1); letter-spacing: -.045em; line-height: 1.02; font-weight: 680; }
-.hero h1 .hl { background: linear-gradient(100deg, var(--accent) 10%, var(--accent-2) 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.hero-sub { font-size: var(--fs-lg); color: var(--text-2); max-width: 600px; line-height: 1.55; }
+.hero { padding-top: clamp(3rem, 1.5rem + 5vw, 6rem); position: relative; z-index: 1; }
+.hero h1 { font-size: var(--fs-h1); line-height: .97; letter-spacing: -.045em; font-weight: 800; max-width: 20ch; }
+.hero-grid { margin-top: clamp(2rem, 1rem + 3vw, 3.5rem); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 4vw, 4.5rem); align-items: start; }
+.hero-copy { display: grid; gap: 1.6rem; align-content: start; }
+.hero-sub { font-size: var(--fs-lead); color: var(--text-2); line-height: 1.55; }
+.hero-sub strong { color: var(--text); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
-.hero-meta { display: flex; flex-wrap: wrap; gap: .5rem; }
-.facts { margin-top: var(--sp-8); display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: var(--r-lg); background: rgba(14,19,23,.6); }
-.fact { padding: 1.25rem 1.4rem; display: grid; gap: .2rem; }
-.fact + .fact { border-left: 1px solid var(--line); }
-.fact b { font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem); font-weight: 650; letter-spacing: -.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
-.fact span { color: var(--muted); font-size: var(--fs-sm); line-height: 1.4; }
+.quick-install { display: grid; gap: .55rem; }
+.quick-install > span { font-size: .9rem; color: var(--muted); }
+.quick-cmd { display: flex; align-items: center; gap: .5rem; padding: .35rem .4rem .35rem 1rem; border-radius: var(--r-pill); background: #060b09; border: 1px solid rgba(237, 243, 240, .14); min-width: 0; }
+.quick-cmd code { flex: 1; min-width: 0; background: none; padding: .45rem 0; font-size: .84rem; color: #dbe6e1; white-space: nowrap; overflow-x: auto; overflow-wrap: normal; scrollbar-width: none; }
+.quick-cmd code::-webkit-scrollbar { display: none; }
+.quick-cmd .copy-btn { flex: none; }
+.quick-install a { font-size: .9rem; }
 
-/* Mini relatório do hero */
-.report-mock { position: relative; padding: 0; overflow: hidden; }
-.report-mock::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none; background: linear-gradient(160deg, rgba(52,224,161,.45), rgba(255,255,255,.05) 35%, rgba(255,255,255,.02) 70%, rgba(44,198,232,.3)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-.rm-bar { display: flex; align-items: center; gap: .6rem; padding: .7rem 1rem; border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--muted); }
-.rm-bar svg { width: 15px; height: 15px; color: var(--accent); }
-.rm-bar .tag { margin-left: auto; flex: none; }
-.rm-bar .fname { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.rm-body > *, .rm-item > *, .rm-plan > * { min-width: 0; }
-.rm-body { padding: 1.1rem; display: grid; gap: 1rem; }
-.rm-top { display: grid; grid-template-columns: auto 1fr; gap: 1.1rem; align-items: center; }
-.gauge { position: relative; width: 116px; height: 116px; }
+/* Folha do relatório: inclina com o ponteiro e desce sobre a faixa seguinte */
+.sheet-wrap { position: relative; z-index: 2; perspective: 1400px; margin-bottom: calc(-1 * clamp(4rem, 2rem + 6vw, 9rem)); }
+.sheet {
+  --rx: 0deg; --ry: 0deg; --mx: 50%; --my: 0%;
+  position: relative; margin: 0;
+  background: #ffffff; color: #0e1613; border-radius: var(--r-md);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .6) inset, 0 40px 80px -30px rgba(0, 0, 0, .55), 0 18px 40px -20px rgba(10, 17, 15, .35);
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform .5s var(--ease-out);
+  /* a folha é papel: campo claro */
+  --bg: #ffffff; --surface: #ffffff; --text: #0e1613; --text-2: #2c3833; --muted: #4f5c56; --line: rgba(14, 22, 19, .1); --code-bg: rgba(14, 22, 19, .06);
+  --crit: #b42318; --high: #a34a00; --med: #775a00; --low: #1559b0; --link: #07734c;
+  color-scheme: light;
+}
+.sheet.is-tilting { transition: transform .12s linear; }
+.sheet::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .4s; background: radial-gradient(600px circle at var(--mx) var(--my), rgba(255, 255, 255, .55), transparent 45%); mix-blend-mode: soft-light; }
+.sheet.is-tilting::after { opacity: 1; }
+.sh-bar { display: flex; align-items: center; gap: .6rem; padding: .7rem 1.1rem; border-bottom: 1px solid var(--line); font-size: .82rem; color: var(--muted); }
+.sh-bar svg { width: 16px; height: 16px; color: #07734c; flex: none; }
+.sh-bar .fname { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-mono); font-size: .78rem; }
+.sh-bar .tag { margin-left: auto; flex: none; }
+.sh-body { padding: clamp(1rem, .8rem + 1vw, 1.6rem); display: grid; gap: 1.25rem; }
+.sh-body > * { min-width: 0; }
+.sh-title { display: grid; gap: .2rem; }
+.sh-title b { font-size: clamp(1.15rem, 1rem + .6vw, 1.45rem); letter-spacing: -.02em; line-height: 1.2; }
+.sh-title span { font-size: .88rem; color: var(--muted); }
+.sh-score { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.25rem; align-items: center; padding: 1rem; border-radius: var(--r-md); background: #f4f5f2; }
+.gauge { position: relative; width: 112px; height: 112px; flex: none; }
 .gauge svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-.gauge .track { stroke: rgba(255,255,255,.08); }
-.gauge .val { stroke: var(--crit); stroke-linecap: round; transition: stroke-dashoffset 1.2s var(--ease); }
+.gauge .track { stroke: var(--line); }
+.gauge .val { stroke: var(--crit); stroke-linecap: round; transition: stroke-dashoffset 1.4s var(--ease-out); }
 .gauge-label { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
-.gauge-label b { font-size: 2rem; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
-.gauge-label span { font-size: .7rem; color: var(--muted); font-family: var(--font-mono); }
-.rm-class { display: grid; gap: .45rem; }
-.rm-class .k { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-.rm-class .v { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
-.sevbar { display: flex; height: 8px; border-radius: var(--r-pill); overflow: hidden; gap: 2px; background: rgba(255,255,255,.04); }
+.gauge-label b { font-size: 2.1rem; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; font-weight: 800; }
+.gauge-label span { font-size: .75rem; color: var(--muted); }
+.sh-class { display: grid; gap: .55rem; }
+.sh-class .row { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+.sh-class .k { font-size: .88rem; color: var(--text-2); }
+.sevbar { display: flex; height: 10px; border-radius: var(--r-pill); overflow: hidden; gap: 2px; }
 .sevbar i { display: block; height: 100%; }
-.sevbar .c { background: var(--crit); } .sevbar .h { background: var(--high); } .sevbar .m { background: var(--med); } .sevbar .l { background: var(--low); }
-.sevlegend { display: flex; flex-wrap: wrap; gap: .3rem .9rem; font-size: var(--fs-xs); color: var(--muted); font-family: var(--font-mono); }
-.sevlegend b { color: var(--text); font-weight: 600; }
-.rm-list { list-style: none; display: grid; gap: .5rem; }
-.rm-item { display: grid; grid-template-columns: auto 1fr; gap: .25rem .7rem; padding: .7rem .8rem; border: 1px solid var(--line); border-radius: var(--r-md); background: rgba(255,255,255,.015); }
-.rm-item .t { font-size: .88rem; font-weight: 550; line-height: 1.35; }
-.rm-item .s { grid-column: 2; font-family: var(--font-mono); font-size: .72rem; color: var(--muted); line-height: 1.45; overflow-wrap: anywhere; }
-.rm-plan { display: grid; grid-template-columns: auto 1fr auto; gap: .7rem; align-items: center; padding: .7rem .8rem; border-radius: var(--r-md); background: var(--accent-soft); border: 1px solid var(--accent-line); font-size: .84rem; }
-.rm-plan .k { font-family: var(--font-mono); font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
-.rm-plan .x { font-family: var(--font-mono); font-size: .72rem; color: var(--text-2); white-space: nowrap; }
-.rm-foot { padding: .65rem 1rem; border-top: 1px solid var(--line); font-size: .74rem; color: var(--muted); }
+.sevbar .c { background: var(--crit); } .sevbar .h { background: var(--high); } .sevbar .m { background: #c99a06; } .sevbar .l { background: var(--low); }
+.sevlegend { display: flex; flex-wrap: wrap; gap: .2rem .9rem; font-size: .8rem; color: var(--muted); }
+.sevlegend b { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; }
+.sh-h { font-size: .95rem; font-weight: 700; margin-bottom: .55rem; }
+.sh-list { list-style: none; display: grid; gap: .5rem; }
+.sh-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .25rem .75rem; padding: .75rem .85rem; border-radius: var(--r-md); border: 1px solid var(--line); }
+.sh-item .t { font-size: .92rem; font-weight: 600; line-height: 1.35; }
+.sh-item .s { grid-column: 2; font-family: var(--font-mono); font-size: .74rem; color: var(--muted); line-height: 1.45; overflow-wrap: anywhere; }
+.sh-todo { list-style: none; display: grid; gap: .35rem; counter-reset: todo; }
+.sh-todo li { counter-increment: todo; display: grid; grid-template-columns: 1.6rem minmax(0, 1fr) auto; gap: .6rem; align-items: center; padding: .55rem .75rem; border-radius: var(--r-md); background: #eafbf3; font-size: .9rem; }
+.sh-todo li::before { content: counter(todo); width: 1.6rem; height: 1.6rem; border-radius: 50%; display: grid; place-items: center; font-size: .78rem; font-weight: 700; background: #0e1613; color: #fff; }
+.sh-todo .x { font-size: .76rem; color: var(--text-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sh-cap { font-size: .88rem; color: var(--muted); }
+.sh-cap code { color: var(--text); }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 981px) {
+    .sheet-wrap { animation: drift linear both; animation-timeline: view(); animation-range: exit -20% exit 60%; }
+  }
+}
+@keyframes drift { to { translate: 0 -70px; } }
+
+/* Faixa de fatos e compatibilidade */
+.facts-band { padding-top: calc(clamp(4rem, 2rem + 6vw, 9rem) + clamp(2.5rem, 1.5rem + 3vw, 4.5rem)); padding-bottom: clamp(3rem, 2rem + 3vw, 5rem); }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem 2rem; margin: 0; }
+.fact { display: grid; gap: .3rem; align-content: start; }
+.fact dt { order: 2; font-size: .98rem; color: var(--text-2); line-height: 1.4; }
+.fact dd { order: 1; margin: 0; font-size: clamp(2.6rem, 1.6rem + 3vw, 4.25rem); font-weight: 800; letter-spacing: -.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.works { margin-top: clamp(2.5rem, 1.5rem + 3vw, 4rem); display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem 1.75rem; padding-top: 1.75rem; border-top: 1px solid var(--line-2); }
+.works > span { font-size: .98rem; color: var(--muted); }
+.works ul { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem 1.75rem; }
+.works li { font-size: clamp(1.1rem, 1rem + .5vw, 1.4rem); font-weight: 700; letter-spacing: -.02em; }
 
 /* ==========================================================================
    6. Problema
    ========================================================================== */
-.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0; overflow: hidden; margin-bottom: var(--sp-6); }
-.compare > div { padding: clamp(1.25rem, 1rem + 1.5vw, 2rem); display: grid; gap: var(--sp-4); align-content: start; }
-.compare > div + div { border-left: 1px solid var(--line); background: linear-gradient(180deg, rgba(52,224,161,.05), transparent 60%); }
-.compare h3 { font-size: var(--fs-h3); display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
-.compare h3 .k { white-space: nowrap; font-family: var(--font-mono); font-size: .7rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; padding: .2rem .5rem; border-radius: var(--r-sm); border: 1px solid var(--line-2); color: var(--muted); }
-.compare > div + div h3 .k { color: var(--accent); border-color: var(--accent-line); }
-.checklist { list-style: none; display: grid; gap: .7rem; }
-.checklist li { display: grid; grid-template-columns: 20px 1fr; gap: .65rem; color: var(--text-2); font-size: .95rem; }
-.checklist svg { width: 18px; height: 18px; margin-top: .2rem; }
-.checklist .x svg { color: var(--crit); opacity: .85; }
-.checklist .v svg { color: var(--accent); }
+.compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; margin-bottom: clamp(3rem, 2rem + 3vw, 5rem); }
+.compare > div { padding: clamp(1.4rem, 1rem + 1.6vw, 2.4rem); border-radius: var(--r-lg); display: grid; gap: 1.25rem; align-content: start; }
+.compare .before { background: var(--paper-2); }
+.compare .after { background: var(--ink); color: #edf3f0; --text: #edf3f0; --text-2: #c4d0cb; }
+.compare h3 { font-size: clamp(1.25rem, 1.05rem + .8vw, 1.6rem); letter-spacing: -.025em; }
+.checklist { list-style: none; display: grid; gap: .85rem; }
+.checklist li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: .7rem; color: var(--text-2); }
+.checklist svg { width: 20px; height: 20px; margin-top: .2rem; }
+.checklist .x svg { color: var(--crit); }
+.checklist .v svg { color: var(--brand); }
 
-.risks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
-.risk { background: var(--bg-2); padding: 1.4rem; display: grid; gap: .7rem; align-content: start; transition: background-color .2s; }
-.risk:hover { background: #0d1215; }
-.risk h3 { font-size: 1.02rem; }
-.risk p { color: var(--muted); font-size: .92rem; }
-.ids { display: flex; flex-wrap: wrap; gap: .35rem; }
-.ids code { font-size: .74rem; color: var(--accent); border-color: var(--accent-line); background: rgba(52,224,161,.06); }
+.risks { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(2rem, 1.5rem + 2vw, 3rem) clamp(1.5rem, 1rem + 2vw, 3rem); }
+.risk { padding-top: 1.25rem; border-top: 2px solid var(--text); }
+.ids { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .2rem; }
+.ids code { font-size: .78rem; color: var(--link); background: rgba(7, 115, 76, .08); }
+.dark .ids code { color: var(--brand); background: rgba(52, 224, 161, .1); }
 
 /* ==========================================================================
    7. Como funciona
    ========================================================================== */
-.how { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 4rem); align-items: start; }
-.steps { list-style: none; counter-reset: s; display: grid; gap: 0; position: relative; }
-.step { position: relative; display: grid; grid-template-columns: 44px 1fr; gap: 1.1rem; padding-bottom: 1.8rem; }
+.how { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.steps { list-style: none; display: grid; position: relative; }
+.step { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 1.1rem; padding-bottom: 2.4rem; }
 .step:last-child { padding-bottom: 0; }
-.step::before { content: ""; position: absolute; left: 21px; top: 46px; bottom: 4px; width: 2px; background: linear-gradient(var(--accent-line), var(--line)); }
-.step:last-child::before { display: none; }
-.step-n { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: .85rem; font-weight: 600; color: var(--accent); background: var(--bg); border: 1px solid var(--accent-line); box-shadow: 0 0 0 5px var(--bg); position: relative; z-index: 1; }
-.step h3 { font-size: 1.08rem; margin-top: .55rem; margin-bottom: .4rem; }
-.step p { color: var(--muted); font-size: .95rem; }
-.step p + p { margin-top: .5rem; }
-.how-side { position: sticky; top: calc(var(--header-h) + 24px); display: grid; gap: var(--sp-4); }
-.term pre { font-size: .82rem; line-height: 1.75; }
-.term .ok { color: var(--accent); }
-.term .dim { color: #71818a; }
-.term .crit { color: var(--crit); }
-.term .q { color: var(--accent-2); }
+.step::before { content: ""; position: absolute; left: 21px; top: 48px; bottom: 6px; width: 2px; background: var(--line-2); }
+.step::after { content: ""; position: absolute; left: 21px; top: 48px; bottom: 6px; width: 2px; background: var(--brand); transform: scaleY(0); transform-origin: 50% 0; transition: transform .6s var(--ease); }
+.step.is-done::after { transform: scaleY(1); }
+.step:last-child::before, .step:last-child::after { display: none; }
+.step-n { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 750; font-size: 1rem; color: var(--text); background: var(--bg); border: 2px solid var(--line-2); position: relative; z-index: 1; transition: background-color .3s, color .3s, border-color .3s, transform .3s var(--ease-out); }
+.step.is-active .step-n, .step.is-done .step-n { background: var(--brand); color: #04140d; border-color: var(--brand); }
+.step.is-active .step-n { transform: scale(1.08); }
+.step h3 { font-size: clamp(1.15rem, 1.05rem + .4vw, 1.35rem); margin: .55rem 0 .45rem; }
+.step p { color: var(--text-2); }
+.step p + p { margin-top: .5rem; color: var(--muted); font-size: .95rem; }
+.how-side { position: sticky; top: calc(var(--header-h) + 24px); display: grid; gap: 1rem; }
+.term pre { font-size: .84rem; line-height: 1.8; }
+.term .ln { display: block; transition: opacity .35s, color .35s, background-color .35s; border-radius: 4px; }
+.term .ok { color: var(--brand); }
+.term .dim { color: #7c8f87; }
+.term .crit { color: #ff7b70; }
+.term .q { color: #7fcaf8; }
+.js .term.is-live .ln.is-pending { opacity: .55; }
+.js .term.is-live .ln.is-active { background: rgba(52, 224, 161, .09); box-shadow: -.6rem 0 0 rgba(52, 224, 161, .09), .6rem 0 0 rgba(52, 224, 161, .09); }
 
 /* ==========================================================================
-   8. Funcionalidades
+   8. Benefícios
    ========================================================================== */
-.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
-.feat { padding: clamp(1.25rem, 1rem + 1vw, 1.75rem); display: grid; gap: 1rem; align-content: start; transition: border-color .2s, transform .25s var(--ease); }
-.feat:hover { border-color: var(--line-2); }
-.feat h3 { font-size: 1.12rem; }
-.feat > p { color: var(--muted); font-size: .95rem; }
-.feat-head { display: flex; gap: .9rem; align-items: center; }
-.f-ev { grid-column: span 4; }
-.f-score { grid-column: span 2; grid-row: span 2; }
-.f-sev { grid-column: span 2; }
-.f-plan { grid-column: span 2; }
-.f-rep { grid-column: span 3; }
-.f-mod { grid-column: span 3; }
-
-.ev-sample { border: 1px solid var(--line-2); border-radius: var(--r-md); background: #05080a; padding: .9rem 1rem; font-size: .84rem; color: var(--text-2); display: grid; gap: .6rem; }
-.ev-sample .row { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
-.axes { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-.axis { border: 1px solid var(--line); border-radius: var(--r-md); padding: .8rem .9rem; display: grid; gap: .45rem; }
-.axis .k { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.benefits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.benefit { padding: clamp(1.4rem, 1rem + 1.4vw, 2.2rem); display: grid; gap: 1.1rem; align-content: start; transition: transform .3s var(--ease); }
+.benefit > p { color: var(--text-2); }
+.proof { border-radius: var(--r-md); background: var(--surface-2); padding: 1rem 1.1rem; font-size: .92rem; color: var(--text-2); display: grid; gap: .65rem; }
+.proof .row { display: flex; flex-wrap: wrap; gap: .45rem; align-items: center; }
+.proof .cap { font-size: .82rem; color: var(--muted); }
+.axes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.axis { display: grid; gap: .4rem; }
+.axis .k { font-size: .85rem; font-weight: 650; color: var(--text); }
 .axis .v { display: flex; flex-wrap: wrap; gap: .3rem; }
-.axis code { font-size: .74rem; }
-
-.formula { font-family: var(--font-mono); font-size: .8rem; color: var(--text-2); border: 1px solid var(--line); border-radius: var(--r-md); padding: .8rem .9rem; background: #05080a; line-height: 1.7; overflow-x: auto; }
-.formula .a { color: var(--accent); }
-.bands { list-style: none; display: grid; gap: .4rem; }
-.band { display: grid; grid-template-columns: 64px 1fr; align-items: center; gap: .7rem; font-size: .8rem; }
-.band span { font-family: var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
-.band b { font-family: var(--font-mono); font-weight: 600; font-size: .74rem; padding: .35rem .55rem; border-radius: var(--r-sm); border-left: 3px solid; background: rgba(255,255,255,.03); overflow-wrap: anywhere; }
-.band:nth-child(1) b { border-color: var(--crit); }
-.band:nth-child(2) b { border-color: var(--high); }
-.band:nth-child(3) b { border-color: var(--med); }
-.band:nth-child(4) b { border-color: #8fe0a4; }
-.band:nth-child(5) b { border-color: var(--accent); }
-
 .sevtable { list-style: none; display: grid; gap: .45rem; }
-.sevtable li { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .5rem .65rem; border: 1px solid var(--line); border-radius: var(--r-md); font-size: .82rem; }
-.sevtable span:last-child { font-family: var(--font-mono); color: var(--text-2); font-size: .76rem; }
+.sevtable li { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .5rem .7rem; border-radius: var(--r-sm); background: var(--surface); font-size: .9rem; }
+.sevtable span:last-child { font-weight: 650; font-variant-numeric: tabular-nums; }
+.formula { font-family: var(--font-mono); font-size: .8rem; color: var(--text-2); line-height: 1.75; overflow-x: auto; }
+.formula .a { color: var(--link); font-weight: 600; }
+.bands { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px; }
+.band { display: grid; gap: .3rem; font-size: .74rem; align-content: start; }
+.band i { height: 8px; border-radius: 2px; }
+.band span { font-variant-numeric: tabular-nums; color: var(--muted); }
+.band b { font-weight: 650; font-size: .72rem; line-height: 1.25; color: var(--text); }
+.horizons { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.horizons li { display: grid; gap: .15rem; padding: .7rem .8rem; border-radius: var(--r-sm); background: var(--surface); }
+.horizons b { font-size: .95rem; }
+.horizons span { font-size: .82rem; color: var(--muted); }
+.formats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+.format { display: grid; gap: .3rem; padding: .75rem .85rem; border-radius: var(--r-sm); background: var(--surface); }
+.format b { font-family: var(--font-mono); font-size: .9rem; color: var(--link); }
+.format p { font-size: .86rem; color: var(--muted); }
 
-.horizons { list-style: none; display: grid; gap: .45rem; }
-.horizons li { display: grid; grid-template-columns: 1fr auto; gap: .5rem; padding: .55rem .7rem; border-radius: var(--r-md); border: 1px solid var(--line); font-size: .85rem; }
-.horizons li span:last-child { font-family: var(--font-mono); font-size: .74rem; color: var(--muted); }
-.effort { display: flex; gap: .4rem; flex-wrap: wrap; font-size: .78rem; color: var(--muted); }
-
-.formats { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-.format { border: 1px solid var(--line); border-radius: var(--r-md); padding: .9rem; display: grid; gap: .5rem; align-content: start; }
-.format b { font-family: var(--font-mono); font-size: .9rem; color: var(--accent); }
-.format p { font-size: .85rem; color: var(--muted); }
-
-.modules { display: flex; flex-wrap: wrap; gap: .4rem; }
-.modules code { font-size: .78rem; }
-.extras { margin-top: 1rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-.extra { display: grid; grid-template-columns: auto 1fr; gap: .9rem; padding: 1.2rem; border-radius: var(--r-lg); border: 1px dashed var(--line-2); }
-.extra h3 { font-size: 1rem; margin-bottom: .3rem; }
-.extra p { font-size: .9rem; color: var(--muted); }
+.minor { margin-top: clamp(2.5rem, 2rem + 2vw, 4rem); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem clamp(1.5rem, 1rem + 2vw, 2.5rem); }
+.minor .it { padding-top: 1.25rem; border-top: 2px solid var(--text); }
+.minor .it p { font-size: .97rem; }
+.modules { display: flex; flex-wrap: wrap; gap: .35rem; }
+.modules code { font-size: .76rem; }
 
 /* Cenários */
-.scen { margin-top: var(--sp-8); display: grid; grid-template-columns: 300px 1fr; gap: 1rem; align-items: start; }
-.scen-intro { grid-column: 1 / -1; display: grid; gap: .6rem; margin-bottom: .5rem; max-width: 760px; }
-.scen-intro h3 { font-size: clamp(1.35rem, 1.1rem + 1vw, 1.75rem); letter-spacing: -.025em; }
-.scen-intro p { color: var(--muted); }
+.scen { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 1rem; align-items: start; }
 .scen-tabs { display: grid; gap: .3rem; }
-.scen-tab { text-align: left; display: grid; gap: .1rem; padding: .7rem .9rem; border-radius: var(--r-md); border: 1px solid transparent; background: transparent; cursor: pointer; transition: background-color .15s, border-color .15s; }
-.scen-tab:hover { background: rgba(255,255,255,.03); }
-.scen-tab[aria-selected="true"] { background: var(--surface-2); border-color: var(--accent-line); }
-.scen-tab code { background: none; border: 0; padding: 0; font-size: .9rem; color: var(--text); }
-.scen-tab[aria-selected="true"] code { color: var(--accent); }
-.scen-tab span { font-size: .78rem; color: var(--muted); }
-.scen-panel { padding: clamp(1.25rem, 1rem + 1vw, 1.75rem); display: grid; gap: 1rem; }
+.scen-tab { text-align: left; display: grid; gap: .1rem; padding: .75rem 1rem; border-radius: var(--r-md); border: 0; background: transparent; cursor: pointer; transition: background-color .2s, transform .2s var(--ease); }
+.scen-tab:hover { background: rgba(14, 22, 19, .05); }
+.scen-tab[aria-selected="true"] { background: var(--ink); }
+.scen-tab code { background: none; padding: 0; font-size: .92rem; color: var(--text); font-weight: 600; }
+.scen-tab span { font-size: .85rem; color: var(--muted); }
+.scen-tab[aria-selected="true"] code { color: var(--brand); }
+.scen-tab[aria-selected="true"] span { color: #c4d0cb; }
+.scen > div:last-child { position: sticky; top: calc(var(--header-h) + 24px); }
+.scen-panel { padding: clamp(1.4rem, 1rem + 1.4vw, 2.2rem); display: grid; gap: 1.1rem; min-width: 0; }
 .scen-panel + .scen-panel { margin-top: 1rem; }
 .js .scen-panel + .scen-panel { margin-top: 0; }
-.scen-panel h4 { font-size: 1.2rem; display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.js .scen-panel:not([hidden]) { animation: fade-in .35s var(--ease-out); }
+@keyframes fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.scen-panel h3 { font-size: clamp(1.25rem, 1.1rem + .6vw, 1.6rem); display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.scen-panel h3 code { font-size: .9em; background: none; padding: 0; }
 .scen-panel p { color: var(--text-2); }
-.scen-panel .k { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.scen-panel .k { font-size: .9rem; font-weight: 650; color: var(--text); }
 .mod-chips { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; }
-.mod-chips li { font-family: var(--font-mono); font-size: .78rem; padding: .3rem .6rem; border-radius: var(--r-sm); border: 1px solid var(--accent-line); color: var(--accent); background: rgba(52,224,161,.05); }
-.mod-chips li.base { border-color: var(--line-2); color: var(--text-2); background: transparent; }
+.mod-chips li { font-family: var(--font-mono); font-size: .8rem; padding: .3rem .65rem; border-radius: var(--r-pill); background: var(--ink); color: var(--brand); }
+.mod-chips li.base { background: var(--paper-2); color: var(--text-2); }
+.scen-note { margin-top: 1rem; }
 html:not(.js) .scen { grid-template-columns: 1fr; }
 html:not(.js) .scen-tabs { display: none; }
 
 /* ==========================================================================
-   9. Demonstração
+   9. Demonstração (fragmento de produto: mantém bordas próprias)
    ========================================================================== */
-.demo-banner { display: flex; gap: .8rem; align-items: flex-start; padding: .9rem 1.1rem; border-radius: var(--r-md); border: 1px solid rgba(114,200,245,.3); background: rgba(114,200,245,.06); color: var(--text-2); font-size: .92rem; margin-bottom: 1.25rem; }
-.demo-banner svg { width: 20px; height: 20px; color: var(--low); flex: none; margin-top: .1rem; }
+.demo-banner { display: flex; gap: .8rem; align-items: flex-start; padding: 1rem 1.15rem; border-radius: var(--r-md); background: rgba(127, 202, 248, .08); color: var(--text-2); font-size: .95rem; margin-bottom: 1.25rem; }
+.demo-banner svg { width: 20px; height: 20px; color: var(--low); flex: none; margin-top: .15rem; }
 .demo { overflow: hidden; }
 .demo-top { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; padding: .85rem 1.1rem; border-bottom: 1px solid var(--line); }
-.demo-top .file { font-family: var(--font-mono); font-size: .82rem; color: var(--text-2); display: inline-flex; align-items: center; gap: .5rem; }
-.demo-top .file svg { width: 16px; height: 16px; color: var(--accent); }
+.demo-top .file { font-size: .9rem; font-weight: 600; color: var(--text); display: inline-flex; align-items: center; gap: .5rem; }
+.demo-top .file svg { width: 16px; height: 16px; color: var(--brand); }
 .demo-top .meta { display: flex; flex-wrap: wrap; gap: .4rem; }
 .demo-top .links { margin-left: auto; display: flex; gap: .5rem; flex-wrap: wrap; }
-.demo-summary { display: grid; grid-template-columns: 260px 1fr 1.2fr; border-bottom: 1px solid var(--line); }
-.demo-summary > * { padding: 1.25rem; }
+.demo-summary { display: grid; grid-template-columns: 250px minmax(0, 1fr) minmax(0, 1.2fr); border-bottom: 1px solid var(--line); }
+.demo-summary > * { padding: 1.35rem; min-width: 0; }
 .demo-summary > * + * { border-left: 1px solid var(--line); }
-.score-box { display: grid; justify-items: center; gap: .6rem; text-align: center; }
+.score-box { display: grid; justify-items: center; gap: .65rem; text-align: center; }
 .score-box .gauge { width: 140px; height: 140px; }
-.score-box .gauge-label b { font-size: 2.5rem; }
-.score-box p { font-size: .8rem; color: var(--muted); }
-.box-title { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: .8rem; }
-.sev-cards { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
-.sev-card { display: grid; gap: .15rem; text-align: left; padding: .75rem .85rem; border-radius: var(--r-md); border: 1px solid var(--line); background: rgba(255,255,255,.015); cursor: pointer; transition: border-color .15s, background-color .15s, transform .15s var(--ease); }
-.sev-card:hover { border-color: var(--line-3); transform: translateY(-1px); }
-.sev-card b { font-size: 1.6rem; line-height: 1.1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
-.sev-card span { font-size: .76rem; color: var(--muted); }
+.score-box .gauge-label b { font-size: 2.6rem; }
+.score-box p { font-size: .84rem; color: var(--muted); }
+.box-title { font-size: .95rem; font-weight: 650; color: var(--text); margin-bottom: .85rem; letter-spacing: -.01em; }
+.sev-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+.sev-card { display: grid; gap: .15rem; text-align: left; padding: .8rem .9rem; border-radius: var(--r-md); border: 1px solid var(--line); background: var(--surface-2); cursor: pointer; transition: border-color .2s, transform .2s var(--ease); }
+.sev-card:hover { border-color: var(--text-2); transform: translateY(-2px); }
+.sev-card:active { transform: scale(.98); }
+.sev-card b { font-size: 1.75rem; line-height: 1.1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; font-weight: 800; }
+.sev-card span { font-size: .8rem; color: var(--muted); }
 .sev-card[data-sev="CRITICO"] b { color: var(--crit); }
 .sev-card[data-sev="ALTO"] b { color: var(--high); }
 .sev-card[data-sev="MEDIO"] b { color: var(--med); }
 .sev-card[data-sev="BAIXO"] b { color: var(--low); }
-.status-line { margin-top: .8rem; font-size: .78rem; color: var(--muted); }
-.areas { list-style: none; display: grid; gap: .55rem; }
-.area { display: grid; grid-template-columns: 1fr auto; gap: .25rem .75rem; font-size: .8rem; }
-.area code { background: none; border: 0; padding: 0; font-size: .78rem; color: var(--text-2); }
-.area .v { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text); }
-.area .bar { grid-column: 1 / -1; height: 6px; border-radius: var(--r-pill); background: rgba(255,255,255,.06); overflow: hidden; }
-.area .bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--crit), var(--high)); }
-.area.na .v { color: var(--muted); font-size: .72rem; }
-.area.na .bar { background: repeating-linear-gradient(45deg, rgba(255,255,255,.04) 0 4px, transparent 4px 8px); }
-.area .w { color: var(--muted); font-size: .7rem; }
+.status-line { margin-top: .85rem; font-size: .84rem; color: var(--muted); }
+.areas { list-style: none; display: grid; gap: .6rem; }
+.area { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .25rem .75rem; font-size: .84rem; }
+.area code { background: none; padding: 0; font-size: .8rem; color: var(--text-2); }
+.area .v { font-variant-numeric: tabular-nums; color: var(--text); font-weight: 600; }
+.area .bar { grid-column: 1 / -1; height: 6px; border-radius: var(--r-pill); background: rgba(237, 243, 240, .08); overflow: hidden; }
+.area .bar i { display: block; height: 100%; border-radius: inherit; background: var(--high); transform-origin: 0 50%; }
+.area.na .v { color: var(--muted); font-size: .78rem; font-weight: 500; }
+.area.na .bar { background: repeating-linear-gradient(45deg, rgba(255, 255, 255, .05) 0 4px, transparent 4px 8px); }
+.area .w { color: var(--muted); font-size: .74rem; font-weight: 500; }
 
 .tabs { display: flex; gap: .25rem; padding: .6rem .8rem 0; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
-.tab { flex: none; padding: .7rem .9rem; border: 0; background: transparent; color: var(--muted); font-weight: 550; font-size: .92rem; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; border-radius: var(--r-sm) var(--r-sm) 0 0; }
+.tab { flex: none; padding: .75rem .95rem; border: 0; background: transparent; color: var(--muted); font-weight: 600; font-size: .95rem; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .2s, border-color .2s; }
 .tab:hover { color: var(--text); }
-.tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
-.tab .count { font-family: var(--font-mono); font-size: .72rem; margin-left: .35rem; padding: .05rem .4rem; border-radius: var(--r-pill); background: rgba(255,255,255,.06); color: var(--text-2); }
-.tabpanel { padding: 1.1rem; }
+.tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--brand); }
+.tab .count { font-size: .75rem; margin-left: .4rem; padding: .05rem .45rem; border-radius: var(--r-pill); background: var(--code-bg); color: var(--text-2); font-variant-numeric: tabular-nums; }
+.tabpanel { padding: 1.2rem; }
+.js .tabpanel[role="tabpanel"]:not([hidden]) { animation: fade-in .3s var(--ease-out); }
 html:not(.js) .tabs { display: none; }
 html:not(.js) .tabpanel + .tabpanel { border-top: 1px solid var(--line); }
-.panel-title { font-size: 1rem; margin-bottom: .9rem; }
+.panel-title { font-size: 1.05rem; margin-bottom: .9rem; }
 html.js .panel-title.js-hide { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
-.toolbar { display: grid; grid-template-columns: 1fr auto auto; gap: .6rem; align-items: center; margin-bottom: .9rem; }
+.toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: .6rem; align-items: center; margin-bottom: .9rem; }
 .search { position: relative; }
-.search svg { position: absolute; left: .8rem; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--muted); pointer-events: none; }
-.search input { width: 100%; min-height: 42px; padding: .55rem .8rem .55rem 2.4rem; border-radius: var(--r-md); border: 1px solid var(--line-2); background: #05080a; color: var(--text); font: inherit; font-size: .92rem; }
-.search input::placeholder { color: var(--faint); }
-.search input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.search svg { position: absolute; left: .85rem; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--muted); pointer-events: none; }
+.search input { width: 100%; min-height: 44px; padding: .55rem .9rem .55rem 2.5rem; border-radius: var(--r-pill); border: 1px solid var(--line-2); background: #060b09; color: var(--text); font: inherit; font-size: .95rem; transition: border-color .2s; }
+.search input:hover { border-color: var(--text-2); }
+.search input::placeholder { color: #7c8f87; }
+.search input:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
 .seg { display: flex; flex-wrap: wrap; gap: .3rem; }
-.seg button { min-height: 38px; padding: .35rem .7rem; border-radius: var(--r-md); border: 1px solid var(--line-2); background: transparent; color: var(--text-2); font-size: .82rem; cursor: pointer; display: inline-flex; align-items: center; gap: .4rem; }
-.seg button:hover { border-color: var(--line-3); color: var(--text); }
-.seg button[aria-pressed="true"] { background: var(--surface-2); color: var(--text); border-color: var(--accent-line); }
-.seg button i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
-.select { min-height: 38px; padding: .35rem 2rem .35rem .7rem; border-radius: var(--r-md); border: 1px solid var(--line-2); background: #05080a; color: var(--text); font: inherit; font-size: .85rem; appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 15px) 52%, calc(100% - 10px) 52%; background-size: 5px 5px; background-repeat: no-repeat; }
-.result-count { font-size: .82rem; color: var(--muted); margin-bottom: .6rem; font-family: var(--font-mono); }
+.seg button { min-height: 40px; padding: .35rem .8rem; border-radius: var(--r-pill); border: 1px solid var(--line-2); background: transparent; color: var(--text-2); font-size: .86rem; font-weight: 550; cursor: pointer; display: inline-flex; align-items: center; gap: .4rem; transition: border-color .2s, background-color .2s, color .2s; }
+.seg button:hover { border-color: var(--text-2); color: var(--text); }
+.seg button[aria-pressed="true"] { background: var(--text); color: var(--ink); border-color: var(--text); }
+.seg button i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.select { min-height: 40px; padding: .35rem 2.1rem .35rem .9rem; border-radius: var(--r-pill); border: 1px solid var(--line-2); background-color: #060b09; color: var(--text); font: inherit; font-size: .88rem; appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 16px) 52%, calc(100% - 11px) 52%; background-size: 5px 5px; background-repeat: no-repeat; cursor: pointer; }
+.select option { background: #0a110f; color: #edf3f0; }
+.result-count { font-size: .86rem; color: var(--muted); margin-bottom: .6rem; font-variant-numeric: tabular-nums; }
 .empty { padding: 2rem 1rem; text-align: center; color: var(--muted); border: 1px dashed var(--line-2); border-radius: var(--r-md); }
 html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
 
 .nc-list:focus-visible { outline-offset: 4px; }
-.nc, .nc summary > *, .nc-body > div > *, .plan-row > *, .plan-list > li, .scen-panel, .demo-summary > *, .tabpanel { min-width: 0; }
-.nc-list { list-style: none; display: grid; gap: .5rem; max-height: 720px; overflow-y: auto; padding-right: .25rem; scrollbar-color: var(--line-3) transparent; }
-.nc details { border: 1px solid var(--line); border-radius: var(--r-md); background: rgba(255,255,255,.012); transition: border-color .15s, background-color .15s; }
+.nc, .nc summary > *, .nc-body > div > *, .plan-row > *, .plan-list > li, .tabpanel { min-width: 0; }
+.nc-list { list-style: none; display: grid; gap: .5rem; max-height: 720px; overflow-y: auto; padding-right: .25rem; scrollbar-color: var(--line-2) transparent; overscroll-behavior: contain; }
+.nc details { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-2); transition: border-color .2s, background-color .2s; }
 .nc details:hover { border-color: var(--line-2); }
-.nc details[open] { border-color: var(--line-3); background: rgba(255,255,255,.025); }
-.nc summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto 1fr auto; gap: .35rem 1rem; align-items: center; padding: .8rem .95rem; border-radius: var(--r-md); }
+.nc details[open] { border-color: rgba(52, 224, 161, .35); background: var(--surface); }
+.nc summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .35rem 1rem; align-items: center; padding: .85rem 1rem; border-radius: var(--r-md); }
 .nc summary::-webkit-details-marker { display: none; }
-.nc summary::after { content: ""; grid-column: 3; grid-row: 1; justify-self: end; width: 8px; height: 8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform .2s; margin-right: .2rem; }
+.nc summary::after { content: ""; grid-column: 3; grid-row: 1; justify-self: end; width: 8px; height: 8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform .25s var(--ease); margin-right: .2rem; }
 .nc details[open] summary::after { transform: rotate(-135deg); }
 .nc-head { display: flex; align-items: center; gap: .5rem; grid-column: 1; grid-row: 1; }
-.nc-id { font-family: var(--font-mono); font-size: .76rem; color: var(--text-2); white-space: nowrap; }
-.nc-title { grid-column: 2; grid-row: 1; font-weight: 550; font-size: .95rem; line-height: 1.35; }
-.nc-meta { grid-column: 2; grid-row: 2; display: flex; flex-wrap: wrap; gap: .25rem .9rem; font-family: var(--font-mono); font-size: .72rem; color: var(--muted); }
-.nc-body { margin: 0; padding: .2rem .95rem 1rem; display: grid; gap: .8rem; border-top: 1px solid var(--line); padding-top: .9rem; margin-inline: .0rem; }
-.nc-body > div { display: grid; grid-template-columns: 170px 1fr; gap: 1rem; }
-.nc-body dt { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); padding-top: .15rem; }
-.nc-body dd { margin: 0; font-size: .9rem; color: var(--text-2); }
-.nc-ev dd { padding: .6rem .75rem; border-radius: var(--r-sm); background: #05080a; border: 1px solid var(--line); font-size: .85rem; }
+.nc-id { font-family: var(--font-mono); font-size: .78rem; color: var(--text-2); white-space: nowrap; }
+.nc-title { grid-column: 2; grid-row: 1; font-weight: 600; font-size: .98rem; line-height: 1.35; }
+.nc-meta { grid-column: 2; grid-row: 2; display: flex; flex-wrap: wrap; gap: .25rem .9rem; font-size: .8rem; color: var(--muted); }
+.nc-body { margin: 0; padding: .95rem 1rem 1.1rem; display: grid; gap: .85rem; border-top: 1px solid var(--line); }
+.nc-body > div { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 1rem; }
+.nc-body dt { font-size: .84rem; font-weight: 650; color: var(--muted); padding-top: .1rem; }
+.nc-body dd { margin: 0; font-size: .93rem; color: var(--text-2); }
+.nc-ev dd { padding: .65rem .8rem; border-radius: var(--r-sm); background: #060b09; border: 1px solid var(--line); font-size: .88rem; }
 
-.plan-groups { display: grid; gap: 1.5rem; }
-.plan-group h4 { font-size: 1rem; display: flex; align-items: baseline; gap: .6rem; margin-bottom: .7rem; }
-.plan-group h4 span { font-family: var(--font-mono); font-size: .75rem; color: var(--muted); font-weight: 500; }
+.plan-groups { display: grid; gap: 1.75rem; }
+.plan-group h4 { font-size: 1.05rem; display: flex; align-items: baseline; gap: .6rem; margin-bottom: .75rem; }
+.plan-group h4 span { font-size: .84rem; color: var(--muted); font-weight: 500; }
 .plan-list { list-style: none; display: grid; gap: .45rem; }
-.plan-row { display: grid; grid-template-columns: 34px 1fr 300px; gap: 1rem; align-items: start; padding: .8rem .9rem; border-radius: var(--r-md); border: 1px solid var(--line); }
-.plan-n { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: .75rem; border: 1px solid var(--line-2); color: var(--text-2); }
-.plan-main { display: grid; gap: .5rem; font-size: .9rem; color: var(--text); }
+.plan-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) 300px; gap: 1rem; align-items: start; padding: .85rem .95rem; border-radius: var(--r-md); border: 1px solid var(--line); background: var(--surface-2); }
+.plan-n { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: .78rem; font-weight: 700; background: var(--code-bg); color: var(--text-2); font-variant-numeric: tabular-nums; }
+.plan-main { display: grid; gap: .5rem; font-size: .94rem; color: var(--text); }
 .chips { list-style: none; display: flex; flex-wrap: wrap; gap: .3rem; }
-.chips li { font-family: var(--font-mono); font-size: .7rem; padding: .1rem .4rem; border-radius: 5px; border: 1px solid var(--line-2); color: var(--muted); }
+.chips li { font-family: var(--font-mono); font-size: .72rem; padding: .1rem .45rem; border-radius: 5px; background: var(--code-bg); color: var(--text-2); }
 .plan-meta { margin: 0; display: grid; grid-template-columns: 1.4fr .6fr .9fr; gap: .6rem; }
-.plan-meta dt { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.plan-meta dd { margin: .15rem 0 0; font-size: .82rem; color: var(--text-2); }
+.plan-meta dt { font-size: .76rem; font-weight: 650; color: var(--muted); }
+.plan-meta dd { margin: .15rem 0 0; font-size: .86rem; color: var(--text-2); }
 
-.calc-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.calc-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
 .calc-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-md); }
-.calc-table th, .calc-table td { padding: .6rem .8rem; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.calc-table th, .calc-table td { padding: .65rem .85rem; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .calc-table th:first-child, .calc-table td:first-child { text-align: left; }
-.calc-table thead th { font-family: var(--font-mono); font-size: .7rem; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,.02); }
+.calc-table thead th { font-size: .8rem; font-weight: 650; color: var(--muted); background: var(--surface-2); }
 .calc-table tbody tr:last-child td { border-bottom: 0; }
-.calc-table tfoot td { font-weight: 650; border-top: 1px solid var(--line-2); border-bottom: 0; }
+.calc-table tfoot td { font-weight: 750; border-top: 1px solid var(--line-2); border-bottom: 0; }
 .calc-table td.na { color: var(--muted); }
-.calc-notes { display: grid; gap: .6rem; margin-top: 1rem; font-size: .9rem; color: var(--text-2); }
-.calc-notes .formula { margin-top: .2rem; }
-.strengths { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; }
-.strengths li { display: grid; grid-template-columns: auto 1fr; gap: .65rem; padding: .75rem .85rem; border: 1px solid var(--line); border-radius: var(--r-md); font-size: .88rem; color: var(--text-2); }
-.strengths svg { width: 18px; height: 18px; color: var(--ok); margin-top: .15rem; }
+.calc-notes { display: grid; gap: .65rem; margin-top: 1rem; font-size: .94rem; color: var(--text-2); }
+.calc-notes .formula { margin-top: .2rem; padding: .8rem .95rem; border-radius: var(--r-md); background: #060b09; color: #dbe6e1; }
+.calc-notes .formula .a { color: var(--brand); }
+.strengths { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+.strengths li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .65rem; padding: .8rem .9rem; border: 1px solid var(--line); border-radius: var(--r-md); font-size: .92rem; color: var(--text-2); }
+.strengths svg { width: 18px; height: 18px; color: var(--ok); margin-top: .2rem; }
 
 /* ==========================================================================
    10. Compatibilidade
    ========================================================================== */
 .compat { overflow: hidden; }
-.compat-row { display: grid; grid-template-columns: 1.1fr .8fr 1.3fr 1.3fr; gap: 1rem; padding: 1rem 1.25rem; align-items: center; border-bottom: 1px solid var(--line); }
+.compat-row { display: grid; grid-template-columns: 1.1fr .8fr 1.3fr 1.3fr; gap: 1rem; padding: 1.05rem 1.35rem; align-items: center; border-bottom: 1px solid var(--line); transition: background-color .2s; }
+.compat-row:not(.head):hover { background: var(--surface-2); }
 .compat-row:last-child { border-bottom: 0; }
-.compat-row.head { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,.02); padding-block: .7rem; }
-.compat-name { display: flex; align-items: center; gap: .75rem; font-weight: 600; }
-.compat-name .mono-ico { width: 34px; height: 34px; border-radius: var(--r-sm); display: grid; place-items: center; font-family: var(--font-mono); font-size: .78rem; font-weight: 600; border: 1px solid var(--line-2); background: var(--surface-2); color: var(--text-2); flex: none; }
-.compat-row code { font-size: .78rem; }
-.yes, .opt, .no { display: inline-flex; align-items: center; gap: .45rem; font-size: .85rem; color: var(--text-2); }
-.yes svg, .opt svg, .no svg { width: 16px; height: 16px; flex: none; }
-.yes svg { color: var(--accent); }
-.opt svg { color: var(--accent-2); }
-.no svg { color: var(--faint); }
+.compat-row.head { font-size: .86rem; font-weight: 650; color: var(--muted); background: var(--surface-2); padding-block: .75rem; }
+.compat-row.head code { font-size: .8rem; }
+.compat-name { display: flex; align-items: center; gap: .8rem; font-weight: 700; font-size: 1.02rem; }
+.compat-name .mono-ico { width: 36px; height: 36px; border-radius: var(--r-sm); display: grid; place-items: center; font-size: .82rem; font-weight: 750; background: var(--ink); color: var(--brand); flex: none; }
+.compat-row code { font-size: .8rem; }
+.yes, .opt, .no { display: inline-flex; align-items: center; gap: .45rem; font-size: .9rem; color: var(--text-2); }
+.yes svg, .opt svg, .no svg { width: 17px; height: 17px; flex: none; }
+.yes svg { color: var(--ok); }
+.opt svg { color: var(--low); }
+.no svg { color: var(--muted); }
 .cell-k { display: none; }
-.compat-notes { margin-top: 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.compat-notes { margin-top: 1.5rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 2rem; }
+.compat-notes .note { font-size: .95rem; color: var(--text-2); }
 
 /* ==========================================================================
    11. Segurança e transparência
    ========================================================================== */
-.trust { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.trust-col { padding: clamp(1.25rem, 1rem + 1vw, 1.75rem); display: grid; gap: 1.1rem; align-content: start; }
-.trust-col > h3 { font-size: 1.15rem; display: flex; align-items: center; gap: .7rem; }
-.trust-list { list-style: none; display: grid; gap: 1.1rem; }
-.trust-list li { display: grid; grid-template-columns: auto 1fr; gap: .9rem; }
-.trust-list h4 { font-size: .98rem; margin-bottom: .25rem; }
-.trust-list p { font-size: .9rem; color: var(--muted); }
-.trust-col.limits { background: linear-gradient(180deg, rgba(242,203,85,.04), transparent 50%), var(--surface); }
-.trust-col.limits .ico-box { background: rgba(242,203,85,.08); border-color: rgba(242,203,85,.3); color: var(--med); }
-.legal-box { margin-top: 1rem; padding: 1.1rem 1.25rem; border-radius: var(--r-lg); border: 1px solid rgba(242,203,85,.3); background: rgba(242,203,85,.05); display: grid; grid-template-columns: auto 1fr; gap: .9rem; color: var(--text-2); font-size: .95rem; }
-.legal-box svg { width: 22px; height: 22px; color: var(--med); }
+.trust { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.trust-col { padding: clamp(1.4rem, 1rem + 1.6vw, 2.4rem); display: grid; gap: 1.6rem; align-content: start; }
+.trust-col > h3 { font-size: clamp(1.3rem, 1.1rem + .7vw, 1.7rem); letter-spacing: -.025em; }
+.trust-list { list-style: none; display: grid; gap: 1.6rem; }
+.trust-list .it-head h4 { font-size: 1.08rem; }
+.trust-list .it p { font-size: .97rem; }
+.trust-col.limits .it-ico { background: #3b2f00; color: #f2cb55; }
+.legal-box { margin-top: 1rem; padding: clamp(1.2rem, 1rem + 1vw, 1.75rem); border-radius: var(--r-lg); background: var(--ink); color: #edf3f0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem; font-size: 1.02rem; --text: #edf3f0; }
+.legal-box svg { width: 24px; height: 24px; color: #f2cb55; margin-top: .1rem; }
 
 /* ==========================================================================
    12. Instalação
    ========================================================================== */
-.install { display: grid; grid-template-columns: 1.25fr .75fr; gap: 1rem; align-items: start; }
+.install { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); gap: 1rem; align-items: start; }
 .install-main { overflow: hidden; }
 .install-main .tabs { padding-top: .4rem; }
 .install-main .tabpanel { display: grid; gap: 1rem; }
-.install-main .tabpanel > p { color: var(--text-2); font-size: .95rem; }
+.install-main .tabpanel > p { color: var(--text-2); font-size: .97rem; }
 .install-side { display: grid; gap: 1rem; }
-.side-card { padding: 1.25rem; display: grid; gap: .8rem; }
-.side-card h3 { font-size: 1rem; }
-.side-card p { font-size: .9rem; color: var(--muted); }
-.link-list { list-style: none; display: grid; gap: .3rem; }
-.link-list a { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .6rem .7rem; border-radius: var(--r-sm); text-decoration: none; color: var(--text-2); font-size: .9rem; border: 1px solid transparent; }
-.link-list a:hover { background: rgba(255,255,255,.03); border-color: var(--line); color: var(--text); }
-.link-list svg { width: 15px; height: 15px; color: var(--muted); flex: none; }
-.cmd-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
-.cmd-table th, .cmd-table td { text-align: left; padding: .55rem .6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-.cmd-table th { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.side-card { padding: 1.35rem; display: grid; gap: .85rem; }
+.side-card h3 { font-size: 1.08rem; }
+.side-card p { font-size: .95rem; color: var(--text-2); }
+.link-list { list-style: none; display: grid; gap: .2rem; }
+.link-list a { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .65rem .75rem; border-radius: var(--r-sm); text-decoration: none; color: var(--text); font-size: .95rem; transition: background-color .2s; }
+.link-list a:hover { background: var(--surface-2); }
+.link-list a svg { width: 15px; height: 15px; color: var(--muted); flex: none; transition: transform .25s var(--ease); }
+.link-list a:hover svg { transform: translate(2px, -2px); }
+.cmd-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.cmd-table th, .cmd-table td { text-align: left; padding: .6rem .65rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cmd-table th { font-size: .82rem; color: var(--muted); font-weight: 650; }
 .cmd-table tr:last-child td { border-bottom: 0; }
-.subhead { font-size: 1rem; margin-top: .4rem; }
-.next-step { display: grid; grid-template-columns: auto 1fr; gap: .8rem; align-items: center; padding: .9rem 1rem; border: 1px solid var(--accent-line); background: var(--accent-soft); border-radius: var(--r-md); font-size: .92rem; color: var(--text-2); }
-.next-step svg { width: 20px; height: 20px; color: var(--accent); }
+.subhead { font-size: 1.02rem; margin-top: .4rem; }
+.next-step { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .85rem; align-items: center; padding: 1.1rem 1.15rem; background: var(--brand); color: #04140d; border-radius: var(--r-lg); font-size: .97rem; font-weight: 550; }
+.next-step code { background: rgba(4, 20, 13, .12); color: #04140d; }
+.next-step svg { width: 22px; height: 22px; }
 
 /* ==========================================================================
    13. FAQ
    ========================================================================== */
-.faq-wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+.faq-wrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
 .faq-wrap .section-head { position: sticky; top: calc(var(--header-h) + 24px); margin-bottom: 0; }
-.faq { display: grid; gap: .5rem; }
-.faq details { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); transition: border-color .15s; }
-.faq details[open] { border-color: var(--line-2); }
-.faq summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.15rem; font-weight: 600; font-size: 1rem; border-radius: var(--r-md); }
+.faq { display: grid; }
+.faq details { border-bottom: 1px solid var(--line-2); }
+.faq details:first-child { border-top: 1px solid var(--line-2); }
+.faq summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem .1rem; font-weight: 650; font-size: 1.08rem; letter-spacing: -.01em; transition: color .2s; }
+.faq summary:hover { color: var(--link); }
 .faq summary::-webkit-details-marker { display: none; }
-.faq summary .pm { position: relative; width: 14px; height: 14px; flex: none; }
-.faq summary .pm::before, .faq summary .pm::after { content: ""; position: absolute; left: 0; top: 6px; width: 14px; height: 2px; background: var(--muted); border-radius: 2px; transition: transform .2s; }
+.faq summary .pm { position: relative; width: 28px; height: 28px; flex: none; border-radius: 50%; background: var(--surface); transition: background-color .2s, transform .3s var(--ease); }
+.faq summary .pm::before, .faq summary .pm::after { content: ""; position: absolute; left: 8px; top: 13px; width: 12px; height: 2px; background: var(--text); border-radius: 2px; transition: transform .3s var(--ease); }
 .faq summary .pm::after { transform: rotate(90deg); }
+.faq details[open] summary .pm { background: var(--ink); }
+.faq details[open] summary .pm::before, .faq details[open] summary .pm::after { background: var(--brand); }
 .faq details[open] summary .pm::after { transform: rotate(0); }
-.faq-a { padding: 0 1.15rem 1.15rem; color: var(--text-2); font-size: .95rem; display: grid; gap: .6rem; }
+.faq-a { padding: 0 .1rem 1.4rem; color: var(--text-2); display: grid; gap: .65rem; max-width: 68ch; }
 .faq-a ul { padding-left: 1.1rem; display: grid; gap: .3rem; }
+.js .faq details[open] .faq-a { animation: fade-in .3s var(--ease-out); }
 
 /* ==========================================================================
    14. CTA final e rodapé
    ========================================================================== */
-.final { text-align: center; overflow: hidden; }
-.final .bg-glow { width: 700px; height: 400px; left: 50%; top: 10%; transform: translateX(-50%); background: radial-gradient(circle, rgba(52,224,161,.2), transparent 65%); }
-.final-inner { display: grid; gap: 1.4rem; justify-items: center; max-width: 820px; margin-inline: auto; }
-.final h2 { font-size: clamp(2rem, 1.2rem + 3.6vw, 3.6rem); letter-spacing: -.04em; }
-.final p { font-size: var(--fs-lg); color: var(--muted); max-width: 620px; }
-.final .hero-actions { justify-content: center; }
+.final-inner { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); gap: 2rem clamp(2rem, 5vw, 5rem); align-items: end; }
+.final h2 { font-size: clamp(2.3rem, 1.2rem + 4.4vw, 5rem); letter-spacing: -.045em; line-height: .98; font-weight: 800; }
+.final-copy { display: grid; gap: 1.5rem; }
+.final-copy > p { font-size: var(--fs-lead); color: var(--text-2); max-width: 600px; }
+.final .hero-actions .btn:not(.btn-primary) { border-color: rgba(4, 20, 13, .35); background: transparent; }
+.final .hero-actions .btn:not(.btn-primary):hover { border-color: #04140d; background: rgba(4, 20, 13, .06); }
+.final-list { list-style: none; display: grid; gap: .75rem; font-size: 1.02rem; font-weight: 600; }
+.final-list li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: .6rem; align-items: start; }
+.final-list svg { width: 22px; height: 22px; margin-top: .1rem; }
 
-.site-footer { border-top: 1px solid var(--line); padding-block: var(--sp-7) var(--sp-6); background: var(--bg-2); }
-.foot-grid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 2rem; }
-.foot-brand { display: grid; gap: .9rem; align-content: start; }
-.foot-brand p { color: var(--muted); font-size: .9rem; max-width: 360px; }
-.foot-col h2 { font-size: .75rem; font-family: var(--font-mono); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: .8rem; }
-.foot-col ul { list-style: none; display: grid; gap: .45rem; }
-.foot-col a { color: var(--text-2); text-decoration: none; font-size: .92rem; }
+.site-footer { padding-block: clamp(3.5rem, 2.5rem + 3vw, 5.5rem) 2rem; }
+.foot-word { font-size: clamp(2.2rem, .6rem + 6.6vw, 7.25rem); font-weight: 800; letter-spacing: -.05em; line-height: .95; color: var(--text); margin-bottom: clamp(2.5rem, 2rem + 2vw, 4rem); }
+.foot-word span { color: var(--brand); }
+.foot-grid { display: grid; grid-template-columns: 1.4fr repeat(3, minmax(0, 1fr)); gap: 2rem; }
+.foot-brand p { color: var(--text-2); font-size: .97rem; max-width: 380px; }
+.foot-col h2 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: .8rem; letter-spacing: -.01em; }
+.foot-col ul { list-style: none; display: grid; gap: .5rem; }
+.foot-col a { color: var(--text-2); text-decoration: none; font-size: .97rem; }
 .foot-col a:hover { color: var(--text); text-decoration: underline; }
-.foot-legal { margin-top: var(--sp-6); padding-top: var(--sp-5); border-top: 1px solid var(--line); display: grid; gap: .6rem; color: var(--muted); font-size: .84rem; }
+.foot-col code { font-size: .8em; }
+.foot-legal { margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem); padding-top: 1.5rem; border-top: 1px solid var(--line); display: grid; gap: .6rem; color: var(--muted); font-size: .9rem; }
+.foot-legal strong { color: var(--text-2); }
 
 /* ==========================================================================
-   15. Animações de entrada
+   15. Movimento
    ========================================================================== */
 @media (prefers-reduced-motion: no-preference) {
-  .js [data-reveal] { opacity: 0; transform: translateY(14px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); transition-delay: calc(var(--d, 0) * 80ms); }
   .js [data-reveal].is-in { opacity: 1; transform: none; }
-  .js [data-reveal-delay="1"] { transition-delay: .08s; }
-  .js [data-reveal-delay="2"] { transition-delay: .16s; }
-  .feat:hover, .risk:hover { transform: translateY(-2px); }
+  .js .hero [data-enter] { animation: rise .9s var(--ease-out) both; animation-delay: calc(var(--d, 0) * 90ms); }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .benefit:hover, .scen-tab:hover { transform: translateY(-3px); }
+  .scen-tab[aria-selected="true"]:hover { transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-delay: 0s !important; }
+  .sheet { transform: none !important; }
 }
 
 /* ==========================================================================
    16. Responsivo
    ========================================================================== */
 @media (max-width: 1100px) {
-  .demo-summary { grid-template-columns: 220px 1fr; }
+  .demo-summary { grid-template-columns: 220px minmax(0, 1fr); }
   .demo-summary > .areas-box { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); }
-  .plan-row { grid-template-columns: 34px 1fr; }
+  .plan-row { grid-template-columns: 34px minmax(0, 1fr); }
   .plan-meta { grid-column: 2; }
+  .minor { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 1024px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .report-mock { max-width: 620px; }
+@media (max-width: 980px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .sheet-wrap { max-width: 680px; }
   .how { grid-template-columns: 1fr; }
   .how-side { position: static; }
-  .bento { grid-template-columns: repeat(2, 1fr); }
-  .f-ev, .f-score, .f-sev, .f-plan, .f-rep, .f-mod { grid-column: span 1; grid-row: auto; }
-  .f-ev, .f-score { grid-column: 1 / -1; }
-  .extras { grid-template-columns: 1fr; }
+  .benefits { grid-template-columns: 1fr; }
   .install { grid-template-columns: 1fr; }
   .faq-wrap { grid-template-columns: 1fr; }
   .faq-wrap .section-head { position: static; }
-  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .foot-brand { grid-column: 1 / -1; }
+  .final-inner { grid-template-columns: 1fr; }
+  .section-head.split { grid-template-columns: 1fr; }
+  .scen { grid-template-columns: 1fr; }
+  .scen > div:last-child { position: static; }
+  .scen-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 860px) {
-  .facts { grid-template-columns: 1fr 1fr; }
-  .fact:nth-child(3) { border-left: 0; }
-  .fact:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .compare { grid-template-columns: 1fr; }
-  .compare > div + div { border-left: 0; border-top: 1px solid var(--line); }
-  .risks { grid-template-columns: 1fr 1fr; }
-  .scen { grid-template-columns: 1fr; }
-  .scen-tabs { grid-template-columns: repeat(2, 1fr); }
+  .risks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .trust { grid-template-columns: 1fr; }
   .compat-row.head { display: none; }
   .compat-row { grid-template-columns: 1fr; gap: .55rem; }
-  .cell-k { display: block; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: .1rem; }
+  .cell-k { display: block; font-size: .8rem; font-weight: 650; color: var(--muted); margin-bottom: .1rem; }
   .compat-notes { grid-template-columns: 1fr; }
   .toolbar { grid-template-columns: 1fr; }
   .strengths { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  .bento { grid-template-columns: 1fr; }
+  .sheet-wrap { margin-bottom: -3rem; }
+  .facts-band { padding-top: calc(3rem + 2.5rem); }
   .risks { grid-template-columns: 1fr; }
+  .minor { grid-template-columns: 1fr; }
   .demo-summary { grid-template-columns: 1fr; }
   .demo-summary > * + * { border-left: 0; border-top: 1px solid var(--line); }
   .demo-top .links { margin-left: 0; }
-  .nc summary { grid-template-columns: 1fr auto; }
+  .nc summary { grid-template-columns: minmax(0, 1fr) auto; }
   .nc-head { grid-column: 1; grid-row: 1; }
   .nc summary::after { grid-column: 2; grid-row: 1; }
   .nc-title { grid-column: 1 / -1; grid-row: 2; }
   .nc-meta { grid-column: 1 / -1; grid-row: 3; }
   .nc-body > div { grid-template-columns: 1fr; gap: .25rem; }
   .plan-row { grid-template-columns: 1fr; gap: .6rem; }
-  .plan-meta { grid-column: 1; grid-template-columns: 1fr 1fr; }
+  .plan-meta { grid-column: 1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .plan-meta div:first-child { grid-column: 1 / -1; }
-  .axes, .formats { grid-template-columns: 1fr; }
+  .axes, .formats, .horizons { grid-template-columns: 1fr; }
+  .bands { grid-template-columns: 1fr; gap: .3rem; }
+  .band { grid-template-columns: 8px 4.5rem minmax(0, 1fr); align-items: center; gap: .6rem; }
+  .band i { height: 100%; min-height: 18px; }
   .scen-tabs { grid-template-columns: 1fr; }
-  .rm-top { grid-template-columns: 1fr; justify-items: start; }
-  .rm-plan { grid-template-columns: 1fr; gap: .3rem; }
-  .rm-item { grid-template-columns: 1fr; }
-  .rm-item .sev { justify-self: start; }
-  .rm-item .s { grid-column: 1; }
+  .sh-score { grid-template-columns: 1fr; justify-items: start; }
+  .sh-item { grid-template-columns: 1fr; }
+  .sh-item .sev { justify-self: start; }
+  .sh-item .s { grid-column: 1; }
+  .sh-todo li { grid-template-columns: 1.6rem minmax(0, 1fr); }
+  .sh-todo .x { grid-column: 2; }
   .foot-grid { grid-template-columns: 1fr; }
   .hero-actions .btn { flex: 1 1 100%; }
   .nc-list { max-height: none; }
 }
 @media (max-width: 400px) {
-  .facts { grid-template-columns: 1fr; }
-  .fact + .fact { border-left: 0; border-top: 1px solid var(--line); }
+  .facts { grid-template-columns: 1fr 1fr; gap: 1.25rem 1rem; }
   .sev-cards { grid-template-columns: 1fr 1fr; }
   .code pre { font-size: .8rem; }
 }
 
 @media print {
-  .site-header, .bg-grid, .bg-glow, .copy-btn, .toolbar, .tabs { display: none !important; }
-  body { background: #fff; color: #000; }
+  .site-header, .copy-btn, .toolbar, .tabs, .quick-install, .progress { display: none !important; }
+  .dark, .field-accent, .tone, body { background: #fff !important; color: #000 !important; }
+  .sheet { box-shadow: none; transform: none; }
 }
 </style>
 </head>
@@ -809,130 +897,158 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
     <symbol id="i-cookie" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9 3 3 0 0 1-3-3 3 3 0 0 1-3-3 3 3 0 0 1-3-3z"/><path d="M8.5 11.5h.01M12 16h.01M15.5 13.5h.01"/></g></symbol>
     <symbol id="i-diff" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12M3 6h6M15 12h6"/><circle cx="18" cy="18" r="3"/><circle cx="6" cy="19" r="2"/></g></symbol>
     <symbol id="i-check-circle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/></g></symbol>
-    <symbol id="i-logo" viewBox="0 0 32 32"><path d="M16 3.2l10.4 3.9v7.9c0 6.4-4.4 11.5-10.4 13.6C10 26.5 5.6 21.4 5.6 15V7.1z" fill="rgba(52,224,161,.08)" stroke="#34e0a1" stroke-width="1.8" stroke-linejoin="round"/><path d="M10.4 12.4h11.2M10.4 16h7M10.4 19.6h4.6" stroke="rgba(232,238,241,.55)" stroke-width="1.6" stroke-linecap="round"/><path d="M17.6 19.3l2.3 2.3 4.4-4.8" fill="none" stroke="#34e0a1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-logo" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#0a110f"/><path d="M16 5l9 3.4v6.9c0 5.6-3.8 10-9 11.7-5.2-1.7-9-6.1-9-11.7V8.4z" fill="none" stroke="#34e0a1" stroke-width="2.2" stroke-linejoin="round"/><path d="M11.8 16.2l3 3 5.6-6" fill="none" stroke="#34e0a1" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   </defs>
 </svg>
 
+
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-<!-- ======================= Header ======================= -->
+<!-- ======================= Cabeçalho ======================= -->
 <header class="site-header" id="topo">
   <div class="container header-inner">
-    <a class="brand" href="#topo" aria-label="LGPD Enterprise Auditor, voltar ao início">
+    <a class="brand" href="#topo" aria-label="LGPD Enterprise Auditor, voltar ao início" translate="no">
       <svg aria-hidden="true"><use href="#i-logo"/></svg>
-      <span class="brand-text">LGPD Enterprise Auditor<small>open source · MIT</small></span>
+      <span>LGPD Enterprise Auditor</span>
     </a>
+    <nav class="nav" id="menu" aria-label="Seções da página">
+      <ul>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#funcionalidades">Benefícios</a></li>
+        <li><a href="#demonstracao">Demonstração</a></li>
+        <li><a href="#instalacao">Instalação</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li class="nav-extra"><a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor" rel="noopener">Repositório no GitHub</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-sm icon-btn" href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor" rel="noopener" aria-label="Repositório no GitHub">
+        <svg aria-hidden="true"><use href="#i-github"/></svg>
+      </a>
+      <a class="btn btn-sm btn-primary" href="#instalacao">Instalar</a>
+    </div>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu de navegação">
       <svg class="i-open" aria-hidden="true"><use href="#i-menu"/></svg>
       <svg class="i-close" aria-hidden="true"><use href="#i-x"/></svg>
     </button>
-    <nav class="nav" id="menu" aria-label="Seções da página">
-      <ul>
-        <li><a href="#funcionalidades">Funcionalidades</a></li>
-        <li><a href="#como-funciona">Como funciona</a></li>
-        <li><a href="#demonstracao">Demonstração</a></li>
-        <li><a href="#instalacao">Instalação</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li class="nav-gh"><a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor" rel="noopener">GitHub</a></li>
-      </ul>
-    </nav>
-    <div class="header-cta">
-      <a class="btn btn-sm" href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor" rel="noopener" aria-label="Repositório no GitHub">
-        <svg aria-hidden="true"><use href="#i-github"/></svg><span class="btn-gh-label">GitHub</span>
-      </a>
-    </div>
   </div>
+  <span class="progress" aria-hidden="true"></span>
 </header>
 
 <main id="conteudo">
 
+<p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
+
 <!-- ======================= Hero ======================= -->
-<section class="hero" aria-labelledby="hero-title">
-  <div class="bg-grid" aria-hidden="true"></div>
-  <div class="bg-glow g1" aria-hidden="true"></div>
-  <div class="bg-glow g2" aria-hidden="true"></div>
+<section class="hero dark" aria-labelledby="hero-title">
   <div class="container">
+    <h1 id="hero-title" data-enter>Transforme riscos de LGPD em ações concretas.</h1>
+
     <div class="hero-grid">
       <div class="hero-copy">
-        <div class="hero-meta">
-          <span class="pill"><span class="dot" aria-hidden="true"></span>Open source · licença MIT</span>
-          <span class="pill">LGPD · ANPD · ECA Digital</span>
-        </div>
-        <h1 id="hero-title">Transforme riscos de LGPD em <span class="hl">ações concretas.</span></h1>
-        <p class="hero-sub">Auditoria orientada a evidências, executada pelo assistente de IA que você já usa: cada achado traz a evidência, o artigo da LGPD e a correção, com score de 0 a 100 e plano de adequação com prazo e esforço.</p>
-        <div class="hero-actions">
+        <p class="hero-sub" data-enter style="--d:1">O <strong translate="no">LGPD Enterprise Auditor</strong> faz do assistente de IA que você já usa um auditor orientado a evidências. Cada achado traz a prova, o artigo da lei e a correção, com score de 0 a 100 e plano de adequação com prazo e esforço.</p>
+        <div class="hero-actions" data-enter style="--d:2">
           <a class="btn btn-primary" href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor" rel="noopener">
             <svg aria-hidden="true"><use href="#i-github"/></svg>Explorar no GitHub
           </a>
-          <a class="btn" href="#como-funciona">Ver como funciona<svg aria-hidden="true"><use href="#i-down"/></svg></a>
+          <a class="btn" href="#como-funciona">Ver como funciona<svg class="down" aria-hidden="true"><use href="#i-down"/></svg></a>
         </div>
-        <p class="note"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Apoio técnico à conformidade: não é certificação nem parecer jurídico.</span></p>
+        <div class="quick-install" data-enter style="--d:3">
+          <span id="quick-label">Ou instale agora, na raiz do projeto (macOS, Linux, WSL):</span>
+          <div class="quick-cmd">
+            <code id="hero-cmd" tabindex="0" aria-labelledby="quick-label" translate="no">curl -fsSL https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/latest/download/install.sh | bash -s -- install</code>
+            <button class="btn copy-btn" type="button" data-copy="hero-cmd"><svg class="i-copy" aria-hidden="true"><use href="#i-copy"/></svg><svg class="i-ok" aria-hidden="true"><use href="#i-check"/></svg><span>Copiar</span></button>
+          </div>
+          <a href="#instalacao">Windows, versão fixa e outras opções</a>
+        </div>
+        <p class="note" data-enter style="--d:4"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Open source, licença MIT. Apoio técnico à conformidade: não é certificação nem parecer jurídico.</span></p>
+        <p class="sh-cap" data-enter style="--d:5" id="sheet-cap">Trecho do relatório público de exemplo, gerado com <code>/lgpd-saas</code> sobre o AgendaFácil, um SaaS fictício e intencionalmente falho. Na <a href="#demonstracao">demonstração</a> você navega pelos 54 achados.</p>
       </div>
 
-      <figure class="card report-mock" aria-labelledby="mock-cap" style="margin:0">
-        <div class="rm-bar">
-          <svg aria-hidden="true"><use href="#i-file"/></svg>
-          <span class="fname">relatorio-auditoria-lgpd.html</span>
-          <span class="tag">exemplo · dados fictícios</span>
-        </div>
-        <div class="rm-body">
-          <div class="rm-top">
-            <div class="gauge" role="img" aria-label="Score LGPD 20 de 100">
-              <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52" fill="none" stroke-width="10"/><circle class="val" cx="60" cy="60" r="52" fill="none" stroke-width="10" stroke-dasharray="326.73" stroke-dashoffset="261.38" data-score="20"/></svg>
-              <div class="gauge-label" aria-hidden="true"><b>20</b><span>de 100</span></div>
+      <div class="sheet-wrap" data-enter style="--d:2">
+        <figure class="sheet" id="hero-sheet" aria-labelledby="sheet-cap">
+          <div class="sh-bar">
+            <svg aria-hidden="true"><use href="#i-file"/></svg>
+            <span class="fname">relatorio-auditoria-lgpd.html</span>
+            <span class="tag">exemplo · dados fictícios</span>
+          </div>
+          <div class="sh-body">
+            <div class="sh-title">
+              <b>Relatório de auditoria LGPD</b>
+              <span>AgendaFácil (SaaS fictício) · <code>/lgpd-saas</code> · escopo direcionado</span>
             </div>
-            <div class="rm-class">
-              <span class="k">Classificação</span>
-              <span class="v"><span class="sev sev-critico">CRITICO</span><span class="tag">escopo direcionado</span></span>
-              <span class="k" style="margin-top:.35rem">54 não conformidades</span>
-              <div class="sevbar" aria-hidden="true"><i class="c" style="width:3.7%"></i><i class="h" style="width:44.4%"></i><i class="m" style="width:40.7%"></i><i class="l" style="width:11.1%"></i></div>
-              <div class="sevlegend"><span><b>2</b> crítico</span><span><b>24</b> alto</span><span><b>22</b> médio</span><span><b>6</b> baixo</span></div>
+            <div class="sh-score">
+              <div class="gauge" role="img" aria-label="Score LGPD 20 de 100">
+                <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52" fill="none" stroke-width="10"/><circle class="val" cx="60" cy="60" r="52" fill="none" stroke-width="10" stroke-dasharray="326.73" stroke-dashoffset="261.38" data-score="20"/></svg>
+                <div class="gauge-label" aria-hidden="true"><b>20</b><span>de 100</span></div>
+              </div>
+              <div class="sh-class">
+                <div class="row"><span class="sev sev-critico">Classificação crítica</span></div>
+                <span class="k"><strong>54 não conformidades</strong> · cobertura de 82,9%</span>
+                <div class="sevbar" aria-hidden="true"><i class="c" style="width:3.7%"></i><i class="h" style="width:44.4%"></i><i class="m" style="width:40.7%"></i><i class="l" style="width:11.1%"></i></div>
+                <div class="sevlegend"><span><b>2</b> críticas</span><span><b>24</b> altas</span><span><b>22</b> médias</span><span><b>6</b> baixas</span></div>
+              </div>
+            </div>
+            <div>
+              <h2 class="sh-h">Achados críticos</h2>
+              <ul class="sh-list">
+                <li class="sh-item"><span class="sev sev-critico">Crítico</span><span class="t">Rota pública permite consultar e alterar dados de pacientes</span><span class="s">SE-03 · art. 46 · src/routes/agendamentos.js:31-38</span></li>
+                <li class="sh-item"><span class="sev sev-critico">Crítico</span><span class="t">Operadora usa dados dos pacientes para publicidade própria</span><span class="s">OP-02 · art. 39 · public/index.html:7-15</span></li>
+              </ul>
+            </div>
+            <div>
+              <h2 class="sh-h">O que fazer agora</h2>
+              <ol class="sh-todo">
+                <li><span>Tirar o Meta Pixel da página de agendamento</span><span class="x">P · imediato</span></li>
+                <li><span>Parar de gravar CPF e e-mail nos logs</span><span class="x">P · imediato</span></li>
+                <li><span>Corrigir a rota pública de agendamento</span><span class="x">P · imediato</span></li>
+              </ol>
             </div>
           </div>
-          <ul class="rm-list" aria-label="Achados críticos do exemplo">
-            <li class="rm-item"><span class="sev sev-critico">Crítico</span><span class="t">Rota pública permite consultar e alterar dados de pacientes</span><span class="s">SE-03 · art. 46 · src/routes/agendamentos.js:31-38</span></li>
-            <li class="rm-item"><span class="sev sev-critico">Crítico</span><span class="t">Operadora usa dados dos pacientes para publicidade própria</span><span class="s">OP-02 · art. 39 · public/index.html:7-15</span></li>
-          </ul>
-          <div class="rm-plan">
-            <span class="k">O que fazer agora · 2</span>
-            <span>Parar de gravar CPF e e-mail nos logs</span>
-            <span class="x">P · IMEDIATO</span>
-          </div>
-        </div>
-        <figcaption class="rm-foot" id="mock-cap">Trecho do relatório público de exemplo, gerado com <code>/lgpd-saas</code> sobre o AgendaFácil, um SaaS fictício e intencionalmente falho.</figcaption>
-      </figure>
+        </figure>
+      </div>
     </div>
-
-    <dl class="facts">
-      <div class="fact"><dt class="sr-only">Itens no catálogo</dt><dd style="margin:0;display:grid;gap:.2rem"><b>174</b><span>itens de checklist com ID fixo e peso definido</span></dd></div>
-      <div class="fact"><dt class="sr-only">Domínios</dt><dd style="margin:0;display:grid;gap:.2rem"><b>17</b><span>domínios de auditoria, de bases legais a IA/LLM</span></dd></div>
-      <div class="fact"><dt class="sr-only">Cenários</dt><dd style="margin:0;display:grid;gap:.2rem"><b>8</b><span>comandos: auditoria completa e 7 direcionadas</span></dd></div>
-      <div class="fact"><dt class="sr-only">Assistentes</dt><dd style="margin:0;display:grid;gap:.2rem"><b>6</b><span>assistentes de IA compatíveis</span></dd></div>
-    </dl>
   </div>
 </section>
 
-<!-- ======================= 01 · Problema ======================= -->
+<!-- ======================= Fatos e compatibilidade ======================= -->
+<section class="facts-band" aria-label="O projeto em números">
+  <div class="container">
+    <dl class="facts">
+      <div class="fact" data-reveal><dt>itens de checklist, com ID fixo e peso definido</dt><dd>174</dd></div>
+      <div class="fact" data-reveal style="--d:1"><dt>domínios de auditoria, de bases legais a IA/LLM</dt><dd>17</dd></div>
+      <div class="fact" data-reveal style="--d:2"><dt>comandos: auditoria completa e 7 direcionadas</dt><dd>8</dd></div>
+      <div class="fact" data-reveal style="--d:3"><dt>assistentes de IA compatíveis</dt><dd>6</dd></div>
+    </dl>
+    <div class="works" data-reveal>
+      <span>Funciona com</span>
+      <ul aria-label="Assistentes compatíveis" translate="no">
+        <li>Claude Code</li><li>Cursor</li><li>VS Code + GitHub Copilot</li><li>OpenCode</li><li>Codex</li><li>Gemini CLI</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= Problema ======================= -->
 <section class="section" id="problema" aria-labelledby="problema-title">
   <div class="container">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow"><span class="num">01</span> O problema</span>
-      <h2 id="problema-title">O code review vê o código. A LGPD pergunta pelo dado.</h2>
-      <p>Um pull request aprovado pode gravar CPF em log, devolver campos demais numa API pública ou disparar um pixel antes do consentimento. Checklists manuais mudam de revisor para revisor, e a política de privacidade costuma dizer uma coisa enquanto o sistema faz outra.</p>
+    <div class="section-head split">
+      <h2 id="problema-title" data-reveal>O code review vê o código. A LGPD pergunta pelo dado.</h2>
+      <p data-reveal style="--d:1">Um pull request aprovado pode gravar CPF em log, devolver campos demais numa API pública ou disparar um pixel antes do consentimento. Checklists manuais mudam de revisor para revisor, e a política de privacidade costuma dizer uma coisa enquanto o sistema faz outra.</p>
     </div>
 
-    <div class="card compare" data-reveal>
-      <div>
-        <h3><span class="k">Hoje</span>Revisão sem critério fixo</h3>
+    <div class="compare">
+      <div class="before" data-reveal>
+        <h3>Revisão sem critério fixo</h3>
         <ul class="checklist">
           <li class="x"><svg aria-hidden="true"><use href="#i-x"/></svg><span>Cada revisor olha uma coisa; o resultado não se compara entre releases.</span></li>
-          <li class="x"><svg aria-hidden="true"><use href="#i-x"/></svg><span>"Está conforme" sem dizer onde está a prova.</span></li>
+          <li class="x"><svg aria-hidden="true"><use href="#i-x"/></svg><span>“Está conforme” sem dizer onde está a prova.</span></li>
           <li class="x"><svg aria-hidden="true"><use href="#i-x"/></svg><span>Riscos sem prioridade: tudo parece urgente, ou nada parece.</span></li>
           <li class="x"><svg aria-hidden="true"><use href="#i-x"/></svg><span>Documentos e código avaliados por pessoas diferentes, em momentos diferentes.</span></li>
         </ul>
       </div>
-      <div>
-        <h3><span class="k">Com o auditor</span>Catálogo fixo, evidência por item</h3>
+      <div class="after" data-reveal style="--d:1">
+        <h3>Catálogo fixo, evidência por item</h3>
         <ul class="checklist">
           <li class="v"><svg aria-hidden="true"><use href="#i-check"/></svg><span>Todos os itens do catálogo dos módulos ativos são avaliados, sempre com o mesmo ID e o mesmo peso.</span></li>
           <li class="v"><svg aria-hidden="true"><use href="#i-check"/></svg><span>Nada é marcado como conforme sem evidência encontrada; no código, a evidência aponta arquivo e linha.</span></li>
@@ -943,95 +1059,88 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
     </div>
 
     <ul class="risks" aria-label="Riscos avaliados pelo catálogo">
-      <li class="risk" data-reveal>
-        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-eye"/></svg></span>
-        <h3>Exposição desnecessária de dados</h3>
+      <li class="risk it" data-reveal>
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-eye"/></svg></span><h3>Exposição desnecessária de dados</h3></div>
         <p>APIs que devolvem mais campos do que a tela usa e formulários que pedem mais do que a finalidade exige.</p>
         <div class="ids"><code>AP-02</code><code>BL-04</code></div>
       </li>
-      <li class="risk" data-reveal data-reveal-delay="1">
-        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-log"/></svg></span>
-        <h3>Dados pessoais em logs</h3>
+      <li class="risk it" data-reveal style="--d:1">
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-log"/></svg></span><h3>Dados pessoais em logs</h3></div>
         <p>CPF, e-mail, tokens ou payloads completos gravados em log sem mascaramento.</p>
         <div class="ids"><code>SE-06</code></div>
       </li>
-      <li class="risk" data-reveal data-reveal-delay="2">
-        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-key"/></svg></span>
-        <h3>Autenticação e controle de acesso</h3>
+      <li class="risk it" data-reveal style="--d:2">
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-key"/></svg></span><h3>Autenticação e controle de acesso</h3></div>
         <p>Tokens sem expiração ou algoritmo fixo, ausência de bloqueio de tentativas e de MFA quando o risco pede.</p>
         <div class="ids"><code>AP-01</code><code>SE-04</code><code>AP-03</code></div>
       </li>
-      <li class="risk" data-reveal>
-        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-split"/></svg></span>
-        <h3>Isolamento entre contas e clientes</h3>
+      <li class="risk it" data-reveal>
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-split"/></svg></span><h3>Isolamento entre contas e clientes</h3></div>
         <p>Autorização que deixa um usuário ler ou alterar dados de outro usuário ou de outro cliente.</p>
         <div class="ids"><code>SE-03</code></div>
       </li>
-      <li class="risk" data-reveal data-reveal-delay="1">
-        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-cookie"/></svg></span>
-        <h3>Consentimento e direitos do titular</h3>
+      <li class="risk it" data-reveal style="--d:1">
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-cookie"/></svg></span><h3>Consentimento e direitos do titular</h3></div>
         <p>Rastreadores antes do aceite, consentimento sem prova e ausência de canal ou processo para atender os direitos do art. 18.</p>
         <div class="ids"><code>CK-02</code><code>CS-03</code><code>DT-01</code><code>DT-06</code></div>
       </li>
-      <li class="risk" data-reveal data-reveal-delay="2">
-        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-diff"/></svg></span>
-        <h3>Política diferente do comportamento</h3>
+      <li class="risk it" data-reveal style="--d:2">
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-diff"/></svg></span><h3>Política diferente do comportamento</h3></div>
         <p>Política sem o conteúdo do art. 9º, rastreadores fora do inventário e hospedagem que altera o que o código configura.</p>
         <div class="ids"><code>DT-04</code><code>CK-07</code><code>IN-01</code></div>
       </li>
     </ul>
-    <p class="note" style="margin-top:1.25rem"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Os códigos são IDs reais do catálogo. O auditor avalia cada item lendo o código e os documentos do projeto; o que exige acesso a painéis ou ao ambiente de produção fica como <code>NAO_VERIFICADO</code>, fora do score, nunca como conforme.</span></p>
+    <p class="note" style="margin-top:2.5rem;max-width:860px"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Os códigos são IDs reais do catálogo. O auditor avalia cada item lendo o código e os documentos do projeto; o que exige acesso a painéis ou ao ambiente de produção fica como <code>NAO_VERIFICADO</code>, fora do score, nunca como conforme.</span></p>
   </div>
 </section>
 
-<!-- ======================= 02 · Como funciona ======================= -->
-<section class="section" id="como-funciona" aria-labelledby="como-title">
+<!-- ======================= Como funciona ======================= -->
+<section class="section dark" id="como-funciona" aria-labelledby="como-title">
   <div class="container">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow"><span class="num">02</span> Como funciona</span>
-      <h2 id="como-title">Do comando ao plano de adequação, no seu fluxo de trabalho.</h2>
-      <p>O auditor é um conjunto de instruções em Markdown que fica dentro do seu projeto. Quem executa a análise é o assistente de IA; o framework define o que verificar, como provar e como pontuar.</p>
+    <div class="section-head split">
+      <h2 id="como-title" data-reveal>Do comando ao plano de adequação, no seu fluxo de trabalho.</h2>
+      <p data-reveal style="--d:1">O auditor é um conjunto de instruções em Markdown que fica dentro do seu projeto. Quem executa a análise é o assistente de IA; o framework define o que verificar, como provar e como pontuar.</p>
     </div>
 
     <div class="how">
-      <ol class="steps">
-        <li class="step" data-reveal>
-          <span class="step-n" aria-hidden="true">01</span>
+      <ol class="steps" id="steps">
+        <li class="step" data-step="1">
+          <span class="step-n" aria-hidden="true">1</span>
           <div>
             <h3>Instale no projeto</h3>
             <p>Um comando na raiz do repositório pergunta qual assistente você usa e instala o framework, os comandos e, se quiser, a skill. Tudo local, por projeto: não existe instalação global.</p>
           </div>
         </li>
-        <li class="step" data-reveal>
-          <span class="step-n" aria-hidden="true">02</span>
+        <li class="step" data-step="2">
+          <span class="step-n" aria-hidden="true">2</span>
           <div>
             <h3>Escolha o cenário</h3>
             <p>Rode <code>/lgpd-full-audit</code> para cobrir os 17 domínios, ou um cenário direcionado como <code>/lgpd-saas</code>, <code>/lgpd-mobile</code> ou <code>/lgpd-ai-llm</code>. Com a skill, basta pedir a auditoria em linguagem natural.</p>
           </div>
         </li>
-        <li class="step" data-reveal>
-          <span class="step-n" aria-hidden="true">03</span>
+        <li class="step" data-step="3">
+          <span class="step-n" aria-hidden="true">3</span>
           <div>
             <h3>O assistente lê antes de perguntar</h3>
             <p>Consulta <code>README</code>, <code>docs/</code>, manifestos e infraestrutura, apresenta o contexto inferido e pergunta só o que faltar: natureza e porte do agente de tratamento, papel em cada fluxo (controlador ou operador) e o formato do relatório.</p>
           </div>
         </li>
-        <li class="step" data-reveal>
-          <span class="step-n" aria-hidden="true">04</span>
+        <li class="step" data-step="4">
+          <span class="step-n" aria-hidden="true">4</span>
           <div>
             <h3>Checklist com evidência</h3>
             <p>O orquestrador ativa os módulos do cenário, mais os que os gatilhos pedirem (IA, menores de idade, app mobile, conteúdo de terceiros). Todos os itens do catálogo desses módulos são avaliados, e cada item aplicável recebe evidência e nível de confiança.</p>
           </div>
         </li>
-        <li class="step" data-reveal>
-          <span class="step-n" aria-hidden="true">05</span>
+        <li class="step" data-step="5">
+          <span class="step-n" aria-hidden="true">5</span>
           <div>
             <h3>Severidade, score e classificação</h3>
             <p>Os achados recebem severidade e prazo; o score sai de uma fórmula fixa. Com achado crítico aberto, a classificação não passa de <code>PARCIALMENTE_CONFORME</code>.</p>
           </div>
         </li>
-        <li class="step" data-reveal>
-          <span class="step-n" aria-hidden="true">06</span>
+        <li class="step" data-step="6">
+          <span class="step-n" aria-hidden="true">6</span>
           <div>
             <h3>Relatório e plano de adequação</h3>
             <p>O relatório sai em <code>.md</code>, <code>.html</code> ou nos dois, com as 8 seções obrigatórias e o plano em curto, médio e longo prazo. Repita a auditoria a cada release para acompanhar a evolução.</p>
@@ -1041,28 +1150,9 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
       </ol>
 
       <div class="how-side" data-reveal>
-        <div class="code term">
-          <div class="code-bar"><span>terminal · sessão ilustrativa</span></div>
-<pre><code><span class="tok-c"># 1. na raiz do projeto</span>
-<span class="tok-p">$ </span>curl -fsSL …/install.sh | bash -s -- install
-
-<span class="tok-c"># 2. no assistente</span>
-<span class="tok-p">&gt; </span>/lgpd-saas
-
-<span class="dim">  Lido: README.md, package.json, vercel.json,</span>
-<span class="dim">        db/schema.sql, .github/workflows/ci.yml</span>
-<span class="q">  ? Papel em cada fluxo: controlador ou operador?</span>
-<span class="q">  ? Formato: .md | .md e .html | só .html</span>
-
-<span class="dim">  Cenário  </span>saas_web <span class="dim">(escopo direcionado)</span>
-<span class="dim">  Módulos  </span>core legal governance appsec cloud devsecops
-<span class="dim">  Itens    </span>109 avaliados
-
-  Score <span class="crit">20/100 · CRITICO</span>
-  Cobertura 82,9% <span class="dim">(63 de 76 verificáveis)</span>
-  Achados <span class="crit">2 crítico</span> · 24 alto · 22 médio · 6 baixo
-<span class="ok">  → relatorio-auditoria-lgpd.md</span>
-<span class="ok">  → relatorio-auditoria-lgpd.html</span></code></pre>
+        <div class="code term" id="term">
+          <div class="code-bar"><span>Terminal · sessão ilustrativa</span></div>
+<pre><code><span class="ln" data-s="1"><span class="tok-c"># na raiz do projeto</span></span><span class="ln" data-s="1"><span class="tok-p">$ </span>curl -fsSL …/install.sh | bash -s -- install</span><span class="ln" data-s="1"> </span><span class="ln" data-s="2"><span class="tok-c"># no assistente</span></span><span class="ln" data-s="2"><span class="tok-p">&gt; </span>/lgpd-saas</span><span class="ln" data-s="2"> </span><span class="ln" data-s="3"><span class="dim">  Lido: README.md, package.json, vercel.json,</span></span><span class="ln" data-s="3"><span class="dim">        db/schema.sql, .github/workflows/ci.yml</span></span><span class="ln" data-s="3"><span class="q">  ? Papel em cada fluxo: controlador ou operador?</span></span><span class="ln" data-s="3"><span class="q">  ? Formato: .md | .md e .html | só .html</span></span><span class="ln" data-s="3"> </span><span class="ln" data-s="4"><span class="dim">  Cenário  </span>saas_web <span class="dim">(escopo direcionado)</span></span><span class="ln" data-s="4"><span class="dim">  Módulos  </span>core legal governance appsec cloud devsecops</span><span class="ln" data-s="4"><span class="dim">  Itens    </span>109 avaliados</span><span class="ln" data-s="4"> </span><span class="ln" data-s="5">  Score <span class="crit">20/100 · CRITICO</span></span><span class="ln" data-s="5">  Cobertura 82,9% <span class="dim">(63 de 76 verificáveis)</span></span><span class="ln" data-s="5">  Achados <span class="crit">2 crítico</span> · 24 alto · 22 médio · 6 baixo</span><span class="ln" data-s="6"><span class="ok">  → relatorio-auditoria-lgpd.md</span></span><span class="ln" data-s="6"><span class="ok">  → relatorio-auditoria-lgpd.html</span></span></code></pre>
         </div>
         <p class="note"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Representação ilustrativa: a forma das mensagens varia com o assistente. Os números são os do relatório de exemplo deste repositório.</span></p>
       </div>
@@ -1070,107 +1160,101 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
   </div>
 </section>
 
-<!-- ======================= 03 · Funcionalidades ======================= -->
+<!-- ======================= Benefícios ======================= -->
 <section class="section" id="funcionalidades" aria-labelledby="func-title">
   <div class="container">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow"><span class="num">03</span> Funcionalidades</span>
-      <h2 id="func-title">Critérios fixos. Resultados que se explicam.</h2>
-      <p>Cada número do relatório pode ser refeito à mão: o item, o peso, a evidência e a fórmula estão escritos. É isso que permite comparar uma auditoria com a seguinte.</p>
+    <div class="section-head split">
+      <h2 id="func-title" data-reveal>Critérios fixos. Resultados que se explicam.</h2>
+      <p data-reveal style="--d:1">Cada número do relatório pode ser refeito à mão: o item, o peso, a evidência e a fórmula estão escritos. É isso que permite comparar uma auditoria com a seguinte.</p>
     </div>
 
-    <div class="bento">
-      <article class="card feat f-ev" data-reveal>
-        <div class="feat-head"><span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-evidence"/></svg></span><h3>Evidência verificável em cada item</h3></div>
-        <p>A evidência é classificada em dois eixos independentes, mais o nível de confiança. Um item só é <code>CONFORME</code> com evidência <code>ENCONTRADA</code>.</p>
-        <div class="axes">
-          <div class="axis"><span class="k">Grau de comprovação</span><div class="v"><code>ENCONTRADA</code><code>PARCIAL</code><code>AUSENTE</code></div></div>
-          <div class="axis"><span class="k">Origem</span><div class="v"><code>TECNICA</code><code>DOCUMENTAL</code></div></div>
-        </div>
-        <div class="ev-sample" aria-label="Exemplo de evidência do relatório de exemplo">
+    <div class="benefits">
+      <article class="card benefit it" data-reveal>
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-evidence"/></svg></span><h3>Saiba exatamente onde corrigir</h3></div>
+        <p>Cada item aplicável traz evidência classificada em dois eixos independentes, mais o nível de confiança. Um item só é <code>CONFORME</code> com evidência <code>ENCONTRADA</code>; no código, ela aponta arquivo e linha.</p>
+        <div class="proof">
+          <div class="axes">
+            <div class="axis"><span class="k">Grau de comprovação</span><div class="v"><code>ENCONTRADA</code><code>PARCIAL</code><code>AUSENTE</code></div></div>
+            <div class="axis"><span class="k">Origem</span><div class="v"><code>TECNICA</code><code>DOCUMENTAL</code></div></div>
+          </div>
           <div class="row"><span class="sev sev-alto">Alto</span><code>SE-06</code><span>Logs com dados pessoais</span></div>
           <div><code>AUSENTE (TECNICA)</code>, confiança <code>ALTA</code>: <code>src/routes/agendamentos.js:29</code> grava nome, CPF e e-mail do paciente no console, que vira log da Vercel; <code>src/auth.js:20</code> grava o e-mail em logins que falham.</div>
+          <span class="cap">Evidência do relatório de exemplo.</span>
         </div>
       </article>
 
-      <article class="card feat f-score" data-reveal data-reveal-delay="1">
-        <div class="feat-head"><span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg></span><h3>Score de 0 a 100, determinístico</h3></div>
-        <p>Cada item vale pelo status e pesa pela criticidade. As áreas têm pesos fixos; áreas sem objeto no escopo, comprovadamente, são redistribuídas.</p>
-        <div class="formula" aria-label="Fórmula do score">
-          valor: <span class="a">CONFORME 1</span> · PARCIAL 0,5 · NAO_CONFORME 0<br>
-          peso: CRITICO 4 · ALTO 3 · MEDIO 2 · BAIXO 1<br>
-          score_area = 100 × Σ(valor × peso) / Σ(peso)
-        </div>
-        <ol class="bands" aria-label="Faixas de classificação">
-          <li class="band"><span>0–49</span><b>CRITICO</b></li>
-          <li class="band"><span>50–69</span><b>BAIXO_NIVEL</b></li>
-          <li class="band"><span>70–84</span><b>PARCIALMENTE_CONFORME</b></li>
-          <li class="band"><span>85–94</span><b>ALTA_CONFORMIDADE</b></li>
-          <li class="band"><span>95–100</span><b>EXCELENTE</b></li>
-        </ol>
-        <p class="note"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Cobertura abaixo de 80% marca o resultado como "score parcial". Aceitar um risco nunca muda o score.</span></p>
-      </article>
-
-      <article class="card feat f-sev" data-reveal>
-        <div class="feat-head"><span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-flag"/></svg></span><h3>Severidade com prazo máximo</h3></div>
-        <ul class="sevtable">
-          <li><span class="sev sev-critico">Crítico</span><span>IMEDIATO</span></li>
-          <li><span class="sev sev-alto">Alto</span><span>30_DIAS</span></li>
-          <li><span class="sev sev-medio">Médio</span><span>90_DIAS</span></li>
-          <li><span class="sev sev-baixo">Baixo</span><span>180_DIAS</span></li>
-        </ul>
-        <p>Para agente de pequeno porte, sem tratamento de alto risco nem exposição explorável confirmada, a severidade pode cair um nível; nunca em achado crítico com dado sensível ou de crianças, vazamento confirmado ou credencial exposta.</p>
-      </article>
-
-      <article class="card feat f-plan" data-reveal data-reveal-delay="1">
-        <div class="feat-head"><span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-plan"/></svg></span><h3>Plano de adequação</h3></div>
-        <ul class="horizons">
-          <li><span>Curto prazo</span><span>0–30 dias</span></li>
-          <li><span>Médio prazo</span><span>30–90 dias</span></li>
-          <li><span>Longo prazo</span><span>90–180 dias</span></li>
-        </ul>
-        <p>Cada ação traz os itens que resolve, o responsável sugerido e o esforço: <code>P</code>, <code>M</code> ou <code>G</code>. O resumo abre com "o que fazer agora": de 3 a 5 ações.</p>
-      </article>
-
-      <article class="card feat f-rep" data-reveal>
-        <div class="feat-head"><span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-file"/></svg></span><h3>Relatório em Markdown e HTML</h3></div>
-        <p>Você escolhe o formato no início. As 8 seções obrigatórias são as mesmas nos dois, sempre na mesma ordem.</p>
-        <div class="formats">
-          <div class="format"><b>.md</b><p>Texto completo, bom para versionar e comparar entre auditorias.</p></div>
-          <div class="format"><b>.html</b><p>Arquivo único e offline: score em destaque, filtros, busca, tema claro e escuro e versão para impressão.</p></div>
+      <article class="card benefit it" data-reveal style="--d:1">
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-flag"/></svg></span><h3>Priorize pelo risco, não pelo volume</h3></div>
+        <p>Cada achado recebe severidade com prazo máximo. Para agente de pequeno porte, sem tratamento de alto risco nem exposição explorável confirmada, a severidade pode cair um nível; nunca em achado crítico com dado sensível ou de crianças, vazamento confirmado ou credencial exposta.</p>
+        <div class="proof">
+          <ul class="sevtable" aria-label="Prazo máximo por severidade">
+            <li><span class="sev sev-critico">Crítico</span><span>Imediato</span></li>
+            <li><span class="sev sev-alto">Alto</span><span>30 dias</span></li>
+            <li><span class="sev sev-medio">Médio</span><span>90 dias</span></li>
+            <li><span class="sev sev-baixo">Baixo</span><span>180 dias</span></li>
+          </ul>
         </div>
       </article>
 
-      <article class="card feat f-mod" data-reveal data-reveal-delay="1">
-        <div class="feat-head"><span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span><h3>Modular e reutilizável</h3></div>
-        <p>Contratos centrais em <code>core/</code> e módulos especialistas ativados por cenário. A mesma auditoria também existe como skill autocontida, com cobertura equivalente.</p>
-        <div class="modules" aria-label="Módulos do framework">
-          <code>core</code><code>legal</code><code>governance</code><code>appsec</code><code>cloud</code><code>mobile</code><code>devsecops</code><code>ai-llm</code><code>eca-digital</code><code>plataformas-digitais</code>
+      <article class="card benefit it" data-reveal>
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-gauge"/></svg></span><h3>Compare uma auditoria com a próxima</h3></div>
+        <p>O score de 0 a 100 é determinístico: cada item vale pelo status e pesa pela criticidade, e as áreas têm pesos fixos. Cobertura abaixo de 80% marca o resultado como “score parcial”, e aceitar um risco nunca muda o número.</p>
+        <div class="proof">
+          <div class="formula" aria-label="Fórmula do score">valor: <span class="a">CONFORME 1</span> · PARCIAL 0,5 · NAO_CONFORME 0<br>peso: CRITICO 4 · ALTO 3 · MEDIO 2 · BAIXO 1<br>score_area = 100 × Σ(valor × peso) / Σ(peso)</div>
+          <ol class="bands" aria-label="Faixas de classificação">
+            <li class="band"><i style="background:var(--crit)"></i><span>0–49</span><b>CRITICO</b></li>
+            <li class="band"><i style="background:var(--high)"></i><span>50–69</span><b>BAIXO_<wbr>NIVEL</b></li>
+            <li class="band"><i style="background:#c99a06"></i><span>70–84</span><b>PARCIALMENTE_<wbr>CONFORME</b></li>
+            <li class="band"><i style="background:#3fbf7f"></i><span>85–94</span><b>ALTA_<wbr>CONFORMIDADE</b></li>
+            <li class="band"><i style="background:var(--ok)"></i><span>95–100</span><b>EXCELENTE</b></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="card benefit it" data-reveal style="--d:1">
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-plan"/></svg></span><h3>Entregue um plano que o time executa</h3></div>
+        <p>O plano de adequação organiza as ações por horizonte. Cada ação traz os itens que resolve, o responsável sugerido e o esforço: <code>P</code>, <code>M</code> ou <code>G</code>. O resumo abre com “o que fazer agora”, de 3 a 5 ações.</p>
+        <div class="proof">
+          <ul class="horizons">
+            <li><b>Curto prazo</b><span>0 a 30 dias</span></li>
+            <li><b>Médio prazo</b><span>30 a 90 dias</span></li>
+            <li><b>Longo prazo</b><span>90 a 180 dias</span></li>
+          </ul>
+          <span class="cap">No exemplo: 29 ações, 15 delas de curto prazo.</span>
         </div>
       </article>
     </div>
 
-    <div class="extras">
-      <div class="extra" data-reveal>
-        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-scale"/></svg></span>
-        <div><h3>Fundamento legal em cada achado</h3><p>Todo achado cita o artigo da LGPD aplicável. Só normas em vigor geram achados; projetos de lei ficam em monitoramento.</p></div>
+    <div class="minor">
+      <div class="it" data-reveal>
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-file"/></svg></span><h3>Relatório em .md e .html</h3></div>
+        <p>Você escolhe o formato no início. O <code>.md</code> é bom para versionar e comparar; o <code>.html</code> é um arquivo único e offline, com filtros, busca, tema claro e escuro e versão para impressão.</p>
       </div>
-      <div class="extra" data-reveal data-reveal-delay="1">
-        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-hash"/></svg></span>
-        <div><h3>Catálogo com IDs estáveis</h3><p>174 itens com ID, domínio, criticidade e agravantes escritos. Um ID nunca é renumerado nem reutilizado.</p></div>
+      <div class="it" data-reveal style="--d:1">
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-scale"/></svg></span><h3>Fundamento legal em cada achado</h3></div>
+        <p>Todo achado cita o artigo da LGPD aplicável. Só normas em vigor geram achados; projetos de lei ficam em monitoramento.</p>
       </div>
-      <div class="extra" data-reveal data-reveal-delay="2">
-        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-check-circle"/></svg></span>
-        <div><h3>Relatório conferível</h3><p><code>scripts/validate-report.py</code> confere IDs, valores permitidos, a ligação entre itens e achados e o cálculo do score.</p></div>
+      <div class="it" data-reveal style="--d:2">
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-check-circle"/></svg></span><h3>Relatório conferível</h3></div>
+        <p><code>scripts/validate-report.py</code> confere IDs, valores permitidos, a ligação entre itens e achados e o cálculo do score.</p>
+      </div>
+      <div class="it" data-reveal style="--d:3">
+        <div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-layers"/></svg></span><h3>Modular e reutilizável</h3></div>
+        <p>174 itens com IDs estáveis em 10 módulos. A mesma auditoria também existe como skill autocontida, com cobertura equivalente.</p>
+        <div class="modules" aria-label="Módulos do framework"><code>core</code><code>legal</code><code>governance</code><code>appsec</code><code>cloud</code><code>mobile</code><code>devsecops</code><code>ai-llm</code><code>eca-digital</code><code>plataformas-digitais</code></div>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- Cenários -->
-    <div class="scen" data-tabs="scen">
-      <div class="scen-intro" data-reveal>
-        <h3>Uma auditoria completa e sete direcionadas</h3>
-        <p><code>core</code> e <code>legal</code> entram sempre. Fora do <code>/lgpd-full-audit</code>, o relatório sai marcado como <strong>escopo direcionado</strong> e lista os domínios que não foram auditados.</p>
-      </div>
+<!-- ======================= Cenários ======================= -->
+<section class="section tone" id="cenarios" aria-labelledby="scen-title">
+  <div class="container">
+    <div class="section-head split">
+      <h2 id="scen-title" data-reveal>Uma auditoria completa e sete direcionadas.</h2>
+      <p data-reveal style="--d:1"><code>core</code> e <code>legal</code> entram sempre. Fora do <code>/lgpd-full-audit</code>, o relatório sai marcado como <strong>escopo direcionado</strong> e lista os domínios que não foram auditados.</p>
+    </div>
+    <div class="scen" data-tabs="scen" data-reveal>
       <div class="scen-tabs" role="tablist" aria-label="Comandos de auditoria" aria-orientation="vertical">
         <button class="scen-tab" role="tab" id="st-1" aria-controls="sp-1" aria-selected="true" type="button"><code>/lgpd-full-audit</code><span>Auditoria completa</span></button>
         <button class="scen-tab" role="tab" id="st-2" aria-controls="sp-2" aria-selected="false" tabindex="-1" type="button"><code>/lgpd-saas</code><span>SaaS web</span></button>
@@ -1183,66 +1267,65 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
       </div>
       <div>
         <div class="card scen-panel" role="tabpanel" id="sp-1" aria-labelledby="st-1" tabindex="0">
-          <h4><code>/lgpd-full-audit</code><span class="tag">full_audit</span></h4>
+          <h3><code>/lgpd-full-audit</code><span class="tag">full_audit</span></h3>
           <p>Cobre os 17 domínios. Levanta a stack completa, os dados pessoais e sensíveis tratados, as integrações de terceiros, o contexto de DevSecOps e de IA/LLM, a presença de menores de 18 anos e a intermediação de conteúdo de terceiros.</p>
           <span class="k">Módulos ativados</span>
           <ul class="mod-chips"><li class="base">core</li><li class="base">legal</li><li>eca-digital</li><li>plataformas-digitais</li><li>governance</li><li>cloud</li><li>appsec</li><li>mobile</li><li>devsecops</li><li>ai-llm</li></ul>
         </div>
         <div class="card scen-panel" role="tabpanel" id="sp-2" aria-labelledby="st-2" tabindex="0">
-          <h4><code>/lgpd-saas</code><span class="tag">saas_web</span></h4>
+          <h3><code>/lgpd-saas</code><span class="tag">saas_web</span></h3>
           <p>Stack web e backend, banco de dados, provedor de cloud, integrações (analytics, pagamentos, CRM) e dados pessoais ou sensíveis tratados. Audita a aplicação, a infraestrutura e o pipeline de entrega.</p>
           <span class="k">Módulos ativados</span>
           <ul class="mod-chips"><li class="base">core</li><li class="base">legal</li><li>governance</li><li>appsec</li><li>cloud</li><li>devsecops</li></ul>
         </div>
         <div class="card scen-panel" role="tabpanel" id="sp-3" aria-labelledby="st-3" tabindex="0">
-          <h4><code>/lgpd-web</code><span class="tag">web_site</span></h4>
+          <h3><code>/lgpd-web</code><span class="tag">web_site</span></h3>
           <p>Sites institucionais, landing pages, blogs e portais: base legal da captura de leads, minimização nos formulários, consentimento de cookies e trackers disparados antes do aceite, compartilhamento com marketing e CRM, política de privacidade e banner.</p>
           <span class="k">Módulos ativados</span>
           <ul class="mod-chips"><li class="base">core</li><li class="base">legal</li><li>governance</li><li>appsec</li><li>cloud</li></ul>
         </div>
         <div class="card scen-panel" role="tabpanel" id="sp-4" aria-labelledby="st-4" tabindex="0">
-          <h4><code>/lgpd-mobile</code><span class="tag">mobile_app</span></h4>
+          <h3><code>/lgpd-mobile</code><span class="tag">mobile_app</span></h3>
           <p>iOS, Android, Flutter e React Native: permissões do app, armazenamento local, SDKs de tracking e analytics, uso de Firebase e de serviços cloud.</p>
           <span class="k">Módulos ativados</span>
           <ul class="mod-chips"><li class="base">core</li><li class="base">legal</li><li>governance</li><li>mobile</li><li>appsec</li><li>cloud</li></ul>
         </div>
         <div class="card scen-panel" role="tabpanel" id="sp-5" aria-labelledby="st-5" tabindex="0">
-          <h4><code>/lgpd-ai-llm</code><span class="tag">ai_llm_system</span></h4>
+          <h3><code>/lgpd-ai-llm</code><span class="tag">ai_llm_system</span></h3>
           <p>Provedores de IA/LLM, dados pessoais enviados em prompts, embeddings, RAG e fine-tuning, retenção e transferência internacional, base legal do tratamento em IA, prompt injection e vazamento contextual.</p>
           <span class="k">Módulos ativados</span>
           <ul class="mod-chips"><li class="base">core</li><li class="base">legal</li><li>governance</li><li>ai-llm</li><li>appsec</li></ul>
         </div>
         <div class="card scen-panel" role="tabpanel" id="sp-6" aria-labelledby="st-6" tabindex="0">
-          <h4><code>/lgpd-devsecops</code><span class="tag">devsecops_pipeline</span></h4>
+          <h3><code>/lgpd-devsecops</code><span class="tag">devsecops_pipeline</span></h3>
           <p>Plataforma de CI/CD, containers e Kubernetes, gestão de segredos, scans de segurança, supply chain, hardening e fluxo de deploy.</p>
           <span class="k">Módulos ativados</span>
           <ul class="mod-chips"><li class="base">core</li><li class="base">legal</li><li>devsecops</li><li>cloud</li><li>appsec</li></ul>
         </div>
         <div class="card scen-panel" role="tabpanel" id="sp-7" aria-labelledby="st-7" tabindex="0">
-          <h4><code>/lgpd-eca-digital</code><span class="tag">eca_digital_platform</span></h4>
+          <h3><code>/lgpd-eca-digital</code><span class="tag">eca_digital_platform</span></h3>
           <p>LGPD art. 14 e ECA Digital (Lei nº 15.211/2025): aferição de idade, vinculação a um responsável e supervisão parental, privacidade padrão de perfis de menores, publicidade e perfilamento, loot boxes, denúncia e moderação, representante legal e relatório de transparência.</p>
           <span class="k">Módulos ativados</span>
           <ul class="mod-chips"><li class="base">core</li><li class="base">legal</li><li>eca-digital</li><li>governance</li><li>appsec</li><li>mobile</li></ul>
         </div>
         <div class="card scen-panel" role="tabpanel" id="sp-8" aria-labelledby="st-8" tabindex="0">
-          <h4><code>/lgpd-plataformas-digitais</code><span class="tag">digital_platform</span></h4>
+          <h3><code>/lgpd-plataformas-digitais</code><span class="tag">digital_platform</span></h3>
           <p>Decretos nº 12.975/2026 e nº 12.976/2026: canal de denúncia, notificação, remoção e contestação com prazos, moderação e riscos sistêmicos, anúncios e impulsionamento, guarda de registros de acesso, termos de uso, relatório de transparência e IA que gera ou altera imagem ou voz de pessoas.</p>
           <span class="k">Módulos ativados</span>
           <ul class="mod-chips"><li class="base">core</li><li class="base">legal</li><li>plataformas-digitais</li><li>governance</li><li>appsec</li><li>cloud</li></ul>
         </div>
-        <p class="note" style="margin-top:1rem"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Em qualquer cenário, gatilhos acrescentam módulos: <code>ai-llm</code> com qualquer chamada a LLM ou IA generativa, <code>eca-digital</code> com usuários menores de 18 anos, <code>mobile</code> com app iOS ou Android, entre outros.</span></p>
+        <p class="note scen-note"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Em qualquer cenário, gatilhos acrescentam módulos: <code>ai-llm</code> com qualquer chamada a LLM ou IA generativa, <code>eca-digital</code> com usuários menores de 18 anos, <code>mobile</code> com app iOS ou Android, entre outros.</span></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======================= 04 · Demonstração ======================= -->
-<section class="section" id="demonstracao" aria-labelledby="demo-title">
+<!-- ======================= Demonstração ======================= -->
+<section class="section dark" id="demonstracao" aria-labelledby="demo-title">
   <div class="container">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow"><span class="num">04</span> Demonstração</span>
-      <h2 id="demo-title">Navegue por um relatório de verdade, sobre uma empresa que não existe.</h2>
-      <p>Os dados abaixo foram extraídos do relatório público de exemplo: todos os 54 achados, o plano de adequação e o cálculo do score. Filtre por severidade ou prazo, busque por artigo ou arquivo e abra cada achado para ver a evidência.</p>
+    <div class="section-head split">
+      <h2 id="demo-title" data-reveal>Navegue por um relatório de verdade, sobre uma empresa que não existe.</h2>
+      <p data-reveal style="--d:1">Os dados abaixo foram extraídos do relatório público de exemplo: todos os 54 achados, o plano de adequação e o cálculo do score. Filtre por severidade ou prazo, busque por artigo ou arquivo e abra cada achado para ver a evidência.</p>
     </div>
 
     <div class="demo-banner" role="note">
@@ -1335,7 +1418,7 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
 <dl class="nc-body">
 <div><dt>Problema</dt><dd>A AgendaFácil trata os dados dos pacientes em nome das clínicas. Mesmo assim, instalou na página de agendamento um pixel de publicidade para as próprias campanhas. O pixel registra a visita à página de uma clínica específica e o evento de agendamento, e associa tudo a um identificador do navegador. Não há instrução nem autorização das clínicas para isso.</dd></div>
 <div><dt>Fundamento LGPD</dt><dd>Art. 39 (tratamento segundo as instruções do controlador); art. 5º, VI e VII; art. 11, I e §1º; art. 42, §1º, I.</dd></div>
-<div class="nc-ev"><dt>Evidência</dt><dd><code>AUSENTE (TECNICA + DOCUMENTAL)</code>, confiança <code>MEDIA</code>: o uso próprio está no código: <code>public/index.html:7-15</code> ("campanhas de aquisição"), <code>public/js/agendar.js:23</code> e <code>README.md:24</code>. Nenhuma instrução das clínicas documentada. Verificação que elevaria a confiança: captura de rede em produção e configuração do pixel no Gerenciador de Eventos da Meta.</dd></div>
+<div class="nc-ev"><dt>Evidência</dt><dd><code>AUSENTE (TECNICA + DOCUMENTAL)</code>, confiança <code>MEDIA</code>: o uso próprio está no código: <code>public/index.html:7-15</code> (“campanhas de aquisição”), <code>public/js/agendar.js:23</code> e <code>README.md:24</code>. Nenhuma instrução das clínicas documentada. Verificação que elevaria a confiança: captura de rede em produção e configuração do pixel no Gerenciador de Eventos da Meta.</dd></div>
 <div><dt>Correção recomendada</dt><dd>Remover o pixel da página de agendamento. Publicidade própria só no site institucional, depois do aceite. Se algum uso próprio de dados dos pacientes for mantido, ele precisa de autorização das clínicas no contrato (OP-01), base legal do art. 11 e RIPD (GV-03).</dd></div>
 <div><dt>Responsável e prazo</dt><dd>desenvolvedor líder (CTO), com decisão da sócia-fundadora (CEO) · prazo <code>IMEDIATO</code></dd></div>
 </dl>
@@ -1357,10 +1440,10 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
 <details>
 <summary><span class="nc-head"><span class="sev sev-alto">Alto</span><span class="nc-id">NC-03 · CK-02</span></span><span class="nc-title">Meta Pixel disparado antes do consentimento</span><span class="nc-meta"><span>Prazo: Imediato</span><span>Esforço: P</span></span></summary>
 <dl class="nc-body">
-<div><dt>Problema</dt><dd>O pixel é carregado e envia <code>PageView</code> no <code>&lt;head&gt;</code> da página, antes de o banner aparecer. Quem clica em "Rejeitar" já foi rastreado.</dd></div>
+<div><dt>Problema</dt><dd>O pixel é carregado e envia <code>PageView</code> no <code>&lt;head&gt;</code> da página, antes de o banner aparecer. Quem clica em “Rejeitar” já foi rastreado.</dd></div>
 <div><dt>Fundamento LGPD</dt><dd>Art. 7º, I; art. 8º; art. 6º, III (necessidade).</dd></div>
 <div class="nc-ev"><dt>Evidência</dt><dd><code>AUSENTE (TECNICA)</code>, confiança <code>ALTA</code>: <code>public/index.html:8-15</code>; <code>consent.js</code> só roda no fim da página (<code>public/index.html:53</code>).</dd></div>
-<div><dt>Correção recomendada</dt><dd>Carregar qualquer rastreador de forma dinâmica, só depois de "Aceitar" (ver <code>recomendacoes_tecnicas</code>).</dd></div>
+<div><dt>Correção recomendada</dt><dd>Carregar qualquer rastreador de forma dinâmica, só depois de “Aceitar” (ver <code>recomendacoes_tecnicas</code>).</dd></div>
 <div><dt>Responsável e prazo</dt><dd>CTO · prazo <code>IMEDIATO</code></dd></div>
 </dl>
 </details>
@@ -1552,7 +1635,7 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
 <div><dt>Problema</dt><dd>Não há canal permanente de denúncia, exigido de todo provedor de aplicações de internet desde 20/07/2026. O rodapé traz só um e-mail de contato geral.</dd></div>
 <div><dt>Fundamento LGPD</dt><dd>Decreto nº 8.771/2016, art. 16-A, II (redação do Decreto nº 12.975/2026). Correlato LGPD: art. 6º, VI (transparência).</dd></div>
 <div class="nc-ev"><dt>Evidência</dt><dd><code>AUSENTE (TECNICA)</code>, confiança <code>ALTA</code>: <code>public/index.html:48</code>.</dd></div>
-<div><dt>Correção recomendada</dt><dd>Página "Fale conosco sobre privacidade e denúncias" com formulário ou e-mail monitorado, que preveja expressamente a notificação de conteúdo ilícito.</dd></div>
+<div><dt>Correção recomendada</dt><dd>Página “Fale conosco sobre privacidade e denúncias” com formulário ou e-mail monitorado, que preveja expressamente a notificação de conteúdo ilícito.</dd></div>
 <div><dt>Responsável e prazo</dt><dd>CEO · prazo <code>30_DIAS</code></dd></div>
 </dl>
 </details>
@@ -1669,7 +1752,7 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
 <details>
 <summary><span class="nc-head"><span class="sev sev-medio">Médio</span><span class="nc-id">NC-29 · CK-05</span></span><span class="nc-title">Consentimento de cookies sem categorias</span><span class="nc-meta"><span>Prazo: 90 dias</span><span>Esforço: M</span></span></summary>
 <dl class="nc-body">
-<div><dt>Problema</dt><dd>O banner oferece só "Aceitar" ou "Rejeitar" tudo, sem separar finalidades.</dd></div>
+<div><dt>Problema</dt><dd>O banner oferece só “Aceitar” ou “Rejeitar” tudo, sem separar finalidades.</dd></div>
 <div><dt>Fundamento LGPD</dt><dd>Art. 8º, §4º.</dd></div>
 <div class="nc-ev"><dt>Evidência</dt><dd><code>AUSENTE (TECNICA)</code>, confiança <code>ALTA</code>: <code>public/index.html:41-45</code>.</dd></div>
 <div><dt>Correção recomendada</dt><dd>Categorias separadas (necessários, medição, publicidade), sem pré-marcação.</dd></div>
@@ -1837,7 +1920,7 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
 <details>
 <summary><span class="nc-head"><span class="sev sev-medio">Médio</span><span class="nc-id">NC-43 · CK-06</span></span><span class="nc-title">Banner de cookies sem informação clara</span><span class="nc-meta"><span>Prazo: 90 dias</span><span>Esforço: P</span></span></summary>
 <dl class="nc-body">
-<div><dt>Problema</dt><dd>O banner aparece e funciona, mas diz apenas que os cookies servem para "melhorar sua experiência". Não informa a finalidade real (publicidade) nem o terceiro que recebe os dados (Meta).</dd></div>
+<div><dt>Problema</dt><dd>O banner aparece e funciona, mas diz apenas que os cookies servem para “melhorar sua experiência”. Não informa a finalidade real (publicidade) nem o terceiro que recebe os dados (Meta).</dd></div>
 <div><dt>Fundamento LGPD</dt><dd>Art. 8º; art. 9º, I e V.</dd></div>
 <div class="nc-ev"><dt>Evidência</dt><dd><code>PARCIAL (TECNICA)</code>, confiança <code>ALTA</code>: <code>public/index.html:41-45</code>.</dd></div>
 <div><dt>Correção recomendada</dt><dd>Texto que nomeie as finalidades e os terceiros, com link para a política de cookies.</dd></div>
@@ -2030,7 +2113,7 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
             <li><svg aria-hidden="true"><use href="#i-check-circle"/></svg><span><strong>AP-04</strong> · TLS na conexão com o banco</span></li>
             <li><svg aria-hidden="true"><use href="#i-check-circle"/></svg><span><strong>AP-06</strong> · nenhuma chave no código nem no front-end</span></li>
             <li><svg aria-hidden="true"><use href="#i-check-circle"/></svg><span><strong>GV-07</strong> · sede e contato no País publicados</span></li>
-            <li><svg aria-hidden="true"><use href="#i-check-circle"/></svg><span><strong>CK-01</strong> · banner com "Rejeitar" tão visível quanto "Aceitar"</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check-circle"/></svg><span><strong>CK-01</strong> · banner com “Rejeitar” tão visível quanto “Aceitar”</span></li>
             <li><svg aria-hidden="true"><use href="#i-check-circle"/></svg><span><strong>BL-04</strong> · coleta mínima nas contas dos usuários das clínicas</span></li>
           </ul>
         </div>
@@ -2039,13 +2122,12 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
   </div>
 </section>
 
-<!-- ======================= 05 · Compatibilidade ======================= -->
+<!-- ======================= Compatibilidade ======================= -->
 <section class="section" id="compatibilidade" aria-labelledby="compat-title">
   <div class="container">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow"><span class="num">05</span> Compatibilidade</span>
-      <h2 id="compat-title">Funciona no assistente que sua equipe já usa.</h2>
-      <p>O framework é o mesmo para todas as ferramentas; mudam só o lugar dos comandos e da skill opcional. Várias ferramentas podem conviver no mesmo projeto.</p>
+    <div class="section-head split">
+      <h2 id="compat-title" data-reveal>Funciona no assistente que sua equipe já usa.</h2>
+      <p data-reveal style="--d:1">O framework é o mesmo para todas as ferramentas; mudam só o lugar dos comandos e da skill opcional. Várias ferramentas podem conviver no mesmo projeto.</p>
     </div>
 
     <div class="card compat" role="table" aria-label="Assistentes compatíveis" data-reveal>
@@ -2095,37 +2177,36 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
 
     <div class="compat-notes">
       <p class="note" data-reveal><svg aria-hidden="true"><use href="#i-terminal"/></svg><span><strong>Slash commands</strong> executam o framework modular (<code>.agents/lgpd-enterprise-auditor/</code>): você escolhe o cenário com <code>/lgpd-saas</code>, <code>/lgpd-full-audit</code> e os demais.</span></p>
-      <p class="note" data-reveal data-reveal-delay="1"><svg aria-hidden="true"><use href="#i-layers"/></svg><span><strong>A skill</strong> (<code>SKILL.md</code>) é a versão autocontida da mesma auditoria: o assistente a carrega quando você pede, por exemplo, "faça uma auditoria LGPD deste projeto". Para Codex, Gemini CLI e similares, o destino <code>agents</code> funciona assim.</span></p>
+      <p class="note" data-reveal data-reveal-delay="1"><svg aria-hidden="true"><use href="#i-layers"/></svg><span><strong>A skill</strong> (<code>SKILL.md</code>) é a versão autocontida da mesma auditoria: o assistente a carrega quando você pede, por exemplo, “faça uma auditoria LGPD deste projeto”. Para Codex, Gemini CLI e similares, o destino <code>agents</code> funciona assim.</span></p>
     </div>
   </div>
 </section>
 
-<!-- ======================= 06 · Segurança e transparência ======================= -->
-<section class="section" id="seguranca" aria-labelledby="seg-title">
+<!-- ======================= Segurança e transparência ======================= -->
+<section class="section tone" id="seguranca" aria-labelledby="seg-title">
   <div class="container">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow"><span class="num">06</span> Segurança e transparência</span>
-      <h2 id="seg-title">O que ele faz, e o que ele não pode prometer.</h2>
-      <p>Uma auditoria só é útil quando seus limites estão escritos. Estes são os do LGPD Enterprise Auditor.</p>
+    <div class="section-head split">
+      <h2 id="seg-title" data-reveal>O que ele faz, e o que ele não pode prometer.</h2>
+      <p data-reveal style="--d:1">Uma auditoria só é útil quando seus limites estão escritos. Estes são os do LGPD Enterprise Auditor.</p>
     </div>
 
     <div class="trust">
       <div class="card trust-col" data-reveal>
-        <h3><span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></span>Como funciona por dentro</h3>
+        <h3>Como funciona por dentro</h3>
         <ul class="trust-list">
-          <li><svg class="ico" aria-hidden="true" style="color:var(--accent);margin-top:.15rem"><use href="#i-folder"/></svg><div><h4>Instalação local, por projeto</h4><p>O instalador copia arquivos para dentro do projeto e registra um manifesto por ferramenta. <code>update</code>, <code>check</code> e <code>uninstall</code> usam esse manifesto e nunca mexem em arquivos que não sejam do framework.</p></div></li>
-          <li><svg class="ico" aria-hidden="true" style="color:var(--accent);margin-top:.15rem"><use href="#i-lock"/></svg><div><h4>Instalador que você pode conferir</h4><p>Leia o script antes de rodar, fixe uma versão e confira o <code>SHA256SUMS</code> publicado em cada release. Sem conseguir consultar a última versão, ele não instala a branch <code>main</code> por conta própria.</p></div></li>
-          <li><svg class="ico" aria-hidden="true" style="color:var(--accent);margin-top:.15rem"><use href="#i-file"/></svg><div><h4>Markdown, sem servidor</h4><p>O framework é um conjunto de instruções em texto. O relatório <code>.html</code> é um arquivo único, com política de segurança que bloqueia qualquer recurso externo.</p></div></li>
-          <li><svg class="ico" aria-hidden="true" style="color:var(--accent);margin-top:.15rem"><use href="#i-evidence"/></svg><div><h4>Evidência antes de conclusão</h4><p>Nada é conforme sem prova, e cada achado cita a evidência, com arquivo e linha quando ela está no código. Isso permite que outra pessoa refaça a verificação e discorde com base em fatos.</p></div></li>
+          <li class="it"><div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-folder"/></svg></span><h4>Instalação local, por projeto</h4></div><p>O instalador copia arquivos para dentro do projeto e registra um manifesto por ferramenta. <code>update</code>, <code>check</code> e <code>uninstall</code> usam esse manifesto e nunca mexem em arquivos que não sejam do framework.</p></li>
+          <li class="it"><div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-lock"/></svg></span><h4>Instalador que você pode conferir</h4></div><p>Leia o script antes de rodar, fixe uma versão e confira o <code>SHA256SUMS</code> publicado em cada release. Sem conseguir consultar a última versão, ele não instala a branch <code>main</code> por conta própria.</p></li>
+          <li class="it"><div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-file"/></svg></span><h4>Markdown, sem servidor</h4></div><p>O framework é um conjunto de instruções em texto. O relatório <code>.html</code> é um arquivo único, com política de segurança que bloqueia qualquer recurso externo.</p></li>
+          <li class="it"><div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-evidence"/></svg></span><h4>Evidência antes de conclusão</h4></div><p>Nada é conforme sem prova, e cada achado cita a evidência, com arquivo e linha quando ela está no código. Isso permite que outra pessoa refaça a verificação e discorde com base em fatos.</p></li>
         </ul>
       </div>
-      <div class="card trust-col limits" data-reveal data-reveal-delay="1">
-        <h3><span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg></span>Limites que você precisa considerar</h3>
+      <div class="card trust-col limits" data-reveal style="--d:1">
+        <h3>Limites que você precisa considerar</h3>
         <ul class="trust-list">
-          <li><svg class="ico" aria-hidden="true" style="color:var(--med);margin-top:.15rem"><use href="#i-terminal"/></svg><div><h4>Quem lê o código é o assistente</h4><p>A análise roda no assistente de IA que você escolher. O que acontece com o conteúdo lido segue as políticas e a configuração desse assistente e do seu ambiente, não do framework.</p></div></li>
-          <li><svg class="ico" aria-hidden="true" style="color:var(--med);margin-top:.15rem"><use href="#i-eye"/></svg><div><h4>Só o que está ao alcance</h4><p>Painéis de nuvem, produção e contratos fora do repositório não são lidos. Esses controles ficam <code>NAO_VERIFICADO</code>, fora do score, e o relatório diz qual acesso falta. Abaixo de 80% de cobertura, o score é marcado como parcial.</p></div></li>
-          <li><svg class="ico" aria-hidden="true" style="color:var(--med);margin-top:.15rem"><use href="#i-users"/></svg><div><h4>Revisão humana é obrigatória</h4><p>O relatório é gerado com apoio de IA, a partir das evidências disponíveis. As conclusões dependem da completude e da atualidade dessas evidências e devem ser revisadas por quem responde pelo tratamento.</p></div></li>
-          <li><svg class="ico" aria-hidden="true" style="color:var(--med);margin-top:.15rem"><use href="#i-lock"/></svg><div><h4>O relatório é confidencial</h4><p>Ele descreve falhas que podem estar abertas. Guarde-o fora de repositórios públicos, por exemplo numa pasta listada no <code>.gitignore</code>.</p></div></li>
+          <li class="it"><div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-terminal"/></svg></span><h4>Quem lê o código é o assistente</h4></div><p>A análise roda no assistente de IA que você escolher. O que acontece com o conteúdo lido segue as políticas e a configuração desse assistente e do seu ambiente, não do framework.</p></li>
+          <li class="it"><div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-eye"/></svg></span><h4>Só o que está ao alcance</h4></div><p>Painéis de nuvem, produção e contratos fora do repositório não são lidos. Esses controles ficam <code>NAO_VERIFICADO</code>, fora do score, e o relatório diz qual acesso falta. Abaixo de 80% de cobertura, o score é marcado como parcial.</p></li>
+          <li class="it"><div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-users"/></svg></span><h4>Revisão humana é obrigatória</h4></div><p>O relatório é gerado com apoio de IA, a partir das evidências disponíveis. As conclusões dependem da completude e da atualidade dessas evidências e devem ser revisadas por quem responde pelo tratamento.</p></li>
+          <li class="it"><div class="it-head"><span class="it-ico"><svg aria-hidden="true"><use href="#i-lock"/></svg></span><h4>O relatório é confidencial</h4></div><p>Ele descreve falhas que podem estar abertas. Guarde-o fora de repositórios públicos, por exemplo numa pasta listada no <code>.gitignore</code>.</p></li>
         </ul>
       </div>
     </div>
@@ -2137,16 +2218,13 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
   </div>
 </section>
 
-<!-- ======================= 07 · Instalação ======================= -->
-<section class="section" id="instalacao" aria-labelledby="inst-title">
+<!-- ======================= Instalação ======================= -->
+<section class="section dark" id="instalacao" aria-labelledby="inst-title">
   <div class="container">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow"><span class="num">07</span> Instalação</span>
-      <h2 id="inst-title">Um comando, na raiz do projeto que você quer auditar.</h2>
-      <p>O instalador pergunta qual ferramenta de IA você usa e se quer a skill, mostra um resumo e instala tudo localmente. Ele baixa a última release, a mesma versão do framework que instala.</p>
+    <div class="section-head split">
+      <h2 id="inst-title" data-reveal>Um comando, na raiz do projeto que você quer auditar.</h2>
+      <p data-reveal style="--d:1">O instalador pergunta qual ferramenta de IA você usa e se quer a skill, mostra um resumo e instala tudo localmente. Ele baixa a última release, a mesma versão do framework que instala.</p>
     </div>
-
-    <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
 
     <div class="install">
       <div class="card install-main" data-tabs="install" data-reveal>
@@ -2158,20 +2236,20 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
         <div class="tabpanel" role="tabpanel" id="ip-1" aria-labelledby="it-1">
           <h3 class="panel-title js-hide">macOS, Linux, WSL e Git Bash</h3>
           <div class="code">
-            <div class="code-bar"><span>bash</span><button class="btn copy-btn" type="button" data-copy="cmd-bash"><svg aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span></button></div>
+            <div class="code-bar"><span>bash</span><button class="btn copy-btn" type="button" data-copy="cmd-bash"><svg class="i-copy" aria-hidden="true"><use href="#i-copy"/></svg><svg class="i-ok" aria-hidden="true"><use href="#i-check"/></svg><span>Copiar</span></button></div>
             <pre><code id="cmd-bash">curl -fsSL https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/latest/download/install.sh | bash -s -- install</code></pre>
           </div>
 
           <h4 class="subhead">Prefere ler o script antes de rodar?</h4>
           <div class="code">
-            <div class="code-bar"><span>bash · baixar, revisar e executar</span><button class="btn copy-btn" type="button" data-copy="cmd-read"><svg aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span></button></div>
+            <div class="code-bar"><span>bash · baixar, revisar e executar</span><button class="btn copy-btn" type="button" data-copy="cmd-read"><svg class="i-copy" aria-hidden="true"><use href="#i-copy"/></svg><svg class="i-ok" aria-hidden="true"><use href="#i-check"/></svg><span>Copiar</span></button></div>
             <pre><code id="cmd-read">curl -fsSL https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/latest/download/install.sh -o install.sh
 bash install.sh install</code></pre>
           </div>
 
           <h4 class="subhead">Versão exata, com conferência de integridade</h4>
           <div class="code">
-            <div class="code-bar"><span>bash · releases a partir da v1.6.0</span><button class="btn copy-btn" type="button" data-copy="cmd-sum"><svg aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span></button></div>
+            <div class="code-bar"><span>bash · releases a partir da v1.6.0</span><button class="btn copy-btn" type="button" data-copy="cmd-sum"><svg class="i-copy" aria-hidden="true"><use href="#i-copy"/></svg><svg class="i-ok" aria-hidden="true"><use href="#i-check"/></svg><span>Copiar</span></button></div>
             <pre><code id="cmd-sum">V=vX.Y.Z   # a versão desejada
 curl -fsSLO "https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/download/${V}/install.sh"
 curl -fsSLO "https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/download/${V}/SHA256SUMS"
@@ -2181,7 +2259,7 @@ bash install.sh install --version "$V"</code></pre>
 
           <h4 class="subhead">Em scripts e CI, sem perguntas</h4>
           <div class="code">
-            <div class="code-bar"><span>bash · não interativo</span><button class="btn copy-btn" type="button" data-copy="cmd-ci"><svg aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span></button></div>
+            <div class="code-bar"><span>bash · não interativo</span><button class="btn copy-btn" type="button" data-copy="cmd-ci"><svg class="i-copy" aria-hidden="true"><use href="#i-copy"/></svg><svg class="i-ok" aria-hidden="true"><use href="#i-check"/></svg><span>Copiar</span></button></div>
             <pre><code id="cmd-ci">curl -fsSL https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/latest/download/install.sh \
   | bash -s -- install --non-interactive --target cursor --with-skill</code></pre>
           </div>
@@ -2190,7 +2268,7 @@ bash install.sh install --version "$V"</code></pre>
         <div class="tabpanel" role="tabpanel" id="ip-2" aria-labelledby="it-2">
           <h3 class="panel-title js-hide">Windows PowerShell</h3>
           <div class="code">
-            <div class="code-bar"><span>PowerShell 5.1 ou 7</span><button class="btn copy-btn" type="button" data-copy="cmd-ps"><svg aria-hidden="true"><use href="#i-copy"/></svg><span>Copiar</span></button></div>
+            <div class="code-bar"><span>PowerShell 5.1 ou 7</span><button class="btn copy-btn" type="button" data-copy="cmd-ps"><svg class="i-copy" aria-hidden="true"><use href="#i-copy"/></svg><svg class="i-ok" aria-hidden="true"><use href="#i-check"/></svg><span>Copiar</span></button></div>
             <pre><code id="cmd-ps">powershell -ExecutionPolicy Bypass -Command "iwr https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/latest/download/install.ps1 -OutFile $env:TEMP\lgpd-install.ps1; &amp; $env:TEMP\lgpd-install.ps1 install"</code></pre>
           </div>
           <p>As opções têm os mesmos nomes no estilo do PowerShell: <code>-Target</code>, <code>-WithSkill</code> / <code>-NoSkill</code>, <code>-ProjectDir</code>, <code>-Version</code> e <code>-NonInteractive</code>.</p>
@@ -2235,13 +2313,12 @@ bash install.sh install --version "$V"</code></pre>
   </div>
 </section>
 
-<!-- ======================= 08 · FAQ ======================= -->
+<!-- ======================= FAQ ======================= -->
 <section class="section" id="faq" aria-labelledby="faq-title">
   <div class="container faq-wrap">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow"><span class="num">08</span> FAQ</span>
-      <h2 id="faq-title">Perguntas frequentes</h2>
-      <p>Não encontrou o que procurava? Pergunte nas <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/discussions" rel="noopener">Discussions do GitHub</a>.</p>
+    <div class="section-head">
+      <h2 id="faq-title" data-reveal>Perguntas frequentes</h2>
+      <p data-reveal style="--d:1">Não encontrou o que procurava? Pergunte nas <a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/discussions" rel="noopener">Discussions do GitHub</a>.</p>
     </div>
 
     <div class="faq">
@@ -2294,28 +2371,34 @@ bash install.sh install --version "$V"</code></pre>
 </section>
 
 <!-- ======================= CTA final ======================= -->
-<section class="section final" aria-labelledby="final-title">
-  <div class="bg-glow" aria-hidden="true"></div>
-  <div class="container final-inner" data-reveal>
-    <span class="eyebrow">Open source · MIT</span>
-    <h2 id="final-title">Mais visibilidade sobre riscos. Mais clareza para agir.</h2>
-    <p>Instale no seu projeto, rode o cenário que se aplica e receba um plano que sua equipe consegue executar.</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor" rel="noopener"><svg aria-hidden="true"><use href="#i-github"/></svg>Explorar no GitHub</a>
-      <a class="btn" href="#instalacao">Instalar agora<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <a class="btn btn-ghost" href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor#readme" rel="noopener">Ler a documentação</a>
+<section class="section final field-accent" aria-labelledby="final-title">
+  <div class="container final-inner">
+    <div class="final-copy">
+      <h2 id="final-title" data-reveal>Mais visibilidade sobre riscos. Mais clareza para agir.</h2>
+      <p data-reveal style="--d:1">Instale no seu projeto, rode o cenário que se aplica e receba um plano que sua equipe consegue executar.</p>
+      <div class="hero-actions" data-reveal style="--d:2">
+        <a class="btn btn-primary" href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor" rel="noopener"><svg aria-hidden="true"><use href="#i-github"/></svg>Explorar no GitHub</a>
+        <a class="btn" href="#instalacao">Instalar agora<svg class="go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor#readme" rel="noopener">Ler a documentação</a>
+      </div>
     </div>
+    <ul class="final-list" data-reveal style="--d:2">
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Open source, licença MIT</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Instalação local, por projeto</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Sem servidor e sem cadastro</span></li>
+      <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Relatório em <code>.md</code>, <code>.html</code> ou nos dois</span></li>
+    </ul>
   </div>
 </section>
 
 </main>
 
-<!-- ======================= Footer ======================= -->
-<footer class="site-footer">
+<!-- ======================= Rodapé ======================= -->
+<footer class="site-footer dark">
   <div class="container">
+    <p class="foot-word" aria-hidden="true" translate="no">LGPD Enterprise <span>Auditor</span></p>
     <div class="foot-grid">
       <div class="foot-brand">
-        <a class="brand" href="#topo"><svg aria-hidden="true"><use href="#i-logo"/></svg><span class="brand-text">LGPD Enterprise Auditor</span></a>
         <p>Framework de auditoria LGPD orientado a evidências, com foco em segurança, governança e uso de IA em engenharia de software.</p>
       </div>
       <nav class="foot-col" aria-labelledby="f-proj">
@@ -2331,7 +2414,7 @@ bash install.sh install --version "$V"</code></pre>
         <h2 id="f-docs">Documentação</h2>
         <ul>
           <li><a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor#readme" rel="noopener">README (português)</a></li>
-          <li><a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/blob/main/README.en.md" rel="noopener">README (English)</a></li>
+          <li><a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/blob/main/README.en.md" rel="noopener" hreflang="en">README (English)</a></li>
           <li><a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/tree/main/examples" rel="noopener">Exemplos</a></li>
           <li><a href="https://github.com/BrunoLagoa/lgpd-enterprise-auditor/blob/main/SKILL.md" rel="noopener">Skill (<code>SKILL.md</code>)</a></li>
         </ul>
@@ -2349,7 +2432,7 @@ bash install.sh install --version "$V"</code></pre>
     </div>
     <div class="foot-legal">
       <p><strong>Aviso legal.</strong> O LGPD Enterprise Auditor apoia a avaliação técnica de conformidade com a LGPD, mas não substitui a avaliação do encarregado (DPO) nem a análise jurídica profissional. Os relatórios são gerados com apoio de IA, a partir das evidências disponíveis.</p>
-      <p>Distribuído sob a licença MIT. Esta página não usa cookies, analytics nem recursos externos para o conteúdo.</p>
+      <p>Distribuído sob a licença MIT. Esta página não usa cookies nem analytics; a fonte Schibsted Grotesk (licença SIL OFL 1.1) é servida junto com a página.</p>
     </div>
   </div>
 </footer>
@@ -2362,9 +2445,10 @@ bash install.sh install --version "$V"</code></pre>
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   function normalize(text) {
-    return (text || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    return (text || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
 
   /* ---------- cabeçalho ---------- */
@@ -2374,6 +2458,30 @@ bash install.sh install --version "$V"</code></pre>
     var update = function () { header.classList.toggle('is-scrolled', window.scrollY > 8); };
     update();
     window.addEventListener('scroll', update, { passive: true });
+  }
+
+  /* marca no menu a seção que está na tela */
+  function setupNavSpy() {
+    if (!('IntersectionObserver' in window)) return;
+    var links = $$('#menu a[href^="#"]');
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var link = byId[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting) {
+          links.forEach(function (a) { a.removeAttribute('aria-current'); });
+          link.setAttribute('aria-current', 'true');
+        } else if (link.getAttribute('aria-current')) {
+          link.removeAttribute('aria-current');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    Object.keys(byId).forEach(function (id) {
+      var section = document.getElementById(id);
+      if (section) io.observe(section);
+    });
   }
 
   /* ---------- menu mobile ---------- */
@@ -2399,7 +2507,7 @@ bash install.sh install --version "$V"</code></pre>
         toggle.focus();
       }
     });
-    var wide = window.matchMedia('(min-width: 961px)');
+    var wide = window.matchMedia('(min-width: 981px)');
     var onWide = function (mq) { if (mq.matches) setOpen(false); };
     if (wide.addEventListener) wide.addEventListener('change', onWide);
     else if (wide.addListener) wide.addListener(onWide);
@@ -2568,6 +2676,67 @@ bash install.sh install --version "$V"</code></pre>
     });
   }
 
+  /* ---------- folha do hero: profundidade e luz que seguem o ponteiro ---------- */
+  function setupTilt() {
+    var sheet = $('#hero-sheet');
+    var area = $('.hero');
+    if (!sheet || !area || reduceMotion || !finePointer) return;
+    var frame = null;
+    var pending = null;
+
+    function paint() {
+      frame = null;
+      if (!pending) return;
+      var rect = sheet.getBoundingClientRect();
+      var x = Math.min(Math.max((pending.x - rect.left) / rect.width, 0), 1);
+      var y = Math.min(Math.max((pending.y - rect.top) / rect.height, 0), 1);
+      sheet.style.setProperty('--ry', ((x - .5) * 7).toFixed(2) + 'deg');
+      sheet.style.setProperty('--rx', ((.5 - y) * 5).toFixed(2) + 'deg');
+      sheet.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+      sheet.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+    }
+    area.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      pending = { x: e.clientX, y: e.clientY };
+      sheet.classList.add('is-tilting');
+      if (!frame) frame = requestAnimationFrame(paint);
+    });
+    area.addEventListener('pointerleave', function () {
+      pending = null;
+      sheet.classList.remove('is-tilting');
+      ['--rx', '--ry', '--mx', '--my'].forEach(function (p) { sheet.style.removeProperty(p); });
+    });
+  }
+
+  /* ---------- como funciona: o terminal acompanha a etapa em leitura ---------- */
+  function setupSteps() {
+    var steps = $$('#steps .step');
+    var term = $('#term');
+    if (!steps.length || !term || !('IntersectionObserver' in window)) return;
+    var lines = $$('.ln', term);
+    term.classList.add('is-live');
+
+    function activate(n) {
+      steps.forEach(function (step) {
+        var s = Number(step.getAttribute('data-step'));
+        step.classList.toggle('is-active', s === n);
+        step.classList.toggle('is-done', s < n);
+      });
+      lines.forEach(function (line) {
+        var s = Number(line.getAttribute('data-s'));
+        line.classList.toggle('is-active', s === n);
+        line.classList.toggle('is-pending', s > n);
+      });
+    }
+    activate(1);
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) activate(Number(entry.target.getAttribute('data-step')));
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    steps.forEach(function (step) { io.observe(step); });
+  }
+
   /* ---------- entrada suave das seções ---------- */
   function setupReveal() {
     var els = $$('[data-reveal]');
@@ -2588,13 +2757,18 @@ bash install.sh install --version "$V"</code></pre>
 
   /* ---------- inicialização ---------- */
   function init() {
+    // identificadores e comandos não devem ser traduzidos automaticamente
+    $$('code').forEach(function (el) { el.setAttribute('translate', 'no'); });
     setupHeader();
+    setupNavSpy();
     setupMobileMenu();
     var tabSets = {};
     $$('[data-tabs]').forEach(function (c) { tabSets[c.getAttribute('data-tabs')] = setupTabs(c); });
     setupCopy();
     setupFindings(tabSets.demo);
     setupGauges();
+    setupTilt();
+    setupSteps();
     setupReveal();
   }
 

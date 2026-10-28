@@ -7,7 +7,7 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 ## [Não lançado]
 
 ### Adicionado
-- `docs/index.html`: landing page do projeto em um único arquivo, sem dependências externas, pronta para o GitHub Pages (pasta `/docs`). Explica o problema, o funcionamento, os cenários, a compatibilidade, os limites e a instalação, e traz uma demonstração navegável com os 54 achados, o plano de adequação e o cálculo do score do relatório de exemplo (dados fictícios). Publicada em https://brunolagoa.github.io/lgpd-enterprise-auditor/, com link no topo dos dois READMEs.
+- `docs/index.html`: landing page do projeto, sem dependências externas, pronta para o GitHub Pages (pasta `/docs`), com a fonte Schibsted Grotesk (SIL OFL 1.1) servida junto em `docs/assets/fonts/`. Explica o problema, o funcionamento (com um terminal que acompanha cada etapa durante a rolagem), os benefícios, os cenários, a compatibilidade, os limites e a instalação (com o comando copiável já no topo), e traz uma demonstração navegável com os 54 achados, o plano de adequação e o cálculo do score do relatório de exemplo (dados fictícios). Respeita `prefers-reduced-motion` e funciona sem JavaScript. Publicada em https://brunolagoa.github.io/lgpd-enterprise-auditor/, com link no topo dos dois READMEs.
 
 ## [1.10.1] - 2026-10-26
 
