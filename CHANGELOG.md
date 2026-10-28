@@ -6,6 +6,9 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+### Adicionado
+- `docs/index.html`: landing page do projeto em um único arquivo, sem dependências externas, pronta para o GitHub Pages (pasta `/docs`). Explica o problema, o funcionamento, os cenários, a compatibilidade, os limites e a instalação, e traz uma demonstração navegável com os 54 achados, o plano de adequação e o cálculo do score do relatório de exemplo (dados fictícios).
+
 ## [1.10.1] - 2026-10-26
 
 ### Alterado
