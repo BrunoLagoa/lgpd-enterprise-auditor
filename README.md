@@ -26,14 +26,14 @@ Este projeto foi desenhado para funcionar como um sistema auditável e modular, 
 
 **Site do projeto:** [brunolagoa.github.io/lgpd-enterprise-auditor](https://brunolagoa.github.io/lgpd-enterprise-auditor/) — visão geral, demonstração navegável do relatório de exemplo e instalação.
 
+[![Página do LGPD Enterprise Auditor: título “Transforme riscos de LGPD em ações concretas.” ao lado do topo do relatório de exemplo, com score 20 de 100, achados críticos e o que fazer agora](./assets/site-landing.png)](https://brunolagoa.github.io/lgpd-enterprise-auditor/)
+
 Você escolhe o formato do relatório no início da auditoria: `.md` (texto completo, bom para versionar e comparar), `.html` (para ler no navegador, com o score em destaque, filtros, busca e versão para impressão) ou os dois. O `.html` é um arquivo único, funciona offline e não carrega nada de fora.
 
 Veja um relatório de exemplo, gerado sobre um SaaS fictício, nos dois formatos:
 
 - [Relatório em Markdown (`.md`)](./examples/saas-demo/relatorio-auditoria-lgpd.md): abre aqui mesmo, no GitHub.
-- [Relatório em HTML (`.html`)](./examples/saas-demo/relatorio-auditoria-lgpd.html): baixe o arquivo e abra no navegador. A imagem abaixo mostra o topo dele.
-
-[![Relatório de exemplo em HTML: score 20 de 100, classificação, não conformidades por severidade e resumo executivo](./examples/saas-demo/relatorio-auditoria-lgpd.png)](./examples/saas-demo/relatorio-auditoria-lgpd.html)
+- [Relatório em HTML (`.html`)](./examples/saas-demo/relatorio-auditoria-lgpd.html): baixe o arquivo e abra no navegador.
 
 ## O que é este projeto
 

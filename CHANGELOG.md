@@ -7,7 +7,7 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 ## [Não lançado]
 
 ### Adicionado
-- `docs/index.html`: landing page do projeto, sem dependências externas, pronta para o GitHub Pages (pasta `/docs`), com a fonte Schibsted Grotesk (SIL OFL 1.1) servida junto em `docs/assets/fonts/`. Explica o problema, o funcionamento (com um terminal que acompanha cada etapa durante a rolagem), os benefícios, os cenários, a compatibilidade, os limites e a instalação (com o comando copiável já no topo), e traz uma demonstração navegável com os 54 achados, o plano de adequação e o cálculo do score do relatório de exemplo (dados fictícios). Respeita `prefers-reduced-motion` e funciona sem JavaScript. Publicada em https://brunolagoa.github.io/lgpd-enterprise-auditor/, com link no topo dos dois READMEs.
+- `docs/index.html`: landing page do projeto, sem dependências externas, pronta para o GitHub Pages (pasta `/docs`), com a fonte Schibsted Grotesk (SIL OFL 1.1) servida junto em `docs/assets/fonts/`. Explica o problema, o funcionamento (com um terminal que acompanha cada etapa durante a rolagem), os benefícios, os cenários, a compatibilidade, os limites e a instalação (com o comando copiável já no topo), e traz uma demonstração navegável com os 54 achados, o plano de adequação e o cálculo do score do relatório de exemplo (dados fictícios). Tema escuro por padrão e tema claro no botão do cabeçalho (a escolha fica salva no navegador). Respeita `prefers-reduced-motion` e funciona sem JavaScript. Publicada em https://brunolagoa.github.io/lgpd-enterprise-auditor/, com link e uma captura da página (`assets/site-landing.png`) no topo dos dois READMEs, no lugar da imagem do relatório de exemplo.
 
 ## [1.10.1] - 2026-10-26
 
