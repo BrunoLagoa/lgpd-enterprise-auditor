@@ -25,6 +25,8 @@ This project was designed to operate as an auditable and modular system, ready t
 
 **In short:** install the auditor into your project with one command, run `/lgpd-saas` (or another scenario) in your AI assistant, and get a report with a 0–100 score, non-conformities with the LGPD article and the evidence for each, and a remediation plan with deadlines and effort. Works with Claude Code, Cursor, VS Code + GitHub Copilot, OpenCode, Codex and Gemini CLI.
 
+**Project site (in Portuguese):** [brunolagoa.github.io/lgpd-enterprise-auditor](https://brunolagoa.github.io/lgpd-enterprise-auditor/) — overview, a browsable demo of the example report and installation.
+
 You choose the report format at the start of the audit: `.md` (full text, good for versioning and comparing), `.html` (to read in the browser, with the score up front, filters, search and a print version) or both. The `.html` is a single file, works offline and loads nothing from outside.
 
 See an example report (in Portuguese), produced on a fictional SaaS, in both formats:
