@@ -138,7 +138,7 @@ Este framework usa como referência principal a **Lei Geral de Proteção de Dad
 
 - **Texto oficial (Planalto):** [Lei nº 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
 - **Órgão regulador:** [ANPD](https://www.gov.br/anpd/) — desde a **Lei nº 15.352/2026**, denominada **Agência** Nacional de Proteção de Dados e submetida ao regime das agências reguladoras da Lei nº 13.848/2019 (art. 55-A da LGPD).
-- **Norma correlata:** [ECA Digital — Lei nº 15.211/2025](https://www.gov.br/anpd/pt-br/assuntos/eca-digital), em vigor desde 17/03/2026, regulamentada pelo Decreto nº 12.880/2026 e fiscalizada pela ANPD; os prazos do relatório semestral de transparência seguem o Despacho Decisório CD/ANPD nº 122/2026.
+- **Norma correlata:** [ECA Digital — Lei nº 15.211/2025](https://www.gov.br/anpd/pt-br/assuntos/eca-digital), em vigor desde 17/03/2026, regulamentada pelo Decreto nº 12.880/2026 e fiscalizada pela ANPD; os prazos do relatório semestral de transparência seguem o Despacho Decisório CD/ANPD nº 122/2026, e o enquadramento segue o Guia Orientativo da ANPD sobre o escopo da lei (versão 1.0, 28/10/2026).
 - **Plataformas digitais:** [Decreto nº 12.975/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12975.htm) (atualiza a regulamentação do Marco Civil da Internet — dever de cuidado, notificação e remoção, anúncios, guarda de registros de acesso) e [Decreto nº 12.976/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12976.htm) (proteção de mulheres na internet), em vigor desde 20/07/2026 e fiscalizados pela ANPD.
 
 Regulamentos da ANPD considerados pelo framework:
@@ -157,7 +157,7 @@ Regulamentos da ANPD considerados pelo framework:
 
 | Item | Valor |
 |------|--------|
-| Última sincronização | `2026-10` |
+| Última sincronização | `2026-11` |
 
 ## Como o projeto está organizado
 
@@ -257,7 +257,7 @@ O cenário define os módulos de partida. O roteador acrescenta outros quando o 
 
 | Módulo | Entra quando |
 |---|---|
-| `eca-digital` | há, ou provavelmente há, usuários menores de 18 anos. Um bloqueio etário baseado só em idade autodeclarada não afasta o gatilho quando existe outro indício |
+| `eca-digital` | o serviço é direcionado a menores de 18 anos, está em categoria que a lei presume acessada por eles (rede social, loja de aplicativos, sistema operacional, streaming de catálogo, jogo, conteúdo adulto, IA generativa, venda de produtos proibidos a menores) ou há outro indício de uso por menores. Aferição de idade, mesmo robusta, não afasta o gatilho |
 | `plataformas-digitais` | o serviço intermedeia conteúdo de terceiros com difusão pública, vende anúncios ou impulsionamento, ou oferece IA que gera ou altera imagem ou som de pessoas |
 | `ai-llm` | há qualquer chamada a provedor ou SDK de LLM ou de IA generativa, modelo próprio, embeddings, RAG, banco vetorial ou fine-tuning |
 | `mobile` | há app iOS ou Android (nativo, Flutter, React Native) |

@@ -4,7 +4,7 @@ description: Auditoria de conformidade LGPD (Lei nº 13.709/2018) orientada a ev
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.10.1"
+  version: "1.11.0"
 ---
 
 # 🛡️ LGPD ENTERPRISE AUDITOR FRAMEWORK
@@ -622,12 +622,12 @@ Nos agravantes, **dado sensível** é o do art. 5º, II, e também o dado que re
 | `ECA-03` | Há gestão de risco, classificação indicativa, bloqueio de conteúdo inadequado, padrões contra uso compulsivo e informação da faixa etária no acesso? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 8º; LGPD arts. 6º, VIII e 14 |
 | `ECA-04` | Serviço com conteúdo impróprio a menores de 18 anos: há verificação de idade confiável **a cada acesso**, sem autodeclaração, e bloqueio de criação de conta em serviço pornográfico? | `CRITICO` | — | `TECNICO` | Lei nº 15.211/2025, art. 9º, §§1º e 3º; LGPD art. 14 |
 | `ECA-05` | Loja de aplicativos ou sistema operacional: há aferição de idade auditável, supervisão parental, API de sinal de idade com minimização e consentimento do responsável para download? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 12; LGPD arts. 6º, III e 14 |
-| `ECA-06` | Os dados de verificação de idade são usados **exclusivamente** para essa finalidade? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 13 e 24, §3º; LGPD art. 6º, I |
+| `ECA-06` | Os dados de verificação de idade são usados **exclusivamente** para essa finalidade, e a imagem ou cópia de documento coletada é eliminada logo após a captura da idade? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 13 e 24, §3º; Decreto nº 12.880/2026, art. 24, §3º; LGPD art. 6º, I e III |
 | `ECA-07` | O fornecedor recebe o sinal de idade da loja ou do sistema e mantém mecanismo próprio de bloqueio, sem depender só de autodeclaração? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 10 e 14; LGPD art. 14, §5º |
 | `ECA-08` | Em tratamento além do estritamente necessário: há mapeamento de riscos e relatório de impacto? | `MEDIO` | — | `DOCUMENTAL` | Lei nº 15.211/2025, art. 16, parágrafo único; LGPD art. 38 |
 | `ECA-09` | As ferramentas de supervisão parental cumprem os nove padrões do art. 17, §4º e as seis capacidades do art. 18, em língua portuguesa? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 17 e 18; LGPD art. 14 |
 | `ECA-10` | O produto está livre de design manipulativo (dark patterns) que enfraqueça as salvaguardas? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 18, §2º; LGPD arts. 6º, VI e 14 |
-| `ECA-11` | Jogos: o produto está livre de caixas de recompensa (loot boxes)? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 20; LGPD art. 14 |
+| `ECA-11` | Jogos: o produto está livre de caixas de recompensa (loot boxes), ou o acesso de menores a elas é impedido por verificação de idade ou por restrição total por padrão? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 20; Decreto nº 12.880/2026, art. 23; LGPD art. 14 |
 | `ECA-12` | Jogos: a interação entre usuários é limitada por padrão, dependendo do consentimento dos responsáveis? | `MEDIO` | — | `TECNICO` | Lei nº 15.211/2025, art. 21; LGPD art. 14 |
 | `ECA-13` | O serviço está livre de perfilamento, análise emocional e realidade aumentada, estendida ou virtual para publicidade a menores, inclusive com dados da verificação de idade? | `CRITICO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 22 e 26; LGPD arts. 6º, I e 14 |
 | `ECA-14` | O serviço impede a monetização e o impulsionamento de conteúdo que retrate menores de forma erotizada ou em contexto adulto? | `CRITICO` | — | `TECNICO` | Lei nº 15.211/2025, art. 23; LGPD art. 14 |
@@ -638,8 +638,12 @@ Nos agravantes, **dado sensível** é o do art. 5º, II, e também o dado que re
 | `ECA-19` | Acima de 1.000.000 de usuários menores registrados no País: o relatório semestral com os sete incisos do art. 31 foi publicado no prazo, no site e em português? | `ALTO` | — | `DOCUMENTAL` | Lei nº 15.211/2025, art. 31; LGPD art. 6º, X |
 | `ECA-20` | Há mecanismo contra o uso abusivo dos instrumentos de denúncia, com sanções graduadas e registros? | `MEDIO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 32 e 33; LGPD art. 6º, X |
 | `ECA-21` | Provedor estrangeiro: há representante legal no País com poderes para receber citações e notificações? | `MEDIO` | — | `DOCUMENTAL` | Lei nº 15.211/2025, art. 40; LGPD art. 6º, X |
-| `ECA-22` | Equipamentos eletrônicos com acesso à internet: a embalagem traz o adesivo de alerta aos responsáveis? | `BAIXO` | — | `DOCUMENTAL` | Lei nº 15.211/2025, art. 38; LGPD art. 6º, VI |
+| `ECA-22` | Equipamentos eletrônicos com acesso à internet: a embalagem traz o adesivo de alerta aos responsáveis? | `BAIXO` | — | `DOCUMENTAL` | Lei nº 15.211/2025, art. 38; Decreto nº 12.880/2026, art. 50; LGPD art. 6º, VI |
 | `ECA-23` | Produtos de monitoramento infantil: as informações captadas são invioláveis e o menor é avisado do monitoramento em linguagem apropriada? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, art. 19; LGPD arts. 14 e 46 |
+| `ECA-24` | IA generativa ou agente conversacional: a interação informa o caráter sintético e automatizado, e há prevenção de manipulação comportamental, avaliação do risco algorítmico e salvaguardas ao desenvolvimento de crianças e adolescentes? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 6º e 8º, I; Decreto nº 12.880/2026, art. 11; LGPD arts. 6º, VI e 14 |
+| `ECA-25` | Venda ou intermediação de produtos ou serviços proibidos a menores: há verificação de idade efetiva no cadastro ou na compra, sem desbloqueio por autodeclaração e com bloqueio para usuário não autenticado? | `ALTO` | — | `TECNICO` | Lei nº 15.211/2025, arts. 6º, IV e 9º; Decreto nº 12.880/2026, arts. 15 e 18; LGPD art. 14 |
+| `ECA-26` | Há avaliação de impacto à segurança e à saúde de crianças e adolescentes, com acompanhamento da efetividade das medidas, e a versão resumida está publicada em linguagem clara? | `MEDIO` | — | `DOCUMENTAL` | Lei nº 15.211/2025, arts. 8º, I e 16, parágrafo único, II; Decreto nº 12.880/2026, art. 47; LGPD art. 6º, X |
+| `ECA-27` | Conteúdo monetizado ou impulsionado que explore de forma habitual a imagem ou a rotina de criança ou adolescente: o fornecedor exige a autorização judicial e retira o conteúdo quando ela falta? | `ALTO` | — | `TECNICO` | Decreto nº 12.880/2026, art. 34; Lei nº 15.211/2025, art. 5º; Lei nº 8.069/1990, art. 149; LGPD art. 14 |
 
 ## 17. Plataformas digitais e conteúdo de terceiros — área `plataformas_digitais`
 
@@ -696,32 +700,46 @@ Aplicável a todo produto ou serviço de tecnologia da informação direcionado 
 Os itens deste domínio são os `ECA` e o `MB-09` do catálogo, que pontuam na área `eca_digital`. O texto abaixo detalha quando aplicá-los e o que cada um exige.
 
 ## Quando auditar
-Sempre que houver serviço direcionado ou de acesso provável por menores. "Acesso provável" (art. 1º, parágrafo único) = probabilidade de uso e atratividade + facilidade de acesso + grau de risco à privacidade, segurança ou desenvolvimento biopsicossocial. Na dúvida, auditar e registrar a incerteza como evidência PARCIAL. Bloqueio etário baseado só em idade ou data de nascimento autodeclarada **não afasta** a auditoria deste domínio quando houver outro indício de acesso por menores; sem nenhum outro indício (ex.: serviço B2B ou profissional), o domínio não é auditado e a decisão é registrada com a justificativa.
+Sempre que houver serviço direcionado ou de acesso provável por menores. O entendimento abaixo é o do Guia Orientativo da ANPD sobre o escopo do ECA Digital (versão 1.0, 28/10/2026), que orienta o enquadramento e nunca fundamenta achado.
 
-**Antes de emitir achado, checar a modulação do art. 39**: as obrigações dos arts. 6º, 17, 18, 19, 20, 27, 28, 29, 31, 32 e 40 são proporcionais ao grau de interferência sobre o conteúdo, ao número de usuários e ao porte; serviços com controle editorial e conteúdo licenciado são dispensados se cumprirem classificação indicativa, transparência etária, mediação parental e canal de denúncias (art. 39, §1º).
+- **Produto ou serviço de TI** (art. 2º, I): fornecido à distância, por meio eletrônico e por requisição individual. Ficam fora o serviço presencial, a radiodifusão, o telemarketing e as funcionalidades essenciais da internet (art. 2º, §2º). A gratuidade não afasta a lei.
+- **Direcionado**: o fornecedor declara o serviço voltado a crianças e adolescentes.
+- **Acesso provável** (art. 1º, parágrafo único): três requisitos ao mesmo tempo — probabilidade de uso e atratividade, facilidade de acesso e utilização, e significativo grau de risco à privacidade, à segurança ou ao desenvolvimento biopsicossocial.
+- **Presunção de acesso provável**, sem necessidade do teste: redes sociais; lojas de aplicativos; sistemas operacionais; serviços com controle editorial; jogos eletrônicos; conteúdo adulto; sistemas de IA generativa e agentes conversacionais (Decreto nº 12.880/2026, art. 11); comércio eletrônico que venda ou intermedeie produtos proibidos a menores (Decreto, art. 18). A presunção só cai com fundamentação nas características concretas do serviço (ex.: agente conversacional restrito a funcionários), registrada no escopo excluído.
+- **Nenhuma medida de cumprimento afasta o enquadramento**: aferição de idade — autodeclarada ou robusta —, termos de uso que proíbem menores, declaração de público adulto e a autoavaliação do fornecedor não tiram o serviço do escopo (Decreto, arts. 16, §3º e 19, §2º). A aferição de idade é obrigação que nasce do enquadramento e é avaliada nos itens.
+- Fora das categorias presumidas, são indícios: conteúdo, design ou publicidade atrativos a crianças e adolescentes, semelhança com serviço presumido, cadastro que não bloqueia menores e dados de uso efetivo por eles. Sem nenhum indício além do cadastro aberto (ex.: serviço B2B ou profissional), o domínio não é auditado e a decisão é registrada com a justificativa.
+- Na dúvida, auditar e registrar a incerteza como evidência PARCIAL.
+
+**Antes de emitir achado, checar a modulação do art. 39**: as obrigações dos arts. 6º, 17, 18, 19, 20, 27, 28, 29, 31, 32 e 40 são proporcionais ao grau de interferência sobre o conteúdo, ao número de usuários e ao porte; serviços com controle editorial e conteúdo licenciado são dispensados se cumprirem classificação indicativa, transparência etária, mediação parental e canal de denúncias (art. 39, §1º). Esses provedores, e os de conteúdo musical ou literário, também são dispensados de aferir idade se oferecerem contas ou perfis infantis e supervisão parental com bloqueio; conteúdo jornalístico e esportivo sob controle editorial é dispensado sem condição (Decreto nº 12.880/2026, art. 22). A dispensa não alcança a configuração mais protetiva por padrão (art. 7º).
 
 ## Validar:
 - prevenção e mitigação de risco, desde a concepção, contra as seis categorias do art. 6º: exploração/abuso sexual; violência e bullying virtual; indução a automutilação, suicídio ou uso de substâncias; jogos de azar, apostas, tabaco, álcool e narcóticos; publicidade predatória; pornografia;
 - configuração **no modelo mais protetivo por padrão** e vedação a tratamento que viole a privacidade do menor (art. 7º);
-- gestão de riscos, classificação indicativa, bloqueio de conteúdo inadequado, defaults contra uso compulsivo e informação da faixa etária no acesso (art. 8º);
-- em conteúdo impróprio/adulto: **verificação confiável de idade a cada acesso, vedada a autodeclaração** (art. 9º, §1º), e bloqueio de criação de conta em serviço pornográfico (art. 9º, §3º);
+- gestão de riscos, classificação indicativa, bloqueio de conteúdo inadequado, defaults contra uso compulsivo e informação da faixa etária no acesso (art. 8º). São mecanismos de incentivo ao uso excessivo a ocultação de pontos naturais de parada, o acionamento de novos conteúdos sem solicitação, a recompensa por tempo de uso e as notificações excessivas (Decreto nº 12.880/2026, art. 9º);
+- **avaliação de impacto à segurança e à saúde** de crianças e adolescentes, com acompanhamento da efetividade das medidas e **versão resumida publicada** em linguagem clara (Decreto, art. 47) — o conteúdo mínimo depende de ato da ANPD, mas fazer e publicar o resumo já é exigível;
+- em **IA generativa e agentes conversacionais**: transparência quanto ao caráter sintético e automatizado da interação, prevenção de manipulação comportamental, avaliação do risco algorítmico e salvaguardas ao desenvolvimento (Decreto, art. 11); interação automatizada de teor sexualmente explícito equipara-se a conteúdo pornográfico (art. 16, §4º);
+- em conteúdo impróprio/adulto: **verificação confiável de idade a cada acesso, vedada a autodeclaração** (art. 9º, §1º), e bloqueio de criação de conta em serviço pornográfico (art. 9º, §3º). Conteúdo, produto ou serviço proibido (lista do Decreto, art. 15, §1º) exige verificação de idade eficaz e impedimento efetivo do acesso; pornografia fica oculta ou desfocada por padrão para usuário não cadastrado ou sem idade verificada (art. 17); rede social com conteúdo proibido oferece versão sem ele ou verifica a idade sem autodeclaração (art. 19);
+- na **venda ou intermediação de produtos proibidos a menores** (bebidas alcoólicas, fumígenos, apostas, armas, entre outros): verificação de idade efetiva no cadastro, com bloqueio da compra por padrão e sem desbloqueio por autodeclaração, ou na aquisição; usuário não autenticado fica bloqueado (Decreto, art. 18);
 - em lojas de aplicativos e sistemas operacionais: aferição proporcional e **auditável**, supervisão parental e **API segura de sinal de idade** com minimização (art. 12), além de consentimento do responsável para download, sem presunção por silêncio (art. 12, §2º);
-- uso dos dados de verificação de idade **exclusivamente** para essa finalidade (art. 13), inclusive os coletados em confirmação de conta suspeita (art. 24, §3º);
+- uso dos dados de verificação de idade **exclusivamente** para essa finalidade (art. 13), inclusive os coletados em confirmação de conta suspeita (art. 24, §3º); a imagem ou cópia de documento não pode ser armazenada e é eliminada logo após a captura da idade (Decreto, art. 24, §3º), e o sinal de idade não leva data de nascimento exata nem identidade civil (art. 25, §1º);
 - recebimento do sinal de idade e **mecanismo próprio de bloqueio**, independente de loja e SO (art. 14);
 - responsabilidade **solidária** de toda a cadeia digital (art. 15);
 - informação sobre riscos acessível independentemente da aquisição e, em tratamento além do estritamente necessário, mapeamento de riscos e **relatório de impacto** (art. 16);
 - ferramentas de supervisão parental com os nove defaults do art. 17, §4º e as seis capacidades do art. 18, incluindo restrição de compras, identificação de adultos que interagem, controle de recomendação personalizada e conteúdo em português;
-- ausência de **dark patterns** que enfraqueçam salvaguardas (art. 18, §2º);
+- ausência de **dark patterns** que enfraqueçam salvaguardas (art. 18, §2º): obstrução, exploração de vulnerabilidades cognitivas e prejuízo ao exercício de direitos (Decreto, art. 10);
 - em produtos de monitoramento infantil: inviolabilidade das informações e aviso ao menor em linguagem apropriada (art. 19);
-- **vedação a caixas de recompensa (loot boxes)** em jogos de acesso provável por menores (art. 20) e limitação padrão das funcionalidades de interação (art. 21);
+- **vedação a caixas de recompensa (loot boxes)** em jogos de acesso provável por menores (art. 20) — o jogo que as mantém verifica a idade para impedir o acesso de menores, ou as restringe totalmente por padrão (Decreto, art. 23) — e limitação padrão das funcionalidades de interação (art. 21);
 - **vedação ao perfilamento para publicidade** a menores, inclusive por análise emocional, realidade aumentada, estendida ou virtual (art. 22), à monetização/impulsionamento de conteúdo erotizado (art. 23) e à criação de perfis comportamentais, mesmo com dados da verificação de idade (art. 26);
+- em **conteúdo monetizado ou impulsionado que explore de forma habitual a imagem ou a rotina de criança ou adolescente**: exigência da autorização judicial do art. 149 do ECA e retirada imediata do conteúdo sem ela (Decreto, art. 34);
 - vinculação da conta de usuários **de até 16 anos** à conta de um responsável legal, com suspensão e direito de apelação diante de indícios (art. 24);
 - remoção e comunicação de conteúdo de exploração, abuso sexual, sequestro e aliciamento às autoridades, com retenção dos dados pelo prazo do **art. 15 do Marco Civil da Internet — 6 meses** (art. 27);
 - canal público de notificação, retirada sem ordem judicial mediante notificação identificada (vedado anonimato) e **direito de contestação** com indicação de análise humana ou automatizada (arts. 28 a 30);
 - **relatório semestral de transparência** para provedores com mais de 1.000.000 de usuários dessa faixa etária registrados com conexão no País, em português, no site do provedor, com os sete incisos do art. 31 — primeiro ciclo até 17/09/2026, cobrindo 01/01 a 30/06/2026 (prazo encerrado: desde 18/09/2026, a ausência de publicação é não conformidade atual; ciclos seguintes por semestre civil, com publicação até 1º/02 e 1º/08, conteúdo mínimo e dispensas do art. 39, §1º fixados pelo Despacho Decisório CD/ANPD nº 122/2026 — o relatório do 2º semestre de 2026 vence em 01/02/2027) — e acesso gratuito a dados para pesquisa;
 - mecanismos contra uso abusivo dos instrumentos de denúncia, com sanções internas graduadas e registros (arts. 32 e 33);
 - **representante legal no País** com poderes para receber citações e notificações (art. 40);
-- adesivo de alerta em embalagens de eletrônicos com acesso à internet (art. 38).
+- adesivo de alerta em embalagens de eletrônicos com acesso à internet (art. 38) — até a regulamentação da ANPD, só para equipamentos de apresentação exclusivamente direcionada a crianças e adolescentes, fabricados ou importados depois de 18/03/2026 (Decreto, art. 50).
+
+Fronteiras: conteúdo exibido ou consumido é `ECA-04` e compra e venda de produto proibido é `ECA-25`; a gestão de risco no produto é `ECA-03`, o relatório de impacto do tratamento de dados é `ECA-08` e a avaliação de impacto à segurança e à saúde, com o resumo público, é `ECA-26`; conteúdo erotizado é `ECA-14` e exploração habitual da imagem sem autorização judicial é `ECA-27`.
 
 ## Severidade
 A criticidade de cada item, com o agravante quando houver, está no catálogo (itens `ECA`).
@@ -736,7 +754,7 @@ Filial, sucursal ou estabelecimento no País de empresa estrangeira responde **s
 Esse regime é **cumulativo** com as sanções do art. 52 da LGPD.
 
 ## Fundamentação obrigatória
-Todo achado deste domínio deve citar o artigo do ECA Digital **e** o correlato na LGPD (art. 14, princípios do art. 6º e art. 46 quando for falha de segurança).
+Todo achado deste domínio deve citar o artigo do ECA Digital (e o do Decreto nº 12.880/2026, quando o detalhamento vier dele) **e** o correlato na LGPD (art. 14, princípios do art. 6º e art. 46 quando for falha de segurança).
 
 ---
 
@@ -786,24 +804,25 @@ Todo achado deste domínio deve citar o dispositivo do decreto (e do MCI, quando
 
 <!-- GERADO:INICIO monitoramento · fonte: base normativa, seção "Em monitoramento" · gerado por scripts/update-generated.py; não editar à mão -->
 
-Fonte única da situação das normas em monitoramento. Situação conferida em 2026-10.
+Fonte única da situação das normas em monitoramento. Situação conferida em 2026-11.
 
 Nada nesta seção origina `finding` nem `check_item` com status `NAO_CONFORME`. Usar apenas em `recomendacoes_tecnicas`, sempre rotulado como norma não vigente.
 
 ## ANPD: fiscalização, processo regulatório e agenda
-- **Revisão da Resolução CD/ANPD nº 1/2021** (Regulamento de Fiscalização e do Processo Administrativo Sancionador): consulta pública aberta em 09/09/2026, com audiência pública em 24/09/2026, encerrada em 26/10/2026; norma final ainda não publicada. A minuta adapta a fiscalização ao ECA Digital, ao regime de agência reguladora e às novas atribuições sobre provedores de aplicações de internet. Até a publicação da norma final, a Res. CD/ANPD nº 1/2021 segue vigente e continua sendo a referência de risco sancionatório.
-- **Revisão da Portaria ANPD nº 16/2021** (processo regulatório da própria ANPD): consulta pública aberta em 06/10/2026, audiência em 22/10/2026 e contribuições até 23/11/2026. Propõe converter a portaria em resolução, tornar obrigatórios os debates públicos e prever a participação de crianças e adolescentes. Não cria obrigação para agentes de tratamento.
+- **Revisão da Resolução CD/ANPD nº 1/2021** (Regulamento de Fiscalização e do Processo Administrativo Sancionador): Consulta Pública nº 1/2026, aberta em 09/09/2026, com audiência pública em 24/09/2026, encerrada em 26/10/2026; norma final ainda não publicada no início de novembro/2026. A minuta adapta a fiscalização ao ECA Digital, ao regime de agência reguladora e às novas atribuições sobre provedores de aplicações de internet. Até a publicação da norma final, a Res. CD/ANPD nº 1/2021 segue vigente e continua sendo a referência de risco sancionatório.
+- **Revisão da Resolução CD/ANPD nº 4/2023** (Regulamento de Dosimetria e Aplicação de Sanções Administrativas): Consulta Pública nº 3/2026, aberta em 15/10/2026, com audiência pública em 29/10/2026 e contribuições até 30/11/2026. A minuta estende a dosimetria às infrações ao ECA Digital e aos deveres dos provedores de aplicações de internet (Decretos nº 12.975/2026 e nº 12.976/2026). Até a norma final, a Res. CD/ANPD nº 4/2023 segue como referência de cálculo das sanções da LGPD, e as sanções do ECA Digital seguem o art. 35 da Lei nº 15.211/2025.
+- **Revisão da Portaria ANPD nº 16/2021** (processo regulatório da própria ANPD): Consulta Pública nº 2/2026, aberta em 06/10/2026, audiência em 22/10/2026 e contribuições até 23/11/2026. Propõe converter a portaria em resolução, tornar obrigatórios os debates públicos e prever a participação de crianças e adolescentes. Não cria obrigação para agentes de tratamento.
 - **Agenda Regulatória 2027-2028 e Agenda de Avaliação de Resultado Regulatório 2027-2030**: tomadas de subsídios abertas em 01/09/2026 e encerradas em 16/10/2026; agendas ainda não aprovadas. Eixos propostos para 2027-2028: ambiente digital seguro, sobretudo para crianças, adolescentes e mulheres (supervisão parental, padrões de design seguro, uso de IA por menores, transparência das plataformas, combate à geração de conteúdo ilícito por IA), e privacidade e proteção de dados (direitos dos titulares, reconhecimento facial, dados de saúde, decisões automatizadas). A avaliação de resultado inclui o Regulamento de Transferência Internacional e o guia de aferição de idade. Sem efeito até a resolução que aprovar as agendas.
 - **Guia Orientativo sobre Tratamento de Dados Pessoais de Alto Risco**: a minuta foi **rejeitada** por unanimidade pelo Conselho Diretor (Voto nº 11/2025/DIR-MW/CD, set/2026) e arquivada; a ANPD indicou que a análise de alto risco deve ocorrer no RIPD. Não citar a minuta: a decisão de alto risco segue a Res. CD/ANPD nº 2/2022, art. 4º, e o critério do modelo de severidade.
 
 ## Inteligência artificial
-- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024 e em tramitação na Câmara dos Deputados, aguardando parecer do relator na Comissão Especial; o relator indicou que a votação fica para depois das eleições de outubro de 2026, e no fim de outubro/2026 o parecer ainda não havia sido apresentado. Prevê classificação por nível de risco, direitos de transparência, explicação e contestação, governança de IA e sanções próprias.
+- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024 e em tramitação na Câmara dos Deputados, aguardando parecer do relator na Comissão Especial; o relator indicou que a votação fica para depois das eleições de outubro de 2026, e no início de novembro/2026 não havia notícia de parecer apresentado. Prevê classificação por nível de risco, direitos de transparência, explicação e contestação, governança de IA e sanções próprias.
 - **Nota Técnica da Sedigi/MJSP sobre companheiros de IA** (22/09/2026): sistemas conversacionais que simulam vínculo afetivo, acessíveis a crianças e adolescentes; encaminhada à ANPD e à Senacon. É preliminar e não vinculante; os indícios que aponta (aferição de idade só por autodeclaração, perfilamento emocional para publicidade, coleta de dados íntimos) são auditados pelos itens vigentes do ECA Digital e do art. 14 da LGPD.
 
 ## ECA Digital (domínio 16)
 - **Guia orientativo sobre aferição de idade** (Processo nº 00261.003182/2026-47): versão atualizada em maio/2026, tomada de subsídios encerrada em 09/07/2026; versão final prevista para a Etapa II e ainda não publicada.
-- **Guia sobre fornecedores de produtos ou serviços de tecnologia da informação** (Processo nº 00261.002701/2026-50): tomada de subsídios encerrada em 15/06/2026; versão final ainda não publicada.
-- **Parâmetros normativos definitivos de aferição de idade**, previstos para a Etapa II (a partir de agosto/2026) e ainda não publicados. O cronograma da ANPD prevê adaptação até novembro/2026, atualização dos regulamentos de fiscalização e sanção a partir de novembro/2026 e fiscalização a partir de janeiro/2027.
+- **Parâmetros normativos definitivos de aferição de idade**, previstos para a Etapa II (a partir de agosto/2026) e ainda não publicados. O cronograma da ANPD prevê adaptação até novembro/2026, atualização dos regulamentos de fiscalização e sanção a partir de novembro/2026 (em consulta pública — ver acima) e fiscalização a partir de janeiro/2027.
+- **Atos previstos no Decreto nº 12.880/2026 e ainda não editados**: regulamentação dos deveres de IA generativa (art. 11, parágrafo único), termos da verificação de idade na venda de produtos proibidos e em redes sociais (arts. 18 e 19), conteúdo mínimo e periodicidade da avaliação de impacto à segurança e à saúde (art. 47, §2º) e aviso em embalagens (art. 50, §3º). Os deveres do decreto já valem; os atos só trarão o detalhe.
 - O cronograma de fiscalização **não suspende a vigência da lei**: os requisitos do domínio 16 são exigíveis desde 17/03/2026.
 
 ## Plataformas digitais (domínio 17)

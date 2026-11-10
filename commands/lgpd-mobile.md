@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para aplicações mobile.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.10.1"
+  version: "1.11.0"
 ---
 
 # LGPD Mobile App
@@ -22,7 +22,7 @@ Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se 
 Ative o cenário `mobile_app`:
 - `core`, `legal`, `governance`, `mobile`, `appsec`, `cloud`.
 
-Adicione `eca-digital` se o app for classificado para faixa etária inferior a 18 anos nas lojas ou tiver usuários menores (gatilho normativo do router — ECA Digital, Lei nº 15.211/2025).
+Adicione `eca-digital` se o app for classificado para faixa etária inferior a 18 anos nas lojas, tiver usuários menores ou estiver em categoria com presunção de acesso provável (rede social, jogo, IA generativa, venda de produtos proibidos a menores); aferição de idade não afasta o gatilho (gatilho normativo do router — ECA Digital, Lei nº 15.211/2025).
 
 Adicione `plataformas-digitais` se o app intermediar conteúdo de terceiros com difusão pública, oferecer anúncios/impulsionamento pagos ou gerar/alterar imagem ou som de pessoas (gatilho normativo do router — Decretos nº 12.975/2026 e nº 12.976/2026).
 

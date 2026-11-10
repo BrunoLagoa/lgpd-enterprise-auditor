@@ -108,6 +108,49 @@ if data["meta"].get("framework_version") != sys.argv[1]:
   fi
 fi
 
+# A página do projeto repete números do catálogo e do exemplo: conferir para que não fiquem para trás.
+LANDING="${REPO_ROOT}/docs/index.html"
+echo "Página do projeto: docs/index.html"
+if [[ ! -f "$LANDING" ]]; then
+  fail "página do projeto não encontrada"
+elif [[ ! -f "$EXAMPLE" ]]; then
+  fail "exemplo ausente: números da página não conferidos"
+elif command -v python3 > /dev/null 2>&1; then
+  # shellcheck disable=SC2016
+  CATALOG_TOTAL="$(cat "${FRAMEWORK}"/*/*.md | grep -cE '^\| `[A-Z][A-Z][A-Z]?-[0-9][0-9]` ' || true)"
+  if LANDING_CHECK="$(data_block "$EXAMPLE" | python3 -c '
+import json, sys
+data = json.load(sys.stdin)
+page = open(sys.argv[1], encoding="utf-8").read()
+total = sys.argv[2]
+def br(number):
+    return ("%.1f" % number).replace(".", ",")
+score = data["score_lgpd"]
+items = data["checklist_conformidade"]
+applicable = sum(1 for item in items if item.get("applicability") == "APLICAVEL")
+expected = [
+    "<dd>%s</dd>" % total,
+    "%s itens com IDs" % total,
+    "%d achados" % len(data["nao_conformidades"]),
+    "Score LGPD %d de 100" % score["score"],
+    "%d itens avaliados: %d aplicáveis" % (len(items), applicable),
+    "cobertura %s%%" % br(score["coverage"]),
+    "score técnico %s" % br(score["score_tecnico"]),
+    "score documental %s" % br(score["score_documental"]),
+]
+missing = [text for text in expected if text not in page]
+if missing:
+    sys.exit("não encontrado em docs/index.html: " + "; ".join(missing))
+' "$LANDING" "$CATALOG_TOTAL" 2>&1)"; then
+    ok "números da página iguais aos do catálogo (${CATALOG_TOTAL} itens) e do exemplo"
+  else
+    fail "números da página iguais aos do catálogo (${CATALOG_TOTAL} itens) e do exemplo"
+    printf "%s\n" "$LANDING_CHECK" | sed 's/^/         /'
+  fi
+else
+  echo "  --   python3 ausente: números da página não conferidos"
+fi
+
 echo
 if [[ "$FAILURES" -gt 0 ]]; then
   echo "${FAILURES} falha(s)."

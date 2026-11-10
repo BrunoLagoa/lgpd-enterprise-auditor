@@ -139,7 +139,7 @@ This framework uses the **General Data Protection Law (LGPD)** as its primary le
 
 - **Official text (Planalto):** [Law No. 13.709/2018](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
 - **Regulatory authority:** [ANPD](https://www.gov.br/anpd/) — since **Law No. 15.352/2026**, renamed National Data Protection **Agency** and placed under the regulatory-agency regime of Law No. 13.848/2019 (LGPD art. 55-A).
-- **Related statute:** [Digital Statute of the Child and Adolescent — Law No. 15.211/2025](https://www.gov.br/anpd/pt-br/assuntos/eca-digital), in force since 2026-03-17, regulated by Decree No. 12.880/2026 and enforced by ANPD; the deadlines of the semiannual transparency report follow ANPD Decision Order (Despacho Decisório) CD/ANPD No. 122/2026.
+- **Related statute:** [Digital Statute of the Child and Adolescent — Law No. 15.211/2025](https://www.gov.br/anpd/pt-br/assuntos/eca-digital), in force since 2026-03-17, regulated by Decree No. 12.880/2026 and enforced by ANPD; the deadlines of the semiannual transparency report follow ANPD Decision Order (Despacho Decisório) CD/ANPD No. 122/2026, and scoping follows ANPD's Guidance on the scope of the statute (version 1.0, 2026-10-28).
 - **Digital platforms:** [Decree No. 12.975/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12975.htm) (updates the Internet Civil Framework regulation — duty of care, notice and takedown, ads, access-log retention) and [Decree No. 12.976/2026](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/decreto/D12976.htm) (protection of women online), in force since 2026-07-20 and enforced by ANPD.
 
 ANPD regulations covered by the framework:
@@ -158,7 +158,7 @@ ANPD regulations covered by the framework:
 
 | Item | Value |
 |------|--------|
-| Last synchronization | `2026-10` |
+| Last synchronization | `2026-11` |
 
 ## How the project is organized
 
@@ -258,7 +258,7 @@ The scenario sets the starting modules. The router adds others when the audited 
 
 | Module | Added when |
 |---|---|
-| `eca-digital` | there are, or plausibly are, users under 18. An age gate based only on self-declared age does not remove the trigger when another indicator exists |
+| `eca-digital` | the service is aimed at users under 18, falls in a category the law presumes they access (social network, app store, operating system, catalog streaming, game, adult content, generative AI, sale of products forbidden to minors) or shows another sign of use by minors. Age assurance, even a robust one, does not remove the trigger |
 | `plataformas-digitais` | the service hosts publicly shared third-party content, sells ads or boosts, or offers AI that generates or alters people's image or voice |
 | `ai-llm` | there is any call to an LLM or generative-AI provider or SDK, an in-house model, embeddings, RAG, a vector database or fine-tuning |
 | `mobile` | there is an iOS or Android app (native, Flutter, React Native) |

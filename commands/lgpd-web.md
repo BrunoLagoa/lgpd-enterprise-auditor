@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para sites e landing pages.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.10.1"
+  version: "1.11.0"
 ---
 
 # LGPD Web Site / Landing Page
@@ -24,7 +24,7 @@ Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se 
 Ative o cenário `web_site`:
 - `core`, `legal`, `governance`, `appsec`, `cloud`.
 
-Adicione `eca-digital` se o site for direcionado ou provavelmente acessado por menores de 18 anos (gatilho normativo do router — ECA Digital, Lei nº 15.211/2025).
+Adicione `eca-digital` se o site for direcionado ou provavelmente acessado por menores de 18 anos, ou se estiver em categoria com presunção de acesso provável (rede social, jogo, conteúdo adulto, IA generativa, venda de produtos proibidos a menores); aferição de idade não afasta o gatilho (gatilho normativo do router — ECA Digital, Lei nº 15.211/2025).
 
 Adicione `plataformas-digitais` se o site publicar comentários ou outro conteúdo de terceiros com difusão pública, ou vender anúncios/impulsionamento (gatilho normativo do router — Decretos nº 12.975/2026 e nº 12.976/2026).
 

@@ -6,8 +6,27 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.11.0] - 2026-11-10
+
+Base normativa sincronizada em novembro/2026: o Guia Orientativo da ANPD sobre o escopo do ECA Digital (versão 1.0, 28/10/2026) e uma conferência do Decreto nº 12.880/2026, artigo por artigo, contra o catálogo.
+
 ### Adicionado
+- Quatro itens no módulo `eca-digital`, para deveres do Decreto nº 12.880/2026 que não tinham item: `ECA-24`, IA generativa e agentes conversacionais (art. 11: caráter sintético da interação, manipulação comportamental, risco algorítmico e salvaguardas); `ECA-25`, verificação de idade na venda ou intermediação de produtos proibidos a menores (art. 18); `ECA-26`, avaliação de impacto à segurança e à saúde com resumo publicado (art. 47); `ECA-27`, autorização judicial para conteúdo monetizado ou impulsionado que explore de forma habitual a imagem de criança ou adolescente (art. 34). O catálogo passa a ter 178 itens; o relatório de exemplo não muda, porque não ativa esse módulo.
+- Regras de enquadramento do ECA Digital, na skill, no módulo e no roteador: os três elementos de produto ou serviço de TI e o que fica fora; os três requisitos cumulativos do acesso provável; as oito categorias com presunção de acesso provável (rede social, loja de aplicativos, sistema operacional, serviço com controle editorial, jogo eletrônico, conteúdo adulto, IA generativa e comércio de produtos proibidos a menores), afastada só com fundamentação no caso concreto; e os indícios que ajudam fora dessas categorias.
+- `scripts/tests/test-html-report.sh` confere os números que a página do projeto repete: total de itens do catálogo e, do exemplo, score, achados, itens avaliados, cobertura e scores técnico e documental.
 - `docs/index.html`: landing page do projeto, sem dependências externas, pronta para o GitHub Pages (pasta `/docs`), com a fonte Schibsted Grotesk (SIL OFL 1.1) servida junto em `docs/assets/fonts/`. Explica o problema, o funcionamento (com um terminal que acompanha cada etapa durante a rolagem), os benefícios, os cenários, a compatibilidade, os limites e a instalação (com o comando copiável já no topo), e traz uma demonstração navegável com os 54 achados, o plano de adequação e o cálculo do score do relatório de exemplo (dados fictícios). Tema escuro por padrão e tema claro no botão do cabeçalho (a escolha fica salva no navegador). Respeita `prefers-reduced-motion` e funciona sem JavaScript. Publicada em https://brunolagoa.github.io/lgpd-enterprise-auditor/, com link e uma captura da página (`assets/site-landing.png`) no topo dos dois READMEs, no lugar da imagem do relatório de exemplo.
+
+### Alterado
+- Gatilho do `eca-digital`: nenhuma medida de cumprimento afasta o módulo. Antes, só o bloqueio por idade autodeclarada não afastava; agora a aferição de idade, mesmo robusta, os termos de uso que proíbem menores e a declaração de público adulto também não, porque a aferição é obrigação que nasce do enquadramento. Os comandos `/lgpd-saas`, `/lgpd-web`, `/lgpd-mobile`, `/lgpd-ai-llm` e `/lgpd-plataformas-digitais` repetem a regra, e sistema de IA generativa oferecido a usuários passa a ativar o módulo por presunção.
+- `ECA-06` passa a exigir também a eliminação imediata da imagem ou cópia de documento usada na aferição de idade (Decreto nº 12.880/2026, art. 24, §3º).
+- `ECA-11` aceita as duas formas de cumprir previstas no decreto (art. 23): jogo sem caixas de recompensa, ou com o acesso de menores a elas impedido por verificação de idade ou restrição total por padrão. Antes, qualquer caixa de recompensa reprovava o item.
+- `ECA-22` segue a regra transitória do decreto (art. 50): até a regulamentação da ANPD, o aviso na embalagem vale para equipamentos de apresentação exclusivamente direcionada a crianças e adolescentes, fabricados ou importados depois de 18/03/2026.
+- Módulo `eca-digital` e domínio 16 da skill com o detalhamento do decreto: mecanismos de incentivo ao uso excessivo (art. 9º), práticas manipulativas (art. 10), conteúdo e produtos proibidos (arts. 14 a 19), dispensa de aferição de idade para serviços com controle editorial (art. 22), sinal de idade e contestação (arts. 24 a 27), publicidade (arts. 31, 33 e 35) e comunicação ao Centro Nacional de Triagem de Notificações (art. 39). A fronteira entre os itens novos e os existentes está escrita ao lado da tabela.
+- Normas em monitoramento, situação do início de novembro/2026: o guia de escopo do ECA Digital sai da lista, por ter versão final; entra a Consulta Pública nº 3/2026, sobre a revisão do Regulamento de Dosimetria (Res. CD/ANPD nº 4/2023), aberta até 30/11/2026; entram os atos previstos no Decreto nº 12.880/2026 e ainda não editados. Sem mudança no PL nº 2338/2023, na revisão da Res. CD/ANPD nº 1/2021 e nas agendas regulatórias.
+- Modelo `age-assurance-checklist.md` com as categorias presumidas, a eliminação do documento e as alternativas às caixas de recompensa.
+
+### Corrigido
+- Página do projeto: o total de itens do catálogo.
 
 ## [1.10.1] - 2026-10-26
 
@@ -236,7 +255,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.1...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.11.0...HEAD
+[1.11.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.1...v1.11.0
 [1.10.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.0...v1.10.1
 [1.10.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.9.0...v1.10.0
 [1.9.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.8.1...v1.9.0

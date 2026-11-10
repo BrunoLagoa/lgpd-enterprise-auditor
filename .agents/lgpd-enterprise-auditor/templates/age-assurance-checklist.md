@@ -1,6 +1,6 @@
 # Checklist — aferição de idade (ECA Digital)
 
-Roteiro auditável de mecanismos confiáveis de aferição de idade, alinhado aos **arts. 9º a 15 e 24 da Lei nº 15.211/2025**, às orientações preliminares da ANPD (março/2026) e ao Radar Tecnológico nº 5. Usar junto de [[eca-digital]].
+Roteiro auditável de mecanismos confiáveis de aferição de idade, alinhado aos **arts. 9º a 15 e 24 da Lei nº 15.211/2025**, aos **arts. 14 a 27 do Decreto nº 12.880/2026**, às orientações preliminares da ANPD (março/2026) e ao Radar Tecnológico nº 5. Usar junto de [[eca-digital]].
 
 Regra de leitura: a **vedação expressa à autodeclaração** está no art. 9º, §1º e alcança serviços com conteúdo impróprio, inadequado ou proibido a menores de 18 anos, exigindo verificação **a cada acesso**. Nos demais serviços, a autodeclaração isolada não satisfaz os arts. 10, 12 e 14 nem os "esforços razoáveis" do art. 14, §5º da LGPD.
 
@@ -8,12 +8,13 @@ Regra de leitura: a **vedação expressa à autodeclaração** está no art. 9º
 | Item | Resposta | Evidência |
 |---|---|---|
 | O serviço é direcionado a menores de 18 anos? | | |
-| O serviço é provavelmente acessado por menores? | | |
+| O serviço está em categoria com presunção de acesso provável (rede social, loja de aplicativos, sistema operacional, controle editorial, jogo, conteúdo adulto, IA generativa, venda de produtos proibidos a menores)? | | |
+| Fora dessas categorias, o serviço é provavelmente acessado por menores? | | |
 | Há cadastro de usuário? | | |
 | Quantos usuários menores de 18 anos registrados? | | |
 | Classificação etária nas lojas de aplicativos | | |
 
-Se qualquer resposta indicar presença de menores, o restante do checklist é obrigatório.
+Se qualquer resposta indicar presença de menores ou categoria presumida, o restante do checklist é obrigatório. A existência de aferição de idade não tira o serviço do escopo: ela é o que este checklist avalia.
 
 ## 2. Mecanismo de aferição
 | Requisito | Base | Status | Evidência |
@@ -47,7 +48,8 @@ Preencher apenas quando o auditado for provedor de loja de aplicações ou de si
 | Vedado reuso para marketing, perfilamento, antifraude ou treinamento de modelo | arts. 13 e 26 | | |
 | Dados de confirmação de identidade em conta suspeita usados só para verificação | art. 24, §3º | | |
 | Preferência por prova de faixa etária em vez de documento completo | art. 12, §1º | | |
-| Documento/biometria descartado após a verificação, ou retenção justificada e prazada | art. 13 | | |
+| Imagem ou cópia de documento eliminada de modo imediato e irreversível após a captura da idade; fica só o dado de idade ou faixa etária | Decreto nº 12.880/2026, art. 24, §3º | | |
+| Biometria descartada após a verificação, ou retenção justificada e prazada | art. 13 | | |
 | Dado biométrico tratado como sensível, com base legal própria | LGPD art. 11 | | |
 | Transferência internacional do provedor de verificação com mecanismo do art. 33 | LGPD art. 33 | | |
 
@@ -72,7 +74,7 @@ Preencher apenas quando o auditado for provedor de loja de aplicações ou de si
 | Recomendação personalizada controlável, com opção de desativação | art. 17, §4º, V | | |
 | Publicidade por perfilamento, análise emocional ou RA/RV vedada para menores | arts. 22 e 26 | | |
 | Compras e transações financeiras restringíveis pelo responsável | art. 18, II | | |
-| Caixas de recompensa (loot boxes) ausentes em jogo de acesso provável | art. 20 | | |
+| Caixas de recompensa (loot boxes) ausentes em jogo de acesso provável, ou inacessíveis a menores por verificação de idade ou restrição total por padrão | art. 20; Decreto nº 12.880/2026, art. 23 | | |
 | Ausência de dark patterns que enfraqueçam salvaguardas | art. 18, §2º | | |
 
 ## 6. Acessibilidade, inclusão e recurso

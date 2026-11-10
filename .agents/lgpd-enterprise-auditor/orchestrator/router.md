@@ -41,14 +41,18 @@ Cada manifesto em `orchestrator/manifests/` lista em `files` os arquivos do mód
 - Se houver Kubernetes ou CI/CD ativo, adicionar `devsecops`.
 
 ### Gatilho normativo — público infantojuvenil
-Adicionar `eca-digital` a **qualquer** cenário quando houver indício de usuários menores de 18 anos:
-- serviço direcionado a crianças ou adolescentes;
-- serviço provavelmente acessado por menores (rede social, vídeo, jogo, mensageria, fórum, marketplace);
-- cadastro que aceite ou não bloqueie usuários menores de 18 anos;
-- jogos eletrônicos, itens virtuais pagos ou monetização por engajamento;
-- app classificado para faixa etária inferior a 18 anos nas lojas.
+Adicionar `eca-digital` a **qualquer** cenário em três situações (regras completas em `legal/eca-digital.md`, "Regras de enquadramento"):
 
-Bloqueio etário baseado só em idade ou data de nascimento **autodeclarada não afasta** o gatilho quando houver qualquer outro indício desta lista: a autodeclaração isolada é insuficiente (arts. 10, 12 e 14 do ECA Digital; LGPD art. 14, §5º). Sem nenhum outro indício (ex.: serviço B2B ou profissional, sem atrativo para menores), o módulo não é ativado e a decisão vai para o escopo excluído, com a justificativa.
+1. **Serviço direcionado** a crianças ou adolescentes, por declaração do próprio fornecedor.
+2. **Categoria com presunção de acesso provável**: rede social; loja de aplicativos; sistema operacional; serviço com controle editorial (streaming de catálogo); jogo eletrônico; conteúdo adulto; **sistema de IA generativa ou agente conversacional** oferecido a usuários; comércio eletrônico que venda ou intermedeie produtos proibidos a menores (bebidas alcoólicas, fumígenos, apostas, armas). A presunção só é afastada com fundamentação nas características concretas do serviço (ex.: ferramenta restrita a funcionários de uma empresa), registrada no escopo excluído.
+3. **Outros serviços com indício de usuários menores de 18 anos**:
+   - serviço provavelmente acessado por menores (vídeo, mensageria, fórum, marketplace, educação);
+   - cadastro que aceite ou não bloqueie usuários menores de 18 anos;
+   - itens virtuais pagos ou monetização por engajamento;
+   - app classificado para faixa etária inferior a 18 anos nas lojas;
+   - conteúdo, design ou publicidade atrativos a crianças e adolescentes, ou dados de uso efetivo por eles.
+
+**Nenhuma medida de cumprimento afasta o gatilho.** Aferição de idade — autodeclarada ou robusta —, termos de uso que proíbem menores e declaração de público adulto não tiram o serviço do escopo: a aferição de idade é obrigação que nasce do enquadramento e é avaliada nos itens (ECA Digital, arts. 9º, 10, 12 e 14; LGPD art. 14, §5º). Na situação 3, sem nenhum indício além do cadastro aberto (ex.: serviço B2B ou profissional, sem atrativo para menores), o módulo não é ativado e a decisão vai para o escopo excluído, com a justificativa.
 
 Esse gatilho é **normativo, não técnico**: na dúvida sobre a presença de menores, ativar o módulo e registrar a incerteza como evidência `PARCIAL`.
 

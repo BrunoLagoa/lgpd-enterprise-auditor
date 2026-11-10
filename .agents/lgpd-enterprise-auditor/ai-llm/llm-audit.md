@@ -6,6 +6,7 @@ Auditar uso de IA/LLM com foco em privacidade, segurança e conformidade regulat
 ## Checklist atômico
 Perguntas de enquadramento (não pontuam):
 - A funcionalidade de IA pode gerar ou alterar imagem ou som de pessoas? Se sim, ativar [[plataformas-digitais]]: as salvaguardas contra conteúdo íntimo de terceiro (Decreto nº 12.976/2026, arts. 9º e 10) são avaliadas lá (`PD-15`).
+- O sistema gera conteúdo e interage com usuários em linguagem natural (modelo de linguagem, agente conversacional)? Se for oferecido ao público, presume-se de acesso provável por crianças e adolescentes: ativar [[eca-digital]], onde os deveres do Decreto nº 12.880/2026, art. 11, são avaliados (`ECA-24`). A presunção só cai com fundamentação concreta, como o uso restrito a funcionários.
 - Menores estão expostos a recomendação algorítmica ou perfilamento? Se sim, ativar [[eca-digital]].
 - Dados biométricos ou neurodados alimentam o modelo? Se sim, aplicar o regime de dado sensível (art. 11) em `BL-01`.
 

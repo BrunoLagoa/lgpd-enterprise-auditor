@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para SaaS web.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.10.1"
+  version: "1.11.0"
 ---
 
 # LGPD SaaS Web
@@ -22,7 +22,7 @@ Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se 
 Ative o cenário `saas_web`:
 - `core`, `legal`, `governance`, `appsec`, `cloud`, `devsecops`.
 
-Adicione `eca-digital` se houver usuários menores de 18 anos, ainda que o produto não seja direcionado a eles (gatilho normativo do router — ECA Digital, Lei nº 15.211/2025).
+Adicione `eca-digital` se houver usuários menores de 18 anos, ainda que o produto não seja direcionado a eles, ou se o produto estiver em categoria com presunção de acesso provável (rede social, jogo, IA generativa oferecida a usuários, venda de produtos proibidos a menores); aferição de idade não afasta o gatilho (gatilho normativo do router — ECA Digital, Lei nº 15.211/2025).
 
 Adicione `plataformas-digitais` se houver conteúdo gerado por usuários com difusão pública, anúncios/impulsionamento pagos ou IA que gere ou altere imagem ou som de pessoas (gatilho normativo do router — Decretos nº 12.975/2026 e nº 12.976/2026).
 

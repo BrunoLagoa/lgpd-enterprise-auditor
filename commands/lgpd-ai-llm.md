@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para sistemas com IA/LLM.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.10.1"
+  version: "1.11.0"
 ---
 
 # LGPD IA/LLM
@@ -22,7 +22,7 @@ Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se 
 Ative o cenário `ai_llm_system`:
 - `core`, `legal`, `governance`, `ai-llm`, `appsec`.
 
-Adicione `eca-digital` se menores forem expostos a recomendação algorítmica, perfilamento ou conteúdo gerado por IA (gatilho normativo do router — ECA Digital, Lei nº 15.211/2025).
+Adicione `eca-digital` se o sistema for IA generativa ou agente conversacional oferecido a usuários — a lei presume o acesso provável por menores, salvo fundamentação concreta em contrário, como o uso restrito a funcionários — ou se menores forem expostos a recomendação algorítmica ou perfilamento (gatilho normativo do router — ECA Digital, Lei nº 15.211/2025, e Decreto nº 12.880/2026, art. 11).
 
 Adicione `plataformas-digitais` se a IA puder gerar ou alterar imagem ou som de pessoas (vedação de conteúdo íntimo do art. 9º do Decreto nº 12.976/2026) ou moderar conteúdo de terceiros (gatilho normativo do router — Decretos nº 12.975/2026 e nº 12.976/2026).
 

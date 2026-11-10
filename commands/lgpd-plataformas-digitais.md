@@ -4,7 +4,7 @@ description: Executa auditoria LGPD + deveres de plataformas digitais (Decretos 
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.10.1"
+  version: "1.11.0"
 ---
 
 # LGPD + Plataformas Digitais (conteúdo de terceiros)
@@ -27,7 +27,7 @@ Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se 
 Ative o cenário `digital_platform`:
 - `core`, `legal`, `plataformas-digitais`, `governance`, `appsec`, `cloud`.
 
-Adicione `ai-llm` se houver IA generativa ou moderação automatizada, e `eca-digital` se o serviço for direcionado ou provavelmente acessado por menores de 18 anos (gatilhos do router).
+Adicione `ai-llm` se houver IA generativa ou moderação automatizada, e `eca-digital` se o serviço for direcionado ou provavelmente acessado por menores de 18 anos — rede social, jogo e IA generativa têm presunção de acesso provável, e aferição de idade não afasta o gatilho (gatilhos do router).
 
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;
