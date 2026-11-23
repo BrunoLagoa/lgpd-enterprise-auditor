@@ -5,7 +5,7 @@ param(
   [Parameter(Position = 0)]
   [ValidateSet("install", "update", "uninstall", "check")]
   [string]$Action = "install",
-  [ValidateSet("claude", "cursor", "vscode", "opencode", "agents")]
+  [ValidateSet("claude", "cursor", "vscode", "opencode", "antigravity", "agents")]
   [string]$Target,
   [switch]$WithSkill,
   [switch]$NoSkill,
@@ -25,7 +25,7 @@ $script:FrameworkRel = ".agents/lgpd-enterprise-auditor"
 $script:StateRel = "$script:FrameworkRel/.install"
 $script:SkillName = "lgpd-enterprise-auditor"
 $script:ExitNotFound = 2
-$script:SupportedTargets = @("claude", "cursor", "vscode", "opencode", "agents")
+$script:SupportedTargets = @("claude", "cursor", "vscode", "opencode", "antigravity", "agents")
 $script:Utf8NoBom = New-Object System.Text.UTF8Encoding $false
 
 $script:SourceRoot = ""
@@ -91,7 +91,7 @@ function Show-Banner([string]$Title) {
   Write-Host "LGPD Enterprise Auditor $Title"
   Write-Host ""
   Write-Host "Framework de auditoria de conformidade LGPD orientado a evidências, para usar com o seu"
-  Write-Host "assistente de IA (Claude Code, Cursor, VS Code + Copilot, OpenCode, Codex, Gemini CLI)."
+  Write-Host "assistente de IA (Claude Code, Cursor, VS Code + Copilot, OpenCode, Antigravity, Codex, Gemini CLI)."
   Write-Host "A instalação é local: tudo fica dentro do projeto auditado."
   Write-Host ""
 }
@@ -110,7 +110,7 @@ Ações:
   check       Verifica a instalação do projeto
 
 Opções:
-  -Target <claude|cursor|vscode|opencode|agents>  Ferramenta (obrigatória com -NonInteractive no install)
+  -Target <claude|cursor|vscode|opencode|antigravity|agents>  Ferramenta (obrigatória com -NonInteractive no install)
   -WithSkill              Instala também a skill
   -NoSkill                Não instala a skill (padrão)
   -ProjectDir <dir>       Projeto de destino (padrão: raiz git do diretório atual)
@@ -189,6 +189,7 @@ function Get-TargetLabel([string]$Name) {
     "cursor" { return "cursor (Cursor)" }
     "vscode" { return "vscode (VS Code + GitHub Copilot)" }
     "opencode" { return "opencode (OpenCode)" }
+    "antigravity" { return "antigravity (Antigravity)" }
     "agents" { return "agents (outra ferramenta: Codex, Gemini CLI e similares)" }
   }
 }
@@ -199,12 +200,15 @@ function Get-TargetCommandsDir([string]$Name) {
     "cursor" { return ".cursor/commands" }
     "vscode" { return ".github/prompts" }
     "opencode" { return ".opencode/commands" }
+    "antigravity" { return ".agents/skills" }
     default { return "" }
   }
 }
 
 function Get-TargetCommandFile([string]$Name, [string]$Stem) {
   if ($Name -eq "vscode") { return "$Stem.prompt.md" }
+  # No Antigravity, slash commands do usuário são skills: cada comando vira .agents/skills/<comando>/SKILL.md.
+  if ($Name -eq "antigravity") { return "$Stem/SKILL.md" }
   return "$Stem.md"
 }
 
@@ -221,6 +225,10 @@ function Show-NextSteps([string]$Name, [string]$Skill) {
     "cursor" { Write-Host "  No chat do Cursor, digite /lgpd-saas, /lgpd-full-audit etc." }
     "vscode" { Write-Host "  No Copilot Chat do VS Code, digite /lgpd-saas, /lgpd-full-audit etc." }
     "opencode" { Write-Host "  Rode opencode na raiz do projeto e use /lgpd-saas, /lgpd-full-audit etc." }
+    "antigravity" {
+      Write-Host "  No chat do Antigravity, digite /lgpd-saas, /lgpd-full-audit etc."
+      Write-Host "  Se os comandos não aparecerem ao digitar /, recarregue a janela (Developer: Reload Window)."
+    }
     "agents" { Write-Host "  Peça ao seu agente: `"faça uma auditoria LGPD deste projeto`" — ele carrega a skill $script:SkillName." }
   }
   if ($Skill -eq "1" -and $Name -ne "agents") {
@@ -234,7 +242,7 @@ function Write-TextFile([string]$Path, [string[]]$Lines) {
   [System.IO.File]::WriteAllText($Path, (($Lines -join "`n") + "`n"), $script:Utf8NoBom)
 }
 
-# Claude e OpenCode leem o frontmatter como está.
+# Claude, OpenCode e Antigravity leem o frontmatter como está.
 # Cursor: remove o frontmatter e promove a description para a primeira linha.
 # VS Code: mantém só os campos aceitos em .prompt.md (name, description) e roda em modo agent.
 function Write-Command([string]$Name, [string]$Source, [string]$Destination) {
@@ -490,6 +498,11 @@ function Remove-TargetFiles([string]$Name) {
     if (-not (Test-SafeRelPath $file)) { continue }
     $path = Join-Rel $script:ProjectRoot $file
     if (Test-Path -LiteralPath $path) { Remove-Item -LiteralPath $path -Force }
+    # Remove a pasta do comando quando ficou vazia (antigravity: .agents/skills/<comando>/).
+    $parent = Split-Path -Parent $path
+    if ((Test-Path -LiteralPath $parent -PathType Container) -and -not (Get-ChildItem -LiteralPath $parent -Force | Select-Object -First 1)) {
+      Remove-Item -LiteralPath $parent -Force
+    }
   }
 
   $skillDir = [string]$manifest.skillDir
@@ -551,6 +564,7 @@ function Install-Target([string]$Name, [string]$Skill) {
     $sources = Get-ChildItem -LiteralPath (Join-Path $script:SourceRoot "commands") -Filter "*.md" -File | Sort-Object Name
     foreach ($source in $sources) {
       $rel = "$commandsDir/$(Get-TargetCommandFile $Name $source.BaseName)"
+      New-Item -ItemType Directory -Force -Path (Split-Path -Parent (Join-Rel $script:ProjectRoot $rel)) | Out-Null
       Write-Command $Name $source.FullName (Join-Rel $script:ProjectRoot $rel)
       $files.Add($rel)
     }
@@ -568,6 +582,15 @@ function Install-Target([string]$Name, [string]$Skill) {
   Write-Manifest $Name $Skill $files.ToArray() $skillDir
   Remove-EmptyDirs
   Write-Ok "$(Get-TargetLabel $Name) instalado (v$($script:SourceVersion))."
+}
+
+# antigravity instala os comandos como skills em .agents/skills/, pasta que o destino agents
+# (Codex, Gemini CLI e similares) também lê: com os dois no projeto, ela vê os comandos como skills.
+function Show-SharedSkills([string]$Name) {
+  $other = switch ($Name) { "antigravity" { "agents" } "agents" { "antigravity" } default { "" } }
+  if ($other -and (Test-Path -LiteralPath (Get-ManifestPath $other))) {
+    Write-WarnLog "antigravity e agents usam a mesma pasta .agents/skills/: a ferramenta do destino agents também verá os comandos /lgpd-* como skills."
+  }
 }
 
 function Show-VersionDrift([string]$Name) {
@@ -648,6 +671,7 @@ function Invoke-Install {
   Assert-NotSourceRepo
   Install-Target $name $script:Skill
   Show-VersionDrift $name
+  Show-SharedSkills $name
   Show-NextSteps $name $script:Skill
 }
 

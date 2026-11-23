@@ -6,6 +6,13 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.12.0] - 2026-11-23
+
+Suporte ao Antigravity no instalador.
+
+### Adicionado
+- Destino `antigravity` no instalador (`install.sh` e `install.ps1`, opção 5 do menu): no Antigravity, os slash commands do usuário são skills, então cada comando é instalado como `.agents/skills/lgpd-<cenário>/SKILL.md` e aparece como `/lgpd-saas`, `/lgpd-full-audit` etc. A skill completa continua opcional (`--with-skill`). Os workflows (`.agents/workflows/`) não são usados, porque o Antigravity deixou de lê-los. Como `antigravity` e `agents` usam a mesma pasta `.agents/skills/`, o instalador avisa quando os dois estão no projeto. A opção `agents` passa a ser a 6 do menu.
+
 ## [1.11.0] - 2026-11-10
 
 Base normativa sincronizada em novembro/2026: o Guia Orientativo da ANPD sobre o escopo do ECA Digital (versão 1.0, 28/10/2026) e uma conferência do Decreto nº 12.880/2026, artigo por artigo, contra o catálogo.
@@ -255,7 +262,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.11.0...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.12.0...HEAD
+[1.12.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.11.0...v1.12.0
 [1.11.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.1...v1.11.0
 [1.10.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.0...v1.10.1
 [1.10.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.9.0...v1.10.0

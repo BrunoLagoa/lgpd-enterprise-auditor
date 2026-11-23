@@ -7,7 +7,7 @@ Definir a cobertura obrigatória do modo `full_audit` e sua equivalência com a 
 - Arquivo de origem: `SKILL.md`, na raiz do repositório do framework.
 - Em um projeto auditado, a skill só existe se tiver sido instalada (opcional no `scripts/install.sh` / `scripts/install.ps1`). Procure nesta ordem:
   1. `.claude/skills/lgpd-enterprise-auditor/SKILL.md` (Claude Code);
-  2. `.agents/skills/lgpd-enterprise-auditor/SKILL.md` (Cursor, VS Code + Copilot, OpenCode, Codex, Gemini CLI e similares);
+  2. `.agents/skills/lgpd-enterprise-auditor/SKILL.md` (Cursor, VS Code + Copilot, OpenCode, Antigravity, Codex, Gemini CLI e similares);
   3. `SKILL.md` na raiz do projeto (cópia manual).
 - A ausência da skill não bloqueia a auditoria: o framework modular cobre os 17 domínios abaixo por conta própria.
 

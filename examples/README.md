@@ -39,7 +39,7 @@ cd examples/saas-demo
 claude
 ```
 
-Antes de rodar, tire `relatorio-auditoria-lgpd.md` e `relatorio-auditoria-lgpd.html` da pasta (ou renomeie-os), para que o agente não use o relatório pronto como ponto de partida. No Claude Code, rode `/lgpd-saas`. Para outras ferramentas, troque `--target` (`cursor`, `vscode`, `opencode` ou `agents`). O `--version local` instala o framework a partir desta cópia do repositório, em vez da última versão publicada.
+Antes de rodar, tire `relatorio-auditoria-lgpd.md` e `relatorio-auditoria-lgpd.html` da pasta (ou renomeie-os), para que o agente não use o relatório pronto como ponto de partida. No Claude Code, rode `/lgpd-saas`. Para outras ferramentas, troque `--target` (`cursor`, `vscode`, `opencode`, `antigravity` ou `agents`). O `--version local` instala o framework a partir desta cópia do repositório, em vez da última versão publicada.
 
 O resultado não será idêntico palavra por palavra, mas o score deve ser reproduzível: os itens e a `criticality` de cada um vêm do catálogo, então, com as mesmas evidências e o mesmo status por item, a fórmula leva ao mesmo número. Para conferir um relatório, na raiz deste repositório: `python3 scripts/validate-report.py examples/saas-demo/relatorio-auditoria-lgpd.html --md examples/saas-demo/relatorio-auditoria-lgpd.md`. Os arquivos criados pelo instalador (`.agents/`, `.claude/` etc.) estão no `.gitignore` do exemplo. Para removê-los, use `./scripts/install.sh uninstall --project-dir examples/saas-demo --non-interactive`.
 

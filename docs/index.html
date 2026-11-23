@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LGPD Enterprise Auditor — auditoria LGPD orientada a evidências para assistentes de IA</title>
-<meta name="description" content="Framework open source (MIT) que transforma seu assistente de IA em um auditor de LGPD: checklist com evidência por item, achados com o artigo da lei, score de 0 a 100 e plano de adequação com prazo e esforço. Funciona com Claude Code, Cursor, VS Code + GitHub Copilot, OpenCode, Codex e Gemini CLI.">
+<meta name="description" content="Framework open source (MIT) que transforma seu assistente de IA em um auditor de LGPD: checklist com evidência por item, achados com o artigo da lei, score de 0 a 100 e plano de adequação com prazo e esforço. Funciona com Claude Code, Cursor, VS Code + GitHub Copilot, OpenCode, Antigravity, Codex e Gemini CLI.">
 <meta name="theme-color" content="#070b0a">
 <meta name="color-scheme" content="light dark">
 <meta name="robots" content="index, follow">
@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="Topo do relatório de exemplo em HTML: score 20 de 100, classificação crítica e não conformidades por severidade, gerado sobre um SaaS fictício">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="LGPD Enterprise Auditor — transforme riscos de LGPD em ações concretas">
-<meta name="twitter:description" content="Auditoria LGPD orientada a evidências para Claude Code, Cursor, VS Code + Copilot, OpenCode, Codex e Gemini CLI. Open source, MIT.">
+<meta name="twitter:description" content="Auditoria LGPD orientada a evidências para Claude Code, Cursor, VS Code + Copilot, OpenCode, Antigravity, Codex e Gemini CLI. Open source, MIT.">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/BrunoLagoa/lgpd-enterprise-auditor/main/examples/saas-demo/relatorio-auditoria-lgpd.png">
 <meta name="twitter:image:alt" content="Topo do relatório de exemplo: score 20 de 100 e não conformidades por severidade, sobre um SaaS fictício">
 
@@ -1109,7 +1109,7 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
     <div class="works" data-reveal>
       <span>Funciona com</span>
       <ul aria-label="Assistentes compatíveis" translate="no">
-        <li>Claude Code</li><li>Cursor</li><li>VS Code + GitHub Copilot</li><li>OpenCode</li><li>Codex</li><li>Gemini CLI</li>
+        <li>Claude Code</li><li>Cursor</li><li>VS Code + GitHub Copilot</li><li>OpenCode</li><li>Antigravity</li><li>Codex</li><li>Gemini CLI</li>
       </ul>
     </div>
   </div>
@@ -2248,6 +2248,12 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
         <span role="cell"><span class="cell-k">Skill</span><span class="opt"><svg aria-hidden="true"><use href="#i-check"/></svg>opcional · <code>.agents/skills/</code></span></span>
       </div>
       <div class="compat-row" role="row">
+        <span class="compat-name" role="cell"><span class="mono-ico" aria-hidden="true">Ag</span>Antigravity</span>
+        <span role="cell"><span class="cell-k">Destino</span><code>antigravity</code></span>
+        <span role="cell"><span class="cell-k">Slash commands</span><span class="yes"><svg aria-hidden="true"><use href="#i-check"/></svg>como skills · <code>.agents/skills/</code></span></span>
+        <span role="cell"><span class="cell-k">Skill</span><span class="opt"><svg aria-hidden="true"><use href="#i-check"/></svg>opcional · <code>.agents/skills/</code></span></span>
+      </div>
+      <div class="compat-row" role="row">
         <span class="compat-name" role="cell"><span class="mono-ico" aria-hidden="true">Cx</span>Codex</span>
         <span role="cell"><span class="cell-k">Destino</span><code>agents</code></span>
         <span role="cell"><span class="cell-k">Slash commands</span><span class="no"><svg aria-hidden="true"><use href="#i-minus"/></svg>não há; peça em linguagem natural</span></span>
@@ -2422,7 +2428,7 @@ bash install.sh install --version "$V"</code></pre>
       </details>
       <details>
         <summary>Quais assistentes de IA são suportados?<span class="pm" aria-hidden="true"></span></summary>
-        <div class="faq-a"><p>Claude Code, Cursor, VS Code com GitHub Copilot e OpenCode, com slash commands e skill opcional. Codex, Gemini CLI e similares usam o destino <code>agents</code>: não há slash commands, e a auditoria é pedida em linguagem natural pela skill, que é sempre instalada.</p></div>
+        <div class="faq-a"><p>Claude Code, Cursor, VS Code com GitHub Copilot, OpenCode e Antigravity, com slash commands e skill opcional (no Antigravity, cada comando é instalado como uma skill, que vira slash command). Codex, Gemini CLI e similares usam o destino <code>agents</code>: não há slash commands, e a auditoria é pedida em linguagem natural pela skill, que é sempre instalada.</p></div>
       </details>
       <details>
         <summary>O que significa o score de 0 a 100?<span class="pm" aria-hidden="true"></span></summary>

@@ -50,6 +50,12 @@ count_files() {
   find "${CURRENT}/$1" -maxdepth 1 -name "$2" 2>/dev/null | wc -l | tr -d ' '
 }
 
+# Comandos instalados como skills (antigravity): .agents/skills/lgpd-*/SKILL.md, fora a skill completa.
+count_command_skills() {
+  find "${CURRENT}/.agents/skills" -mindepth 2 -maxdepth 2 -name SKILL.md -path '*/lgpd-*' \
+    ! -path "*/lgpd-enterprise-auditor/*" 2>/dev/null | wc -l | tr -d ' '
+}
+
 manifest() { printf "%s/.agents/lgpd-enterprise-auditor/.install/%s.json" "$CURRENT" "$1"; }
 exists() { [[ -e "${CURRENT}/$1" ]]; }
 missing() { [[ ! -e "${CURRENT}/$1" ]]; }
@@ -84,6 +90,28 @@ install_quiet --target agents
 check "agents: skill em .agents/skills" exists ".agents/skills/lgpd-enterprise-auditor/SKILL.md"
 check "agents: manifesto sem comandos" contains ".agents/lgpd-enterprise-auditor/.install/agents.json" '"files": \[\]'
 check "agents: --no-skill é recusado" equals "$(exit_code_of install_quiet --target agents --no-skill)" "1"
+
+echo "== antigravity (comandos como skills)"
+new_project "antigravity"
+install_quiet --target antigravity
+check "antigravity: framework instalado" exists ".agents/lgpd-enterprise-auditor/core/auditor-core.md"
+check "antigravity: ${COMMAND_COUNT} comandos em .agents/skills/<comando>/SKILL.md" equals "$(count_command_skills)" "$COMMAND_COUNT"
+check "antigravity: name igual ao nome da pasta" contains ".agents/skills/lgpd-saas/SKILL.md" "^name: lgpd-saas$"
+check "antigravity: frontmatter preservado" first_line_matches ".agents/skills/lgpd-saas/SKILL.md" "^---$"
+check "antigravity: sem skill completa por padrão" missing ".agents/skills/lgpd-enterprise-auditor"
+check "antigravity: manifesto lista os comandos" contains ".agents/lgpd-enterprise-auditor/.install/antigravity.json" '".agents/skills/lgpd-saas/SKILL.md"'
+install_quiet --target antigravity --with-skill
+check "antigravity: --with-skill instala a skill completa" exists ".agents/skills/lgpd-enterprise-auditor/SKILL.md"
+check "antigravity: reinstalação não duplica comandos" equals "$(count_command_skills)" "$COMMAND_COUNT"
+install_quiet --target agents
+check "antigravity + agents: aviso de pasta compartilhada" grep -q "mesma pasta .agents/skills/" "${WORK_DIR}/last.log"
+run_installer uninstall --non-interactive --target antigravity
+check "uninstall antigravity remove as pastas dos comandos" equals "$(count_command_skills)" "0"
+check "uninstall antigravity remove a pasta do comando" missing ".agents/skills/lgpd-saas"
+check "uninstall antigravity mantém a skill de agents" exists ".agents/skills/lgpd-enterprise-auditor/SKILL.md"
+run_installer uninstall --non-interactive
+check "uninstall total remove .agents" missing ".agents"
+check "antigravity: arquivo do projeto intacto" project_untouched
 
 echo "== skill por ferramenta"
 new_project "skill-claude"

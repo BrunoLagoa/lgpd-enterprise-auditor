@@ -55,6 +55,13 @@ function Get-Count([string]$Dir, [string]$Pattern) {
 }
 function Get-Lines([string]$Rel) { return [System.IO.File]::ReadAllLines((Get-ProjectPath $Rel)) }
 function Test-Contains([string]$Rel, [string]$Pattern) { return [bool](@(Get-Lines $Rel) -match $Pattern) }
+# Comandos instalados como skills (antigravity): .agents/skills/lgpd-*/SKILL.md, fora a skill completa.
+function Get-CommandSkillCount {
+  $path = Get-ProjectPath ".agents/skills"
+  if (-not (Test-Path -LiteralPath $path)) { return 0 }
+  return @(Get-ChildItem -LiteralPath $path -Directory -Filter "lgpd-*" |
+    Where-Object { $_.Name -ne "lgpd-enterprise-auditor" -and (Test-Path -LiteralPath (Join-Path $_.FullName "SKILL.md")) }).Count
+}
 function Test-AppUntouched { return ((Get-Content -LiteralPath (Get-ProjectPath "app.txt")) -eq "keep") }
 
 try {
@@ -73,6 +80,28 @@ try {
     Test-Check "${target}: sem skill do Claude" (-not (Test-Exists ".claude/skills"))
     Test-Check "${target}: arquivo do projeto intacto" (Test-AppUntouched)
   }
+
+  Write-Host "== antigravity (comandos como skills)"
+  New-Project "antigravity"
+  Install-Quiet -Target antigravity | Out-Null
+  Test-Check "antigravity: framework instalado" (Test-Exists ".agents/lgpd-enterprise-auditor/core/auditor-core.md")
+  Test-Check "antigravity: $CommandCount comandos em .agents/skills/<comando>/SKILL.md" ((Get-CommandSkillCount) -eq $CommandCount)
+  Test-Check "antigravity: name igual ao nome da pasta" (Test-Contains ".agents/skills/lgpd-saas/SKILL.md" '^name: lgpd-saas$')
+  Test-Check "antigravity: frontmatter preservado" ((Get-Lines ".agents/skills/lgpd-saas/SKILL.md")[0] -eq "---")
+  Test-Check "antigravity: sem skill completa por padrão" (-not (Test-Exists ".agents/skills/lgpd-enterprise-auditor"))
+  Test-Check "antigravity: manifesto lista os comandos" (Test-Contains ".agents/lgpd-enterprise-auditor/.install/antigravity.json" '"\.agents/skills/lgpd-saas/SKILL\.md"')
+  Install-Quiet -Target antigravity -WithSkill | Out-Null
+  Test-Check "antigravity: -WithSkill instala a skill completa" (Test-Exists ".agents/skills/lgpd-enterprise-auditor/SKILL.md")
+  Test-Check "antigravity: reinstalação não duplica comandos" ((Get-CommandSkillCount) -eq $CommandCount)
+  Install-Quiet -Target agents | Out-Null
+  Test-Check "antigravity + agents: aviso de pasta compartilhada" ($script:LastLog -match 'mesma pasta \.agents/skills/')
+  Invoke-Installer uninstall -NonInteractive -Target antigravity | Out-Null
+  Test-Check "uninstall antigravity remove as pastas dos comandos" ((Get-CommandSkillCount) -eq 0)
+  Test-Check "uninstall antigravity remove a pasta do comando" (-not (Test-Exists ".agents/skills/lgpd-saas"))
+  Test-Check "uninstall antigravity mantém a skill de agents" (Test-Exists ".agents/skills/lgpd-enterprise-auditor/SKILL.md")
+  Invoke-Installer uninstall -NonInteractive | Out-Null
+  Test-Check "uninstall total remove .agents" (-not (Test-Exists ".agents"))
+  Test-Check "antigravity: arquivo do projeto intacto" (Test-AppUntouched)
 
   Write-Host "== agents (skill obrigatória)"
   New-Project "agents"

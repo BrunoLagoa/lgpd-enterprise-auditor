@@ -10,7 +10,7 @@ FRAMEWORK_REL=".agents/lgpd-enterprise-auditor"
 STATE_REL="${FRAMEWORK_REL}/.install"
 SKILL_NAME="lgpd-enterprise-auditor"
 EXIT_NOT_FOUND=2
-SUPPORTED_TARGETS="claude cursor vscode opencode agents"
+SUPPORTED_TARGETS="claude cursor vscode opencode antigravity agents"
 
 ACTION="install"
 NON_INTERACTIVE=0
@@ -130,7 +130,7 @@ print_banner() {
 EOF
   printf "\nLGPD Enterprise Auditor %s\n\n" "$1"
   printf "Framework de auditoria de conformidade LGPD orientado a evidências, para usar com o seu\n"
-  printf "assistente de IA (Claude Code, Cursor, VS Code + Copilot, OpenCode, Codex, Gemini CLI).\n"
+  printf "assistente de IA (Claude Code, Cursor, VS Code + Copilot, OpenCode, Antigravity, Codex, Gemini CLI).\n"
   printf "A instalação é local: tudo fica dentro do projeto auditado.\n\n"
 }
 
@@ -148,7 +148,7 @@ Ações:
   check       Verifica a instalação do projeto
 
 Opções:
-  --target <claude|cursor|vscode|opencode|agents>  Ferramenta (obrigatória com --non-interactive no install)
+  --target <claude|cursor|vscode|opencode|antigravity|agents>  Ferramenta (obrigatória com --non-interactive no install)
   --with-skill            Instala também a skill
   --no-skill              Não instala a skill (padrão)
   --project-dir <dir>     Projeto de destino (padrão: raiz git do diretório atual)
@@ -207,7 +207,7 @@ parse_args() {
 
 is_supported_target() {
   case "$1" in
-    claude|cursor|vscode|opencode|agents) return 0 ;;
+    claude|cursor|vscode|opencode|antigravity|agents) return 0 ;;
     *) return 1 ;;
   esac
 }
@@ -260,6 +260,7 @@ target_label() {
     cursor) printf "cursor (Cursor)" ;;
     vscode) printf "vscode (VS Code + GitHub Copilot)" ;;
     opencode) printf "opencode (OpenCode)" ;;
+    antigravity) printf "antigravity (Antigravity)" ;;
     agents) printf "agents (outra ferramenta: Codex, Gemini CLI e similares)" ;;
   esac
 }
@@ -270,6 +271,7 @@ target_commands_dir() {
     cursor) printf ".cursor/commands" ;;
     vscode) printf ".github/prompts" ;;
     opencode) printf ".opencode/commands" ;;
+    antigravity) printf ".agents/skills" ;;
     agents) printf "" ;;
   esac
 }
@@ -279,6 +281,9 @@ target_command_file() {
   local stem="$2"
   if [[ "$target" == "vscode" ]]; then
     printf "%s.prompt.md" "$stem"
+  elif [[ "$target" == "antigravity" ]]; then
+    # No Antigravity, slash commands do usuário são skills: cada comando vira .agents/skills/<comando>/SKILL.md.
+    printf "%s/SKILL.md" "$stem"
   else
     printf "%s.md" "$stem"
   fi
@@ -301,6 +306,10 @@ print_next_steps() {
     cursor) printf "  No chat do Cursor, digite /lgpd-saas, /lgpd-full-audit etc.\n" ;;
     vscode) printf "  No Copilot Chat do VS Code, digite /lgpd-saas, /lgpd-full-audit etc.\n" ;;
     opencode) printf "  Rode opencode na raiz do projeto e use /lgpd-saas, /lgpd-full-audit etc.\n" ;;
+    antigravity)
+      printf "  No chat do Antigravity, digite /lgpd-saas, /lgpd-full-audit etc.\n"
+      printf "  Se os comandos não aparecerem ao digitar /, recarregue a janela (Developer: Reload Window).\n"
+      ;;
     agents) printf "  Peça ao seu agente: \"faça uma auditoria LGPD deste projeto\" — ele carrega a skill %s.\n" "$SKILL_NAME" ;;
   esac
   if [[ "$skill" == "1" && "$target" != "agents" ]]; then
@@ -310,7 +319,7 @@ print_next_steps() {
   printf "  (ex.: docs/lgpd/) para que contem como evidência documental.\n"
 }
 
-# Claude e OpenCode leem o frontmatter como está.
+# Claude, OpenCode e Antigravity leem o frontmatter como está.
 # Cursor: remove o frontmatter e promove a description para a primeira linha.
 # VS Code: mantém só os campos aceitos em .prompt.md (name, description) e roda em modo agent.
 render_command() {
@@ -559,6 +568,8 @@ remove_target_files() {
   while IFS= read -r file; do
     safe_rel_path "$file" || continue
     rm -f "${PROJECT_DIR}/${file}"
+    # Remove a pasta do comando quando ficou vazia (antigravity: .agents/skills/<comando>/).
+    rmdir "$(dirname "${PROJECT_DIR}/${file}")" 2>/dev/null || true
   done < <(manifest_files "$manifest")
 
   local skill_dir
@@ -635,6 +646,7 @@ install_target() {
       [[ -f "$src" ]] || continue
       stem="$(basename "$src" .md)"
       rel="${commands_dir}/$(target_command_file "$target" "$stem")"
+      mkdir -p "$(dirname "${PROJECT_DIR}/${rel}")"
       render_command "$target" "$src" "${PROJECT_DIR}/${rel}"
       files="${files}${rel}"$'\n'
     done
@@ -651,6 +663,20 @@ install_target() {
   write_manifest "$target" "$skill" "$files" "$skill_dir"
   prune_empty_dirs
   log_ok "$(target_label "$target") instalado (v${SOURCE_VERSION})."
+}
+
+# antigravity instala os comandos como skills em .agents/skills/, pasta que o destino agents
+# (Codex, Gemini CLI e similares) também lê: com os dois no projeto, ela vê os comandos como skills.
+warn_shared_skills() {
+  local target="$1" other=""
+  case "$target" in
+    antigravity) other="agents" ;;
+    agents) other="antigravity" ;;
+    *) return 0 ;;
+  esac
+  if [[ -f "$(manifest_path "$other")" ]]; then
+    log_warn "antigravity e agents usam a mesma pasta .agents/skills/: a ferramenta do destino agents também verá os comandos /lgpd-* como skills."
+  fi
 }
 
 warn_version_drift() {
@@ -685,7 +711,7 @@ run_install() {
     local choice
     choice="$(choose_index "1 - Selecione a ferramenta" \
       "$(target_label claude)" "$(target_label cursor)" "$(target_label vscode)" \
-      "$(target_label opencode)" "$(target_label agents)")"
+      "$(target_label opencode)" "$(target_label antigravity)" "$(target_label agents)")"
     TARGET="$(printf "%s" "$SUPPORTED_TARGETS" | cut -d' ' -f"$choice")"
   else
     [[ "$NON_INTERACTIVE" -eq 1 ]] || printf "1 - Ferramenta\n  > %s\n" "$(target_label "$TARGET")"
@@ -734,6 +760,7 @@ run_install() {
   guard_not_source_repo
   install_target "$TARGET" "$WITH_SKILL"
   warn_version_drift "$TARGET"
+  warn_shared_skills "$TARGET"
   print_next_steps "$TARGET" "$WITH_SKILL"
 }
 

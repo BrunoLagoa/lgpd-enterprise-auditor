@@ -23,7 +23,7 @@ An evidence-driven LGPD auditing framework focused on security, governance, and 
 
 This project was designed to operate as an auditable and modular system, ready to be reused across products and teams.
 
-**In short:** install the auditor into your project with one command, run `/lgpd-saas` (or another scenario) in your AI assistant, and get a report with a 0–100 score, non-conformities with the LGPD article and the evidence for each, and a remediation plan with deadlines and effort. Works with Claude Code, Cursor, VS Code + GitHub Copilot, OpenCode, Codex and Gemini CLI.
+**In short:** install the auditor into your project with one command, run `/lgpd-saas` (or another scenario) in your AI assistant, and get a report with a 0–100 score, non-conformities with the LGPD article and the evidence for each, and a remediation plan with deadlines and effort. Works with Claude Code, Cursor, VS Code + GitHub Copilot, OpenCode, Antigravity, Codex and Gemini CLI.
 
 **Project site (in Portuguese):** [brunolagoa.github.io/lgpd-enterprise-auditor](https://brunolagoa.github.io/lgpd-enterprise-auditor/) — overview, a browsable demo of the example report and installation.
 
@@ -88,11 +88,13 @@ The framework (`.agents/lgpd-enterprise-auditor/`) is the same for every tool; o
 | `cursor` — Cursor | `.cursor/commands/lgpd-*.md` | `.agents/skills/lgpd-enterprise-auditor/` |
 | `vscode` — VS Code + GitHub Copilot | `.github/prompts/lgpd-*.prompt.md` | `.agents/skills/lgpd-enterprise-auditor/` |
 | `opencode` — OpenCode | `.opencode/commands/lgpd-*.md` | `.agents/skills/lgpd-enterprise-auditor/` |
+| `antigravity` — Antigravity | `.agents/skills/lgpd-*/SKILL.md` | `.agents/skills/lgpd-enterprise-auditor/` |
 | `agents` — Codex, Gemini CLI and similar | — (no slash commands) | `.agents/skills/lgpd-enterprise-auditor/` (always installed) |
 
 - **Without the skill (default):** you run the audit through the slash commands (`/lgpd-saas`, `/lgpd-full-audit`…), which run the modular framework (`.agents/lgpd-enterprise-auditor/`).
 - **With the skill:** the assistant can also start the audit from a plain request ("audit this project for LGPD"), loading the self-contained skill (`SKILL.md`).
-- Several tools in the same project are supported: run the installer once per tool. They share the framework folder.
+- **Antigravity:** in Antigravity, user slash commands are skills, so each command is installed as a skill (`.agents/skills/lgpd-saas/SKILL.md` becomes `/lgpd-saas`). After installing, reload the window (**Developer: Reload Window**) so the commands show up when you type `/`. The old workflows (`.agents/workflows/`) are not used: Antigravity no longer reads them.
+- Several tools in the same project are supported: run the installer once per tool. They share the framework folder. `antigravity` and `agents` also share the `.agents/skills/` folder: with both in the project, the `agents` tool also sees the commands as skills (the installer warns about it).
 
 ### Update, check and uninstall
 
@@ -113,7 +115,7 @@ curl -fsSL https://github.com/BrunoLagoa/lgpd-enterprise-auditor/releases/latest
 
 | Option (bash) | PowerShell | Description |
 |---|---|---|
-| `--target <tool>` | `-Target` | `claude`, `cursor`, `vscode`, `opencode` or `agents` (required with `--non-interactive`) |
+| `--target <tool>` | `-Target` | `claude`, `cursor`, `vscode`, `opencode`, `antigravity` or `agents` (required with `--non-interactive`) |
 | `--with-skill` / `--no-skill` | `-WithSkill` / `-NoSkill` | Install the skill or not (default: no) |
 | `--project-dir <dir>` | `-ProjectDir` | Target project (default: git root of the current directory) |
 | `--version <ref>` | `-Version` | Tag or branch (default: latest published tag) |
@@ -219,7 +221,7 @@ To check a generated report (catalog IDs, allowed values, the link between items
 
 ## Available commands
 
-After installation, each file in `commands/` becomes a slash command in your assistant. There are 8: one runs the full audit and seven run targeted audits by type of system. With the `agents` target (Codex, Gemini CLI and similar) there are no slash commands: ask for the audit in plain language, through the skill.
+After installation, each file in `commands/` becomes a slash command in your assistant (in Antigravity, a skill with the same name). There are 8: one runs the full audit and seven run targeted audits by type of system. With the `agents` target (Codex, Gemini CLI and similar) there are no slash commands: ask for the audit in plain language, through the skill.
 
 | Command | Scenario | When to use | Activated modules (besides `core` and `legal`) |
 |---|---|---|---|
