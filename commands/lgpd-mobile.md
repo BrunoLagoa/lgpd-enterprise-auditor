@@ -1,10 +1,10 @@
 ---
 name: lgpd-mobile
-description: Executa auditoria LGPD direcionada para aplicações mobile.
+description: Executa auditoria LGPD direcionada para aplicações mobile (cenário mobile_app). Use para apps iOS e Android, nativos, Flutter ou React Native, com foco em permissões, armazenamento local, SDKs de analytics e tracking e Firebase.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.12.0"
+  version: "1.13.0"
 ---
 
 # LGPD Mobile App
@@ -15,7 +15,9 @@ Antes de perguntar, leia o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`
 - plataforma mobile (iOS, Android, Flutter, React Native);
 - uso de Firebase e serviços cloud;
 - SDKs de tracking/analytics;
-- dados pessoais/sensíveis tratados no app.
+- dados pessoais/sensíveis tratados no app;
+- uso de IA/LLM (chamada a provedor ou SDK, modelo próprio, embeddings, RAG);
+- classificação etária nas lojas e existência de usuários menores de 18 anos.
 
 Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se o pedido já disser: `.md`, `.md` e `.html` (resultado completo, com custo maior) ou só `.html` (versão visual, para abrir no navegador).
 
@@ -27,6 +29,8 @@ Adicione `eca-digital` se o app for classificado para faixa etária inferior a 1
 Adicione `plataformas-digitais` se o app intermediar conteúdo de terceiros com difusão pública, oferecer anúncios/impulsionamento pagos ou gerar/alterar imagem ou som de pessoas (gatilho normativo do router — Decretos nº 12.975/2026 e nº 12.976/2026).
 
 Adicione `ai-llm` se houver chamada a provedor ou SDK de LLM ou de IA generativa, modelo próprio, embeddings, RAG ou fine-tuning (gatilho técnico do router).
+
+Adicione `devsecops` se houver CI/CD ativo ou Kubernetes (gatilho técnico do router).
 
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;

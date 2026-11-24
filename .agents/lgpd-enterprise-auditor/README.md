@@ -14,7 +14,7 @@ O framework organiza a auditoria em camadas para facilitar manutenção, escalab
 - `ai-llm/`: riscos de IA generativa, RAG e retenção.
 - `orchestrator/`: roteamento de módulos por cenário, cobertura do `full_audit` (`full-audit.md`) e manifestos, que listam em `files` os arquivos de cada módulo.
 - `templates/`: modelos de políticas e artefatos de conformidade (política de privacidade e de cookies, registro das operações, teste de legítimo interesse, ato de indicação do encarregado, política de retenção, RIPD, DPA, resposta a incidentes, ECA Digital).
-- `reports/`: formatos de relatório por público e modelo do relatório em HTML (`html-report.md` e `html-report-template.html`).
+- `reports/`: formatos de relatório por público, modelo do relatório em HTML (`html-report.md` e `html-report-template.html`) e comparação com a auditoria anterior (`reaudit-report.md`).
 - `validation/`: checklist de paridade com a skill e matriz de rastreabilidade dos domínios.
 
 ## Fluxo de execução
@@ -27,6 +27,7 @@ O framework organiza a auditoria em camadas para facilitar manutenção, escalab
 ## Modo de uso
 - Modo direcionado: ativação por cenário (`saas_web`, `web_site`, `mobile_app`, `ai_llm_system`, `devsecops_pipeline`, `eca_digital_platform`, `digital_platform`). O relatório sai com a marca **escopo direcionado** e a lista dos domínios não auditados.
 - Auditoria completa (`full_audit`): ativa todos os módulos e cobre os 17 domínios de auditoria.
+- Reauditoria (`/lgpd-reaudit`): refaz a auditoria no cenário do relatório anterior e grava um comparativo item a item, conforme `reports/reaudit-report.md`.
 
 ## Catálogo de itens
 Os itens do checklist são fixos. Cada módulo traz, na seção "Checklist atômico", a tabela dos seus itens, com ID estável (ex.: `SE-03`), domínio, criticidade, agravante ou atenuante, tipo de controle e fundamento. A auditoria avalia todos os itens dos módulos ativos; a criticidade só muda pelo agravante da linha do item ou pela modulação por porte. As regras estão em `core/scoring-engine.md`.

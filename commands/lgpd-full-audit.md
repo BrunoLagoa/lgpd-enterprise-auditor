@@ -1,10 +1,10 @@
 ---
 name: lgpd-full-audit
-description: Executa auditoria LGPD completa (full_audit), com todos os módulos ativos.
+description: Executa auditoria LGPD completa (full_audit), com todos os módulos ativos e os 17 domínios. Use para uma avaliação geral de conformidade sem foco definido, ou quando o projeto combina web, mobile, IA, pipeline e público infantojuvenil.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.12.0"
+  version: "1.13.0"
 ---
 
 # LGPD Full Audit

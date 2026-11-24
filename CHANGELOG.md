@@ -6,6 +6,19 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.13.0] - 2026-11-23
+
+Reauditoria, comandos mais fáceis de escolher e alinhados ao roteador.
+
+### Adicionado
+- Comando `/lgpd-reaudit`: faz uma auditoria nova e completa no cenário do relatório anterior (`.md` ou `.html`) e grava ao lado do relatório novo um comparativo (`<base>-comparativo.md`) com o que foi corrigido, melhorou, piorou ou segue pendente, mudanças de aplicabilidade, itens novos e fora desta auditoria, prazos vencidos, aceites de risco anteriores e a variação do score, da classificação e da cobertura. Os itens são pareados pelo ID do catálogo; o relatório anterior nunca vale como evidência, e a comparação só começa depois de avaliados todos os itens. Quando versão do framework, cenário ou cobertura mudam, o comparativo avisa que parte da variação não vem de correções. As regras ficam em `reports/reaudit-report.md` e são copiadas para a skill (seção "REAUDITORIA") por `scripts/update-generated.py`.
+- `test-framework.sh` confere que cada comando de cenário cita o gatilho de todo módulo que o `router.md` pode adicionar e que o cenário não ativa, para que comandos e roteador não voltem a divergir.
+
+### Alterado
+- Descrições dos comandos dizem quando usar cada um, além do que fazem. No Antigravity, onde cada comando é uma skill, o modelo escolhe a skill pela descrição; nos menus de slash commands das outras ferramentas, ajuda a escolher o cenário.
+- Slash commands alinhados aos gatilhos do `router.md`: todos perguntam o público (menores de 18 anos) e o uso de IA/LLM, entradas mínimas do router; cada comando passa a citar os gatilhos técnicos dos módulos que o seu cenário não ativa (`mobile`, `devsecops`, `cloud`); `/lgpd-devsecops` ganha os gatilhos normativos de `eca-digital` e `plataformas-digitais`, e `/lgpd-eca-digital` o de `plataformas-digitais` (redes sociais e plataformas de vídeo costumam ter conteúdo de terceiros com difusão pública); `/lgpd-eca-digital` e `/lgpd-plataformas-digitais` adotam o gatilho canônico de `ai-llm` (qualquer chamada a provedor ou SDK de LLM ou de IA generativa).
+- Normas em monitoramento conferidas em 23/11/2026: sem norma final das revisões das Res. CD/ANPD nº 1/2021 e nº 4/2023, nem da Portaria ANPD nº 16/2021 (consulta encerrada em 23/11/2026); Agenda Regulatória 2027-2028 ainda não aprovada; PL nº 2338/2023 sem parecer na Câmara. As Res. CD/ANPD nº 34/2026 e nº 35/2026 tratam só do regimento e dos cargos da ANPD e não criam obrigação para agentes de tratamento.
+
 ## [1.12.0] - 2026-11-23
 
 Suporte ao Antigravity no instalador.
@@ -262,7 +275,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.12.0...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.13.0...HEAD
+[1.13.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.12.0...v1.13.0
 [1.12.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.11.0...v1.12.0
 [1.11.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.1...v1.11.0
 [1.10.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.0...v1.10.1

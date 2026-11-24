@@ -1,10 +1,10 @@
 ---
 name: lgpd-plataformas-digitais
-description: Executa auditoria LGPD + deveres de plataformas digitais (Decretos nº 12.975/2026 e nº 12.976/2026, regulamentação do Marco Civil da Internet) para provedores de aplicações com conteúdo de terceiros.
+description: Executa auditoria LGPD + deveres de plataformas digitais (Decretos nº 12.975/2026 e nº 12.976/2026, regulamentação do Marco Civil da Internet; cenário digital_platform). Use para redes sociais, fóruns e marketplaces com conteúdo público de usuários, anúncios ou impulsionamento pagos, ou IA que gera imagem ou voz de pessoas.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.12.0"
+  version: "1.13.0"
 ---
 
 # LGPD + Plataformas Digitais (conteúdo de terceiros)
@@ -27,7 +27,9 @@ Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se 
 Ative o cenário `digital_platform`:
 - `core`, `legal`, `plataformas-digitais`, `governance`, `appsec`, `cloud`.
 
-Adicione `ai-llm` se houver IA generativa ou moderação automatizada, e `eca-digital` se o serviço for direcionado ou provavelmente acessado por menores de 18 anos — rede social, jogo e IA generativa têm presunção de acesso provável, e aferição de idade não afasta o gatilho (gatilhos do router).
+Adicione `ai-llm` se houver chamada a provedor ou SDK de LLM ou de IA generativa, modelo próprio, embeddings, RAG, fine-tuning ou moderação automatizada com IA, e `eca-digital` se o serviço for direcionado ou provavelmente acessado por menores de 18 anos — rede social, jogo e IA generativa têm presunção de acesso provável, e aferição de idade não afasta o gatilho (gatilhos do router).
+
+Adicione `mobile` se houver app iOS ou Android (nativo, Flutter ou React Native) e `devsecops` se houver CI/CD ativo ou Kubernetes (gatilhos técnicos do router).
 
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;

@@ -170,6 +170,24 @@ for scenario in $SCENARIOS; do
   grep -qF "\`${scenario}\`" "${FRAMEWORK}/README.md" || fail "${scenario}: ausente do README do framework"
 done
 
+# Gatilhos: cada comando de cenário cita o gatilho (técnico ou normativo) de todo módulo que o router
+# manda adicionar e que o cenário não ativa, na forma "`módulo` se ...".
+TRIGGER_MODULES="$(LC_ALL=C awk '/^## Regras de ativação/ { on = 1; next } on && /^## / { exit } on { print }' "$ROUTER" \
+  | grep -oE '[Aa]dicionar `[a-z-]+`' | sed 's/.*`\([a-z-]*\)`/\1/' | sort -u)"
+check "router declara os módulos com gatilho" test -n "$TRIGGER_MODULES"
+for scenario in $SCENARIOS; do
+  [[ "$scenario" == "full_audit" ]] && continue
+  command_file="$(grep -lE "Ative o cenário \`${scenario}\`" "${REPO_ROOT}"/commands/*.md || true)"
+  [[ -n "$command_file" ]] || continue
+  active=" $(router_modules "$scenario") "
+  missing=""
+  for module in $TRIGGER_MODULES; do
+    case "$active" in *" ${module} "*) continue ;; esac
+    grep -qF "\`${module}\` se " "$command_file" || missing="${missing}${module} "
+  done
+  check "${scenario}: comando $(basename "$command_file") cita os gatilhos dos módulos fora do cenário${missing:+ (faltam: ${missing})}" test -z "$missing"
+done
+
 ALL_MODULES="$(sed -n 's/^| Cenário | \(.*\) |$/\1/p' "$MATRIX" | tr '|' ',' | normalize)"
 same "full_audit ativa todos os módulos da matriz" "$ALL_MODULES" "$(router_modules full_audit)"
 

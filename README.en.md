@@ -180,7 +180,8 @@ ANPD regulations covered by the framework:
 │   ├── lgpd-ai-llm.md
 │   ├── lgpd-devsecops.md
 │   ├── lgpd-eca-digital.md
-│   └── lgpd-plataformas-digitais.md
+│   ├── lgpd-plataformas-digitais.md
+│   └── lgpd-reaudit.md
 └── .agents/
     └── lgpd-enterprise-auditor/
         ├── core/
@@ -221,7 +222,7 @@ To check a generated report (catalog IDs, allowed values, the link between items
 
 ## Available commands
 
-After installation, each file in `commands/` becomes a slash command in your assistant (in Antigravity, a skill with the same name). There are 8: one runs the full audit and seven run targeted audits by type of system. With the `agents` target (Codex, Gemini CLI and similar) there are no slash commands: ask for the audit in plain language, through the skill.
+After installation, each file in `commands/` becomes a slash command in your assistant (in Antigravity, a skill with the same name). There are 9: one runs the full audit, seven run targeted audits by type of system and one runs the audit again and compares it with the previous one. With the `agents` target (Codex, Gemini CLI and similar) there are no slash commands: ask for the audit in plain language, through the skill.
 
 | Command | Scenario | When to use | Activated modules (besides `core` and `legal`) |
 |---|---|---|---|
@@ -236,6 +237,8 @@ After installation, each file in `commands/` becomes a slash command in your ass
 
 `core` and `legal` are activated in every scenario. Only `/lgpd-full-audit` covers everything; the report of the other seven carries the **escopo direcionado** (targeted scope) mark and lists the domains that were not audited.
 
+After fixing findings, run **`/lgpd-reaudit`**. It runs a new, full audit in the scenario of the previous report and writes a comparison next to it (`-comparativo.md`): what was fixed, what improved, what got worse, what is still open, overdue deadlines and the change in score and classification. Items are matched by their catalog ID, and the previous report never counts as evidence: every item is evaluated again. When the framework versions differ, the comparison warns that part of the change may come from the new version.
+
 ### What each command checks
 
 - **`/lgpd-full-audit`**: maps the full stack (frontend, backend, database, cloud), the personal and sensitive data processed, third-party integrations, the DevSecOps and AI/LLM context, the presence of users under 18 and the intermediation of third-party content.
@@ -245,6 +248,7 @@ After installation, each file in `commands/` becomes a slash command in your ass
 - **`/lgpd-ai-llm`**: AI/LLM providers, personal data sent in prompts, embeddings, RAG and fine-tuning, retention and international transfer, legal basis for processing in AI, prompt injection and context leakage.
 - **`/lgpd-devsecops`**: CI/CD platform, containers and Kubernetes, secrets management, security scans, supply chain, hardening and deploy flow.
 - **`/lgpd-eca-digital`**: age assurance (plain self-declaration is a non-conformity), linking a minor's account to a guardian and parental supervision, default privacy for minors' profiles, advertising, profiling and algorithmic recommendation, loot boxes and paid virtual items, reporting and moderation, legal representative in Brazil and the transparency report (above 1 million underage users).
+- **`/lgpd-reaudit`**: finds the previous report (`.md` or `.html`), asks only what changed since then (nature and role of the agent, integrations, data, audience), runs the full audit again and compares it item by item.
 - **`/lgpd-plataformas-digitais`**: reporting channel, notice, takedown and appeal with their deadlines, moderation and systemic risk management, paid ads and boosting, access-log retention, headquarters and legal representative in Brazil, terms of use, annual transparency report and AI that generates or alters people's image or voice.
 
 ### What every command does

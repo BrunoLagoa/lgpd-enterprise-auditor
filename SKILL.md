@@ -4,7 +4,7 @@ description: Auditoria de conformidade LGPD (Lei nº 13.709/2018) orientada a ev
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.12.0"
+  version: "1.13.0"
 ---
 
 # 🛡️ LGPD ENTERPRISE AUDITOR FRAMEWORK
@@ -809,14 +809,14 @@ Fonte única da situação das normas em monitoramento. Situação conferida em 
 Nada nesta seção origina `finding` nem `check_item` com status `NAO_CONFORME`. Usar apenas em `recomendacoes_tecnicas`, sempre rotulado como norma não vigente.
 
 ## ANPD: fiscalização, processo regulatório e agenda
-- **Revisão da Resolução CD/ANPD nº 1/2021** (Regulamento de Fiscalização e do Processo Administrativo Sancionador): Consulta Pública nº 1/2026, aberta em 09/09/2026, com audiência pública em 24/09/2026, encerrada em 26/10/2026; norma final ainda não publicada no início de novembro/2026. A minuta adapta a fiscalização ao ECA Digital, ao regime de agência reguladora e às novas atribuições sobre provedores de aplicações de internet. Até a publicação da norma final, a Res. CD/ANPD nº 1/2021 segue vigente e continua sendo a referência de risco sancionatório.
+- **Revisão da Resolução CD/ANPD nº 1/2021** (Regulamento de Fiscalização e do Processo Administrativo Sancionador): Consulta Pública nº 1/2026, aberta em 09/09/2026, com audiência pública em 24/09/2026, encerrada em 26/10/2026; norma final ainda não publicada em 23/11/2026. A minuta adapta a fiscalização ao ECA Digital, ao regime de agência reguladora e às novas atribuições sobre provedores de aplicações de internet. Até a publicação da norma final, a Res. CD/ANPD nº 1/2021 segue vigente e continua sendo a referência de risco sancionatório.
 - **Revisão da Resolução CD/ANPD nº 4/2023** (Regulamento de Dosimetria e Aplicação de Sanções Administrativas): Consulta Pública nº 3/2026, aberta em 15/10/2026, com audiência pública em 29/10/2026 e contribuições até 30/11/2026. A minuta estende a dosimetria às infrações ao ECA Digital e aos deveres dos provedores de aplicações de internet (Decretos nº 12.975/2026 e nº 12.976/2026). Até a norma final, a Res. CD/ANPD nº 4/2023 segue como referência de cálculo das sanções da LGPD, e as sanções do ECA Digital seguem o art. 35 da Lei nº 15.211/2025.
-- **Revisão da Portaria ANPD nº 16/2021** (processo regulatório da própria ANPD): Consulta Pública nº 2/2026, aberta em 06/10/2026, audiência em 22/10/2026 e contribuições até 23/11/2026. Propõe converter a portaria em resolução, tornar obrigatórios os debates públicos e prever a participação de crianças e adolescentes. Não cria obrigação para agentes de tratamento.
-- **Agenda Regulatória 2027-2028 e Agenda de Avaliação de Resultado Regulatório 2027-2030**: tomadas de subsídios abertas em 01/09/2026 e encerradas em 16/10/2026; agendas ainda não aprovadas. Eixos propostos para 2027-2028: ambiente digital seguro, sobretudo para crianças, adolescentes e mulheres (supervisão parental, padrões de design seguro, uso de IA por menores, transparência das plataformas, combate à geração de conteúdo ilícito por IA), e privacidade e proteção de dados (direitos dos titulares, reconhecimento facial, dados de saúde, decisões automatizadas). A avaliação de resultado inclui o Regulamento de Transferência Internacional e o guia de aferição de idade. Sem efeito até a resolução que aprovar as agendas.
+- **Revisão da Portaria ANPD nº 16/2021** (processo regulatório da própria ANPD): Consulta Pública nº 2/2026, aberta em 06/10/2026, audiência em 22/10/2026, encerrada em 23/11/2026; norma final ainda não publicada. Propõe converter a portaria em resolução, tornar obrigatórios os debates públicos e prever a participação de crianças e adolescentes. Não cria obrigação para agentes de tratamento.
+- **Agenda Regulatória 2027-2028 e Agenda de Avaliação de Resultado Regulatório 2027-2030**: tomadas de subsídios abertas em 01/09/2026 e encerradas em 16/10/2026; agendas ainda não aprovadas em 23/11/2026. Eixos propostos para 2027-2028: ambiente digital seguro, sobretudo para crianças, adolescentes e mulheres (supervisão parental, padrões de design seguro, uso de IA por menores, transparência das plataformas, combate à geração de conteúdo ilícito por IA), e privacidade e proteção de dados (direitos dos titulares, reconhecimento facial, dados de saúde, decisões automatizadas). A avaliação de resultado inclui o Regulamento de Transferência Internacional e o guia de aferição de idade. Sem efeito até a resolução que aprovar as agendas.
 - **Guia Orientativo sobre Tratamento de Dados Pessoais de Alto Risco**: a minuta foi **rejeitada** por unanimidade pelo Conselho Diretor (Voto nº 11/2025/DIR-MW/CD, set/2026) e arquivada; a ANPD indicou que a análise de alto risco deve ocorrer no RIPD. Não citar a minuta: a decisão de alto risco segue a Res. CD/ANPD nº 2/2022, art. 4º, e o critério do modelo de severidade.
 
 ## Inteligência artificial
-- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024 e em tramitação na Câmara dos Deputados, aguardando parecer do relator na Comissão Especial; o relator indicou que a votação fica para depois das eleições de outubro de 2026, e no início de novembro/2026 não havia notícia de parecer apresentado. Prevê classificação por nível de risco, direitos de transparência, explicação e contestação, governança de IA e sanções próprias.
+- **PL nº 2338/2023 — Marco Legal da IA**: aprovado no Senado em 10/12/2024 e em tramitação na Câmara dos Deputados, aguardando parecer do relator na Comissão Especial; o relator indicou que a votação fica para depois das eleições de outubro de 2026, e em 23/11/2026 não havia notícia de parecer apresentado. Prevê classificação por nível de risco, direitos de transparência, explicação e contestação, governança de IA e sanções próprias.
 - **Nota Técnica da Sedigi/MJSP sobre companheiros de IA** (22/09/2026): sistemas conversacionais que simulam vínculo afetivo, acessíveis a crianças e adolescentes; encaminhada à ANPD e à Senacon. É preliminar e não vinculante; os indícios que aponta (aferição de idade só por autodeclaração, perfilamento emocional para publicidade, coleta de dados íntimos) são auditados pelos itens vigentes do ECA Digital e do art. 14 da LGPD.
 
 ## ECA Digital (domínio 16)
@@ -1266,6 +1266,70 @@ O relatório, em qualquer formato, descreve falhas que podem estar abertas e é 
 
 ---
 
+# REAUDITORIA (comparação com a auditoria anterior)
+
+Quando o usuário pedir uma reauditoria, ou quiser saber o que mudou desde uma auditoria anterior deste auditor, fazer uma auditoria completa nova e compará-la com o relatório anterior, assim:
+
+<!-- GERADO:INICIO reauditoria · fonte: relatório de reauditoria · gerado por scripts/update-generated.py; não editar à mão -->
+
+## Quando usar
+Depois de correções, para medir a evolução da adequação: o que foi corrigido, o que piorou, o que segue pendente e quais prazos venceram. Exige um relatório anterior gerado por este auditor (`.md` ou `.html`); sem ele, não há o que comparar e a auditoria é feita da forma comum.
+
+## Relatório anterior
+- Procurar o relatório anterior pelos nomes `auditoria-lgpd-*` e `relatorio-auditoria-lgpd*` (ex.: em `docs/lgpd/auditorias/`); com mais de um, propor o de data da análise mais recente e confirmar com o usuário; sem nenhum, pedir o caminho. Como o relatório costuma ficar fora do repositório, perguntar antes de concluir que ele não existe.
+- Do `.html`, ler só o JSON do bloco `<script type="application/json" id="lgpd-dados">`. Com `.md` e `.html` da mesma auditoria, vale o `.md`.
+- Extrair: data da análise, comando, cenário, versão do framework, módulos ativos, score, classificação com as marcas, cobertura e score por área; de cada item do checklist, o ID, a aplicabilidade, o status e a criticidade; de cada não conformidade, o item, a severidade, o prazo sugerido e o aceite de risco, se houver.
+- O relatório anterior é só ponto de comparação: nunca serve de evidência para a nova auditoria.
+
+## Nova auditoria
+- Usar o mesmo cenário do relatório anterior, salvo pedido do usuário. O roteamento é refeito, porque o projeto pode ter mudado: entra o módulo cujo gatilho passou a valer, sai o módulo cujo objeto deixou de existir, com a evidência disso.
+- O contexto registrado no relatório anterior vale como contexto inferido, a confirmar. Perguntar só o que pode ter mudado desde então (natureza e porte do agente de tratamento, tratamento de alto risco, papel em cada fluxo, novas integrações, novos dados, público menor de 18 anos) e, na mesma rodada, o formato de saída.
+- Avaliar todos os itens de novo, com evidência colhida agora, **antes** de abrir a comparação, para que o resultado anterior não influencie a avaliação. Nunca copiar status nem evidência do relatório anterior: um item só fica `CONFORME` com evidência `ENCONTRADA` desta auditoria.
+- O relatório novo é completo: as 8 seções e os anexos, no formato escolhido, com a data no nome e sem sobrescrever o anterior. O bloco "Contexto e escopo" registra o relatório anterior usado (arquivo, data da análise e versão do framework).
+- Aceite de risco do relatório anterior: listado no comparativo; só passa para o `finding` novo se o usuário confirmar que continua válido e a data de revisão (`review_at`) não tiver passado.
+
+## Comparação item a item
+Os itens são pareados pelo ID do catálogo. Achados (`NC-nn`) são renumerados a cada relatório: parear pelo item. Itens extras (`EX-nn`) não têm ID estável: parear pela descrição do controle ou, sem correspondência clara, tratar como novo e como fora desta auditoria.
+
+| Situação | Critério |
+|---|---|
+| Corrigido | `APLICAVEL` nas duas; antes `NAO_CONFORME` ou `PARCIAL`, agora `CONFORME` |
+| Melhorou | `APLICAVEL` nas duas; antes `NAO_CONFORME`, agora `PARCIAL` |
+| Piorou | `APLICAVEL` nas duas; antes `CONFORME`, agora `PARCIAL` ou `NAO_CONFORME`, ou antes `PARCIAL`, agora `NAO_CONFORME` |
+| Pendente | `APLICAVEL` nas duas, com o mesmo status `NAO_CONFORME` ou `PARCIAL` |
+| Mantido conforme | `APLICAVEL` e `CONFORME` nas duas |
+| Mudou de aplicabilidade | aplicabilidade diferente nas duas (ex.: `NAO_VERIFICADO` antes, `APLICAVEL` agora), com o status novo e o motivo |
+| Novo | sem par no relatório anterior: item novo no catálogo ou de módulo ativado agora |
+| Fora desta auditoria | sem par na auditoria nova: módulo não ativado agora ou item retirado do catálogo |
+
+Itens com a mesma aplicabilidade diferente de `APLICAVEL` nas duas auditorias entram só na contagem. Quando o item pareado tem achado nas duas auditorias com severidade diferente (agravante que passou a valer, modulação por porte), registrar a severidade antes e agora.
+
+**Prazos vencidos:** para cada achado do relatório anterior cujo item segue `NAO_CONFORME` ou `PARCIAL`, o vencimento é a data da análise anterior somada ao prazo sugerido (`IMEDIATO` vence na própria data; `30_DIAS`, `90_DIAS` e `180_DIAS` somam os dias) ou, havendo aceite de risco com novo prazo, o `accepted_deadline`. Vencimento anterior à data da nova análise entra na lista de prazos vencidos, com os dias de atraso.
+
+## Score e classificação na comparação
+- Score global antes, agora e a variação em pontos; classificação antes e agora, com as marcas (teto por achado crítico, score parcial, escopo direcionado); cobertura antes e agora; não conformidades por severidade antes e agora.
+- Score por área antes, agora e a variação, para cada área presente em qualquer das duas auditorias.
+- A variação é só a diferença entre os números de cada relatório: nada é recalculado no relatório anterior.
+
+## Comparabilidade
+Antes dos números, registrar o que limita a comparação:
+- **versões do framework diferentes**: o catálogo, os pesos ou as regras podem ter mudado; listar os itens novos e os fora desta auditoria e avisar que parte da variação pode vir da mudança de versão, não de correções;
+- **cenário ou módulos ativos diferentes**: o score global compara escopos diferentes; a comparação por item continua válida nos itens pareados;
+- **cobertura diferente**: itens `NAO_VERIFICADO` em uma auditoria e verificados na outra mudam o score sem que nada tenha sido corrigido.
+
+## Arquivo do comparativo
+- Gravado em Markdown, qualquer que seja o formato escolhido para o relatório, na mesma pasta e com o mesmo nome base do relatório novo, terminado em `-comparativo.md`.
+- Começa com `CONFIDENCIAL — uso interno` e segue as regras de armazenamento do relatório.
+- Ordem: identificação das duas auditorias (arquivo, data da análise, comando, cenário, versão do framework); comparabilidade; evolução (score, classificação, cobertura, não conformidades por severidade e contagem de itens por situação); score por área; regressões (itens que pioraram); prazos vencidos; corrigidos; melhoraram; pendentes, da maior para a menor severidade; mudanças de aplicabilidade, novos e fora desta auditoria; aceites de risco do relatório anterior e o que foi feito com cada um.
+- Tabelas de itens com as colunas `Item | Antes | Agora | Achado`: `Item` no formato `ID · criticality — texto`, `Antes` e `Agora` com o status (ou a aplicabilidade) e a severidade do achado, quando houver, e `Achado` com o `NC-nn` do relatório novo. A evidência fica só no relatório novo; o comparativo não a repete. Itens mantidos conformes aparecem só na contagem.
+
+## Resposta da reauditoria
+Com os arquivos gravados, a resposta em tela traz só: score antes e agora, com a variação; classificação antes e agora; quantos itens foram corrigidos, melhoraram, pioraram e seguem pendentes; os IDs das regressões; os prazos vencidos; o aviso de comparabilidade, se houver; e os caminhos do relatório novo e do comparativo.
+
+<!-- GERADO:FIM reauditoria -->
+
+---
+
 # EXEMPLOS DE NÃO CONFORMIDADE
 
 Cada achado nasce de um item do catálogo e herda dele a criticidade, com o agravante da linha quando a condição está presente.
@@ -1294,6 +1358,8 @@ Ao receber um projeto:
 7. Gerar score, aplicar o teto de classificação e registrar o escopo;
 8. Gerar plano de adequação;
 9. Gerar relatório completo.
+
+Na reauditoria, seguir também a seção "REAUDITORIA": a auditoria nova vem antes da comparação.
 
 ---
 

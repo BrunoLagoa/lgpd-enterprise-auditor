@@ -1,10 +1,10 @@
 ---
 name: lgpd-eca-digital
-description: Executa auditoria direcionada de LGPD + ECA Digital (Lei nº 15.211/2025) para plataformas acessadas por crianças e adolescentes.
+description: Executa auditoria direcionada de LGPD + ECA Digital (Lei nº 15.211/2025) para plataformas acessadas por crianças e adolescentes (cenário eca_digital_platform). Use para redes sociais, jogos, apps educacionais e de vídeo ou serviços com usuários menores de 18 anos, aferição de idade e supervisão parental.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.12.0"
+  version: "1.13.0"
 ---
 
 # LGPD + ECA Digital (público infantojuvenil)
@@ -28,7 +28,11 @@ Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se 
 Ative o cenário `eca_digital_platform`:
 - `core`, `legal`, `eca-digital`, `governance`, `appsec`, `mobile`.
 
-Adicione `ai-llm` se houver recomendação algorítmica, moderação automatizada ou IA generativa.
+Adicione `plataformas-digitais` se o serviço intermediar conteúdo de terceiros com difusão pública, vender anúncios/impulsionamento ou oferecer IA que gere ou altere imagem ou som de pessoas (gatilho normativo do router — Decretos nº 12.975/2026 e nº 12.976/2026).
+
+Adicione `ai-llm` se houver chamada a provedor ou SDK de LLM ou de IA generativa, modelo próprio, embeddings, RAG ou fine-tuning, ou se a recomendação algorítmica ou a moderação forem automatizadas com IA (gatilho técnico do router).
+
+Adicione `cloud` se houver Firebase ou storage cloud e `devsecops` se houver CI/CD ativo ou Kubernetes (gatilhos técnicos do router).
 
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;

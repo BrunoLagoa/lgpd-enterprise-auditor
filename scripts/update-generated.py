@@ -8,6 +8,7 @@
     score          core/scoring-engine.md (cálculo, aplicabilidade, mapa de áreas, subtotais, riscos aceitos);
     classificacao  core/scoring-engine.md (faixas, teto e rótulos);
     monitoramento  legal/anpd-guidelines.md, seção "Em monitoramento" (fonte única das normas não vigentes).
+    reauditoria    reports/reaudit-report.md (comparação com a auditoria anterior, comando /lgpd-reaudit).
 - examples/saas-demo/relatorio-auditoria-lgpd.html: reaplica o modelo reports/html-report-template.html,
   mantendo o bloco de dados do exemplo.
 
@@ -59,6 +60,10 @@ SECTION_BLOCKS = [
     ("classificacao", "core/scoring-engine.md", ["Classificação final canônica", "Teto de classificação",
                                                  "Normalização de rótulos"], False),
     ("monitoramento", "legal/anpd-guidelines.md", ["Em monitoramento (não vigente — não gera não conformidade)"], True),
+    ("reauditoria", "reports/reaudit-report.md", ["Quando usar", "Relatório anterior", "Nova auditoria",
+                                                 "Comparação item a item", "Score e classificação na comparação",
+                                                 "Comparabilidade", "Arquivo do comparativo",
+                                                 "Resposta da reauditoria"], False),
 ]
 
 FRAMEWORK_REF = re.compile(r"\[\[[^\]]+\]\]|`(?:core|legal|orchestrator|reports|governance|appsec|cloud|mobile|devsecops|"

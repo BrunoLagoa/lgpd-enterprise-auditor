@@ -1,10 +1,10 @@
 ---
 name: lgpd-saas
-description: Executa auditoria LGPD direcionada para SaaS web.
+description: Executa auditoria LGPD direcionada para SaaS web (cenário saas_web). Use para aplicações web com login, backend e banco de dados próprios, B2B ou B2C, inclusive quando a empresa é operadora dos dados que os clientes inserem.
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.12.0"
+  version: "1.13.0"
 ---
 
 # LGPD SaaS Web
@@ -15,7 +15,9 @@ Antes de perguntar, leia o que o projeto já documenta (`CLAUDE.md`, `AGENTS.md`
 - stack web e backend;
 - banco de dados e cloud provider;
 - integrações (analytics, pagamentos, CRM, etc.);
-- dados pessoais/sensíveis tratados.
+- dados pessoais/sensíveis tratados;
+- uso de IA/LLM (chamada a provedor ou SDK, modelo próprio, embeddings, RAG);
+- público: serviço direcionado a menores de 18 anos, provavelmente acessado por eles ou com cadastro sem bloqueio etário.
 
 Pergunte sempre, na mesma rodada, em qual formato gravar o relatório, salvo se o pedido já disser: `.md`, `.md` e `.html` (resultado completo, com custo maior) ou só `.html` (versão visual, para abrir no navegador).
 
@@ -27,6 +29,8 @@ Adicione `eca-digital` se houver usuários menores de 18 anos, ainda que o produ
 Adicione `plataformas-digitais` se houver conteúdo gerado por usuários com difusão pública, anúncios/impulsionamento pagos ou IA que gere ou altere imagem ou som de pessoas (gatilho normativo do router — Decretos nº 12.975/2026 e nº 12.976/2026).
 
 Adicione `ai-llm` se houver chamada a provedor ou SDK de LLM ou de IA generativa, modelo próprio, embeddings, RAG ou fine-tuning (gatilho técnico do router).
+
+Adicione `mobile` se houver app iOS ou Android (nativo, Flutter ou React Native; gatilho técnico do router).
 
 Regras obrigatórias:
 - considerar `.agents/lgpd-enterprise-auditor/` como caminho base canônico em qualquer projeto;

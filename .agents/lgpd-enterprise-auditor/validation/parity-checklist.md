@@ -76,6 +76,7 @@ Parte da paridade é conferida por máquina em `scripts/tests/test-framework.sh`
 - [x] Deveres do Decreto nº 12.880/2026 com item próprio nas duas formas: IA generativa (art. 11, `ECA-24`), venda de produtos proibidos a menores (art. 18, `ECA-25`), avaliação de impacto à segurança e à saúde com resumo público (art. 47, `ECA-26`) e conteúdo monetizado com exploração habitual da imagem de menor (art. 34, `ECA-27`); eliminação do documento usado na aferição de idade (art. 24, §3º, `ECA-06`) e alternativas às caixas de recompensa (art. 23, `ECA-11`).
 - [x] Relatório com marcação de confidencialidade, "o que fazer agora", coluna `Área`, esforço `P | M | G`, riscos aceitos, glossário e aviso legal fixo, na skill e no framework (`core/reporting-engine.md` e `reports/*.md`).
 - [x] Formato de saída perguntado sempre no início (`.md`, `.md` e `.html`, ou só `.html`), com `.md` quando não há resposta e só o resumo em tela quando há arquivo gravado; o `.html` é gerado pelo modelo `reports/html-report-template.html`, preenchendo só o bloco de dados (`reports/html-report.md`), na skill ("Arquivos do relatório") e no framework (`core/reporting-engine.md`).
+- [x] Reauditoria com as mesmas regras nas duas formas: auditoria nova e completa antes da comparação, relatório anterior nunca usado como evidência, pareamento pelo ID do catálogo, situações (corrigido, melhorou, piorou, pendente, mudou de aplicabilidade, novo, fora desta auditoria), prazos vencidos, avisos de comparabilidade e comparativo em `-comparativo.md`; no framework (`reports/reaudit-report.md`, comando `/lgpd-reaudit`) e na skill ("REAUDITORIA", gerada a partir do framework).
 
 ## Evidências de teste esperadas
 - execução de cenário `saas_web`;
@@ -85,4 +86,5 @@ Parte da paridade é conferida por máquina em `scripts/tests/test-framework.sh`
 - execução de cenário `devsecops_pipeline`;
 - execução de cenário `eca_digital_platform`;
 - execução de cenário `digital_platform`;
-- execução `full_audit`.
+- execução `full_audit`;
+- reauditoria (`/lgpd-reaudit`) sobre um relatório anterior.
