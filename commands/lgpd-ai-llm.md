@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para sistemas com IA/LLM (cenár
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.13.0"
+  version: "1.13.1"
 ---
 
 # LGPD IA/LLM

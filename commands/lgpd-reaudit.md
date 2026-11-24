@@ -4,7 +4,7 @@ description: Executa uma nova auditoria LGPD e a compara com o relatório anteri
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.13.0"
+  version: "1.13.1"
 ---
 
 # LGPD Reauditoria

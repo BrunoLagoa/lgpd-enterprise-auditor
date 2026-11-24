@@ -233,6 +233,7 @@ Depois da instalação, cada arquivo de `commands/` vira um slash command no seu
 | `/lgpd-devsecops` | `devsecops_pipeline` | Pipelines de CI/CD e supply chain | `devsecops`, `cloud`, `appsec` |
 | `/lgpd-eca-digital` | `eca_digital_platform` | Plataformas acessadas por crianças e adolescentes (LGPD art. 14 + ECA Digital, Lei nº 15.211/2025) | `eca-digital`, `governance`, `appsec`, `mobile` |
 | `/lgpd-plataformas-digitais` | `digital_platform` | Provedores de aplicações com conteúdo de terceiros, anúncios pagos ou IA que gera imagem/voz (Decretos nº 12.975/2026 e nº 12.976/2026) | `plataformas-digitais`, `governance`, `appsec`, `cloud` |
+| `/lgpd-reaudit` | o do relatório anterior | Depois de correções: refaz a auditoria e compara com o relatório anterior (corrigidos, piorados, pendentes, prazos vencidos) | os do cenário anterior, mais os que os gatilhos acrescentarem |
 
 `core` e `legal` são ativados em todos os cenários. Só o `/lgpd-full-audit` cobre tudo; o relatório dos outros sete sai com a marca **escopo direcionado** e lista os domínios que não foram auditados.
 
@@ -302,7 +303,6 @@ Os contratos centrais estão em `.agents/lgpd-enterprise-auditor/core/`:
 - templates mais ricos por setor (healthtech, fintech, gov);
 - automação de coleta de evidências;
 - geração de matriz de risco por ambiente;
-- relatórios comparativos entre releases;
 - integração com pipelines CI/CD.
 
 ## Pessoas por trás do LGPD Enterprise Auditor

@@ -8,7 +8,8 @@ Depois de correções, para medir a evolução da adequação: o que foi corrigi
 ## Relatório anterior
 - Procurar o relatório anterior pelos nomes `auditoria-lgpd-*` e `relatorio-auditoria-lgpd*` (ex.: em `docs/lgpd/auditorias/`); com mais de um, propor o de data da análise mais recente e confirmar com o usuário; sem nenhum, pedir o caminho. Como o relatório costuma ficar fora do repositório, perguntar antes de concluir que ele não existe.
 - Do `.html`, ler só o JSON do bloco `<script type="application/json" id="lgpd-dados">`. Com `.md` e `.html` da mesma auditoria, vale o `.md`.
-- Extrair: data da análise, comando, cenário, versão do framework, módulos ativos, score, classificação com as marcas, cobertura e score por área; de cada item do checklist, o ID, a aplicabilidade, o status e a criticidade; de cada não conformidade, o item, a severidade, o prazo sugerido e o aceite de risco, se houver.
+- **Antes da auditoria nova**, ler só os metadados: data da análise, comando, cenário, versão do framework, módulos ativos, contexto e escopo, score, classificação com as marcas e cobertura. Não abrir ainda o checklist, os achados nem as decisões da auditoria anterior (contagem única, dependências, fronteiras entre itens): a avaliação nova segue as regras do framework, não as escolhas da anterior.
+- **Depois de avaliados todos os itens**, extrair: score por área; de cada item do checklist, o ID, a aplicabilidade, o status e a criticidade; de cada não conformidade, o item, a severidade, o prazo sugerido e o aceite de risco, se houver.
 - O relatório anterior é só ponto de comparação: nunca serve de evidência para a nova auditoria.
 
 ## Nova auditoria
@@ -32,6 +33,8 @@ Os itens são pareados pelo ID do catálogo. Achados (`NC-nn`) são renumerados 
 | Novo | sem par no relatório anterior: item novo no catálogo ou de módulo ativado agora |
 | Fora desta auditoria | sem par na auditoria nova: módulo não ativado agora ou item retirado do catálogo |
 
+**Origem da mudança:** para cada item que mudou de status, dizer se a causa é uma **mudança no projeto** (o código, a configuração ou o documento citado como evidência no relatório anterior mudou) ou uma **mudança de leitura** (a evidência é a mesma ou o projeto não mudou naquele ponto, e a avaliação nova a enquadra de outro modo). Só a mudança no projeto conta como correção ou regressão do projeto; a mudança de leitura entra na lista, marcada como tal, e o comparativo não a atribui às correções.
+
 Itens com a mesma aplicabilidade diferente de `APLICAVEL` nas duas auditorias entram só na contagem. Quando o item pareado tem achado nas duas auditorias com severidade diferente (agravante que passou a valer, modulação por porte), registrar a severidade antes e agora.
 
 **Prazos vencidos:** para cada achado do relatório anterior cujo item segue `NAO_CONFORME` ou `PARCIAL`, o vencimento é a data da análise anterior somada ao prazo sugerido (`IMEDIATO` vence na própria data; `30_DIAS`, `90_DIAS` e `180_DIAS` somam os dias) ou, havendo aceite de risco com novo prazo, o `accepted_deadline`. Vencimento anterior à data da nova análise entra na lista de prazos vencidos, com os dias de atraso.
@@ -48,10 +51,10 @@ Antes dos números, registrar o que limita a comparação:
 - **cobertura diferente**: itens `NAO_VERIFICADO` em uma auditoria e verificados na outra mudam o score sem que nada tenha sido corrigido.
 
 ## Arquivo do comparativo
-- Gravado em Markdown, qualquer que seja o formato escolhido para o relatório, na mesma pasta e com o mesmo nome base do relatório novo, terminado em `-comparativo.md`.
+- Gravado em Markdown, qualquer que seja o formato escolhido para o relatório, na mesma pasta e com o mesmo nome base do relatório novo, terminado em `-comparativo.md`. O nome base do relatório novo segue a regra de nomeação do relatório, com o ID do cenário (ex.: `auditoria-lgpd-2026-11-saas_web`).
 - Começa com `CONFIDENCIAL — uso interno` e segue as regras de armazenamento do relatório.
 - Ordem: identificação das duas auditorias (arquivo, data da análise, comando, cenário, versão do framework); comparabilidade; evolução (score, classificação, cobertura, não conformidades por severidade e contagem de itens por situação); score por área; regressões (itens que pioraram); prazos vencidos; corrigidos; melhoraram; pendentes, da maior para a menor severidade; mudanças de aplicabilidade, novos e fora desta auditoria; aceites de risco do relatório anterior e o que foi feito com cada um.
-- Tabelas de itens com as colunas `Item | Antes | Agora | Achado`: `Item` no formato `ID · criticality — texto`, `Antes` e `Agora` com o status (ou a aplicabilidade) e a severidade do achado, quando houver, e `Achado` com o `NC-nn` do relatório novo. A evidência fica só no relatório novo; o comparativo não a repete. Itens mantidos conformes aparecem só na contagem.
+- Tabelas de itens com as colunas `Item | Antes | Agora | Achado` (e `Origem`, nas listas de itens que mudaram de status, com "projeto" ou "leitura"): `Item` no formato `ID · criticality — texto`, `Antes` e `Agora` com o status (ou a aplicabilidade) e a severidade do achado, quando houver, e `Achado` com o `NC-nn` do relatório novo. A evidência fica só no relatório novo; o comparativo não a repete. Itens mantidos conformes aparecem só na contagem.
 
 ## Resposta da reauditoria
 Com os arquivos gravados, a resposta em tela traz só: score antes e agora, com a variação; classificação antes e agora; quantos itens foram corrigidos, melhoraram, pioraram e seguem pendentes; os IDs das regressões; os prazos vencidos; o aviso de comparabilidade, se houver; e os caminhos do relatório novo e do comparativo.

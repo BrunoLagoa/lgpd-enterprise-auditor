@@ -6,6 +6,14 @@ O formato segue o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.
 
 ## [Não lançado]
 
+## [1.13.1] - 2026-11-24
+
+Correções da reauditoria e da documentação do comando.
+
+### Corrigido
+- `/lgpd-reaudit` não aparecia na tabela de comandos dos dois READMEs nem entre os cenários do site (`docs/index.html`); a linha e a aba foram adicionadas e o item "relatórios comparativos entre releases" saiu do roadmap, porque a reauditoria o entrega.
+- `/lgpd-reaudit`: teste de ponta a ponta mostrou duas lacunas na regra. Na auditoria nova só os metadados do relatório anterior são lidos; checklist, achados e decisões ficam para depois de avaliados todos os itens, para que as escolhas da auditoria anterior não contaminem a nova. O comparativo passa a dizer, para cada item que mudou de status, se a causa foi uma mudança no projeto ou só uma mudança de leitura, para não creditar às correções o que foi diferença de avaliação.
+
 ## [1.13.0] - 2026-11-23
 
 Reauditoria, comandos mais fáceis de escolher e alinhados ao roteador.
@@ -275,7 +283,8 @@ Mudanças motivadas pelo primeiro uso em projeto real e pela preparação para o
 - Comandos `lgpd-full-audit`, `lgpd-saas`, `lgpd-mobile`, `lgpd-ai-llm` e `lgpd-devsecops`.
 - READMEs em inglês e português e licença MIT.
 
-[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.13.0...HEAD
+[Não lançado]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.13.1...HEAD
+[1.13.1]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.13.0...v1.13.1
 [1.13.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.12.0...v1.13.0
 [1.12.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.11.0...v1.12.0
 [1.11.0]: https://github.com/BrunoLagoa/lgpd-enterprise-auditor/compare/v1.10.1...v1.11.0

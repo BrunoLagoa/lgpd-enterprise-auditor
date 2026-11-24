@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para aplicações mobile (cenár
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.13.0"
+  version: "1.13.1"
 ---
 
 # LGPD Mobile App

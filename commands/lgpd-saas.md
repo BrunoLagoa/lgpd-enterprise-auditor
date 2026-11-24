@@ -4,7 +4,7 @@ description: Executa auditoria LGPD direcionada para SaaS web (cenário saas_web
 license: MIT
 metadata:
   author: BrunoCastro
-  version: "1.13.0"
+  version: "1.13.1"
 ---
 
 # LGPD SaaS Web

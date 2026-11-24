@@ -1337,7 +1337,7 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
 <section class="section tone" id="cenarios" aria-labelledby="scen-title">
   <div class="container">
     <div class="section-head split">
-      <h2 id="scen-title" data-reveal>Uma auditoria completa e sete direcionadas.</h2>
+      <h2 id="scen-title" data-reveal>Uma auditoria completa, sete direcionadas e a reauditoria.</h2>
       <p data-reveal style="--d:1"><code>core</code> e <code>legal</code> entram sempre. Fora do <code>/lgpd-full-audit</code>, o relatório sai marcado como <strong>escopo direcionado</strong> e lista os domínios que não foram auditados.</p>
     </div>
     <div class="scen" data-tabs="scen" data-reveal>
@@ -1350,6 +1350,7 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
         <button class="scen-tab" role="tab" id="st-6" aria-controls="sp-6" aria-selected="false" tabindex="-1" type="button"><code>/lgpd-devsecops</code><span>CI/CD e supply chain</span></button>
         <button class="scen-tab" role="tab" id="st-7" aria-controls="sp-7" aria-selected="false" tabindex="-1" type="button"><code>/lgpd-eca-digital</code><span>Crianças e adolescentes</span></button>
         <button class="scen-tab" role="tab" id="st-8" aria-controls="sp-8" aria-selected="false" tabindex="-1" type="button"><code>/lgpd-plataformas-digitais</code><span>Conteúdo de terceiros</span></button>
+        <button class="scen-tab" role="tab" id="st-9" aria-controls="sp-9" aria-selected="false" tabindex="-1" type="button"><code>/lgpd-reaudit</code><span>Depois das correções</span></button>
       </div>
       <div>
         <div class="card scen-panel" role="tabpanel" id="sp-1" aria-labelledby="st-1" tabindex="0">
@@ -1399,6 +1400,12 @@ html:not(.js) .toolbar, html:not(.js) .result-count { display: none; }
           <p>Decretos nº 12.975/2026 e nº 12.976/2026: canal de denúncia, notificação, remoção e contestação com prazos, moderação e riscos sistêmicos, anúncios e impulsionamento, guarda de registros de acesso, termos de uso, relatório de transparência e IA que gera ou altera imagem ou voz de pessoas.</p>
           <span class="k">Módulos ativados</span>
           <ul class="mod-chips"><li class="base">core</li><li class="base">legal</li><li>plataformas-digitais</li><li>governance</li><li>appsec</li><li>cloud</li></ul>
+        </div>
+        <div class="card scen-panel" role="tabpanel" id="sp-9" aria-labelledby="st-9" tabindex="0">
+          <h3><code>/lgpd-reaudit</code><span class="tag">cenário anterior</span></h3>
+          <p>Refaz a auditoria completa no cenário do relatório anterior e grava, ao lado dela, um comparativo item a item: o que foi corrigido, o que melhorou, o que piorou, o que segue pendente, os prazos vencidos e a variação do score. O relatório anterior nunca vale como evidência: cada item é avaliado de novo.</p>
+          <span class="k">Módulos ativados</span>
+          <ul class="mod-chips"><li class="base">core</li><li class="base">legal</li><li>os do cenário anterior</li><li>mais os que os gatilhos acrescentarem</li></ul>
         </div>
         <p class="note scen-note"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Em qualquer cenário, gatilhos acrescentam módulos: <code>ai-llm</code> com qualquer chamada a LLM ou IA generativa, <code>eca-digital</code> com usuários menores de 18 anos ou serviço que a lei presume acessado por eles (rede social, jogo, IA generativa), <code>mobile</code> com app iOS ou Android, entre outros.</span></p>
       </div>

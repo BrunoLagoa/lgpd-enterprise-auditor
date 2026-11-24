@@ -234,6 +234,7 @@ After installation, each file in `commands/` becomes a slash command in your ass
 | `/lgpd-devsecops` | `devsecops_pipeline` | CI/CD pipelines and supply chain | `devsecops`, `cloud`, `appsec` |
 | `/lgpd-eca-digital` | `eca_digital_platform` | Platforms accessed by children and adolescents (LGPD art. 14 + Digital Statute, Law No. 15.211/2025) | `eca-digital`, `governance`, `appsec`, `mobile` |
 | `/lgpd-plataformas-digitais` | `digital_platform` | Internet application providers with third-party content, paid ads or image/voice-generating AI (Decrees No. 12.975/2026 and No. 12.976/2026) | `plataformas-digitais`, `governance`, `appsec`, `cloud` |
+| `/lgpd-reaudit` | the previous report's | After fixes: runs the audit again and compares it with the previous report (fixed, worse, pending, overdue deadlines) | those of the previous scenario, plus any the triggers add |
 
 `core` and `legal` are activated in every scenario. Only `/lgpd-full-audit` covers everything; the report of the other seven carries the **escopo direcionado** (targeted scope) mark and lists the domains that were not audited.
 
@@ -303,7 +304,6 @@ Core contracts are located at `.agents/lgpd-enterprise-auditor/core/`:
 - richer templates by industry (healthtech, fintech, gov);
 - evidence collection automation;
 - environment-based risk matrix generation;
-- comparative reports between releases;
 - CI/CD pipeline integration.
 
 ## People Behind LGPD Enterprise Auditor
